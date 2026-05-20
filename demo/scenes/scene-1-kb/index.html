@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>场景1：销售随身智能知识库</title>
+  <link rel="stylesheet" href="../../shared/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body class="scene-page">
+  <nav class="scene-nav" id="scene-nav"></nav>
+
+  <main class="scene-content">
+    <!-- 快捷场景入口 -->
+    <div style="margin-bottom:16px">
+      <div style="font-size:13px;color:var(--gray-500);margin-bottom:10px">快速场景入口：</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="quick-tag" onclick="ask('食堂场景推荐什么机型？')">食堂场景</button>
+        <button class="quick-tag" onclick="ask('300平川菜馆，日均350单，推荐配置')">川菜馆配置</button>
+        <button class="quick-tag" onclick="ask('YC-2000和竞品A对比')">竞品对比</button>
+        <button class="quick-tag" onclick="ask('机器多久能回本？')">回本周期</button>
+        <button class="quick-tag" onclick="ask('你们售后怎么保障？')">售后政策</button>
+      </div>
+    </div>
+
+    <!-- 聊天区 -->
+    <div class="chat-container" style="height:calc(100vh - 240px)">
+      <div class="chat-messages" id="chat-messages">
+        <div class="chat-message ai">
+          <div class="chat-avatar ai">AI</div>
+          <div class="chat-bubble">
+            您好！我是您的智能厨具顾问 🍳<br><br>
+            您可以问我：<br>
+            • <strong>产品参数</strong>：某型号的功率、产能、尺寸<br>
+            • <strong>场景适配</strong>：食堂/火锅/快餐推荐什么配置<br>
+            • <strong>竞品对比</strong>：我们和 XX 品牌的差异<br>
+            • <strong>报价咨询</strong>：不同配置的预算区间<br>
+            • <strong>售后问题</strong>：质保、维修、培训
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-input-area">
+        <input type="text" class="chat-input" id="chat-input" placeholder="输入您的问题..." onkeypress="if(event.key==='Enter')sendMessage()">
+        <button class="chat-send-btn" onclick="sendMessage()">
+          <i class="fas fa-paper-plane"></i>
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    initNav('销售随身智能知识库', '销售赋能', 'tag-blue');
+
+    const messagesEl = document.getElementById('chat-messages');
+    const inputEl = document.getElementById('chat-input');
+
+    // 知识库数据（简化版，实际从 JSON 加载）
+    const KB = {
+      'YC-1000': 'YC-1000 创业款\n• 价格：2.98 万\n• 功率：8kW | 产能：80-120 单/日\n• 尺寸：600×600×850mm\n• 适用：创业小店、私房菜\n• 亮点：占地面积小、即插即用',
+      'YC-2000': 'YC-2000 标准款（主推）\n• 价格：4.28 万\n• 功率：12kW | 产能：200-300 单/日\n• 尺寸：800×750×950mm\n• 适用：中型快餐、食堂、小型火锅\n• 亮点：性价比高、出餐快、菜谱丰富',
+      'YC-3000': 'YC-3000 旗舰款\n• 价格：6.98 万\n• 功率：18kW | 产能：400-600 单/日\n• 尺寸：1000×900×1050mm\n• 适用：大型餐饮、连锁门店、酒店厨房\n• 亮点：大产能、支持定制菜谱、联网管理',
+      '食堂': '食堂场景推荐方案\n━━━━━━━━━━━━━━━━━━\n• 推荐机型：YC-2000 × 2-3 台\n• 配套：自动洗锅模块 + 智能调料机\n• 优势：已服务 200+ 企业食堂\n• 效果：平均出餐效率提升 60%\n• 案例：阿里西溪食堂（500平，3台YC-3000，日供2000份）',
+      '川菜': '川菜馆推荐方案\n━━━━━━━━━━━━━━━━━━\n• 推荐机型：YC-3000 × 2 台\n• 配套：排烟系统 + 专用操作台 + 自动洗锅\n• 预估投入：12-15 万\n• 回本周期：5-8 个月\n• 案例：成都「川味轩」（280平，2台YC-3000，5个月回本）',
+      '竞品': '核心竞争优势\n━━━━━━━━━━━━━━━━━━\n1. 温控精度 ±1℃（竞品 ±3-5℃）\n2. 菜谱 800+，每月更新 50+（竞品 150-200）\n3. 质保 3 年 + 终身维护（竞品 1-2 年）\n4. 上门响应 < 4 小时（竞品 24-48 小时）',
+      '回本': '回本周期计算\n━━━━━━━━━━━━━━━━━━\n以 YC-2000 为例（4.28万）：\n• 日均节省 2 个厨师（月薪 6000/人）\n• 月省人力成本：12,000 元\n• 理论回本：3.5 个月\n• 实际平均：6-8 个月（考虑淡旺季）\n\n以 YC-3000 为例（6.98万）：\n• 日均节省 3 个厨师\n• 月省人力成本：18,000 元\n• 理论回本：4 个月\n• 实际平均：8-12 个月',
+      '售后': '售后服务保障\n━━━━━━━━━━━━━━━━━━\n• 质保：3 年整机质保（YC-1000 为 2 年）\n• 维护：质保期后终身维护，只收配件成本\n• 响应：全国 200+ 服务网点，4 小时响应\n• 培训：免费上门安装 + 使用培训\n• 升级：菜谱云端更新，终身免费',
+    };
+
+    function ask(text) {
+      inputEl.value = text;
+      sendMessage();
+    }
+
+    function sendMessage() {
+      const text = inputEl.value.trim();
+      if (!text) return;
+      inputEl.value = '';
+
+      messagesEl.appendChild(createMessageBubble(text, 'user'));
+      scrollToBottom(messagesEl);
+
+      messagesEl.appendChild(createLoadingBubble());
+      scrollToBottom(messagesEl);
+
+      mockDelay(800).then(() => {
+        removeLoadingBubble();
+        const reply = findAnswer(text);
+        messagesEl.appendChild(createMessageBubble(reply, 'ai'));
+        scrollToBottom(messagesEl);
+      });
+    }
+
+    function findAnswer(text) {
+      const lower = text.toLowerCase();
+      for (const [key, value] of Object.entries(KB)) {
+        if (lower.includes(key.toLowerCase())) return value;
+      }
+      // 场景匹配
+      if (lower.includes('300') || lower.includes('川菜')) return KB['川菜'];
+      if (lower.includes('食堂') || lower.includes('企业')) return KB['食堂'];
+      if (lower.includes('比') || lower.includes('优势')) return KB['竞品'];
+      if (lower.includes('回') || lower.includes('多久')) return KB['回本'];
+      if (lower.includes('售后') || lower.includes('保')) return KB['售后'];
+
+      return '抱歉，这个问题我还在学习中。建议您换个问法，比如：\n• "食堂推荐什么机型？"\n• "YC-2000 什么参数？"\n• "和 XX 品牌对比"\n• "多久能回本？"';
+    }
+
+    // 简化的工具函数（内联避免依赖加载顺序）
+    function createMessageBubble(content, sender) {
+      const div = document.createElement('div');
+      div.className = `chat-message ${sender}`;
+      const avatarText = sender === 'ai' ? 'AI' : '我';
+      div.innerHTML = `<div class="chat-avatar ${sender}">${avatarText}</div><div class="chat-bubble">${content.replace(/\n/g, '<br>')}</div>`;
+      return div;
+    }
+    function createLoadingBubble() {
+      const div = document.createElement('div');
+      div.className = 'chat-message ai';
+      div.id = 'loading-msg';
+      div.innerHTML = `<div class="chat-avatar ai">AI</div><div class="chat-bubble"><span class="loading-dot"></span><span class="loading-dot" style="animation-delay:0.2s"></span><span class="loading-dot" style="animation-delay:0.4s"></span></div>`;
+      return div;
+    }
+    function removeLoadingBubble() {
+      const el = document.getElementById('loading-msg');
+      if (el) el.remove();
+    }
+    function scrollToBottom(el) {
+      el.scrollTop = el.scrollHeight;
+    }
+    function mockDelay(ms = 800) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+    function initNav(title, badge, badgeClass) {
+      const nav = document.getElementById('scene-nav');
+      if (!nav) return;
+      nav.innerHTML = `
+        <div class="scene-nav-inner">
+          <a href="../../index.html" class="scene-nav-back">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            返回首页
+          </a>
+          <div style="display:flex;align-items:center;gap:12px">
+            <span class="scene-nav-title">${title}</span>
+            <span class="scene-nav-badge ${badgeClass}">${badge}</span>
+          </div>
+          <div style="width:60px"></div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

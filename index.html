@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>智能厨具行业 AI 销售赋能全场景解决方案</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        body {
+            font-family: "Microsoft YaHei", -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        /* 入场动画 */
+        .fade-up {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+        .fade-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* 卡片悬停效果 */
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+        .card-hover::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.5s ease;
+        }
+        .card-hover:hover::before {
+            left: 100%;
+        }
+        .card-hover:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(37, 99, 235, 0.15);
+        }
+        
+        /* 渐变背景 */
+        .gradient-bg {
+            background: linear-gradient(135deg, #1e3a5f 0%, #2563eb 50%, #3b82f6 100%);
+        }
+        .gradient-accent {
+            background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+        }
+        
+        /* 装饰元素 */
+        .decoration-dot {
+            width: 8px;
+            height: 8px;
+            background: linear-gradient(135deg, #60a5fa, #3b82f6);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.6; transform: scale(1.2); }
+        }
+        
+        /* 场景卡片数字标识 */
+        .scene-number {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #2563eb, #3b82f6);
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 16px;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+        }
+        
+        /* 价值卡片悬停 */
+        .value-card {
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+        .value-card:hover {
+            border-color: #2563eb;
+            transform: scale(1.05);
+        }
+        
+        /* 底部渐变 */
+        .footer-gradient {
+            background: linear-gradient(to top, #1f2937, #111827);
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800">
+<!-- 头部区域 -->
+<header class="gradient-bg text-white py-16 px-4 md:px-8 relative overflow-hidden">
+    <!-- 装饰背景 -->
+    <div class="absolute inset-0 opacity-10">
+        <div class="absolute top-10 left-10 w-32 h-32 border border-white rounded-full"></div>
+        <div class="absolute bottom-10 right-20 w-48 h-48 border border-white rounded-full"></div>
+        <div class="absolute top-1/2 left-1/3 w-20 h-20 border border-white rounded-lg rotate-45"></div>
+    </div>
+    
+    <div class="max-w-5xl mx-auto relative z-10">
+        <div class="flex items-center gap-3 mb-4">
+            <span class="decoration-dot"></span>
+            <span class="text-blue-200 text-sm tracking-wider">AI 赋能销售 · 降本增效</span>
+        </div>
+        <h1 class="text-3xl md:text-5xl font-bold mb-4 leading-tight">
+            智能厨具行业<br>
+            <span class="text-blue-200">AI 销售赋能</span>全场景解决方案
+        </h1>
+        <p class="text-lg md:text-xl text-blue-100 opacity-90">适用产品：智能炒菜机 | 商用厨具 | 非标高客单餐饮设备</p>
+    </div>
+</header>
+
+<!-- 主体内容 -->
+<main class="max-w-5xl mx-auto py-12 px-4 md:px-8">
+    <!-- 行业核心属性 -->
+    <section class="mb-16 fade-up">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+            <span class="w-1 h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full"></span>
+            <span class="text-blue-600">一、行业核心属性</span>
+            <span class="text-gray-400 font-normal text-sm">落地基础</span>
+        </h2>
+        <div class="bg-white p-8 rounded-2xl shadow-lg border border-gray-100">
+            <ul class="space-y-4">
+                <li class="flex items-start gap-3">
+                    <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></span>
+                    <span class="text-gray-700 leading-relaxed">高客单、非标定制、强依赖线下服务（试菜/上门/配套）</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></span>
+                    <span class="text-gray-700 leading-relaxed">销售周期长（1-2个月+），客户决策慢、易断联</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></span>
+                    <span class="text-gray-700 leading-relaxed">销售能力分层严重：新人专业弱、跟进随意，资深销售经验无法沉淀</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></span>
+                    <span class="text-gray-700 leading-relaxed">客户类型复杂：餐饮门店、食堂、连锁机构、创业者需求差异化大</span>
+                </li>
+                <li class="flex items-start gap-3">
+                    <span class="w-2 h-2 bg-blue-500 rounded-full mt-2 flex-shrink-0"></span>
+                    <span class="text-gray-700 leading-relaxed">企业诉求：标准化销售流程、降低培训成本、盘活沉睡线索、提升转化</span>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 8大落地场景 -->
+    <section class="mb-16 fade-up">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+            <span class="w-1 h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full"></span>
+            <span class="text-blue-600">二、8大AI落地场景</span>
+            <span class="text-gray-400 font-normal text-sm">可直接落地</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <!-- 场景1 -->
+            <div class="card-hover bg-white p-6 rounded-2xl shadow-lg">
+                <div class="flex items-start gap-4">
+                    <div class="scene-number">1</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">销售随身智能知识库</h3>
+                        <p class="text-red-500 font-medium mb-1 text-sm">核心痛点：</p>
+                        <p class="text-gray-600 mb-3 text-sm">产品参数复杂、适配场景多，销售记不住、查资料慢</p>
+                        <p class="text-green-600 font-medium mb-1 text-sm">AI能力：</p>
+                        <p class="text-gray-700 text-sm">实时解答参数、配置、报价、适配方案，新人快速上手</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 场景2 -->
+            <div class="card-hover bg-white p-6 rounded-2xl shadow-lg">
+                <div class="flex items-start gap-4">
+                    <div class="scene-number">2</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">企微实时话术参谋</h3>
+                        <p class="text-red-500 font-medium mb-1 text-sm">核心痛点：</p>
+                        <p class="text-gray-600 mb-3 text-sm">销售临场不会接话、不会引导，只会发资料</p>
+                        <p class="text-green-600 font-medium mb-1 text-sm">AI能力：</p>
+                        <p class="text-gray-700 text-sm">侧边栏实时推荐话术、跟进动作，半自动辅助，不替代人工</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 场景3 -->
+            <div class="card-hover bg-white p-6 rounded-2xl shadow-lg">
+                <div class="flex items-start gap-4">
+                    <div class="scene-number">3</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">客户分层+智能SOP跟进</h3>
+                        <p class="text-red-500 font-medium mb-1 text-sm">核心痛点：</p>
+                        <p class="text-gray-600 mb-3 text-sm">销售挑客户跟进，长周期客户遗忘、流失</p>
+                        <p class="text-green-600 font-medium mb-1 text-sm">AI能力：</p>
+                        <p class="text-gray-700 text-sm">自动标签分层，按阶段定时提醒/触达，盘活沉睡线索</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 场景4 -->
+            <div class="card-hover bg-white p-6 rounded-2xl shadow-lg">
+                <div class="flex items-start gap-4">
+                    <div class="scene-number">4</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">聊天记录AI复盘沉淀</h3>
+                        <p class="text-red-500 font-medium mb-1 text-sm">核心痛点：</p>
+                        <p class="text-gray-600 mb-3 text-sm">优秀销售经验无法复用，新人持续犯错</p>
+                        <p class="text-green-600 font-medium mb-1 text-sm">AI能力：</p>
+                        <p class="text-gray-700 text-sm">自动提炼高转化话术、分析流失原因，形成公司标准SOP</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 场景5 -->
+            <div class="card-hover bg-white p-6 rounded-2xl shadow-lg">
+                <div class="flex items-start gap-4">
+                    <div class="scene-number">5</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">客户个性化数据应答</h3>
+                        <p class="text-red-500 font-medium mb-1 text-sm">核心痛点：</p>
+                        <p class="text-gray-600 mb-3 text-sm">无法精准回答发货、售后、试菜排期等个性化问题</p>
+                        <p class="text-green-600 font-medium mb-1 text-sm">AI能力：</p>
+                        <p class="text-gray-700 text-sm">对接内部系统，实时查询客户专属订单/售后/进度信息</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 场景6 -->
+            <div class="card-hover bg-white p-6 rounded-2xl shadow-lg">
+                <div class="flex items-start gap-4">
+                    <div class="scene-number">6</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">AI新人模拟培训对练</h3>
+                        <p class="text-red-500 font-medium mb-1 text-sm">核心痛点：</p>
+                        <p class="text-gray-600 mb-3 text-sm">培训成本高、新人无人带，不敢对接客户</p>
+                        <p class="text-green-600 font-medium mb-1 text-sm">AI能力：</p>
+                        <p class="text-gray-700 text-sm">AI模拟各类客户，实战对练+点评，批量快速培养销售</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 场景7 -->
+            <div class="card-hover bg-white p-6 rounded-2xl shadow-lg">
+                <div class="flex items-start gap-4">
+                    <div class="scene-number">7</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">线索智能初筛评级</h3>
+                        <p class="text-red-500 font-medium mb-1 text-sm">核心痛点：</p>
+                        <p class="text-gray-600 mb-3 text-sm">线索量大，人工筛选效率低、浪费高意向客户</p>
+                        <p class="text-green-600 font-medium mb-1 text-sm">AI能力：</p>
+                        <p class="text-gray-700 text-sm">自动判定客户意向、预算、类型，优先推送高价值线索</p>
+                    </div>
+                </div>
+            </div>
+            <!-- 场景8 -->
+            <div class="card-hover bg-white p-6 rounded-2xl shadow-lg">
+                <div class="flex items-start gap-4">
+                    <div class="scene-number">8</div>
+                    <div>
+                        <h3 class="font-bold text-lg text-gray-800 mb-2">行业方案智能生成</h3>
+                        <p class="text-red-500 font-medium mb-1 text-sm">核心痛点：</p>
+                        <p class="text-gray-600 mb-3 text-sm">销售不会搭配方案，案例整理耗时费力</p>
+                        <p class="text-green-600 font-medium mb-1 text-sm">AI能力：</p>
+                        <p class="text-gray-700 text-sm">根据客户类型，自动生成配套方案、案例、报价参考</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 核心价值归类 -->
+    <section class="mb-16 fade-up">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+            <span class="w-1 h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full"></span>
+            <span class="text-blue-600">三、三大核心价值归类</span>
+            <span class="text-gray-400 font-normal text-sm">汇报专用</span>
+        </h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="value-card bg-gradient-to-br from-blue-50 to-indigo-50 p-6 rounded-2xl text-center">
+                <div class="w-14 h-14 bg-blue-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                    </svg>
+                </div>
+                <h4 class="font-bold text-gray-800 text-lg mb-2">销售赋能类</h4>
+                <p class="text-gray-600 text-sm">知识库答疑、实时话术参谋、AI模拟培训</p>
+            </div>
+            <div class="value-card bg-gradient-to-br from-green-50 to-emerald-50 p-6 rounded-2xl text-center">
+                <div class="w-14 h-14 bg-green-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"/>
+                    </svg>
+                </div>
+                <h4 class="font-bold text-gray-800 text-lg mb-2">客户运营类</h4>
+                <p class="text-gray-600 text-sm">线索筛分、SOP自动跟进、个性化数据应答</p>
+            </div>
+            <div class="value-card bg-gradient-to-br from-purple-50 to-violet-50 p-6 rounded-2xl text-center">
+                <div class="w-14 h-14 bg-purple-600 rounded-xl flex items-center justify-center mx-auto mb-4 shadow-lg">
+                    <svg class="w-7 h-7 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
+                    </svg>
+                </div>
+                <h4 class="font-bold text-gray-800 text-lg mb-2">资产沉淀类</h4>
+                <p class="text-gray-600 text-sm">聊天复盘、话术沉淀、方案智能生成</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 总结 -->
+    <section class="fade-up">
+        <h2 class="text-xl md:text-2xl font-bold text-gray-800 mb-6 flex items-center gap-3">
+            <span class="w-1 h-8 bg-gradient-to-b from-blue-500 to-blue-600 rounded-full"></span>
+            <span class="text-blue-600">四、方案总结</span>
+        </h2>
+        <div class="gradient-bg text-white p-10 rounded-2xl shadow-xl text-center relative overflow-hidden">
+            <!-- 装饰 -->
+            <div class="absolute top-0 right-0 w-40 h-40 bg-white opacity-5 rounded-full -mr-20 -mt-20"></div>
+            <div class="absolute bottom-0 left-0 w-32 h-32 bg-white opacity-5 rounded-full -ml-16 -mb-16"></div>
+            
+            <p class="text-2xl font-bold relative z-10">AI不替代销售，专注全链路提效、标准化、可复制</p>
+            <p class="mt-4 text-blue-100 text-lg relative z-10">适配高客单、长周期、非标行业，可内部落地，可行业商业化复制</p>
+        </div>
+    </section>
+</main>
+
+<!-- 底部 -->
+<footer class="footer-gradient text-white py-8 mt-16">
+    <div class="max-w-5xl mx-auto px-4 text-center">
+        <p class="text-gray-400 text-sm">智能厨具 AI 销售解决方案 | 可落地、可演示、可规模化</p>
+    </div>
+</footer>
+
+<!-- 滚动动画脚本 -->
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        });
+
+        document.querySelectorAll('.fade-up').forEach(el => {
+            observer.observe(el);
+        });
+    });
+</script>
+</body>
+</html>

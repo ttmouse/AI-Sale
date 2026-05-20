@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>场景3：客户分层+智能SOP跟进</title>
+  <link rel="stylesheet" href="../../shared/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .crm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 16px; }
+    .customer-card { background: white; border-radius: var(--radius-lg); border: 1px solid var(--gray-200); padding: 16px; transition: all 0.2s; }
+    .customer-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-2px); }
+    .customer-header { display: flex; justify-content: space-between; align-items: start; margin-bottom: 12px; }
+    .customer-name { font-size: 15px; font-weight: 600; }
+    .customer-company { font-size: 12px; color: var(--gray-500); }
+    .sop-timeline { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--gray-100); }
+    .sop-item { display: flex; gap: 8px; align-items: start; margin-bottom: 8px; font-size: 12px; }
+    .sop-dot { width: 8px; height: 8px; border-radius: 50%; margin-top: 4px; flex-shrink: 0; }
+    .sop-done { background: var(--success); }
+    .sop-pending { background: var(--warning); }
+    .sop-overdue { background: var(--danger); }
+    .filter-bar { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; }
+  </style>
+</head>
+<body class="scene-page">
+  <nav class="scene-nav" id="scene-nav"></nav>
+
+  <main class="scene-content">
+    <div class="filter-bar">
+      <button class="quick-tag" onclick="filterCustomers('all')" style="background:var(--primary);color:white;border-color:var(--primary)">全部客户</button>
+      <button class="quick-tag" onclick="filterCustomers('active')">跟进中</button>
+      <button class="quick-tag" onclick="filterCustomers('sleeping')">沉睡客户</button>
+      <button class="quick-tag" onclick="filterCustomers('closed')">已成交</button>
+      <span style="margin-left:auto;font-size:13px;color:var(--gray-500)">共 <strong id="customer-count">6</strong> 个客户</span>
+    </div>
+
+    <div class="crm-grid" id="crm-grid"></div>
+  </main>
+
+  <script>
+    initNav('客户分层+智能SOP跟进', '客户运营', 'tag-green');
+
+    const customers = [
+      { id: 'K001', name: '张老板', company: '川味轩', type: '川菜馆', size: '280平', stage: 'P4', stageLabel: '决策期', budget: '8-12万', lastContact: '2024-05-18', nextAction: '2024-05-22', nextActionLabel: '发送合同', status: 'active', tags: ['高意向','大店','试菜完成'], sop: [
+        { done: true, text: 'Day 1: 首次响应 - 发送产品介绍' },
+        { done: true, text: 'Day 3: 需求沟通 - 确认 280 平川菜馆' },
+        { done: true, text: 'Day 10: 试菜体验 - 客户反馈满意' },
+        { done: true, text: 'Day 15: 方案报价 - 发送 2 台 YC-3000' },
+        { done: false, text: 'Day 22: 发送合同 - 待执行 ⏰' }
+      ]},
+      { id: 'K002', name: '李店长', company: '快食尚', type: '快餐店', size: '120平', stage: 'P5', stageLabel: '已成交', budget: '3-5万', lastContact: '2024-05-10', status: 'closed', tags: ['已成交','小预算','高效'], sop: [
+        { done: true, text: 'Day 1: 初次咨询 - 抖音私信' },
+        { done: true, text: 'Day 8: 试菜体验 - 到店试菜' },
+        { done: true, text: 'Day 15: 签约付款 - YC-2000' },
+        { done: true, text: 'Day 20: 安装交付 - 培训使用' }
+      ]},
+      { id: 'K003', name: '王老板', company: '盖浇王', type: '快餐店', size: '180平', stage: 'P3', stageLabel: '评估期', budget: '8-10万', lastContact: '2024-05-15', nextAction: '2024-05-25', nextActionLabel: '二次试菜', status: 'active', tags: ['中意向','比价中'], sop: [
+        { done: true, text: 'Day 1: 初次咨询 - 百度推广线索' },
+        { done: true, text: 'Day 7: 首次试菜 - 对味道满意' },
+        { done: false, text: 'Day 17: 二次试菜 - 待执行 ⏰' }
+      ]},
+      { id: 'K004', name: '陈主管', company: '某企业食堂', type: '企业食堂', size: '500平', stage: 'P2', stageLabel: '兴趣期', budget: '20-30万', lastContact: '2024-05-12', nextAction: '2024-05-23', nextActionLabel: '上门考察', status: 'active', tags: ['大项目','采购流程长'], sop: [
+        { done: true, text: 'Day 1: 展会接触 - 食品设备展' },
+        { done: false, text: 'Day 13: 上门考察 - 待执行 ⏰' }
+      ]},
+      { id: 'K005', name: '刘老板', company: '待定', type: '火锅店', size: '250平', stage: 'P1', stageLabel: '认知期', budget: '10-15万', lastContact: '2024-05-08', nextAction: '2024-05-21', nextActionLabel: '首次回访', status: 'sleeping', tags: ['低意向','需激活'], sop: [
+        { done: true, text: 'Day 1: 留言咨询 - 抖音留言' },
+        { done: false, text: 'Day 13: 首次回访 - 已逾期 ⚠️' }
+      ]},
+      { id: 'K006', name: '赵总', company: '维也纳酒店', type: '酒店厨房', size: '400平', stage: 'P4', stageLabel: '决策期', budget: '15-20万', lastContact: '2024-05-19', nextAction: '2024-05-24', nextActionLabel: '商务谈判', status: 'active', tags: ['高意向','酒店','定制'], sop: [
+        { done: true, text: 'Day 1: 初次咨询 - 同行推荐' },
+        { done: true, text: 'Day 10: 现场勘察 - 工程师上门' },
+        { done: true, text: 'Day 20: 试菜演示 - 管理层评价高' },
+        { done: false, text: 'Day 25: 商务谈判 - 待执行 ⏰' }
+      ]}
+    ];
+
+    function renderCustomers(list) {
+      const grid = document.getElementById('crm-grid');
+      document.getElementById('customer-count').textContent = list.length;
+      const stageColors = { P1: 'status-gray', P2: 'status-blue', P3: 'status-yellow', P4: 'status-green', P5: 'status-green' };
+
+      grid.innerHTML = list.map(c => `
+        <div class="customer-card">
+          <div class="customer-header">
+            <div>
+              <div class="customer-name">${c.name} · ${c.company}</div>
+              <div class="customer-company">${c.type} | ${c.size} | 预算 ${c.budget}</div>
+            </div>
+            <span class="status-badge ${stageColors[c.stage]}">${c.stageLabel}</span>
+          </div>
+          <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:10px">
+            ${c.tags.map(t => `<span class="tag" style="font-size:11px;padding:2px 8px">${t}</span>`).join('')}
+          </div>
+          <div style="font-size:12px;color:var(--gray-500);margin-bottom:8px">
+            <i class="fas fa-clock" style="margin-right:4px"></i>上次联系：${c.lastContact}
+            ${c.nextAction ? `<span style="margin-left:12px"><i class="fas fa-bell" style="margin-right:4px;color:var(--warning)"></i>下次：${c.nextActionLabel}</span>` : ''}
+          </div>
+          <div class="sop-timeline">
+            <div style="font-size:11px;color:var(--gray-500);margin-bottom:8px;font-weight:500">SOP 跟进时间线</div>
+            ${c.sop.map(s => `
+              <div class="sop-item">
+                <div class="sop-dot ${s.done ? 'sop-done' : s.text.includes('逾期') ? 'sop-overdue' : 'sop-pending'}"></div>
+                <span style="color:${s.done ? 'var(--gray-500)' : 'var(--gray-700)'};text-decoration:${s.done ? 'line-through' : 'none'}">${s.text}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function filterCustomers(filter) {
+      if (filter === 'all') renderCustomers(customers);
+      else renderCustomers(customers.filter(c => c.status === filter));
+    }
+
+    renderCustomers(customers);
+
+    function initNav(title, badge, badgeClass) {
+      const nav = document.getElementById('scene-nav');
+      if (!nav) return;
+      nav.innerHTML = `
+        <div class="scene-nav-inner">
+          <a href="../../index.html" class="scene-nav-back">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+            返回首页
+          </a>
+          <div style="display:flex;align-items:center;gap:12px">
+            <span class="scene-nav-title">${title}</span>
+            <span class="scene-nav-badge ${badgeClass}">${badge}</span>
+          </div>
+          <div style="width:60px"></div>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

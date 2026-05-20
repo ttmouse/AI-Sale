@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>场景8 · 行业方案智能生成 - AI-Sale Demo</title>
+  <link rel="stylesheet" href="../../shared/css/styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <style>
+    .proposal-page { display: flex; gap: 20px; min-height: calc(100vh - 65px); }
+    .form-panel {
+      width: 360px; flex-shrink: 0;
+      background: white; border-radius: var(--radius-lg);
+      border: 1px solid var(--gray-200); padding: 24px;
+      height: fit-content; position: sticky; top: 80px;
+    }
+    .form-panel h3 { font-size: 16px; font-weight: 600; margin-bottom: 20px; }
+    .form-group { margin-bottom: 16px; }
+    .form-label { font-size: 13px; font-weight: 500; color: var(--gray-700); margin-bottom: 6px; display: block; }
+    .form-select, .form-input {
+      width: 100%; padding: 10px 12px; border: 1px solid var(--gray-300);
+      border-radius: var(--radius-md); font-size: 14px; outline: none;
+    }
+    .form-select:focus, .form-input:focus { border-color: var(--primary); }
+    .radio-group { display: flex; flex-wrap: wrap; gap: 8px; }
+    .radio-item {
+      padding: 8px 14px; border: 1px solid var(--gray-300); border-radius: var(--radius-md);
+      font-size: 13px; cursor: pointer; transition: all 0.2s; background: white;
+    }
+    .radio-item:hover { border-color: var(--primary); color: var(--primary); }
+    .radio-item.active { border-color: var(--primary); background: #EFF6FF; color: var(--primary); font-weight: 500; }
+
+    .checkbox-group { display: flex; flex-wrap: wrap; gap: 8px; }
+    .checkbox-item {
+      padding: 6px 12px; border: 1px solid var(--gray-300); border-radius: var(--radius-md);
+      font-size: 12px; cursor: pointer; transition: all 0.2s; background: white;
+    }
+    .checkbox-item:hover { border-color: var(--primary); }
+    .checkbox-item.active { border-color: var(--primary); background: #EFF6FF; color: var(--primary); }
+
+    .generate-btn {
+      width: 100%; padding: 12px; background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: white; border: none; border-radius: var(--radius-md); font-size: 14px; font-weight: 600;
+      cursor: pointer; transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .generate-btn:hover { transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    .generate-btn:disabled { opacity: 0.6; cursor: not-allowed; transform: none; }
+
+    .preview-panel { flex: 1; }
+    .preview-empty {
+      background: white; border-radius: var(--radius-lg); border: 1px solid var(--gray-200);
+      padding: 60px 40px; text-align: center; color: var(--gray-400);
+    }
+    .preview-empty i { font-size: 48px; margin-bottom: 16px; display: block; }
+
+    .proposal-doc {
+      background: white; border-radius: var(--radius-lg); border: 1px solid var(--gray-200);
+      overflow: hidden; animation: fadeIn 0.5s ease;
+    }
+    .proposal-header {
+      background: linear-gradient(135deg, var(--gray-800), var(--gray-700));
+      color: white; padding: 28px;
+    }
+    .proposal-header h2 { font-size: 22px; font-weight: 700; margin-bottom: 8px; }
+    .proposal-header p { font-size: 14px; opacity: 0.8; }
+    .proposal-meta {
+      display: flex; gap: 20px; margin-top: 16px; flex-wrap: wrap;
+    }
+    .proposal-meta-item {
+      background: rgba(255,255,255,0.1); padding: 6px 14px; border-radius: var(--radius-md);
+      font-size: 13px;
+    }
+
+    .proposal-section { padding: 24px; border-bottom: 1px solid var(--gray-100); }
+    .proposal-section:last-child { border-bottom: none; }
+    .proposal-section-title {
+      font-size: 16px; font-weight: 600; margin-bottom: 16px;
+      display: flex; align-items: center; gap: 8px;
+    }
+
+    .device-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .device-table th {
+      background: var(--gray-50); padding: 10px 12px; text-align: left;
+      font-weight: 600; color: var(--gray-700); border-bottom: 1px solid var(--gray-200);
+    }
+    .device-table td { padding: 10px 12px; border-bottom: 1px solid var(--gray-100); color: var(--gray-700); }
+    .device-table tr:hover td { background: var(--gray-50); }
+    .device-table .total-row { font-weight: 600; background: #EFF6FF; }
+    .device-table .total-row td { color: var(--primary-dark); }
+
+    .case-card {
+      background: var(--gray-50); border-radius: var(--radius-md); padding: 16px;
+      margin-bottom: 12px; border-left: 3px solid var(--success);
+    }
+    .case-card-title { font-weight: 600; font-size: 14px; margin-bottom: 6px; }
+    .case-card-desc { font-size: 13px; color: var(--gray-500); line-height: 1.5; }
+    .case-card-result {
+      display: flex; gap: 16px; margin-top: 10px; font-size: 12px;
+    }
+    .case-card-result span { background: white; padding: 4px 10px; border-radius: 20px; }
+
+    .quote-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px;
+    }
+    .quote-card {
+      background: var(--gray-50); border-radius: var(--radius-md); padding: 16px; text-align: center;
+    }
+    .quote-card-value { font-size: 24px; font-weight: 700; color: var(--primary); }
+    .quote-card-label { font-size: 12px; color: var(--gray-500); margin-top: 4px; }
+
+    .benefit-list {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px;
+    }
+    .benefit-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px; background: var(--gray-50); border-radius: var(--radius-md);
+    }
+    .benefit-icon {
+      width: 36px; height: 36px; border-radius: 50%;
+      background: linear-gradient(135deg, var(--success), #34D399);
+      color: white; display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0;
+    }
+    .benefit-text { font-size: 13px; color: var(--gray-700); }
+    .benefit-text strong { display: block; font-size: 14px; color: var(--gray-800); margin-bottom: 2px; }
+
+    .loading-screen {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      padding: 80px 40px; background: white; border-radius: var(--radius-lg);
+      border: 1px solid var(--gray-200);
+    }
+    .loading-screen .loading-dots { margin-bottom: 16px; }
+    .loading-screen p { color: var(--gray-500); font-size: 14px; }
+    .loading-steps { margin-top: 20px; width: 100%; max-width: 400px; }
+    .loading-step {
+      display: flex; align-items: center; gap: 10px; padding: 8px 0;
+      font-size: 13px; color: var(--gray-400); transition: color 0.3s;
+    }
+    .loading-step.done { color: var(--gray-700); }
+    .loading-step.done i { color: var(--success); }
+    .step-icon { width: 20px; text-align: center; }
+  </style>
+</head>
+<body class="scene-page">
+  <div id="scene-nav"></div>
+
+  <div class="container proposal-page">
+    <!-- 左侧表单 -->
+    <aside class="form-panel">
+      <h3><i class="fas fa-sliders-h" style="margin-right:6px;color:var(--primary)"></i>客户需求配置</h3>
+
+      <div class="form-group">
+        <label class="form-label">客户类型</label>
+        <select class="form-select" id="customerType">
+          <option value="chain">连锁餐饮</option>
+          <option value="canteen">企业/单位食堂</option>
+          <option value="fastfood">快餐/粉面</option>
+          <option value="night">烧烤/夜宵</option>
+          <option value="startup">创业开店</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">门店规模</label>
+        <div class="radio-group" id="scaleGroup">
+          <div class="radio-item active" data-value="small">小型（1家）</div>
+          <div class="radio-item" data-value="medium">中型（2-3家）</div>
+          <div class="radio-item" data-value="large">大型（4家以上）</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">预算区间</label>
+        <div class="radio-group" id="budgetGroup">
+          <div class="radio-item active" data-value="low">5万以下</div>
+          <div class="radio-item" data-value="mid">5-15万</div>
+          <div class="radio-item" data-value="high">15万以上</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">特殊需求（多选）</label>
+        <div class="checkbox-group" id="needsGroup">
+          <div class="checkbox-item active" data-value="auto-wash">自动洗锅</div>
+          <div class="checkbox-item" data-value="smart-spice">智能调料</div>
+          <div class="checkbox-item" data-value="cloud-recipe">云菜谱</div>
+          <div class="checkbox-item" data-value="custom-dev">定制开发</div>
+          <div class="checkbox-item" data-value="install">包安装</div>
+          <div class="checkbox-item" data-value="training">培训服务</div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">日均单量预估</label>
+        <input type="text" class="form-input" id="dailyOrders" placeholder="例如：300单" value="500单">
+      </div>
+
+      <button class="generate-btn" id="generateBtn">
+        <i class="fas fa-magic"></i> 生成配套方案
+      </button>
+    </aside>
+
+    <!-- 右侧预览 -->
+    <main class="preview-panel" id="previewPanel">
+      <div class="preview-empty">
+        <i class="fas fa-file-alt"></i>
+        <p>在左侧配置客户需求后，点击「生成配套方案」</p>
+        <p style="font-size:12px;margin-top:8px">AI 将自动匹配设备清单、推荐案例、生成报价</p>
+      </div>
+    </main>
+  </div>
+
+  <script src="../../shared/js/app.js"></script>
+  <script>
+    initNav('行业方案智能生成', '资产沉淀', 'tag-purple');
+
+    // 绑定单选
+    document.querySelectorAll('.radio-group').forEach(group => {
+      group.addEventListener('click', e => {
+        const item = e.target.closest('.radio-item');
+        if (!item) return;
+        group.querySelectorAll('.radio-item').forEach(i => i.classList.remove('active'));
+        item.classList.add('active');
+      });
+    });
+
+    // 绑定多选
+    document.getElementById('needsGroup').addEventListener('click', e => {
+      const item = e.target.closest('.checkbox-item');
+      if (!item) return;
+      item.classList.toggle('active');
+    });
+
+    const proposals = {
+      chain: {
+        title: '连锁餐饮智能化升级方案',
+        subtitle: '针对连锁品牌标准化出餐、多店统一管理需求定制',
+        devices: [
+          { name: 'YC-2000 智能炒菜机', spec: '标准款，双锅头', qty: 3, unit: '4.28万', total: '12.84万' },
+          { name: '不锈钢操作台', spec: '定制尺寸，带储物', qty: 3, unit: '0.35万', total: '1.05万' },
+          { name: '智能调料机', spec: '8口味自动配比', qty: 1, unit: '1.68万', total: '1.68万' },
+          { name: '排烟净化系统', spec: '低空排放，环保达标', qty: 3, unit: '0.45万', total: '1.35万' },
+          { name: '云菜谱管理系统', spec: '总部统一管控，门店同步', qty: 1, unit: '0.60万', total: '0.60万' },
+        ],
+        cases: [
+          { title: '川香阁连锁 · 3店部署', desc: '杭州本土川菜连锁，部署后出餐效率提升60%，人力成本降低40%。总部通过云端统一更新菜谱，新店开业即复制标准口味。', result: ['效率+60%', '人力-40%', '3个月回本'] },
+          { title: '悦来快餐 · 5店标准化', desc: '快餐品牌快速扩张，借助智能炒菜机实现"千店一味"。每家店减少炒锅师傅2名，年省人力成本24万/店。', result: ['千店一味', '省厨2人/店', '年省120万'] },
+        ],
+        benefits: [
+          { icon: 'fa-bolt', title: '出餐效率提升', desc: '单菜平均90秒，高峰期产能翻倍' },
+          { icon: 'fa-user-minus', title: '人力成本降低', desc: '每店减少炒锅师傅1-2名' },
+          { icon: 'fa-check-circle', title: '口味标准化', desc: '云端菜谱，百店一味' },
+          { icon: 'fa-chart-line', title: '数据化管理', desc: '实时销量、菜品热度分析' },
+        ]
+      },
+      canteen: {
+        title: '企业食堂智慧餐饮方案',
+        subtitle: '大流量、高翻台、营养均衡的团餐场景',
+        devices: [
+          { name: 'YC-3000 智能炒菜机', spec: '大型款，三锅头', qty: 2, unit: '6.98万', total: '13.96万' },
+          { name: '自动洗锅模块', spec: '高压喷淋，30秒洗净', qty: 2, unit: '0.88万', total: '1.76万' },
+          { name: '智能保温售饭台', spec: '多格保温，LED显示', qty: 4, unit: '0.28万', total: '1.12万' },
+          { name: '排烟净化系统', spec: '大风量，静音运行', qty: 2, unit: '0.55万', total: '1.10万' },
+          { name: '营养数据分析系统', spec: '菜品营养成分自动标注', qty: 1, unit: '0.80万', total: '0.80万' },
+        ],
+        cases: [
+          { title: '某军工单位食堂 · 1200人', desc: '日均供餐1200人次，原先后厨8人，部署后仅需4人。菜品从8道增至15道，员工满意度从72%提升至91%。', result: ['后厨-50%', '菜品+87%', '满意度91%'] },
+          { title: '美味食堂 · 800人企业', desc: 'IT企业员工食堂，引入智能炒菜机后午餐排队时间从18分钟缩短至5分钟，日均浪费减少35%。', result: ['排队-72%', '浪费-35%', '好评率95%'] },
+        ],
+        benefits: [
+          { icon: 'fa-users', title: '供餐能力翻倍', desc: '高峰期不卡餐，800人30分钟打完' },
+          { icon: 'fa-carrot', title: '菜品丰富度提升', desc: '日均可供15-20道菜，轮换不重复' },
+          { icon: 'fa-leaf', title: '减少食物浪费', desc: '精准预估，按需出餐' },
+          { icon: 'fa-shield-alt', title: '食品安全可追溯', desc: '每道菜出品时间、操作人记录' },
+        ]
+      },
+      fastfood: {
+        title: '快餐/粉面极速出餐方案',
+        subtitle: '高频出餐、快速翻台、一人操作',
+        devices: [
+          { name: 'YC-1000 智能炒菜机', spec: '小型款，单锅头', qty: 2, unit: '2.98万', total: '5.96万' },
+          { name: '智能煮面机', spec: '6孔定时，自动升降', qty: 1, unit: '1.28万', total: '1.28万' },
+          { name: '操作台+调料架', spec: '集成设计，节省空间', qty: 2, unit: '0.25万', total: '0.50万' },
+          { name: '小型排烟机', spec: '壁挂式，低噪音', qty: 2, unit: '0.18万', total: '0.36万' },
+        ],
+        cases: [
+          { title: '燕记面馆 · 社区店', desc: '夫妻店升级，引入炒菜机后增加盖浇饭品类，营业额从日均2000元提升至3500元，无需额外雇人。', result: ['营收+75%', '0增人力', '新增品类'] },
+          { title: '快客便当 · 写字楼店', desc: '写字楼快餐店，午市2小时出餐300份，原需3人炒锅，现1人操作机器+1人打包即可。', result: ['2h出300份', '人力-33%', '坪效+50%'] },
+        ],
+        benefits: [
+          { icon: 'fa-stopwatch', title: '极速出餐', desc: '单份1.5分钟，午市不积压' },
+          { icon: 'fa-expand', title: '节省空间', desc: '设备占地仅0.8㎡，小店面友好' },
+          { icon: 'fa-coins', title: '低门槛投入', desc: '3-6万即可起步，回本周期短' },
+          { icon: 'fa-plus-circle', title: '品类拓展', desc: '炒菜+煮面，一机多能' },
+        ]
+      },
+      night: {
+        title: '烧烤/夜宵场景适配方案',
+        subtitle: '油烟控制、深夜稳定出品、减少依赖大厨',
+        devices: [
+          { name: 'YC-2000 智能炒菜机', spec: '标准款，带油烟净化', qty: 1, unit: '4.28万', total: '4.28万' },
+          { name: '智能烧烤一体机', spec: '电烤+炒菜双功能', qty: 1, unit: '2.68万', total: '2.68万' },
+          { name: '高效油烟净化器', spec: '99%净化率，无烟道直排', qty: 1, unit: '0.85万', total: '0.85万' },
+          { name: '不锈钢操作台', spec: '防锈耐腐蚀', qty: 1, unit: '0.30万', total: '0.30万' },
+        ],
+        cases: [
+          { title: '老街烧烤 · 夜宵城店', desc: '原炒锅师傅凌晨难招人，引入炒菜机后通宵营业无忧。炒菜品类占比从20%提升至45%，客单价提高12元。', result: ['通宵营业', '客单价+12', '无需夜班厨师'] },
+        ],
+        benefits: [
+          { icon: 'fa-moon', title: '通宵稳定出品', desc: '机器不疲劳，凌晨口味不变' },
+          { icon: 'fa-wind', title: '油烟零投诉', desc: '低空排放，居民区友好' },
+          { icon: 'fa-user-clock', title: '解决招工难', desc: '深夜班次无需专职厨师' },
+          { icon: 'fa-fire', title: '菜品升级', desc: '增加热炒菜系，提升客单价' },
+        ]
+      },
+      startup: {
+        title: '创业开店起步方案',
+        subtitle: '低成本、易操作、快速上手的创业首选',
+        devices: [
+          { name: 'YC-1000 智能炒菜机', spec: '小型款，含基础菜谱', qty: 1, unit: '2.98万', total: '2.98万' },
+          { name: '基础操作台', spec: '标准尺寸', qty: 1, unit: '0.20万', total: '0.20万' },
+          { name: '小型排烟机', spec: '基础款', qty: 1, unit: '0.15万', total: '0.15万' },
+          { name: '创业培训包', spec: '7天驻店培训+菜谱包', qty: 1, unit: '0.50万', total: '0.50万' },
+        ],
+        cases: [
+          { title: '小李创业 · 一人简餐店', desc: '90后创业者，无餐饮经验。通过7天培训掌握操作，开业首月营收3.8万，第三个月稳定5万+。', result: ['0经验上手', '首月3.8万', '3月回本'] },
+        ],
+        benefits: [
+          { icon: 'fa-hand-holding-usd', title: '低门槛起步', desc: '3-4万设备投入即可开业' },
+          { icon: 'fa-graduation-cap', title: '0经验培训', desc: '7天包教包会，无需厨师证' },
+          { icon: 'fa-rocket', title: '快速开业', desc: '设备到场3天即可营业' },
+          { icon: 'fa-headset', title: '全程陪跑', desc: '前3个月专属顾问跟进' },
+        ]
+      }
+    };
+
+    function getSelectedValues(groupId) {
+      return Array.from(document.querySelectorAll(`#${groupId} .active`)).map(el => el.dataset.value);
+    }
+
+    function getSelectedRadio(groupId) {
+      return document.querySelector(`#${groupId} .active`)?.dataset.value || '';
+    }
+
+    function calcTotal(devices) {
+      return devices.reduce((sum, d) => {
+        const t = parseFloat(d.total.replace(/[^d.]/g, ''));
+        return sum + t;
+      }, 0).toFixed(2);
+    }
+
+    document.getElementById('generateBtn').addEventListener('click', async () => {
+      const panel = document.getElementById('previewPanel');
+      const type = document.getElementById('customerType').value;
+      const scale = getSelectedRadio('scaleGroup');
+      const budget = getSelectedRadio('budgetGroup');
+      const needs = getSelectedValues('needsGroup');
+      const orders = document.getElementById('dailyOrders').value;
+
+      // 加载动画
+      panel.innerHTML = `
+        <div class="loading-screen">
+          <div class="loading-dots">
+            <span class="loading-dot"></span>
+            <span class="loading-dot" style="animation-delay:0.2s"></span>
+            <span class="loading-dot" style="animation-delay:0.4s"></span>
+          </div>
+          <p>AI 正在分析需求并生成方案...</p>
+          <div class="loading-steps">
+            <div class="loading-step done"><span class="step-icon"><i class="fas fa-check"></i></span> 识别客户类型：${type === 'chain' ? '连锁餐饮' : type === 'canteen' ? '企业食堂' : type === 'fastfood' ? '快餐粉面' : type === 'night' ? '烧烤夜宵' : '创业开店'}</div>
+            <div class="loading-step" id="step2"><span class="step-icon"><i class="fas fa-circle-notch fa-spin"></i></span> 匹配设备清单与配件</div>
+            <div class="loading-step" id="step3"><span class="step-icon"><i class="fas fa-circle"></i></span> 推荐相似案例</div>
+            <div class="loading-step" id="step4"><span class="step-icon"><i class="fas fa-circle"></i></span> 计算报价与预期收益</div>
+          </div>
+        </div>
+      `;
+
+      await mockDelay(400);
+      document.getElementById('step2').classList.add('done');
+      document.getElementById('step2').querySelector('.step-icon').innerHTML = '<i class="fas fa-check"></i>';
+      await mockDelay(400);
+      document.getElementById('step3').classList.add('done');
+      document.getElementById('step3').querySelector('.step-icon').innerHTML = '<i class="fas fa-check"></i>';
+      await mockDelay(400);
+      document.getElementById('step4').classList.add('done');
+      document.getElementById('step4').querySelector('.step-icon').innerHTML = '<i class="fas fa-check"></i>';
+      await mockDelay(300);
+
+      const p = proposals[type] || proposals.chain;
+      const total = calcTotal(p.devices);
+
+      // 规模系数
+      const scaleMultipliers = { small: 1, medium: 1.5, large: 2.5 };
+      const sm = scaleMultipliers[scale] || 1;
+      const adjustedTotal = (parseFloat(total) * sm).toFixed(2);
+
+      let devicesHtml = p.devices.map((d, i) => `
+        <tr>
+          <td>${d.name}</td>
+          <td>${d.spec}</td>
+          <td style="text-align:center">${Math.round(d.qty * sm)}</td>
+          <td style="text-align:right">¥${d.unit}</td>
+          <td style="text-align:right">¥${(parseFloat(d.total.replace(/[^\d.]/g,'')) * sm).toFixed(2)}万</td>
+        </tr>
+      `).join('');
+
+      devicesHtml += `
+        <tr class="total-row">
+          <td colspan="4" style="text-align:right">方案合计</td>
+          <td style="text-align:right">¥${adjustedTotal}万</td>
+        </tr>
+      `;
+
+      let casesHtml = p.cases.map(c => `
+        <div class="case-card">
+          <div class="case-card-title">${c.title}</div>
+          <div class="case-card-desc">${c.desc}</div>
+          <div class="case-card-result">
+            ${c.result.map(r => `<span>${r}</span>`).join('')}
+          </div>
+        </div>
+      `).join('');
+
+      let benefitsHtml = p.benefits.map(b => `
+        <div class="benefit-item">
+          <div class="benefit-icon"><i class="fas ${b.icon}"></i></div>
+          <div class="benefit-text"><strong>${b.title}</strong>${b.desc}</div>
+        </div>
+      `).join('');
+
+      panel.innerHTML = `
+        <div class="proposal-doc">
+          <div class="proposal-header">
+            <h2>${p.title}</h2>
+            <p>${p.subtitle}</p>
+            <div class="proposal-meta">
+              <span class="proposal-meta-item">规模：${scale === 'small' ? '小型' : scale === 'medium' ? '中型' : '大型'}</span>
+              <span class="proposal-meta-item">日均：${orders}</span>
+              <span class="proposal-meta-item">特殊：${needs.length ? needs.map(n => ({'auto-wash':'自动洗锅','smart-spice':'智能调料','cloud-recipe':'云菜谱','custom-dev':'定制开发','install':'包安装','training':'培训服务'})[n]).join('、') : '无'}</span>
+            </div>
+          </div>
+
+          <div class="proposal-section">
+            <div class="proposal-section-title"><i class="fas fa-cogs" style="color:var(--primary)"></i> 推荐设备清单</div>
+            <table class="device-table">
+              <thead><tr><th>设备名称</th><th>规格参数</th><th style="text-align:center">数量</th><th style="text-align:right">单价</th><th style="text-align:right">小计</th></tr></thead>
+              <tbody>${devicesHtml}</tbody>
+            </table>
+          </div>
+
+          <div class="proposal-section">
+            <div class="proposal-section-title"><i class="fas fa-star" style="color:var(--warning)"></i> 相似案例推荐</div>
+            ${casesHtml}
+          </div>
+
+          <div class="proposal-section">
+            <div class="proposal-section-title"><i class="fas fa-chart-pie" style="color:var(--success)"></i> 报价概览</div>
+            <div class="quote-grid">
+              <div class="quote-card">
+                <div class="quote-card-value">¥${adjustedTotal}万</div>
+                <div class="quote-card-label">设备总价</div>
+              </div>
+              <div class="quote-card">
+                <div class="quote-card-value">8-12月</div>
+                <div class="quote-card-label">预计回本周期</div>
+              </div>
+              <div class="quote-card">
+                <div class="quote-card-value">35%</div>
+                <div class="quote-card-label">人力成本降幅</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="proposal-section">
+            <div class="proposal-section-title"><i class="fas fa-trophy" style="color:var(--success)"></i> 预期价值</div>
+            <div class="benefit-list">${benefitsHtml}</div>
+          </div>
+        </div>
+      `;
+    });
+  </script>
+</body>
+</html>
