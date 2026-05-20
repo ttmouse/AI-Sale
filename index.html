@@ -5,33 +5,36 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>AI-Sale Demo 系统 - 智能厨具销售赋能</title>
   <link rel="stylesheet" href="shared/css/styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 </head>
 <body>
   <!-- Header -->
   <header class="demo-header">
     <div class="container">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
-        <div style="width:48px;height:48px;background:rgba(255,255,255,0.15);border-radius:12px;display:flex;align-items:center;justify-content:center">
-          <i class="fas fa-robot" style="font-size:24px;color:white"></i>
+      <div class="header-inner">
+        <div class="header-logo">
+          <svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 0 1 2 2c0 .74-.4 1.39-1 1.73V7h1a7 7 0 0 1 7 7h1a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1h-1v1a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-1H2a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1h1a7 7 0 0 1 7-7h1V5.73c-.6-.34-1-.99-1-1.73a2 2 0 0 1 2-2z"/><circle cx="8.5" cy="14.5" r="1.5"/><circle cx="15.5" cy="14.5" r="1.5"/></svg>
         </div>
-        <div>
-          <h1>AI-Sale 智能销售赋能系统</h1>
-          <p>智能炒菜机 / 商用厨具行业 · 八大 AI 场景全链路 Demo</p>
-        </div>
-      </div>
-      <div style="display:flex;gap:24px;margin-top:16px;flex-wrap:wrap">
-        <div style="display:flex;align-items:center;gap:8px">
-          <span style="width:10px;height:10px;background:#10B981;border-radius:50%"></span>
-          <span style="font-size:14px;opacity:0.9">销售赋能：3 个场景</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px">
-          <span style="width:10px;height:10px;background:#0EA5E9;border-radius:50%"></span>
-          <span style="font-size:14px;opacity:0.9">客户运营：3 个场景</span>
-        </div>
-        <div style="display:flex;align-items:center;gap:8px">
-          <span style="width:10px;height:10px;background:#8B5CF6;border-radius:50%"></span>
-          <span style="font-size:14px;opacity:0.9">资产沉淀：2 个场景</span>
+        <div class="header-content">
+          <div class="header-eyebrow">智能厨具行业 · 八大 AI 场景全链路 Demo</div>
+          <h1>AI-Sale <span>智能销售赋能系统</span></h1>
+          <p class="subtitle">为高客单、非标、长周期、强线下服务依赖的销售场景打造的全链路 AI 赋能方案</p>
+          <div class="value-row">
+            <div class="value-item sales">
+              <span class="dot"></span>
+              <span>销售赋能</span>
+              <span class="count">3 个场景</span>
+            </div>
+            <div class="value-item ops">
+              <span class="dot"></span>
+              <span>客户运营</span>
+              <span class="count">3 个场景</span>
+            </div>
+            <div class="value-item asset">
+              <span class="dot"></span>
+              <span>资产沉淀</span>
+              <span class="count">2 个场景</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -39,45 +42,64 @@
 
   <!-- 场景网格 -->
   <main class="container">
-    <div class="scene-grid" id="scene-grid"></div>
+    <section class="scene-section">
+      <div class="section-header">
+        <span class="section-title">全部场景</span>
+        <span class="section-count">8 个</span>
+      </div>
+      <div class="scene-grid" id="scene-grid"></div>
+    </section>
   </main>
 
   <!-- Footer -->
-  <footer style="background:var(--gray-900);color:var(--gray-400);padding:32px 0;margin-top:48px">
-    <div class="container" style="text-align:center">
-      <p style="font-size:14px;margin-bottom:8px">AI-Sale 智能销售赋能解决方案</p>
-      <p style="font-size:12px;opacity:0.6">适用行业：智能炒菜机 / 商用厨具 / 非标餐饮设备 · 高客单 / 长周期 / 重线下</p>
+  <footer class="demo-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-brand">AI-Sale 智能销售赋能解决方案</div>
+        <div class="footer-meta">适用：高客单 / 长周期 / 重线下 · 智能炒菜机 / 商用厨具 / 非标餐饮设备</div>
+      </div>
     </div>
   </footer>
 
   <script>
     const scenes = [
-      { id: 1, name: '销售随身智能知识库', desc: '产品参数、场景适配、竞品对比，一问即答', badge: '销售赋能', badgeClass: 'tag-blue', icon: 'fa-book', path: 'scenes/scene-1-kb/index.html' },
-      { id: 2, name: '企微实时话术参谋', desc: '侧边栏实时推荐话术，半自动辅助不替代人工', badge: '销售赋能', badgeClass: 'tag-blue', icon: 'fa-comments', path: 'scenes/scene-2-chat/index.html' },
-      { id: 3, name: '客户分层+智能SOP跟进', desc: '自动标签分层，按阶段定时提醒触达', badge: '客户运营', badgeClass: 'tag-green', icon: 'fa-users', path: 'scenes/scene-3-crm/index.html' },
-      { id: 4, name: '聊天记录AI复盘沉淀', desc: '成交案例拆解，流失原因分析，话术自动沉淀', badge: '资产沉淀', badgeClass: 'tag-purple', icon: 'fa-chart-line', path: 'scenes/scene-4-review/index.html' },
-      { id: 5, name: '客户个性化数据应答', desc: '对接内部系统，实时查客户专属订单/售后/进度', badge: '客户运营', badgeClass: 'tag-green', icon: 'fa-database', path: 'scenes/scene-5-data/index.html' },
-      { id: 6, name: 'AI新人模拟培训对练', desc: 'AI扮演各类客户，实战对练+三维评分', badge: '销售赋能', badgeClass: 'tag-blue', icon: 'fa-graduation-cap', path: 'scenes/scene-6-training/index.html' },
-      { id: 7, name: '线索智能初筛评级', desc: '自动判定意向/预算/类型，优先推送高价值', badge: '客户运营', badgeClass: 'tag-green', icon: 'fa-filter', path: 'scenes/scene-7-leads/index.html' },
-      { id: 8, name: '行业方案智能生成', desc: '按客户类型自动生成配套方案/案例/报价', badge: '资产沉淀', badgeClass: 'tag-purple', icon: 'fa-file-alt', path: 'scenes/scene-8-proposal/index.html' },
+      { id: '01', name: '销售随身智能知识库', desc: '产品参数、场景适配、竞品对比，一问即答。实时解答各类专业问题。', badge: '销售赋能', badgeClass: 'sales', icon: 'book', path: 'scenes/scene-1-kb/index.html' },
+      { id: '02', name: '企微实时话术参谋', desc: '侧边栏实时推荐话术，半自动辅助不替代人工，让跟进更专业。', badge: '销售赋能', badgeClass: 'sales', icon: 'chat', path: 'scenes/scene-2-chat/index.html' },
+      { id: '03', name: '客户分层 + 智能 SOP 跟进', desc: '自动标签分层，按阶段定时提醒触达，客户状态一目了然。', badge: '客户运营', badgeClass: 'ops', icon: 'users', path: 'scenes/scene-3-crm/index.html' },
+      { id: '04', name: '聊天记录 AI 复盘沉淀', desc: '成交案例拆解，流失原因分析，话术自动沉淀，优秀经验可复制。', badge: '资产沉淀', badgeClass: 'asset', icon: 'chart', path: 'scenes/scene-4-review/index.html' },
+      { id: '05', name: '客户个性化数据应答', desc: '对接内部系统，实时查客户专属订单、售后、进度，信息统一口径。', badge: '客户运营', badgeClass: 'ops', icon: 'database', path: 'scenes/scene-5-data/index.html' },
+      { id: '06', name: 'AI 新人模拟培训对练', desc: 'AI 扮演各类客户，实战对练配合三维评分，让培训效率大幅提升。', badge: '销售赋能', badgeClass: 'sales', icon: 'graduation', path: 'scenes/scene-6-training/index.html' },
+      { id: '07', name: '线索智能初筛评级', desc: '自动判定意向、预算、类型，优先推送高价值线索，销售精力聚焦。', badge: '客户运营', badgeClass: 'ops', icon: 'filter', path: 'scenes/scene-7-leads/index.html' },
+      { id: '08', name: '行业方案智能生成', desc: '按客户类型自动生成配套方案、案例、报价，一键生成专业提案。', badge: '资产沉淀', badgeClass: 'asset', icon: 'file', path: 'scenes/scene-8-proposal/index.html' },
     ];
+
+    const icons = {
+      book: '<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+      chat: '<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+      users: '<svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+      chart: '<svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>',
+      database: '<svg viewBox="0 0 24 24"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>',
+      graduation: '<svg viewBox="0 0 24 24"><path d="M22 10v6M2 10l10-5 10 5-10 5z"/><path d="M6 12v5c3 3 9 3 12 0v-5"/></svg>',
+      filter: '<svg viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>',
+      file: '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>'
+    };
+
+    const arrowIcon = '<svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
 
     const grid = document.getElementById('scene-grid');
     scenes.forEach(s => {
       const card = document.createElement('div');
       card.className = 'scene-card';
       card.innerHTML = `
-        <div style="display:flex;justify-content:space-between;align-items:start;margin-bottom:12px">
-          <div class="scene-number">${s.id}</div>
-          <span class="tag ${s.badgeClass}">${s.badge}</span>
+        <div class="card-meta">
+          <span class="card-num">${s.id}</span>
+          <span class="card-badge ${s.badgeClass}">${s.badge}</span>
         </div>
-        <div style="width:48px;height:48px;background:var(--gray-50);border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:16px">
-          <i class="fas ${s.icon}" style="font-size:20px;color:var(--primary)"></i>
-        </div>
-        <h3 class="scene-title">${s.name}</h3>
-        <p class="scene-desc">${s.desc}</p>
-        <a href="${s.path}" class="scene-btn">
-          进入 Demo <i class="fas fa-arrow-right" style="font-size:12px"></i>
+        <div class="card-icon">${icons[s.icon]}</div>
+        <h3 class="card-title">${s.name}</h3>
+        <p class="card-desc">${s.desc}</p>
+        <a href="${s.path}" class="card-link">
+          进入 Demo ${arrowIcon}
         </a>
       `;
       card.addEventListener('click', (e) => {

@@ -1,0 +1,131 @@
+{
+  "customerTypes": {
+    "description": "客户类型（客户规模维度）",
+    "values": [
+      { "code": "STARTUP", "label": "创业小店", "desc": "初创餐饮，单店，面积 50~150㎡，投资预算 3~8 万" },
+      { "code": "FAST_CASUAL", "label": "快餐简餐", "desc": "标准化快餐，出餐快，翻台率高，面积 80~200㎡，预算 5~15 万" },
+      { "code": "CHAIN", "label": "连锁品牌", "desc": "2 家以上门店，统一采购，品牌化运营，面积不定，预算 15~50 万" },
+      { "code": "CANTEEN", "label": "食堂团餐", "desc": "企业/学校/机关食堂，批量出餐，讲究性价比，面积 200~1000㎡，预算 20~100 万" },
+      { "code": "HOTEL", "label": "酒店餐饮", "desc": "星级酒店自营餐厅，注重品质和品牌匹配，面积不定，预算 15~80 万" },
+      { "code": "HOTPOT", "label": "火锅串串", "desc": "火锅/串串/麻辣烫，对出餐速度和标准化有要求，预算 5~20 万" },
+      { "code": "CAFE_BAKERY", "label": "咖啡茶饮", "desc": "咖啡厅/茶饮/烘焙，搭配简餐，面积 30~100㎡，预算 3~10 万" },
+      { "code": "FOREIGN_CUISINE", "label": "异国料理", "desc": "日料/韩餐/西餐，对设备精度要求高，预算 10~30 万" },
+      { "code": "CATERING", "label": "外包团餐", "desc": "专业团餐外包公司，承接大型活动/展会供餐，预算按项目计" },
+      { "code": "CENTRAL_KITCHEN", "label": "中央厨房", "desc": "规模化生产，配送多个门店，注重标准化和产能，预算 50~200 万" },
+      { "code": "CLOUD_KITCHEN", "label": "云厨房", "desc": "纯外卖模式，无堂食，设备投入集中在出品效率，预算 3~15 万" },
+      { "code": "INDIVIDUAL", "label": "个体经营", "desc": "夫妻店/档口，外卖为主，预算 2~5 万" }
+    ]
+  },
+  "equipmentCategories": {
+    "description": "设备品类",
+    "values": [
+      { "code": "WOK", "label": "智能炒菜机", "desc": "全自动炒菜，核心产品线" },
+      { "code": "STEAMER", "label": "智能蒸柜", "desc": "蒸菜/点心/米饭" },
+      { "code": "FRYER", "label": "智能油炸机", "desc": "炸鸡/薯条/油炸类" },
+      { "code": "ROASTER", "label": "智能烤箱", "desc": "烤肉/烘焙/焗饭" },
+      { "code": "SOUP", "label": "智能汤锅", "desc": "炖汤/火锅底料/煮面" },
+      { "code": "INDUCTION", "label": "电磁灶", "desc": "明火替代，节能安全" },
+      { "code": "ACCESSORY", "label": "配套附件", "desc": "操作台/排烟/调料机/洗锅模块" },
+      { "code": "CUSTOM", "label": "定制方案", "desc": "OEM/出口/特殊场景" }
+    ]
+  },
+  "cuisineTypes": {
+    "description": "适配菜系",
+    "values": [
+      { "code": "SICHUAN", "label": "川菜", "examples": ["宫保鸡丁", "麻婆豆腐", "水煮鱼", "回锅肉"] },
+      { "code": "CANTONESE", "label": "粤菜", "examples": ["白切鸡", "清蒸鱼", "叉烧", "煲仔饭"] },
+      { "code": "HUNAN", "label": "湘菜", "examples": ["剁椒鱼头", "小炒肉", "臭豆腐"] },
+      { "code": "SHANDONG", "label": "鲁菜", "examples": ["糖醋里脊", "九转大肠", "葱烧海参"] },
+      { "code": "JIANGSU", "label": "苏菜", "examples": ["松鼠鳜鱼", "蟹粉狮子头", "盐水鸭"] },
+      { "code": "ZHEJIANG", "label": "浙菜", "examples": ["东坡肉", "西湖醋鱼", "龙井虾仁"] },
+      { "code": "FUJIAN", "label": "闽菜", "examples": ["佛跳墙", "肉燕", "沙茶面"] },
+      { "code": "ANHUI", "label": "徽菜", "examples": ["臭鳜鱼", "徽州毛豆腐", "黄山炖鸽"] },
+      { "code": "HOTPOT_BASE", "label": "火锅底料", "examples": ["麻辣锅底", "菌汤锅底", "番茄锅底"] },
+      { "code": "CURRY", "label": "咖喱/东南亚", "examples": ["黄咖喱鸡", "绿咖喱牛", "泰式炒饭"] },
+      { "code": "WESTERN", "label": "西餐/意式", "examples": ["黑椒牛柳", "奶油培根意面", "焗蜗牛"] },
+      { "code": "JAPANESE", "label": "日料", "examples": ["照烧鸡肉", "味噌汤", "天妇罗"] },
+      { "code": "KOREAN", "label": "韩餐", "examples": ["石锅拌饭", "炒年糕", "烤肉"] },
+      { "code": "RICE_BOWL", "label": "盖浇饭/快餐", "examples": ["鱼香肉丝盖饭", "红烧牛肉饭", "宫保鸡丁盖饭"] },
+      { "code": "NOODLE", "label": "面食", "examples": ["炒面", "烩面", "刀削面"] },
+      { "code": "DIM_SUM", "label": "点心/早茶", "examples": ["虾饺", "烧麦", "叉烧包", "肠粉"] },
+      { "code": "SOUP", "label": "汤品", "examples": ["佛跳墙", "老火汤", "酸辣汤"] },
+      { "code": "GRILLED", "label": "烧烤/烤肉", "examples": ["羊肉串", "韩式烤肉", "铁板烧"] },
+      { "code": "FRIED", "label": "油炸", "examples": ["炸鸡", "薯条", "天妇罗", "春卷"] },
+      { "code": "STEAMED", "label": "蒸菜", "examples": ["清蒸鱼", "粉蒸肉", "小笼包", "馒头"] },
+      { "code": "STIR_FRY", "label": "炒菜（通用）", "examples": ["家常炒菜", "员工餐", "大锅菜"] }
+    ]
+  },
+  "decisionRoles": {
+    "description": "决策角色",
+    "values": [
+      { "code": "OWNER", "label": "老板/创始人", "weight": "最终决策人，关注投资回报率" },
+      { "code": "CHEF", "label": "厨师长/总厨", "weight": "技术把关，关注出品质量/操作便捷度" },
+      { "code": "MANAGER", "label": "店长/运营经理", "weight": "执行层，关注翻台率/人力成本/标准化" },
+      { "code": "PROCUREMENT", "label": "采购负责人", "weight": "流程把控，关注价格/供应商资质/售后" },
+      { "code": "FINANCE", "label": "财务/投资人", "weight": "预算审批，关注ROI/回本周期/现金流" },
+      { "code": "CORPORATE", "label": "企业/集团总部", "weight": "多门店连锁，关注品牌匹配/系统对接/培训成本" }
+    ]
+  },
+  "salesStages": {
+    "description": "销售阶段（P0~P5）",
+    "values": [
+      { "code": "P0", "label": "沉睡", "color": "#94A3B8", "desc": "30 天以上未跟进，需激活" },
+      { "code": "P1", "label": "认知期", "color": "#60A5FA", "desc": "刚接触，了解产品，收集信息" },
+      { "code": "P2", "label": "兴趣期", "color": "#34D399", "desc": "表达兴趣，询方案，要报价" },
+      { "code": "P3", "label": "评估期", "color": "#FBBF24", "desc": "试菜/比价/评估方案中" },
+      { "code": "P4", "label": "决策期", "color": "#F97316", "desc": "谈判/签约/审批中" },
+      { "code": "P5", "label": "已成交", "color": "#10B981", "desc": "签约完成，进入交付/复购" }
+    ]
+  },
+  "leadSources": {
+    "description": "线索来源",
+    "values": [
+      { "code": "DOUYIN", "label": "抖音", "convertRate": "中", "avgCycle": "15天" },
+      { "code": "WECHAT_MOMENTS", "label": "微信朋友圈", "convertRate": "中", "avgCycle": "12天" },
+      { "code": "BAIDU", "label": "百度推广", "convertRate": "中低", "avgCycle": "20天" },
+      { "code": "LITTLE_RED_BOOK", "label": "小红书", "convertRate": "中高", "avgCycle": "10天" },
+      { "code": "EXHIBITION", "label": "行业展会", "convertRate": "高", "avgCycle": "30天" },
+      { "code": "REFERRAL", "label": "转介绍", "convertRate": "高", "avgCycle": "7天" },
+      { "code": "REPEAT", "label": "老客户复购", "convertRate": "极高", "avgCycle": "3天" },
+      { "code": "TENCENT_ADS", "label": "腾讯广告", "convertRate": "中", "avgCycle": "18天" },
+      { "code": "ALIPAY_ADS", "label": "支付宝小程序", "convertRate": "中低", "avgCycle": "22天" },
+      { "code": "TRADE_MEDIA", "label": "行业媒体", "convertRate": "中", "avgCycle": "25天" },
+      { "code": "COLD_CALL", "label": "主动拓客", "convertRate": "低", "avgCycle": "35天" }
+    ]
+  },
+  "regions": {
+    "description": "地区分布（简化版）",
+    "values": [
+      { "code": "EAST_CHINA", "label": "华东", "cities": ["上海", "杭州", "南京", "苏州", "宁波", "无锡", "合肥", "福州", "厦门", "济南", "青岛"] },
+      { "code": "SOUTH_CHINA", "label": "华南", "cities": ["广州", "深圳", "东莞", "佛山", "南宁", "海口", "珠海"] },
+      { "code": "NORTH_CHINA", "label": "华北", "cities": ["北京", "天津", "石家庄", "太原", "呼和浩特"] },
+      { "code": "CENTRAL_CHINA", "label": "华中", "cities": ["武汉", "长沙", "郑州", "南昌"] },
+      { "code": "WEST_CHINA", "label": "西南", "cities": ["成都", "重庆", "昆明", "贵阳", "拉萨"] },
+      { "code": "NORTHWEST_CHINA", "label": "西北", "cities": ["西安", "兰州", "西宁", "银川", "乌鲁木齐"] },
+      { "code": "NORTHEAST_CHINA", "label": "东北", "cities": ["沈阳", "大连", "长春", "哈尔滨"] }
+    ]
+  },
+  "objectionTypes": {
+    "description": "常见异议类型",
+    "values": [
+      { "code": "PRICE", "label": "价格太贵", "frequency": "最高", "response": "从 ROI/人力节省/回本周期角度切入" },
+      { "code": "WAIT", "label": "再考虑考虑", "frequency": "高", "response": "制造紧迫感，了解真实顾虑" },
+      { "code": "COMPETITOR", "label": "在对比竞品", "frequency": "高", "response": "了解竞品方案，突出差异化优势" },
+      { "code": "NO_BUDGET", "label": "预算不够", "frequency": "中", "response": "分期/租赁方案，降低门槛" },
+      { "code": "NO_SPACE", "label": "场地不支持", "frequency": "中", "response": "上门测量，提供改造方案" },
+      { "code": "NO_STAFF", "label": "担心没人会用", "frequency": "中", "response": "免费培训，远程指导" },
+      { "code": "UNSTABLE", "label": "担心不稳定", "frequency": "低", "response": "案例见证，实地考察安排" },
+      { "code": "AFTER_SALE", "label": "担心售后", "frequency": "中低", "response": "4小时响应，质保条款，入网协议" }
+    ]
+  },
+  "financialTerms": {
+    "description": "财务术语规范",
+    "values": [
+      { "term": "客单价", "unit": "¥", "formula": "订单总额 / 订单数量", "example": "¥45,800/单" },
+      { "term": "月流水增量", "unit": "¥万/月", "formula": "日均单量 × 客单价 × 30", "example": "月流水 ¥18 万" },
+      { "term": "回本周期", "unit": "月", "formula": "设备总价 / 月节省人力成本", "example": "8~12 个月" },
+      { "term": "毛利率", "unit": "%", "formula": "(售价 - 成本) / 售价 × 100%", "example": "65%~72%" },
+      { "term": "提效百分比", "unit": "%", "formula": "节省工时 / 总工时 × 100%", "example": "节省 60% 炒菜工时" }
+    ]
+  }
+}
