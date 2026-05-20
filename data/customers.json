@@ -1,0 +1,205 @@
+{
+  "customers": [
+    {
+      "id": "K001",
+      "name": "张老板",
+      "company": "川味轩",
+      "type": "川菜馆",
+      "size": "280平",
+      "city": "成都",
+      "budget": "8-12万",
+      "stage": "P4",
+      "stageLabel": "决策期",
+      "lastContact": "2024-05-18",
+      "nextAction": "2024-05-22",
+      "nextActionLabel": "发送合同",
+      "status": "active",
+      "source": "转介绍",
+      "tags": ["高意向", "大店", "试菜完成"],
+      "history": [
+        { "date": "2024-05-01", "action": "初次咨询", "detail": "通过朋友推荐联系，了解 YC-3000" },
+        { "date": "2024-05-05", "action": "需求沟通", "detail": "确认 280 平川菜馆，日均 350 单" },
+        { "date": "2024-05-10", "action": "试菜体验", "detail": "上门试菜，客户反馈满意" },
+        { "date": "2024-05-15", "action": "方案报价", "detail": "发送 2 台 YC-3000 方案，总价 13.96 万" },
+        { "date": "2024-05-18", "action": "价格谈判", "detail": "客户希望优惠，申请活动价" }
+      ],
+      "order": {
+        "id": "ORD-20240518-001",
+        "product": "YC-3000 × 2台",
+        "amount": 139600,
+        "status": "待签约",
+        "createdAt": "2024-05-15"
+      }
+    },
+    {
+      "id": "K002",
+      "name": "李店长",
+      "company": "快食尚",
+      "type": "快餐店",
+      "size": "120平",
+      "city": "杭州",
+      "budget": "3-5万",
+      "stage": "P5",
+      "stageLabel": "已成交",
+      "lastContact": "2024-05-10",
+      "nextAction": null,
+      "status": "closed",
+      "source": "抖音",
+      "tags": ["已成交", "小预算", "高效"],
+      "history": [
+        { "date": "2024-04-20", "action": "初次咨询", "detail": "抖音私信咨询，120 平快餐店" },
+        { "date": "2024-04-25", "action": "方案推荐", "detail": "推荐 YC-2000 单台方案" },
+        { "date": "2024-04-28", "action": "试菜体验", "detail": "到店试菜，出餐速度满意" },
+        { "date": "2024-05-05", "action": "签约", "detail": "全款支付，YC-2000 标准款" },
+        { "date": "2024-05-10", "action": "安装交付", "detail": "上门安装，培训使用" }
+      ],
+      "order": {
+        "id": "ORD-20240505-002",
+        "product": "YC-2000 × 1台",
+        "amount": 42800,
+        "status": "已交付",
+        "createdAt": "2024-05-05",
+        "deliveredAt": "2024-05-10"
+      }
+    },
+    {
+      "id": "K003",
+      "name": "王老板",
+      "company": "盖浇王",
+      "type": "快餐店",
+      "size": "180平",
+      "city": "上海",
+      "budget": "8-10万",
+      "stage": "P3",
+      "stageLabel": "评估期",
+      "lastContact": "2024-05-15",
+      "nextAction": "2024-05-25",
+      "nextActionLabel": "二次试菜",
+      "status": "active",
+      "source": "百度推广",
+      "tags": ["中意向", "比价中", "复购意向"],
+      "history": [
+        { "date": "2024-05-08", "action": "初次咨询", "detail": "百度推广线索，180 平盖浇饭店" },
+        { "date": "2024-05-12", "action": "电话沟通", "detail": "日均 600 单，目前在对比 2 家竞品" },
+        { "date": "2024-05-15", "action": "首次试菜", "detail": "到店试菜，对味道满意，但对价格犹豫" }
+      ],
+      "order": null
+    },
+    {
+      "id": "K004",
+      "name": "陈主管",
+      "company": "某企业食堂",
+      "type": "企业食堂",
+      "size": "500平",
+      "city": "杭州",
+      "budget": "20-30万",
+      "stage": "P2",
+      "stageLabel": "兴趣期",
+      "lastContact": "2024-05-12",
+      "nextAction": "2024-05-23",
+      "nextActionLabel": "上门考察",
+      "status": "active",
+      "source": "展会",
+      "tags": ["大项目", "采购流程长", "需招投标"],
+      "history": [
+        { "date": "2024-05-10", "action": "展会接触", "detail": "食品设备展会上交流，500 平企业食堂" },
+        { "date": "2024-05-12", "action": "资料发送", "detail": "发送产品册和食堂方案" }
+      ],
+      "order": null
+    },
+    {
+      "id": "K005",
+      "name": "刘老板",
+      "company": "待定",
+      "type": "火锅店",
+      "size": "250平",
+      "city": "长沙",
+      "budget": "10-15万",
+      "stage": "P1",
+      "stageLabel": "认知期",
+      "lastContact": "2024-05-08",
+      "nextAction": "2024-05-21",
+      "nextActionLabel": "首次回访",
+      "status": "sleeping",
+      "source": "抖音",
+      "tags": ["低意向", "信息不全", "需激活"],
+      "history": [
+        { "date": "2024-05-08", "action": "留言咨询", "detail": "抖音留言：火锅店能用吗？多少钱？" }
+      ],
+      "order": null
+    },
+    {
+      "id": "K006",
+      "name": "赵总",
+      "company": "维也纳酒店",
+      "type": "酒店厨房",
+      "size": "400平",
+      "city": "深圳",
+      "budget": "15-20万",
+      "stage": "P4",
+      "stageLabel": "决策期",
+      "lastContact": "2024-05-19",
+      "nextAction": "2024-05-24",
+      "nextActionLabel": "商务谈判",
+      "status": "active",
+      "source": "转介绍",
+      "tags": ["高意向", "酒店", "定制需求"],
+      "history": [
+        { "date": "2024-04-15", "action": "初次咨询", "detail": "同行推荐，400 平酒店厨房改造" },
+        { "date": "2024-04-22", "action": "现场勘察", "detail": "工程师上门测量，确认电源和排烟条件" },
+        { "date": "2024-05-05", "action": "定制方案", "detail": "提交定制方案：YC-3000 × 2 + 调料机" },
+        { "date": "2024-05-15", "action": "试菜演示", "detail": "酒店管理层现场试菜，评价很高" },
+        { "date": "2024-05-19", "action": "预算审批", "detail": "客户内部走预算审批流程" }
+      ],
+      "order": {
+        "id": "ORD-20240519-006",
+        "product": "YC-3000 × 2台 + 智能调料机",
+        "amount": 149200,
+        "status": "审批中",
+        "createdAt": "2024-05-19"
+      }
+    }
+  ],
+  "stages": [
+    { "code": "P1", "name": "认知期", "desc": "刚接触，了解产品" },
+    { "code": "P2", "name": "兴趣期", "desc": "表达兴趣，询方案" },
+    { "code": "P3", "name": "评估期", "desc": "试菜/比价/评估" },
+    { "code": "P4", "name": "决策期", "desc": "谈判/签约" },
+    { "code": "P5", "name": "已成交", "desc": "签约完成" },
+    { "code": "P0", "name": "沉睡", "desc": "30天未跟进" }
+  ],
+  "sopTemplates": [
+    {
+      "stage": "P1",
+      "actions": [
+        { "day": 0, "action": "首次响应", "content": "发送产品介绍+案例集" },
+        { "day": 2, "action": "需求挖掘", "content": "电话沟通，了解门店类型/面积/预算" },
+        { "day": 5, "action": "方案初推", "content": "发送初步配置方案和报价区间" }
+      ]
+    },
+    {
+      "stage": "P2",
+      "actions": [
+        { "day": 0, "action": "方案确认", "content": "确认需求细节，调整方案" },
+        { "day": 3, "action": "试菜邀约", "content": "邀请试菜体验" },
+        { "day": 7, "action": "跟进反馈", "content": "询问试菜反馈，解答疑问" }
+      ]
+    },
+    {
+      "stage": "P3",
+      "actions": [
+        { "day": 0, "action": "异议处理", "content": "针对价格/售后/竞品疑虑进行回应" },
+        { "day": 3, "action": "案例佐证", "content": "发送同类客户案例和见证" },
+        { "day": 7, "action": "促单推动", "content": "制造紧迫感（活动截止/限量）" }
+      ]
+    },
+    {
+      "stage": "P4",
+      "actions": [
+        { "day": 0, "action": "谈判支持", "content": "灵活调整方案/赠送配件" },
+        { "day": 2, "action": "合同准备", "content": "发送正式合同" },
+        { "day": 5, "action": "签约跟进", "content": "催促签约，解答合同疑问" }
+      ]
+    }
+  ]
+}
