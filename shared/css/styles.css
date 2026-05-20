@@ -625,3 +625,533 @@ body {
 @media (max-width: 480px) {
   .scene-grid { grid-template-columns: 1fr; }
 }
+
+/* ============================================================
+   ▌双轨旅程板块（Journey）
+   外轨（client）= 客户转化   内轨（sales）= 销售成长
+   ============================================================ */
+
+/* 通用 section 容器 */
+.journey-section {
+  padding: 3rem 0 1rem;
+  scroll-margin-top: 72px;
+}
+.journey-section + .journey-section { padding-top: 1rem; }
+.journey-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.journey-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+}
+.journey-eyebrow .dot {
+  width: 6px; height: 6px; border-radius: 50%; background: currentColor;
+}
+.journey-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+.journey-title .accent { color: var(--brand); }
+.journey-subtitle {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-top: 0.375rem;
+  max-width: 720px;
+}
+.journey-meta {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+.journey-meta strong {
+  color: var(--text-secondary);
+  font-weight: 600;
+}
+
+/* 轨道色 token：外轨蓝、内轨琥珀 */
+:root {
+  --track-client: #2563EB;
+  --track-client-bg: #EFF6FF;
+  --track-client-soft: #DBEAFE;
+  --track-sales: #B45309;
+  --track-sales-bg: #FFFBEB;
+  --track-sales-soft: #FEF3C7;
+}
+
+/* ============================================================
+   ▌旅程总览：双轨示意（首屏锚点 #overview）
+   ============================================================ */
+.journey-overview {
+  background: linear-gradient(180deg, var(--bg-surface) 0%, var(--bg-subtle) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 1.75rem;
+  box-shadow: var(--shadow-card);
+}
+.track-row {
+  display: grid;
+  grid-template-columns: 132px 1fr;
+  gap: 1rem;
+  align-items: stretch;
+}
+.track-row + .track-row { margin-top: 1rem; }
+.track-row.flywheel-row { margin-top: 1.25rem; }
+
+.track-label {
+  border-radius: var(--radius-inner);
+  padding: 0.875rem 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 0.25rem;
+  font-weight: 600;
+}
+.track-label .track-name {
+  font-size: 0.9375rem;
+  letter-spacing: -0.01em;
+}
+.track-label .track-tag {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  opacity: 0.78;
+}
+.track-row.client .track-label {
+  background: var(--track-client-bg);
+  color: var(--track-client);
+  border: 1px solid var(--track-client-soft);
+}
+.track-row.sales .track-label {
+  background: var(--track-sales-bg);
+  color: var(--track-sales);
+  border: 1px solid var(--track-sales-soft);
+}
+
+.track-stages {
+  display: grid;
+  gap: 0.5rem;
+  align-items: stretch;
+}
+.track-row.client .track-stages { grid-template-columns: repeat(6, 1fr); }
+.track-row.sales  .track-stages { grid-template-columns: repeat(4, 1fr); }
+
+.stage-pill {
+  position: relative;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-inner);
+  padding: 0.75rem 0.75rem 0.875rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  cursor: pointer;
+  transition: all 0.2s var(--transition);
+  text-decoration: none;
+  color: inherit;
+}
+.stage-pill:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+  border-color: currentColor;
+}
+.track-row.client .stage-pill:hover { border-color: var(--track-client); }
+.track-row.sales  .stage-pill:hover { border-color: var(--track-sales); }
+
+.stage-pill .stage-step {
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.6875rem;
+  color: var(--text-muted);
+  letter-spacing: 0.06em;
+}
+.stage-pill .stage-name {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+}
+.stage-pill .stage-tip {
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.stage-pill .stage-count {
+  margin-top: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.6875rem;
+  font-weight: 500;
+}
+.track-row.client .stage-pill .stage-count { color: var(--track-client); }
+.track-row.sales  .stage-pill .stage-count { color: var(--track-sales); }
+
+/* CSS 箭头连接器（节点间） */
+.stage-pill + .stage-pill::before {
+  content: '';
+  position: absolute;
+  left: -7px;
+  top: 50%;
+  width: 12px;
+  height: 1px;
+  background: var(--border-strong);
+}
+.stage-pill + .stage-pill::after {
+  content: '';
+  position: absolute;
+  left: -2px;
+  top: 50%;
+  width: 6px;
+  height: 6px;
+  border-top: 1px solid var(--border-strong);
+  border-right: 1px solid var(--border-strong);
+  transform: translateY(-50%) rotate(45deg);
+}
+
+/* 飞轮提示行 */
+.flywheel-hint {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.625rem 0.875rem;
+  background: var(--bg-subtle);
+  border: 1px dashed var(--border-strong);
+  border-radius: var(--radius-inner);
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.flywheel-hint strong { color: var(--text-primary); font-weight: 600; }
+.flywheel-hint svg { width: 14px; height: 14px; stroke: var(--brand); fill: none; stroke-width: 2; }
+
+/* ============================================================
+   ▌外轨/内轨详情卡片矩阵（4字段卡片）
+   ============================================================ */
+.stage-grid {
+  display: grid;
+  gap: 1rem;
+}
+.stage-grid.client { grid-template-columns: repeat(3, 1fr); }
+.stage-grid.sales  { grid-template-columns: repeat(2, 1fr); }
+
+.stage-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  position: relative;
+  transition: all 0.25s var(--transition);
+  scroll-margin-top: 80px;
+}
+.stage-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+.stage-card.client { border-top: 3px solid var(--track-client); }
+.stage-card.sales  { border-top: 3px solid var(--track-sales); }
+
+.stage-card-head {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+}
+.stage-card-step {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 26px;
+  height: 26px;
+  padding: 0 0.5rem;
+  border-radius: 6px;
+  font-family: 'Geist Mono', monospace;
+  font-size: 0.6875rem;
+  font-weight: 600;
+}
+.stage-card.client .stage-card-step {
+  background: var(--track-client-soft);
+  color: var(--track-client);
+}
+.stage-card.sales .stage-card-step {
+  background: var(--track-sales-soft);
+  color: var(--track-sales);
+}
+.stage-card-name {
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: -0.01em;
+  flex: 1;
+}
+.stage-card-tag {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
+}
+
+.stage-fields {
+  display: grid;
+  gap: 0.625rem;
+}
+.stage-field {
+  display: grid;
+  grid-template-columns: 88px 1fr;
+  gap: 0.625rem;
+  align-items: flex-start;
+  padding: 0.5rem 0;
+  border-top: 1px dashed var(--border);
+}
+.stage-field:first-child { border-top: none; padding-top: 0; }
+.stage-field-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+.stage-field-label .ico { width: 12px; height: 12px; opacity: 0.7; }
+.stage-field-text {
+  font-size: 0.8125rem;
+  color: var(--text-primary);
+  line-height: 1.55;
+}
+.stage-field-text.metric { color: var(--success); font-weight: 500; }
+.stage-field-text.pain { color: var(--danger); }
+
+/* 关联场景 chips */
+.stage-scenes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  padding-top: 0.625rem;
+  margin-top: auto;
+  border-top: 1px solid var(--border);
+}
+.stage-scene-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.3125rem 0.625rem;
+  border-radius: 999px;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border);
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.2s var(--transition);
+}
+.stage-scene-chip:hover {
+  background: var(--brand-muted);
+  border-color: var(--brand-border);
+  color: var(--brand);
+}
+.stage-scene-chip .num {
+  font-family: 'Geist Mono', monospace;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+.stage-scene-chip:hover .num { color: var(--brand); }
+
+/* ============================================================
+   ▌资产沉淀飞轮（双轨闭环）
+   ============================================================ */
+.flywheel {
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 1.5rem;
+  align-items: stretch;
+}
+.flywheel-visual {
+  position: relative;
+  background: linear-gradient(135deg, var(--track-client-bg) 0%, var(--track-sales-bg) 100%);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.875rem;
+}
+.flywheel-step {
+  display: grid;
+  grid-template-columns: 36px 1fr;
+  gap: 0.875rem;
+  align-items: center;
+  padding: 0.875rem 1rem;
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-inner);
+  position: relative;
+}
+.flywheel-step .num {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Geist Mono', monospace;
+  font-weight: 600;
+  font-size: 0.8125rem;
+}
+.flywheel-step.t1 .num { background: var(--track-client); color: white; }
+.flywheel-step.t2 .num { background: var(--track-sales); color: white; }
+.flywheel-step.t3 .num { background: var(--brand); color: white; }
+.flywheel-step.t4 .num { background: #6D28D9; color: white; }
+.flywheel-step .body { display: flex; flex-direction: column; gap: 0.125rem; }
+.flywheel-step .body strong {
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+.flywheel-step .body span {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+.flywheel-step + .flywheel-step::before {
+  content: '↓';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 22px;
+  height: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  font-size: 14px;
+  font-weight: 600;
+  background: transparent;
+}
+
+.flywheel-side {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+.flywheel-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 1.125rem 1.25rem;
+  flex: 1;
+}
+.flywheel-card .head {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.8125rem; font-weight: 600; color: var(--text-primary);
+  margin-bottom: 0.625rem;
+}
+.flywheel-card .head .pill {
+  font-size: 0.625rem;
+  padding: 0.125rem 0.5rem;
+  border-radius: 999px;
+  background: var(--brand-muted);
+  color: var(--brand);
+  font-weight: 500;
+}
+.flywheel-card ul { list-style: none; display: flex; flex-direction: column; gap: 0.375rem; }
+.flywheel-card li {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  padding-left: 1rem;
+  position: relative;
+}
+.flywheel-card li::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0.5rem;
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--brand);
+}
+
+/* ============================================================
+   ▌浮动 TOC（锚点导航）
+   ============================================================ */
+.toc-floating {
+  position: fixed;
+  right: 1.5rem;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 50;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 0.625rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  box-shadow: var(--shadow-card);
+  min-width: 132px;
+}
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4375rem 0.625rem;
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: all 0.2s var(--transition);
+  cursor: pointer;
+}
+.toc-item:hover { background: var(--bg-subtle); color: var(--text-primary); }
+.toc-item.active {
+  background: var(--brand-muted);
+  color: var(--brand);
+  font-weight: 500;
+}
+.toc-item .toc-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--border-strong);
+}
+.toc-item.active .toc-dot { background: var(--brand); }
+
+/* ============================================================
+   ▌响应式：双轨在窄屏下的退化
+   ============================================================ */
+@media (max-width: 1100px) {
+  .stage-grid.client { grid-template-columns: repeat(2, 1fr); }
+  .flywheel { grid-template-columns: 1fr; }
+  .toc-floating { display: none; }
+}
+@media (max-width: 900px) {
+  .track-row { grid-template-columns: 1fr; }
+  .track-row.client .track-stages { grid-template-columns: repeat(3, 1fr); }
+  .track-row.sales  .track-stages { grid-template-columns: repeat(2, 1fr); }
+  .stage-pill + .stage-pill::before,
+  .stage-pill + .stage-pill::after { display: none; }
+}
+@media (max-width: 640px) {
+  .stage-grid.client,
+  .stage-grid.sales { grid-template-columns: 1fr; }
+  .track-row.client .track-stages,
+  .track-row.sales  .track-stages { grid-template-columns: repeat(2, 1fr); }
+  .journey-head { flex-direction: column; align-items: flex-start; }
+}

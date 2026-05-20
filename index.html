@@ -40,15 +40,159 @@
     </div>
   </header>
 
-  <!-- 场景网格 -->
+  <!-- 浮动 TOC 锚点 -->
+  <nav class="toc-floating" id="toc">
+    <a class="toc-item" data-target="overview"><span class="toc-dot"></span>旅程总览</a>
+    <a class="toc-item" data-target="client"><span class="toc-dot"></span>客户转化</a>
+    <a class="toc-item" data-target="sales"><span class="toc-dot"></span>销售成长</a>
+    <a class="toc-item" data-target="flywheel"><span class="toc-dot"></span>资产飞轮</a>
+    <a class="toc-item" data-target="all-scenes"><span class="toc-dot"></span>全部场景</a>
+  </nav>
+
   <main class="container">
-    <section class="scene-section">
+
+    <!-- ① 旅程总览 -->
+    <section id="overview" class="journey-section">
+      <div class="journey-head">
+        <div>
+          <div class="journey-eyebrow"><span class="dot"></span>JOURNEY MAP · 双轨视图</div>
+          <h2 class="journey-title">销售链路全景：<span class="accent">客户在转化、销售在成长</span></h2>
+          <p class="journey-subtitle">外轨呈现客户从线索到复购的 6 个关键节点，内轨呈现销售从入职到沉淀的 4 个成长阶段。每个节点上挂载对应的 AI 场景，点击节点可定位到该阶段的详细切入点。</p>
+        </div>
+        <div class="journey-meta">
+          <span><strong>外轨</strong>　6 阶段</span>
+          <span><strong>内轨</strong>　4 阶段</span>
+          <span><strong>AI 场景</strong>　8 个</span>
+        </div>
+      </div>
+
+      <div class="journey-overview">
+        <!-- 外轨：客户转化 -->
+        <div class="track-row client">
+          <div class="track-label">
+            <span class="track-name">外轨 · 客户转化</span>
+            <span class="track-tag">Customer Journey</span>
+          </div>
+          <div class="track-stages" id="track-client-pills"></div>
+        </div>
+
+        <!-- 内轨：销售成长 -->
+        <div class="track-row sales">
+          <div class="track-label">
+            <span class="track-name">内轨 · 销售成长</span>
+            <span class="track-tag">Sales Enablement</span>
+          </div>
+          <div class="track-stages" id="track-sales-pills"></div>
+        </div>
+
+        <!-- 飞轮提示 -->
+        <div class="track-row flywheel-row">
+          <div class="flywheel-hint" style="grid-column:1 / -1">
+            <svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 3 21 9 15 9"/></svg>
+            <span><strong>资产沉淀飞轮：</strong>外轨成交沉淀经验 → 内轨快速复用 → 反哺外轨提升下一轮转化</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ② 外轨：客户转化全链路 -->
+    <section id="client" class="journey-section">
+      <div class="journey-head">
+        <div>
+          <div class="journey-eyebrow" style="color:var(--track-client)"><span class="dot"></span>OUTER LOOP · 客户转化</div>
+          <h2 class="journey-title">客户转化全链路 · <span class="accent">每个节点都有 AI 在工作</span></h2>
+          <p class="journey-subtitle">从线索进入到复购转介，6 个关键节点，AI 在每个节点都有明确的切入方式与可量化的效果指标。</p>
+        </div>
+      </div>
+      <div class="stage-grid client" id="client-cards"></div>
+    </section>
+
+    <!-- ③ 内轨：销售成长全链路 -->
+    <section id="sales" class="journey-section">
+      <div class="journey-head">
+        <div>
+          <div class="journey-eyebrow" style="color:var(--track-sales)"><span class="dot"></span>INNER LOOP · 销售成长</div>
+          <h2 class="journey-title">销售成长全链路 · <span class="accent">把资深经验变成新人能力</span></h2>
+          <p class="journey-subtitle">从入职准备到经验沉淀，4 个成长阶段，AI 让培训成本可控、能力分层可缩小、优秀经验可复用。</p>
+        </div>
+      </div>
+      <div class="stage-grid sales" id="sales-cards"></div>
+    </section>
+
+    <!-- ④ 资产飞轮闭环 -->
+    <section id="flywheel" class="journey-section">
+      <div class="journey-head">
+        <div>
+          <div class="journey-eyebrow"><span class="dot"></span>FLYWHEEL · 资产沉淀闭环</div>
+          <h2 class="journey-title">外轨成交 → 内轨沉淀 → <span class="accent">飞轮越转越快</span></h2>
+          <p class="journey-subtitle">每一次外轨成交或流失，都成为内轨培训和提案库的素材；内轨产出的话术与方案，又反哺外轨更高的转化效率。</p>
+        </div>
+      </div>
+
+      <div class="flywheel">
+        <div class="flywheel-visual">
+          <div class="flywheel-step t1">
+            <div class="num">1</div>
+            <div class="body">
+              <strong>外轨：客户对话产生数据</strong>
+              <span>聊天记录、报价方案、成交/流失结果</span>
+            </div>
+          </div>
+          <div class="flywheel-step t2">
+            <div class="num">2</div>
+            <div class="body">
+              <strong>内轨：AI 复盘提炼经验</strong>
+              <span>高转化话术、流失原因、方案模板</span>
+            </div>
+          </div>
+          <div class="flywheel-step t3">
+            <div class="num">3</div>
+            <div class="body">
+              <strong>沉淀：注入知识库与培训</strong>
+              <span>知识库更新、新人对练、SOP 升级</span>
+            </div>
+          </div>
+          <div class="flywheel-step t4">
+            <div class="num">4</div>
+            <div class="body">
+              <strong>反哺：下一轮外轨更高效</strong>
+              <span>话术更准、提案更快、转化率更高</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="flywheel-side">
+          <div class="flywheel-card">
+            <div class="head">沉淀的资产 <span class="pill">Reusable Asset</span></div>
+            <ul>
+              <li>分客户类型的高转化话术库（餐饮门店 / 食堂 / 连锁 / 创业者）</li>
+              <li>结构化的方案模板与配套报价（按客单价 / 场景）</li>
+              <li>流失原因清单与对应挽回话术</li>
+              <li>新人模拟训练的真实客户脚本</li>
+            </ul>
+          </div>
+          <div class="flywheel-card">
+            <div class="head">飞轮带来的复利 <span class="pill">Compounding</span></div>
+            <ul>
+              <li>新人独立上手时间从 3 个月缩到 4 周</li>
+              <li>方案产出时间从 2 小时缩到 10 分钟</li>
+              <li>沉睡线索盘活率从 5% 提升到 18%</li>
+              <li>资深销售经验不再随人离职流失</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ⑤ 全部场景索引（保留原网格） -->
+    <section id="all-scenes" class="scene-section">
       <div class="section-header">
-        <span class="section-title">全部场景</span>
+        <span class="section-title">全部场景索引</span>
         <span class="section-count">8 个</span>
       </div>
       <div class="scene-grid" id="scene-grid"></div>
     </section>
+
   </main>
 
   <!-- Footer -->
@@ -62,17 +206,95 @@
   </footer>
 
   <script>
+    /* ============================================================
+       AI 场景数据（保持原 8 个场景，扩展 stages / tracks 字段）
+       stages: 该场景在「外轨·客户转化」中所处节点
+       tracks: 该场景在「内轨·销售成长」中所处节点
+       ============================================================ */
     const scenes = [
-      { id: '01', name: '销售随身智能知识库', desc: '产品参数、场景适配、竞品对比，一问即答。实时解答各类专业问题。', badge: '销售赋能', badgeClass: 'sales', icon: 'book', path: 'scenes/scene-1-kb/index.html' },
-      { id: '02', name: '企微实时话术参谋', desc: '侧边栏实时推荐话术，半自动辅助不替代人工，让跟进更专业。', badge: '销售赋能', badgeClass: 'sales', icon: 'chat', path: 'scenes/scene-2-chat/index.html' },
-      { id: '03', name: '客户分层 + 智能 SOP 跟进', desc: '自动标签分层，按阶段定时提醒触达，客户状态一目了然。', badge: '客户运营', badgeClass: 'ops', icon: 'users', path: 'scenes/scene-3-crm/index.html' },
-      { id: '04', name: '聊天记录 AI 复盘沉淀', desc: '成交案例拆解，流失原因分析，话术自动沉淀，优秀经验可复制。', badge: '资产沉淀', badgeClass: 'asset', icon: 'chart', path: 'scenes/scene-4-review/index.html' },
-      { id: '05', name: '客户个性化数据应答', desc: '对接内部系统，实时查客户专属订单、售后、进度，信息统一口径。', badge: '客户运营', badgeClass: 'ops', icon: 'database', path: 'scenes/scene-5-data/index.html' },
-      { id: '06', name: 'AI 新人模拟培训对练', desc: 'AI 扮演各类客户，实战对练配合三维评分，让培训效率大幅提升。', badge: '销售赋能', badgeClass: 'sales', icon: 'graduation', path: 'scenes/scene-6-training/index.html' },
-      { id: '07', name: '线索智能初筛评级', desc: '自动判定意向、预算、类型，优先推送高价值线索，销售精力聚焦。', badge: '客户运营', badgeClass: 'ops', icon: 'filter', path: 'scenes/scene-7-leads/index.html' },
-      { id: '08', name: '行业方案智能生成', desc: '按客户类型自动生成配套方案、案例、报价，一键生成专业提案。', badge: '资产沉淀', badgeClass: 'asset', icon: 'file', path: 'scenes/scene-8-proposal/index.html' },
+      { id: '01', name: '销售随身智能知识库', desc: '产品参数、场景适配、竞品对比，一问即答。实时解答各类专业问题。', badge: '销售赋能', badgeClass: 'sales', icon: 'book', path: 'scenes/scene-1-kb/index.html',
+        stages: ['contact','followup','proposal'], tracks: ['onboard','field'] },
+      { id: '02', name: '企微实时话术参谋', desc: '侧边栏实时推荐话术，半自动辅助不替代人工，让跟进更专业。', badge: '销售赋能', badgeClass: 'sales', icon: 'chat', path: 'scenes/scene-2-chat/index.html',
+        stages: ['contact','followup','deal'], tracks: ['field'] },
+      { id: '03', name: '客户分层 + 智能 SOP 跟进', desc: '自动标签分层，按阶段定时提醒触达，客户状态一目了然。', badge: '客户运营', badgeClass: 'ops', icon: 'users', path: 'scenes/scene-3-crm/index.html',
+        stages: ['followup','deal','repurchase'], tracks: [] },
+      { id: '04', name: '聊天记录 AI 复盘沉淀', desc: '成交案例拆解，流失原因分析，话术自动沉淀，优秀经验可复制。', badge: '资产沉淀', badgeClass: 'asset', icon: 'chart', path: 'scenes/scene-4-review/index.html',
+        stages: ['repurchase'], tracks: ['review'] },
+      { id: '05', name: '客户个性化数据应答', desc: '对接内部系统，实时查客户专属订单、售后、进度，信息统一口径。', badge: '客户运营', badgeClass: 'ops', icon: 'database', path: 'scenes/scene-5-data/index.html',
+        stages: ['deal','repurchase'], tracks: [] },
+      { id: '06', name: 'AI 新人模拟培训对练', desc: 'AI 扮演各类客户，实战对练配合三维评分，让培训效率大幅提升。', badge: '销售赋能', badgeClass: 'sales', icon: 'graduation', path: 'scenes/scene-6-training/index.html',
+        stages: [], tracks: ['onboard','simulate'] },
+      { id: '07', name: '线索智能初筛评级', desc: '自动判定意向、预算、类型，优先推送高价值线索，销售精力聚焦。', badge: '客户运营', badgeClass: 'ops', icon: 'filter', path: 'scenes/scene-7-leads/index.html',
+        stages: ['lead'], tracks: [] },
+      { id: '08', name: '行业方案智能生成', desc: '按客户类型自动生成配套方案、案例、报价，一键生成专业提案。', badge: '资产沉淀', badgeClass: 'asset', icon: 'file', path: 'scenes/scene-8-proposal/index.html',
+        stages: ['proposal','deal'], tracks: ['field','review'] },
     ];
 
+    /* ============================================================
+       外轨：客户转化 6 节点
+       ============================================================ */
+    const clientStages = [
+      { key: 'lead',       step: 'S1', name: '线索',     tip: '渠道线索进入',
+        customer: '通过广告、展会、转介绍等渠道留下联系方式。',
+        pain: '线索量大但质量参差，销售凭感觉跟进，浪费高价值线索。',
+        ai: 'AI 自动判定意向 / 预算 / 类型，优先推送高价值线索。',
+        metric: '线索分配效率 ↑ 60%，高意向覆盖率 ≥ 80%' },
+      { key: 'contact',    step: 'S2', name: '接触',     tip: '首次专业沟通',
+        customer: '加微信、咨询产品、要资料、问报价。',
+        pain: '新人不熟悉参数、答非所问，资深的也不一定有空。',
+        ai: '随身知识库 + 实时话术参谋，一问即答、句句专业。',
+        metric: '首回复时长 ≤ 30s，专业度评分 ↑ 35%' },
+      { key: 'followup',   step: 'S3', name: '跟进',     tip: '长周期培育',
+        customer: '货比三家、上级审批、预算调整，决策周期 1–2 个月。',
+        pain: '跟进随意、节奏断、客户被遗忘，沉睡线索越积越多。',
+        ai: '客户分层打标 + SOP 自动提醒 + 个性化触达。',
+        metric: '沉睡线索盘活率 5% → 18%，跟进遗漏 ↓ 90%' },
+      { key: 'proposal',   step: 'S4', name: '提案',     tip: '配套方案输出',
+        customer: '需要看完整方案：设备清单、报价、案例、ROI。',
+        pain: '方案要拼凑，做一份要 2 小时，新人根本搭不齐。',
+        ai: '按客户类型一键生成配套方案 / 案例 / 报价。',
+        metric: '方案产出 2h → 10min，方案使用率 ↑ 70%' },
+      { key: 'deal',       step: 'S5', name: '成交',     tip: '关单 / 线下确认',
+        customer: '试菜、签合同、付款、安排发货安装。',
+        pain: '客户问发货 / 售后 / 排期问不准，临门一脚掉链子。',
+        ai: '对接内部系统，实时查客户专属订单 / 售后 / 排期信息。',
+        metric: '查询响应 ≤ 3s，关单流失率 ↓ 25%' },
+      { key: 'repurchase', step: 'S6', name: '复购',     tip: '复购 / 转介绍',
+        customer: '使用反馈、扩店、连锁拓展、推荐同行。',
+        pain: '老客户经验没沉淀，复购线索同样被忽略。',
+        ai: '聊天复盘 + 个性化应答，把复购也跑进 SOP。',
+        metric: '复购触达覆盖 ↑ 100%，转介绍贡献 ↑ 40%' },
+    ];
+
+    /* ============================================================
+       内轨：销售成长 4 阶段
+       ============================================================ */
+    const salesStages = [
+      { key: 'onboard',  step: 'T1', name: '入职准备', tip: '快速建立产品认知',
+        sales: '新销售刚入职，需要在短时间内掌握上百个 SKU、配套、案例。',
+        pain: '资料分散在各种 PPT / Excel，记不住、查不到、用不上。',
+        ai: '智能知识库 + AI 模拟培训，把资料结构化、可检索、可对练。',
+        metric: '上手时间 3 个月 → 4 周，知识考核通过率 ↑ 50%' },
+      { key: 'simulate', step: 'T2', name: '模拟实训', tip: 'AI 客户对练',
+        sales: '上岗前需要先在模拟环境练手，避免直接面对真客户翻车。',
+        pain: '老带新成本高、场景有限、点评质量看人品。',
+        ai: 'AI 扮演各类客户实战对练，配合三维评分给出针对性点评。',
+        metric: '人均对练时长 × 3，点评一致性 ↑ 80%' },
+      { key: 'field',    step: 'T3', name: '实战赋能', tip: '一线半自动辅助',
+        sales: '客户对话现场临场反应慢、参数记不住、方案搭不齐。',
+        pain: '只能发资料、靠话术模板，临场专业度断崖式下降。',
+        ai: '企微侧边栏话术参谋 + 知识库 + 方案智能生成，半自动辅助。',
+        metric: '专业话术使用率 ↑ 65%，单次提案时长 ↓ 80%' },
+      { key: 'review',   step: 'T4', name: '复盘沉淀', tip: '把经验变成资产',
+        sales: '资深销售的高转化打法、流失原因分析无法系统沉淀。',
+        pain: '人走经验走，团队水平靠个人。',
+        ai: 'AI 复盘聊天记录与方案，提炼话术、流程、模板。',
+        metric: '高转化话术沉淀 ≥ 200 条 / 季，团队 PK 差异 ↓ 40%' },
+    ];
+
+    /* ============================================================
+       图标库
+       ============================================================ */
     const icons = {
       book: '<svg viewBox="0 0 24 24"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
       chat: '<svg viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
@@ -83,9 +305,83 @@
       filter: '<svg viewBox="0 0 24 24"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>',
       file: '<svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>'
     };
-
     const arrowIcon = '<svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
 
+    /* ============================================================
+       渲染：旅程总览的两条轨道
+       ============================================================ */
+    function renderPills(stages, sceneKey, container) {
+      stages.forEach(s => {
+        const matched = scenes.filter(sc => (sc[sceneKey] || []).includes(s.key));
+        const a = document.createElement('a');
+        a.className = 'stage-pill';
+        a.href = '#stage-' + s.key;
+        a.innerHTML = `
+          <span class="stage-step">${s.step}</span>
+          <span class="stage-name">${s.name}</span>
+          <span class="stage-tip">${s.tip}</span>
+          <span class="stage-count">● ${matched.length} 个 AI 场景</span>
+        `;
+        container.appendChild(a);
+      });
+    }
+    renderPills(clientStages, 'stages', document.getElementById('track-client-pills'));
+    renderPills(salesStages,  'tracks', document.getElementById('track-sales-pills'));
+
+    /* ============================================================
+       渲染：外轨/内轨详情卡片矩阵
+       ============================================================ */
+    function renderStageCards(stages, sceneKey, container, trackClass, trackLabel) {
+      stages.forEach(s => {
+        const matched = scenes.filter(sc => (sc[sceneKey] || []).includes(s.key));
+        const card = document.createElement('div');
+        card.className = `stage-card ${trackClass}`;
+        card.id = 'stage-' + s.key;
+        const fieldKey = trackClass === 'client' ? 'customer' : 'sales';
+        const fieldLabel = trackClass === 'client' ? '客户在做什么' : '销售在做什么';
+        card.innerHTML = `
+          <div class="stage-card-head">
+            <span class="stage-card-step">${s.step}</span>
+            <span class="stage-card-name">${s.name}</span>
+            <span class="stage-card-tag">${trackLabel}</span>
+          </div>
+          <div class="stage-fields">
+            <div class="stage-field">
+              <span class="stage-field-label">▎${fieldLabel}</span>
+              <span class="stage-field-text">${s[fieldKey]}</span>
+            </div>
+            <div class="stage-field">
+              <span class="stage-field-label">▎销售痛点</span>
+              <span class="stage-field-text pain">${s.pain}</span>
+            </div>
+            <div class="stage-field">
+              <span class="stage-field-label">▎AI 切入点</span>
+              <span class="stage-field-text">${s.ai}</span>
+            </div>
+            <div class="stage-field">
+              <span class="stage-field-label">▎效果指标</span>
+              <span class="stage-field-text metric">${s.metric}</span>
+            </div>
+          </div>
+          ${matched.length ? `
+          <div class="stage-scenes">
+            ${matched.map(m => `
+              <a class="stage-scene-chip" href="${m.path}">
+                <span class="num">${m.id}</span>
+                <span>${m.name}</span>
+              </a>
+            `).join('')}
+          </div>` : ''}
+        `;
+        container.appendChild(card);
+      });
+    }
+    renderStageCards(clientStages, 'stages', document.getElementById('client-cards'), 'client', '外轨');
+    renderStageCards(salesStages,  'tracks', document.getElementById('sales-cards'),  'sales',  '内轨');
+
+    /* ============================================================
+       渲染：底部全部场景索引网格（保留原能力）
+       ============================================================ */
     const grid = document.getElementById('scene-grid');
     scenes.forEach(s => {
       const card = document.createElement('div');
@@ -108,6 +404,32 @@
       });
       grid.appendChild(card);
     });
+
+    /* ============================================================
+       浮动 TOC：点击平滑滚动 + 滚动高亮
+       ============================================================ */
+    const tocItems = document.querySelectorAll('.toc-item');
+    tocItems.forEach(el => {
+      el.addEventListener('click', () => {
+        const id = el.getAttribute('data-target');
+        const target = document.getElementById(id);
+        if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    });
+    const sections = ['overview','client','sales','flywheel','all-scenes']
+      .map(id => document.getElementById(id))
+      .filter(Boolean);
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const id = entry.target.id;
+          tocItems.forEach(el => {
+            el.classList.toggle('active', el.getAttribute('data-target') === id);
+          });
+        }
+      });
+    }, { rootMargin: '-40% 0px -50% 0px', threshold: 0 });
+    sections.forEach(s => io.observe(s));
   </script>
 </body>
 </html>
