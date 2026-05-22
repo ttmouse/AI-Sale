@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=375, user-scalable=no">
+  <title>销售AI助手</title>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --wework-blue: #1AAD19;
+      --wework-blue-dark: #168B16;
+      --primary: #1AAD19;
+      --primary-light: #E8F5E0;
+      --orange: #FF6B00;
+      --orange-light: #FFF3E0;
+      --red: #E53935;
+      --red-light: #FFEBEE;
+      --green: #43A047;
+      --green-light: #E8F5E9;
+      --bg: #F5F7FA;
+      --card: #FFFFFF;
+      --text: #1A1A1A;
+      --text-secondary: #888888;
+      --text-hint: #BBBBBB;
+      --border: #E8E8E8;
+      --shadow: 0 2px 8px rgba(0,0,0,0.06);
+      --shadow-lg: 0 4px 16px rgba(0,0,0,0.10);
+      --radius: 16px;
+      --radius-sm: 8px;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      width: 375px;
+      min-height: 100vh;
+      margin: 0 auto;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    .app { display: flex; flex-direction: column; min-height: 100vh; }
+    .page { display: none; flex-direction: column; flex: 1; overflow-y: auto; padding-bottom: calc(60px + var(--safe-bottom)); }
+    .page.active { display: flex; }
+
+    /* ─── HEADER ─── */
+    .header {
+      background: var(--primary);
+      color: #fff;
+      padding: 12px 16px 16px;
+      flex-shrink: 0;
+    }
+    .header-title { font-size: 17px; font-weight: 600; }
+    .header-sub { font-size: 12px; opacity: 0.85; margin-top: 2px; }
+
+    /* ─── BOTTOM NAV ─── */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 375px;
+      background: #fff;
+      border-top: 1px solid var(--border);
+      display: flex;
+      z-index: 100;
+      padding-bottom: var(--safe-bottom);
+    }
+    .nav-item {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 2px;
+      padding: 8px 0 6px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      font-size: 10px;
+      border: none;
+      background: none;
+      transition: color 0.2s;
+    }
+    .nav-item.active { color: var(--primary); }
+    .nav-item svg { width: 22px; height: 22px; }
+
+    /* ─── TODAY PAGE ─── */
+    .today-greeting {
+      background: linear-gradient(135deg, #1AAD19 0%, #168B16 100%);
+      color: #fff;
+      margin: 12px 16px 0;
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+    .greeting-name { font-size: 18px; font-weight: 700; }
+    .greeting-tip { font-size: 13px; opacity: 0.9; margin-top: 4px; }
+    .greeting-date { font-size: 12px; opacity: 0.75; margin-top: 8px; }
+
+    .stats-row {
+      display: flex;
+      gap: 10px;
+      padding: 12px 16px 0;
+    }
+    .stat-card {
+      flex: 1;
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 12px 10px;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .stat-num { font-size: 24px; font-weight: 700; color: var(--text); }
+    .stat-num.orange { color: var(--orange); }
+    .stat-num.red { color: var(--red); }
+    .stat-num.green { color: var(--green); }
+    .stat-label { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 16px 10px;
+    }
+    .section-title { font-size: 15px; font-weight: 600; }
+    .section-more {
+      font-size: 12px;
+      color: var(--primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .section-more svg { width: 14px; height: 14px; }
+
+    .ai-advice-card {
+      margin: 0 16px 12px;
+      background: linear-gradient(135deg, #EFFAFF 0%, #E0F3FF 100%);
+      border: 1px solid #B8E4FF;
+      border-radius: var(--radius);
+      padding: 14px;
+    }
+    .ai-advice-header {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 10px;
+    }
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      background: var(--primary);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 20px;
+    }
+    .ai-badge svg { width: 12px; height: 12px; }
+    .ai-advice-text { font-size: 13px; color: #333; line-height: 1.6; }
+
+    /* FILTER TABS */
+    .filter-tabs {
+      display: flex;
+      gap: 8px;
+      padding: 0 16px 12px;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .filter-tabs::-webkit-scrollbar { display: none; }
+    .filter-tab {
+      flex-shrink: 0;
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-size: 13px;
+      cursor: pointer;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+    .filter-tab.active {
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
+      font-weight: 600;
+    }
+
+    /* TASK CARDS */
+    .task-list { padding: 0 16px; display: flex; flex-direction: column; gap: 12px; padding-bottom: 20px; }
+    .task-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 14px;
+      box-shadow: var(--shadow);
+      cursor: pointer;
+    }
+    .task-card-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .task-customer { font-size: 15px; font-weight: 600; }
+    .task-stage { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    .priority-tag {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      flex-shrink: 0;
+    }
+    .priority-tag.high { background: #FFF3E0; color: var(--orange); }
+    .priority-tag.risk { background: #FFEBEE; color: var(--red); }
+    .priority-tag.pending { background: #E3F2FD; color: #1565C0; }
+    .priority-tag.done { background: var(--green-light); color: var(--green); }
+    .priority-tag.normal { background: #F5F5F5; color: #666; }
+
+    .task-ai-reason {
+      background: #FAFAFA;
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+      font-size: 12px;
+      color: #555;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+    .task-ai-label { color: var(--primary); font-weight: 600; margin-right: 4px; }
+
+    .task-meta {
+      display: flex;
+      gap: 12px;
+      font-size: 11px;
+      color: var(--text-secondary);
+      margin-bottom: 10px;
+    }
+    .task-meta-item { display: flex; align-items: center; gap: 3px; }
+    .task-meta-item svg { width: 12px; height: 12px; }
+
+    .task-trigger {
+      font-size: 11px;
+      color: #888;
+      margin-bottom: 10px;
+    }
+    .task-trigger span { color: var(--primary); }
+
+    .task-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-bottom: 10px; }
+    .task-tag {
+      font-size: 10px;
+      padding: 2px 7px;
+      border-radius: 4px;
+      background: #F0F0F0;
+      color: #666;
+    }
+
+    .task-actions { display: flex; gap: 8px; }
+    .btn {
+      flex: 1;
+      padding: 8px 0;
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: opacity 0.15s;
+    }
+    .btn:active { opacity: 0.8; }
+    .btn svg { width: 14px; height: 14px; }
+    .btn-primary { background: var(--primary); color: #fff; }
+    .btn-outline { background: #fff; color: var(--primary); border: 1px solid var(--primary); }
+    .btn-gray { background: #F5F5F5; color: #666; }
+
+    /* ─── AI ADVICE OVERLAY ─── */
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.5);
+      z-index: 200;
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .overlay.show { display: flex; }
+    .overlay-panel {
+      background: #fff;
+      width: 375px;
+      max-height: 80vh;
+      border-radius: 20px 20px 0 0;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transform: translateY(100%);
+      transition: transform 0.3s ease;
+    }
+    .overlay.show .overlay-panel { transform: translateY(0); }
+    .overlay-handle {
+      width: 36px;
+      height: 4px;
+      background: #DDD;
+      border-radius: 2px;
+      margin: 10px auto 0;
+      flex-shrink: 0;
+    }
+    .overlay-head {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-shrink: 0;
+    }
+    .overlay-head-title { font-size: 15px; font-weight: 600; }
+    .overlay-close {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: #F5F5F5;
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: #666;
+    }
+    .overlay-close svg { width: 16px; height: 16px; }
+    .overlay-body { overflow-y: auto; flex: 1; padding: 16px; }
+
+    .advice-item {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+    .advice-num {
+      width: 20px; height: 20px;
+      border-radius: 50%;
+      background: var(--primary);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .advice-content { font-size: 13px; line-height: 1.6; color: #333; }
+    .advice-title { font-weight: 600; margin-bottom: 2px; }
+    .advice-desc { color: #666; font-size: 12px; }
+
+    /* ─── TASK DETAIL ─── */
+    .detail-section { margin-bottom: 20px; }
+    .detail-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .detail-section-title svg { width: 14px; height: 14px; }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .info-item {
+      background: #FAFAFA;
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+    }
+    .info-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 3px; }
+    .info-value { font-size: 14px; font-weight: 600; }
+
+    .ai-judge-box {
+      background: #EFFAFF;
+      border: 1px solid #B8E4FF;
+      border-radius: var(--radius);
+      padding: 12px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .history-list { display: flex; flex-direction: column; gap: 10px; }
+    .history-item {
+      display: flex;
+      gap: 10px;
+      align-items: flex-start;
+    }
+    .history-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: #E8F5E9;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .history-content { flex: 1; }
+    .history-name { font-size: 12px; font-weight: 600; margin-bottom: 2px; }
+    .history-msg { font-size: 13px; color: #333; background: #F5F5F5; padding: 8px 12px; border-radius: var(--radius-sm); }
+    .history-time { font-size: 10px; color: var(--text-hint); margin-top: 2px; }
+
+    .suggestion-box {
+      background: #FFF8E1;
+      border: 1px solid #FFE082;
+      border-radius: var(--radius);
+      padding: 12px;
+    }
+    .suggestion-label { font-size: 12px; font-weight: 600; color: #F57C00; margin-bottom: 6px; }
+    .suggestion-text { font-size: 13px; color: #333; line-height: 1.5; }
+
+    .next-action {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      background: var(--primary-light);
+      border-radius: var(--radius);
+      padding: 12px;
+    }
+    .next-action svg { width: 16px; height: 16px; color: var(--primary); flex-shrink: 0; margin-top: 1px; }
+    .next-action-text { font-size: 13px; color: #333; line-height: 1.5; }
+
+    /* ─── CHAT PAGE ─── */
+    .chat-header {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-shrink: 0;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+    .chat-back {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: #F5F5F5;
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      color: #333;
+    }
+    .chat-back svg { width: 16px; height: 16px; }
+    .chat-customer { flex: 1; }
+    .chat-customer-name { font-size: 16px; font-weight: 700; }
+    .chat-customer-status { font-size: 11px; color: var(--text-secondary); }
+    .chat-ai-btn {
+      font-size: 12px;
+      color: var(--primary);
+      background: var(--primary-light);
+      border: none;
+      padding: 4px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+    }
+
+    .chat-msgs {
+      flex: 1;
+      overflow-y: auto;
+      padding: 12px 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+    .msg { display: flex; gap: 8px; align-items: flex-end; }
+    .msg.customer { flex-direction: row-reverse; }
+    .msg-avatar {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px;
+      font-weight: 600;
+    }
+    .msg-avatar.sale { background: #E3F2FD; color: #1565C0; }
+    .msg-avatar.cust { background: #FFF3E0; color: #E65100; }
+    .msg-bubble {
+      max-width: 72%;
+      padding: 9px 12px;
+      border-radius: 12px;
+      font-size: 14px;
+      line-height: 1.5;
+    }
+    .msg.sale .msg-bubble { background: var(--primary); color: #fff; border-bottom-right-radius: 4px; }
+    .msg.customer .msg-bubble { background: #fff; color: #333; border: 1px solid var(--border); border-bottom-left-radius: 4px; }
+
+    .ai-summary-card {
+      background: linear-gradient(135deg, #EFFAFF 0%, #E0F3FF 100%);
+      border: 1px solid #B8E4FF;
+      border-radius: var(--radius);
+      padding: 12px;
+      margin: 4px 16px 12px;
+    }
+    .ai-summary-header { display: flex; align-items: center; gap: 6px; margin-bottom: 8px; }
+    .ai-summary-title { font-size: 13px; font-weight: 700; color: var(--primary); }
+    .ai-summary-section { margin-bottom: 8px; }
+    .ai-summary-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 2px; }
+    .ai-summary-text { font-size: 13px; color: #333; line-height: 1.5; }
+    .ai-summary-tags { display: flex; flex-wrap: wrap; gap: 4px; }
+    .ai-summary-tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; background: #E3F2FD; color: #1565C0; }
+    .ai-next { display: flex; align-items: flex-start; gap: 6px; font-size: 12px; color: #333; }
+    .ai-next svg { width: 14px; height: 14px; color: var(--primary); flex-shrink: 0; margin-top: 1px; }
+
+    .chat-ai-suggestion {
+      margin: 0 16px 12px;
+      background: #FFF8E1;
+      border: 1px solid #FFE082;
+      border-radius: var(--radius);
+      padding: 10px 12px;
+    }
+    .chat-ai-suggestion-label { font-size: 11px; font-weight: 600; color: #F57C00; margin-bottom: 6px; display: flex; align-items: center; gap: 4px; }
+    .chat-ai-suggestion-label svg { width: 12px; height: 12px; }
+    .chat-ai-suggestion-text { font-size: 12px; color: #555; line-height: 1.5; margin-bottom: 8px; }
+
+    .chat-input-area {
+      background: #fff;
+      border-top: 1px solid var(--border);
+      padding: 10px 16px calc(10px + var(--safe-bottom));
+      flex-shrink: 0;
+    }
+    .chat-input-row { display: flex; gap: 8px; align-items: flex-end; }
+    .chat-input {
+      flex: 1;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      padding: 9px 14px;
+      font-size: 14px;
+      outline: none;
+      resize: none;
+      max-height: 100px;
+      font-family: inherit;
+    }
+    .chat-input:focus { border-color: var(--primary); }
+    .chat-send {
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: var(--primary);
+      border: none;
+      color: #fff;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .chat-send svg { width: 18px; height: 18px; }
+    .chat-tools { display: flex; gap: 12px; margin-bottom: 8px; }
+    .chat-tool {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      color: var(--text-secondary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 4px 0;
+    }
+    .chat-tool svg { width: 16px; height: 16px; }
+
+    /* ─── WORKBENCH ─── */
+    .workbench-search {
+      margin: 12px 16px;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      padding: 9px 12px 9px 36px;
+      border: 1px solid var(--border);
+      border-radius: 22px;
+      font-size: 14px;
+      background: #fff;
+      outline: none;
+    }
+    .search-input:focus { border-color: var(--primary); }
+    .search-icon {
+      position: absolute;
+      left: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--text-hint);
+      width: 16px; height: 16px;
+    }
+    .customer-list { padding: 0 16px; display: flex; flex-direction: column; gap: 0; }
+    .customer-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+    .customer-item:last-child { border-bottom: none; }
+    .customer-avatar {
+      width: 44px; height: 44px;
+      border-radius: 50%;
+      background: #E3F2FD;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px;
+      font-weight: 600;
+      color: #1565C0;
+      flex-shrink: 0;
+    }
+    .customer-info { flex: 1; overflow: hidden; }
+    .customer-name { font-size: 15px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .customer-meta { font-size: 12px; color: var(--text-secondary); margin-top: 2px; }
+    .customer-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 4px; }
+    .customer-tag { font-size: 10px; padding: 1px 6px; border-radius: 3px; background: #F0F0F0; color: #666; }
+    .customer-arrow { color: var(--text-hint); width: 16px; height: 16px; flex-shrink: 0; }
+
+    /* ─── CUSTOMER DETAIL ─── */
+    .detail-header-bg {
+      background: linear-gradient(135deg, #1AAD19 0%, #168B16 100%);
+      padding: 20px 16px 30px;
+    }
+    .detail-customer-card {
+      background: #fff;
+      border-radius: var(--radius);
+      padding: 16px;
+      margin: -20px 16px 0;
+      box-shadow: var(--shadow-lg);
+    }
+    .detail-customer-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+    .detail-avatar {
+      width: 52px; height: 52px;
+      border-radius: 50%;
+      background: #E3F2FD;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px;
+      font-weight: 700;
+      color: #1565C0;
+      flex-shrink: 0;
+    }
+    .detail-name { font-size: 18px; font-weight: 700; }
+    .detail-stage-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 10px;
+      margin-top: 4px;
+    }
+    .detail-tags { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 8px; }
+    .detail-tag { font-size: 11px; padding: 2px 8px; border-radius: 4px; background: #F5F5F5; color: #666; }
+
+    .detail-stats {
+      display: flex;
+      border-top: 1px solid var(--border);
+      padding-top: 12px;
+      margin-top: 4px;
+    }
+    .detail-stat { flex: 1; text-align: center; }
+    .detail-stat-val { font-size: 18px; font-weight: 700; color: var(--text); }
+    .detail-stat-val.orange { color: var(--orange); }
+    .detail-stat-label { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+    .detail-content { padding: 16px; }
+
+    /* ─── MY PAGE ─── */
+    .my-profile-bg {
+      background: linear-gradient(135deg, #1AAD19 0%, #168B16 100%);
+      padding: 32px 16px 48px;
+      color: #fff;
+    }
+    .my-info { display: flex; align-items: center; gap: 14px; }
+    .my-avatar {
+      width: 60px; height: 60px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      border: 2px solid rgba(255,255,255,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .my-name { font-size: 18px; font-weight: 700; }
+    .my-role { font-size: 13px; opacity: 0.85; margin-top: 2px; }
+    .my-dept { font-size: 12px; opacity: 0.7; margin-top: 2px; }
+
+    .my-card {
+      background: #fff;
+      border-radius: var(--radius);
+      margin: -24px 16px 0;
+      padding: 16px;
+      box-shadow: var(--shadow-lg);
+    }
+    .my-stats-row {
+      display: flex;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 14px;
+      margin-bottom: 14px;
+    }
+    .my-stat { flex: 1; text-align: center; }
+    .my-stat-val { font-size: 20px; font-weight: 700; }
+    .my-stat-label { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
+
+    .my-menu { display: flex; flex-direction: column; gap: 0; }
+    .my-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 13px 0;
+      border-bottom: 1px solid var(--border);
+      cursor: pointer;
+    }
+    .my-menu-item:last-child { border-bottom: none; }
+    .my-menu-icon {
+      width: 32px; height: 32px;
+      border-radius: 8px;
+      background: #F5F5F5;
+      display: flex; align-items: center; justify-content: center;
+      color: #666;
+    }
+    .my-menu-icon svg { width: 18px; height: 18px; }
+    .my-menu-icon.blue { background: #E3F2FD; color: #1565C0; }
+    .my-menu-icon.green { background: var(--primary-light); color: var(--primary); }
+    .my-menu-icon.orange { background: var(--orange-light); color: var(--orange); }
+    .my-menu-text { flex: 1; font-size: 14px; }
+    .my-menu-arrow { color: var(--text-hint); width: 16px; height: 16px; }
+
+    /* ─── TOAST ─── */
+    .toast {
+      position: fixed;
+      top: 60px;
+      left: 50%;
+      transform: translateX(-50%) translateY(-20px);
+      background: rgba(0,0,0,0.8);
+      color: #fff;
+      padding: 10px 20px;
+      border-radius: 22px;
+      font-size: 13px;
+      z-index: 999;
+      opacity: 0;
+      transition: all 0.3s ease;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+<div class="app">
+
+  <!-- ── TODAY PAGE ── -->
+  <div class="page active" id="page-today">
+    <div class="header">
+      <div class="header-title">销售AI助手</div>
+      <div class="header-sub">智能跟进，高效成交</div>
+    </div>
+
+    <div class="today-greeting">
+      <div class="greeting-name">王强，早上好</div>
+      <div class="greeting-tip">今天优先处理高意向与风险客户</div>
+      <div class="greeting-date" id="today-date"></div>
+    </div>
+
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num" id="stat-total">12</div>
+        <div class="stat-label">今日任务</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num orange" id="stat-high">3</div>
+        <div class="stat-label">高优先级</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num red" id="stat-risk">1</div>
+        <div class="stat-label">风险客户</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num green" id="stat-pending">5</div>
+        <div class="stat-label">待今日处理</div>
+      </div>
+    </div>
+
+    <div class="section-header">
+      <div class="section-title">AI今日建议</div>
+      <div class="section-more" id="btn-ai-advice">
+        查看全部
+        <i data-lucide="chevron-right"></i>
+      </div>
+    </div>
+    <div class="ai-advice-card">
+      <div class="ai-advice-header">
+        <span class="ai-badge"><i data-lucide="sparkles"></i> AI建议</span>
+      </div>
+      <div class="ai-advice-text">李波波已连续查看报价方案3次，建议今天主动联系确认购买意向，可推进续费评估。</div>
+    </div>
+
+    <div class="section-header">
+      <div class="section-title">今日任务</div>
+    </div>
+
+    <div class="filter-tabs" id="filter-tabs">
+      <div class="filter-tab active" data-filter="all">全部</div>
+      <div class="filter-tab" data-filter="high">高优先级</div>
+      <div class="filter-tab" data-filter="risk">风险客户</div>
+      <div class="filter-tab" data-filter="pending">待复盘</div>
+    </div>
+
+    <div class="task-list" id="task-list"></div>
+  </div>
+
+  <!-- ── WORKBENCH PAGE ── -->
+  <div class="page" id="page-workbench">
+    <div class="header">
+      <div class="header-title">工作台</div>
+    </div>
+    <div class="workbench-search">
+      <i data-lucide="search" class="search-icon"></i>
+      <input class="search-input" id="search-input" placeholder="搜索客户姓名" autocomplete="off">
+    </div>
+    <div class="customer-list" id="customer-list"></div>
+  </div>
+
+  <!-- ── MY PAGE ── -->
+  <div class="page" id="page-my">
+    <div class="my-profile-bg">
+      <div class="my-info">
+        <div class="my-avatar">王</div>
+        <div>
+          <div class="my-name">王强</div>
+          <div class="my-role">高级销售顾问</div>
+          <div class="my-dept">华东区销售一部</div>
+        </div>
+      </div>
+    </div>
+    <div class="my-card">
+      <div class="my-stats-row">
+        <div class="my-stat">
+          <div class="my-stat-val">47</div>
+          <div class="my-stat-label">跟进中客户</div>
+        </div>
+        <div class="my-stat">
+          <div class="my-stat-val" style="color:var(--primary)">12</div>
+          <div class="my-stat-label">本月成交</div>
+        </div>
+        <div class="my-stat">
+          <div class="my-stat-val" style="color:var(--orange)">89%</div>
+          <div class="my-stat-label">跟进响应率</div>
+        </div>
+      </div>
+      <div class="my-menu">
+        <div class="my-menu-item">
+          <div class="my-menu-icon blue"><i data-lucide="bar-chart-2"></i></div>
+          <div class="my-menu-text">我的业绩</div>
+          <i data-lucide="chevron-right" class="my-menu-arrow"></i>
+        </div>
+        <div class="my-menu-item">
+          <div class="my-menu-icon green"><i data-lucide="users"></i></div>
+          <div class="my-menu-text">客户管理</div>
+          <i data-lucide="chevron-right" class="my-menu-arrow"></i>
+        </div>
+        <div class="my-menu-item">
+          <div class="my-menu-icon orange"><i data-lucide="settings"></i></div>
+          <div class="my-menu-text">设置</div>
+          <i data-lucide="chevron-right" class="my-menu-arrow"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BOTTOM NAV ── -->
+  <div class="bottom-nav">
+    <button class="nav-item active" data-page="today">
+      <i data-lucide="layout-dashboard"></i>
+      <span>今日</span>
+    </button>
+    <button class="nav-item" data-page="workbench">
+      <i data-lucide="briefcase"></i>
+      <span>工作台</span>
+    </button>
+    <button class="nav-item" data-page="my">
+      <i data-lucide="user"></i>
+      <span>我的</span>
+    </button>
+  </div>
+</div>
+
+<!-- ── AI ADVICE OVERLAY ── -->
+<div class="overlay" id="overlay-advice">
+  <div class="overlay-panel">
+    <div class="overlay-handle"></div>
+    <div class="overlay-head">
+      <div class="overlay-head-title">AI今日建议</div>
+      <button class="overlay-close" onclick="closeOverlay('advice')"><i data-lucide="x"></i></button>
+    </div>
+    <div class="overlay-body" id="advice-body"></div>
+  </div>
+</div>
+
+<!-- ── TASK DETAIL OVERLAY ── -->
+<div class="overlay" id="overlay-detail">
+  <div class="overlay-panel">
+    <div class="overlay-handle"></div>
+    <div class="overlay-head">
+      <div class="overlay-head-title">任务详情</div>
+      <button class="overlay-close" onclick="closeOverlay('detail')"><i data-lucide="x"></i></button>
+    </div>
+    <div class="overlay-body" id="detail-body"></div>
+  </div>
+</div>
+
+<!-- ── CHAT PAGE ── -->
+<div class="page" id="page-chat" style="padding-bottom:0;">
+  <div class="chat-header">
+    <button class="chat-back" onclick="goBackFromChat()"><i data-lucide="chevron-left"></i></button>
+    <div class="chat-customer">
+      <div class="chat-customer-name" id="chat-customer-name">李波波</div>
+      <div class="chat-customer-status" id="chat-customer-status">续费评估中</div>
+    </div>
+    <button class="chat-ai-btn" onclick="showChatAi()">AI建议</button>
+  </div>
+  <div class="chat-msgs" id="chat-msgs"></div>
+  <div class="chat-ai-suggestion" id="chat-ai-suggestion" style="display:none;">
+    <div class="chat-ai-suggestion-label"><i data-lucide="sparkles"></i> 推荐话术</div>
+    <div class="chat-ai-suggestion-text" id="chat-suggestion-text"></div>
+    <button class="btn btn-outline" style="margin-top:8px;" onclick="insertSuggestion()" id="btn-insert-suggestion">
+      <i data-lucide="plus"></i> 插入话术
+    </button>
+  </div>
+  <div class="chat-ai-suggestion" id="chat-ai-summary" style="display:none; background:#EFFAFF; border-color:#B8E4FF;">
+    <div style="font-size:13px; font-weight:700; color:var(--primary); margin-bottom:8px;">AI跟进总结</div>
+    <div id="chat-summary-content"></div>
+  </div>
+  <div class="chat-input-area">
+    <div class="chat-tools">
+      <button class="chat-tool" onclick="showChatAi()"><i data-lucide="sparkles"></i> AI建议</button>
+    </div>
+    <div class="chat-input-row">
+      <textarea class="chat-input" id="chat-input" rows="1" placeholder="输入消息..."></textarea>
+      <button class="chat-send" onclick="sendMessage()"><i data-lucide="send"></i></button>
+    </div>
+  </div>
+</div>
+
+<!-- ── CUSTOMER DETAIL PAGE ── -->
+<div class="page" id="page-customer-detail" style="padding-bottom:0;">
+  <div class="detail-header-bg"></div>
+  <div class="detail-customer-card" id="detail-customer-card"></div>
+  <div class="detail-content" id="detail-content"></div>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast"></div>
+
+<script>
+// ─── INIT ───
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+  renderTodayDate();
+  renderTasks('all');
+  renderWorkbenchCustomers();
+  initNav();
+  initFilters();
+  lucide.createIcons();
+});
+
+function $(id) { return document.getElementById(id); }
+
+// ─── DATA ───
+const TASKS = [
+  {
+    id: 1, customer: '李波波', stage: '续费评估', priority: 'high',
+    aiReason: '最近24小时查看报价方案3次，已5天未跟进，存在竞品流失风险。',
+    suggestedAction: '今天先确认价格顾虑，再推荐续费优惠方案。',
+    lastContact: '5天前', trigger: '客户重新查看报价方案',
+    tags: ['老客户', '价格敏感', '续费意向', '住在附近'],
+    done: false, status: 'pending',
+    history: [
+      { who: 'sale', name: '王强', msg: '李先生，之前这10节课上下来，您感觉整体提升怎么样？', time: '昨天 14:22' },
+      { who: 'customer', name: '李波波', msg: '整体还可以，就是最近时间不太固定，也想看看后面怎么安排。', time: '昨天 14:25' },
+      { who: 'sale', name: '王强', msg: '明白，那您更关注的是训练效果，还是时间和价格更好协调？', time: '昨天 14:27' },
+      { who: 'customer', name: '李波波', msg: '主要还是价格吧，如果长期报，压力有点大。', time: '昨天 14:30' }
+    ],
+    aiSuggestion: '李先生，我理解长期课包一次性决策压力会比较大。我们可以先按一个月目标来安排短周期训练，先解决您现在最想提升的稳定性问题，后面再根据效果决定是否继续。',
+    summary: {
+      content: '销售针对客户价格顾虑，推荐了短周期训练方案，降低客户一次性续费压力。',
+      tags: ['价格敏感', '适合短周期方案', '续费可推进'],
+      next: '明天上午10点前确认客户是否接受一个月短周期方案。'
+    },
+    detail: {
+      phone: '138****6721', company: '个人客户', source: '老客户转介绍',
+      lastBuy: '2025年6月', totalAmount: '¥28,800', contactCount: '23次'
+    }
+  },
+  {
+    id: 2, customer: '陈晓峰', stage: '报价阶段', priority: 'pending',
+    aiReason: '上周发送方案后客户未读，已3天无响应，需推进决策。',
+    suggestedAction: '发送简短跟进消息，确认方案是否收到，了解顾虑。',
+    lastContact: '3天前', trigger: '方案未读超时',
+    tags: ['新客户', '教育行业', '预算待确认'],
+    done: false, status: 'pending'
+  },
+  {
+    id: 3, customer: '王莉莉', stage: '试听后跟进', priority: 'pending',
+    aiReason: '已试听1次，课后反馈积极但未报名，关注决策障碍。',
+    suggestedAction: '主动发送成功案例，安排二次体验或优惠方案。',
+    lastContact: '2天前', trigger: '课后反馈积极',
+    tags: ['新客户', '成人培训', '决策中'],
+    done: false, status: 'pending'
+  },
+  {
+    id: 4, customer: '赵明', stage: '续费到期', priority: 'risk',
+    aiReason: '合同本周到期，客户未主动联系，存在流失风险。',
+    suggestedAction: '今天必须联系，提供续费优惠，锁定续约。',
+    lastContact: '7天前', trigger: '合同即将到期',
+    tags: ['老客户', '合同本周到期', '高价值'],
+    done: false, status: 'pending'
+  }
+];
+
+const AI_ADVICES = [
+  { title: '优先跟进李波波', desc: '已查看报价3次，今天联系可推进续费评估。' },
+  { title: '关注赵明合同', desc: '合同本周到期，需今天锁定续约。' },
+  { title: '陈晓峰推进', desc: '方案已读未回，用简短消息破冰。' },
+  { title: '王莉莉转化', desc: '试听反馈积极，给优惠方案促报名。' }
+];
+
+let currentCustomer = null;
+let chatHistory = [];
+let fromPage = 'today';
+
+// ─── NAV ───
+function initNav() {
+  document.querySelectorAll('.nav-item').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const page = btn.dataset.page;
+      switchPage(page);
+    });
+  });
+}
+
+function switchPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  $('page-' + page).classList.add('active');
+  document.querySelector(`.nav-item[data-page="${page}"]`).classList.add('active');
+  if (page === 'workbench') renderWorkbenchCustomers();
+}
+
+// ─── TODAY ───
+function renderTodayDate() {
+  const now = new Date();
+  const opts = { month: 'long', day: 'numeric', weekday: 'long' };
+  $('today-date').textContent = now.toLocaleDateString('zh-CN', opts);
+}
+
+function getPriorityLabel(p) {
+  return { high: '高优先级', risk: '风险客户', pending: '待转化', done: '已跟进', normal: '普通' }[p] || p;
+}
+
+function getPriorityClass(p) {
+  return { high: 'high', risk: 'risk', pending: 'pending', done: 'done', normal: 'normal' }[p] || 'normal';
+}
+
+function renderTasks(filter) {
+  let tasks = TASKS.filter(t => !t.done);
+  if (filter === 'high') tasks = tasks.filter(t => t.priority === 'high');
+  else if (filter === 'risk') tasks = tasks.filter(t => t.priority === 'risk');
+  else if (filter === 'pending') tasks = tasks.filter(t => t.priority === 'pending');
+
+  if (tasks.length === 0) {
+    $('task-list').innerHTML = '<div style="text-align:center;padding:40px 0;color:var(--text-secondary);font-size:14px;">暂无任务</div>';
+    return;
+  }
+
+  $('task-list').innerHTML = tasks.map(t => `
+    <div class="task-card" onclick="openTaskDetail(${t.id})">
+      <div class="task-card-header">
+        <div>
+          <div class="task-customer">${t.customer}</div>
+          <div class="task-stage">${t.stage}</div>
+        </div>
+        <span class="priority-tag ${getPriorityClass(t.priority)}">${getPriorityLabel(t.priority)}</span>
+      </div>
+      <div class="task-ai-reason">
+        <span class="task-ai-label">AI判断</span>${t.aiReason}
+      </div>
+      <div class="task-meta">
+        <div class="task-meta-item"><i data-lucide="clock"></i> 上次沟通 ${t.lastContact}</div>
+        <div class="task-meta-item"><i data-lucide="zap"></i> 触发：<span>${t.trigger}</span></div>
+      </div>
+      <div class="task-tags">${t.tags.map(tag => `<span class="task-tag">${tag}</span>`).join('')}</div>
+      <div style="font-size:12px;color:#666;margin-bottom:10px;"><span class="task-ai-label">建议</span>${t.suggestedAction}</div>
+      <div class="task-actions">
+        <button class="btn btn-outline" onclick="event.stopPropagation();openTaskDetail(${t.id})">
+          <i data-lucide="file-text"></i> 查看详情
+        </button>
+        <button class="btn btn-primary" onclick="event.stopPropagation();startChat(${t.id})">
+          <i data-lucide="message-circle"></i> 立即沟通
+        </button>
+      </div>
+    </div>
+  `).join('');
+  lucide.createIcons();
+}
+
+function initFilters() {
+  $('filter-tabs').addEventListener('click', e => {
+    const tab = e.target.closest('.filter-tab');
+    if (!tab) return;
+    $('filter-tabs').querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+    tab.classList.add('active');
+    renderTasks(tab.dataset.filter);
+  });
+}
+
+// ─── AI ADVICE OVERLAY ───
+$('btn-ai-advice').addEventListener('click', () => {
+  $('advice-body').innerHTML = AI_ADVICES.map((a, i) => `
+    <div class="advice-item">
+      <div class="advice-num">${i + 1}</div>
+      <div class="advice-content">
+        <div class="advice-title">${a.title}</div>
+        <div class="advice-desc">${a.desc}</div>
+      </div>
+    </div>
+  `).join('');
+  openOverlay('advice');
+});
+
+function openOverlay(id) {
+  $('overlay-' + id).classList.add('show');
+}
+function closeOverlay(id) {
+  $('overlay-' + id).classList.remove('show');
+}
+document.querySelectorAll('.overlay').forEach(o => {
+  o.addEventListener('click', e => {
+    if (e.target === o) o.classList.remove('show');
+  });
+});
+
+// ─── TASK DETAIL ───
+function openTaskDetail(id) {
+  const t = TASKS.find(t => t.id === id);
+  if (!t) return;
+  currentCustomer = t;
+  $('detail-body').innerHTML = `
+    <div class="detail-section">
+      <div class="detail-section-title"><i data-lucide="user"></i> 客户基础信息</div>
+      <div class="info-grid">
+        <div class="info-item"><div class="info-label">姓名</div><div class="info-value">${t.customer}</div></div>
+        <div class="info-item"><div class="info-label">当前阶段</div><div class="info-value" style="color:var(--primary)">${t.stage}</div></div>
+        <div class="info-item"><div class="info-label">联系方式</div><div class="info-value">${t.detail?.phone || '138****6721'}</div></div>
+        <div class="info-item"><div class="info-label">来源</div><div class="info-value">${t.detail?.source || '老客户转介绍'}</div></div>
+      </div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title"><i data-lucide="alert-circle"></i> 当前状态</div>
+      <div class="info-grid">
+        <div class="info-item"><div class="info-label">优先级</div><div class="info-value"><span class="priority-tag ${getPriorityClass(t.priority)}">${getPriorityLabel(t.priority)}</span></div></div>
+        <div class="info-item"><div class="info-label">上次沟通</div><div class="info-value">${t.lastContact}</div></div>
+      </div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title"><i data-lucide="sparkles"></i> AI判断</div>
+      <div class="ai-judge-box">${t.aiReason}</div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title"><i data-lucide="message-square"></i> 历史沟通摘要</div>
+      <div class="history-list">
+        ${(t.history || []).map(h => `
+          <div class="history-item">
+            <div class="history-avatar">${h.who === 'sale' ? '王' : h.name[0]}</div>
+            <div class="history-content">
+              <div class="history-name">${h.name}</div>
+              <div class="history-msg">${h.msg}</div>
+              <div class="history-time">${h.time}</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title"><i data-lucide="message-circle"></i> 推荐话术</div>
+      <div class="suggestion-box">
+        <div class="suggestion-label">开场白</div>
+        <div class="suggestion-text">${t.aiSuggestion}</div>
+      </div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title"><i data-lucide="arrow-right-circle"></i> 下一步动作</div>
+      <div class="next-action">
+        <i data-lucide="arrow-right-circle"></i>
+        <div class="next-action-text">${t.suggestedAction}</div>
+      </div>
+    </div>
+    <div style="padding:12px 0 20px;">
+      <button class="btn btn-primary" onclick="startChat(${t.id})" style="width:100%;">
+        <i data-lucide="message-circle"></i> 立即沟通
+      </button>
+    </div>
+  `;
+  lucide.createIcons();
+  closeOverlay('detail');
+  openOverlay('detail');
+}
+
+// ─── CHAT ───
+function startChat(id) {
+  const t = TASKS.find(t => t.id === id);
+  if (!t) return;
+  currentCustomer = t;
+  chatHistory = JSON.parse(JSON.stringify(t.history || []));
+  fromPage = 'today';
+  openChatPage(t);
+}
+
+function openChatPage(t) {
+  $('chat-customer-name').textContent = t.customer;
+  $('chat-customer-status').textContent = t.stage + '中';
+  $('chat-suggestion-text').textContent = t.aiSuggestion;
+  $('chat-ai-suggestion').style.display = 'none';
+  $('chat-ai-summary').style.display = 'none';
+  $('chat-input').value = '';
+  renderChatMessages();
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  $('page-chat').classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  lucide.createIcons();
+  setTimeout(() => scrollChat(), 50);
+}
+
+function renderChatMessages() {
+  const container = $('chat-msgs');
+  container.innerHTML = chatHistory.map(m => `
+    <div class="msg ${m.who}">
+      <div class="msg-avatar ${m.who}">${m.who === 'sale' ? '王' : m.name[0]}</div>
+      <div class="msg-bubble">${m.msg}</div>
+    </div>
+  `).join('');
+  scrollChat();
+}
+
+function scrollChat() {
+  const container = $('chat-msgs');
+  container.scrollTop = container.scrollHeight;
+}
+
+function showChatAi() {
+  $('chat-ai-suggestion').style.display = 'block';
+  $('chat-ai-summary').style.display = 'none';
+  scrollChat();
+}
+
+function insertSuggestion() {
+  $('chat-input').value = $('chat-suggestion-text').textContent;
+  $('chat-ai-suggestion').style.display = 'none';
+  $('chat-input').focus();
+}
+
+function sendMessage() {
+  const text = $('chat-input').value.trim();
+  if (!text) return;
+
+  chatHistory.push({ who: 'customer', name: currentCustomer.customer, msg: text, time: '刚刚' });
+  $('chat-input').value = '';
+  $('chat-ai-suggestion').style.display = 'none';
+
+  renderChatMessages();
+
+  setTimeout(() => {
+    // Auto AI reply
+    chatHistory.push({
+      who: 'sale', name: '王强', msg: '好的，我先记录下来。稍后给您整理一份跟进总结。', time: '刚刚'
+    });
+    renderChatMessages();
+    showAISummary();
+  }, 800);
+}
+
+function showAISummary() {
+  const s = currentCustomer.summary;
+  $('chat-summary-content').innerHTML = `
+    <div class="ai-summary-section">
+      <div class="ai-summary-label">本次沟通摘要</div>
+      <div class="ai-summary-text">${s.content}</div>
+    </div>
+    <div class="ai-summary-section">
+      <div class="ai-summary-label">客户新标签</div>
+      <div class="ai-summary-tags">${s.tags.map(tag => `<span class="ai-summary-tag">${tag}</span>`).join('')}</div>
+    </div>
+    <div class="ai-next" style="margin-top:8px;">
+      <i data-lucide="arrow-right-circle"></i>
+      <div><div class="ai-summary-label" style="color:var(--primary);margin-bottom:2px;">下一步建议</div>${s.next}</div>
+    </div>
+    <button class="btn btn-primary" style="width:100%;margin-top:12px;" onclick="saveAndUpdate()">
+      <i data-lucide="check"></i> 保存并更新任务
+    </button>
+  `;
+  lucide.createIcons();
+  $('chat-ai-summary').style.display = 'block';
+  scrollChat();
+}
+
+function saveAndUpdate() {
+  currentCustomer.done = true;
+  currentCustomer.status = 'done';
+
+  // Update stats
+  $('stat-total').textContent = parseInt($('stat-total').textContent) - 1;
+  if (currentCustomer.priority === 'high') {
+    $('stat-high').textContent = parseInt($('stat-high').textContent) - 1;
+  }
+  if (currentCustomer.priority === 'risk') {
+    $('stat-risk').textContent = parseInt($('stat-risk').textContent) - 1;
+  }
+  $('stat-pending').textContent = parseInt($('stat-pending').textContent) - 1;
+
+  showToast('已保存跟进记录');
+  goBackFromChat();
+}
+
+function goBackFromChat() {
+  renderTasks(getCurrentFilter());
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  $('page-' + (fromPage || 'today')).classList.add('active');
+  updateNavActive(fromPage || 'today');
+}
+
+function getCurrentFilter() {
+  const active = $('filter-tabs').querySelector('.filter-tab.active');
+  return active ? active.dataset.filter : 'all';
+}
+
+function updateNavActive(page) {
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  const nav = document.querySelector(`.nav-item[data-page="${page}"]`);
+  if (nav) nav.classList.add('active');
+}
+
+// ─── WORKBENCH ───
+const ALL_CUSTOMERS = [
+  { name: '李波波', stage: '续费评估', priority: 'high', tags: ['老客户', '价格敏感', '续费意向'], last: '5天前', avatar: '李' },
+  { name: '陈晓峰', stage: '报价阶段', priority: 'normal', tags: ['新客户', '教育行业'], last: '3天前', avatar: '陈' },
+  { name: '王莉莉', stage: '试听后跟进', priority: 'normal', tags: ['新客户', '成人培训'], last: '2天前', avatar: '王' },
+  { name: '赵明', stage: '续费到期', priority: 'risk', tags: ['老客户', '高价值'], last: '7天前', avatar: '赵' },
+  { name: '周海涛', stage: '需求确认', priority: 'normal', tags: ['新客户', '企业客户'], last: '1周前', avatar: '周' },
+];
+
+function renderWorkbenchCustomers(filter) {
+  const q = ($('search-input') && $('search-input').value) || '';
+  const customers = q ? ALL_CUSTOMERS.filter(c => c.name.includes(q)) : ALL_CUSTOMERS;
+
+  $('customer-list').innerHTML = customers.map(c => `
+    <div class="customer-item" onclick="openCustomerDetail('${c.name}')">
+      <div class="customer-avatar">${c.avatar}</div>
+      <div class="customer-info">
+        <div class="customer-name">${c.name}</div>
+        <div class="customer-meta">${c.stage} · ${c.last}</div>
+        <div class="customer-tags">${c.tags.map(t => `<span class="customer-tag">${t}</span>`).join('')}</div>
+      </div>
+      <i data-lucide="chevron-right" class="customer-arrow"></i>
+    </div>
+  `).join('');
+  if (customers.length === 0) {
+    $('customer-list').innerHTML = '<div style="text-align:center;padding:40px;color:var(--text-secondary);font-size:14px;">未找到匹配客户</div>';
+  }
+  lucide.createIcons();
+}
+
+$('search-input')?.addEventListener('input', () => renderWorkbenchCustomers());
+
+// ─── CUSTOMER DETAIL ───
+function openCustomerDetail(name) {
+  const t = TASKS.find(t => t.customer === name) || ALL_CUSTOMERS.find(c => c.name === name);
+  if (!t) return;
+  currentCustomer = t;
+
+  const stageColor = { high: 'var(--orange)', risk: 'var(--red)', normal: 'var(--primary)' }[t.priority] || 'var(--text-secondary)';
+
+  $('detail-customer-card').innerHTML = `
+    <div class="detail-customer-top">
+      <div class="detail-avatar">${(t.customer || t.name)[0]}</div>
+      <div>
+        <div class="detail-name">${t.customer || t.name}</div>
+        <div class="detail-stage-badge" style="background:${stageColor}20;color:${stageColor}">
+          ${t.stage}
+        </div>
+      </div>
+    </div>
+    <div class="detail-tags">
+      ${(t.tags || []).map(tag => `<span class="detail-tag">${tag}</span>`).join('')}
+    </div>
+    <div class="detail-stats">
+      <div class="detail-stat">
+        <div class="detail-stat-val">${t.detail?.totalAmount || '¥2.8万'}</div>
+        <div class="detail-stat-label">累计消费</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-val">${t.detail?.contactCount || '23次'}</div>
+        <div class="detail-stat-label">沟通次数</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-val orange">${t.lastContact || t.last || '5天前'}</div>
+        <div class="detail-stat-label">最近联系</div>
+      </div>
+    </div>
+  `;
+
+  const tData = typeof t === 'object' && t.id ? t : null;
+  $('detail-content').innerHTML = `
+    <div class="detail-section">
+      <div class="detail-section-title"><i data-lucide="message-square"></i> 最近沟通</div>
+      ${tData?.history ? `
+        <div class="history-list">
+          ${tData.history.slice(-2).map(h => `
+            <div class="history-item">
+              <div class="history-avatar">${h.who === 'sale' ? '王' : h.name[0]}</div>
+              <div class="history-content">
+                <div class="history-name">${h.name}</div>
+                <div class="history-msg">${h.msg}</div>
+                <div class="history-time">${h.time}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      ` : '<div style="font-size:13px;color:var(--text-secondary);padding:8px 0;">暂无沟通记录</div>'}
+    </div>
+    <div style="padding:12px 0 20px;">
+      <button class="btn btn-primary" onclick="startChatFromDetail()" style="width:100%;">
+        <i data-lucide="message-circle"></i> 发起沟通
+      </button>
+    </div>
+  `;
+
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  $('page-customer-detail').classList.add('active');
+  lucide.createIcons();
+}
+
+function startChatFromDetail() {
+  const t = TASKS.find(t => (t.customer || t.name) === (currentCustomer.customer || currentCustomer.name));
+  if (t) {
+    openChatPage(t);
+  } else {
+    // Mock a basic chat for non-task customers
+    const name = currentCustomer.customer || currentCustomer.name;
+    openChatPage({
+      customer: name, stage: currentCustomer.stage, aiSuggestion: '您好，关于课程安排想和您详细沟通一下。',
+      history: [], summary: { content: '初次联系，了解客户需求。', tags: ['新接触'], next: '明天跟进确认需求。' } 
+    });
+  }
+}
+
+// ─── TOAST ───
+function showToast(msg) {
+  const toast = $('toast');
+  toast.textContent = msg;
+  toast.classList.add('show');
+  setTimeout(() => toast.classList.remove('show'), 2200);
+}
+</script>
+</body>
+</html>
