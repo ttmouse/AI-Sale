@@ -4,245 +4,903 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../shared/favicon.svg">
-  <title>场景2：企微实时话术参谋</title>
+  <title>场景2 · 企微实时话术参谋｜陈香贵连锁 王建国</title>
   <link rel="stylesheet" href="../../shared/css/styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <link rel="stylesheet" href="../../shared/css/wecom.css">
   <style>
-    .dual-layout { display: flex; gap: 16px; height: calc(100vh - 180px); }
-    .chat-panel { flex: 3; }
-    .advisor-panel { flex: 2; background: white; border-radius: var(--radius-lg); border: 1px solid var(--gray-200); overflow: hidden; display: flex; flex-direction: column; }
-    .advisor-header { padding: 14px 16px; background: linear-gradient(135deg, var(--primary), var(--primary-light)); color: white; }
-    .advisor-header h3 { font-size: 14px; font-weight: 600; }
-    .advisor-header p { font-size: 12px; opacity: 0.85; margin-top: 2px; }
-    .advisor-content { flex: 1; overflow-y: auto; padding: 16px; }
-    .stage-indicator { display: flex; gap: 4px; margin-bottom: 16px; }
-    .stage-dot { flex: 1; height: 6px; border-radius: 3px; background: var(--gray-200); }
-    .stage-dot.active { background: var(--primary); }
-    .stage-labels { display: flex; justify-content: space-between; font-size: 11px; color: var(--gray-500); margin-bottom: 16px; }
-    .script-card { background: var(--gray-50); border-radius: var(--radius-md); padding: 12px; margin-bottom: 10px; cursor: pointer; transition: all 0.2s; border: 1px solid transparent; }
-    .script-card:hover { border-color: var(--primary); background: #EFF6FF; }
-    .script-card.featured { border-color: var(--success); background: #ECFDF5; }
-    .script-score { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; font-weight: 600; margin-bottom: 6px; }
-    .script-text { font-size: 13px; color: var(--gray-700); line-height: 1.6; }
-    .script-why { font-size: 11px; color: var(--gray-500); margin-top: 6px; }
-    @media (max-width: 900px) { .dual-layout { flex-direction: column; height: auto; } }
+    /* 场景级覆盖：scene-content 留出三栏布局所需的高度 */
+    main.scene-content { padding: 14px 18px 28px; max-width: 1480px; }
+    .scene-hint-bar {
+      display:flex; align-items:center; gap:10px;
+      padding:10px 14px; margin-bottom:12px;
+      background: linear-gradient(90deg, #FFFAF1 0%, #FFF7E0 100%);
+      border:1px solid #F4D58A; border-left:3px solid #E0A52A;
+      border-radius: 10px;
+      font-size: 12.5px; color:#6B4D14;
+    }
+    .scene-hint-bar svg { flex:none; color:#C28615; }
+    .scene-hint-bar b { color:#3F2E08; font-weight:600; }
+    .wecom-app { height: calc(100vh - 168px); min-height: 620px; }
+    /* 故事剧本卡（隐藏式，hover 顶栏 ID 时浮出） */
+    .scene-takeover-toast {
+      position: fixed; right: 22px; bottom: 22px;
+      background:#0F172A; color:#fff; padding:12px 16px;
+      border-radius:12px; box-shadow:0 14px 36px rgba(15,23,42,.32);
+      font-size:12.5px; line-height:1.55; max-width: 280px;
+      transform: translateY(140%); opacity:0;
+      transition: all .35s cubic-bezier(.25,.8,.3,1.05);
+      z-index: 90; pointer-events:none;
+    }
+    .scene-takeover-toast.is-show { transform: translateY(0); opacity:1; }
+    .scene-takeover-toast b { color:#5EEAD4; font-weight:600; }
+    /* 未读红点动画 */
+    @keyframes badge-pop {
+      0%   { transform: scale(1); }
+      40%  { transform: scale(1.35); }
+      70%  { transform: scale(0.9); }
+      100% { transform: scale(1); }
+    }
+    .wc-badge.is-anim { animation: badge-pop 0.5s ease; }
+    /* 空状态提示 */
+    .wc-empty-hint {
+      padding: 32px 16px;
+      text-align: center;
+      color: var(--gray-400, #94A3B8);
+      font-size: 13px;
+    }
+    /* 切换会话过渡 */
+    .wc-chat-header { transition: background 0.25s; }
+    .wc-chat-header.is-switching { background: rgba(37,99,235,0.06); }
+    /* 引用气泡内提示 */
+    .wc-typing-hint { color: var(--gray-400, #94A3B8); font-style: italic; font-size: 13px; }
+    /* 接管状态 */
+    .wc-chat-header.is-takeover {
+      background: linear-gradient(90deg, rgba(14,165,233,0.08), rgba(14,165,233,0.03)) !important;
+      border-bottom: 1.5px solid rgba(14,165,233,0.25);
+    }
+    /* AI 参谋面板脉冲 */
+    .wc-aside.is-pulse {
+      animation: aside-pulse 0.8s ease;
+    }
+    @keyframes aside-pulse {
+      0%,100% { box-shadow: none; }
+      40%      { box-shadow: 0 0 0 3px rgba(37,99,235,0.18); }
+    }
+    /* 插入输入框高亮 */
+    .wc-input.is-flash {
+      background: rgba(7,193,96,0.05) !important;
+      box-shadow: inset 0 0 0 2px rgba(7,193,96,0.32) !important;
+      border-radius: 4px;
+      transition: all 0.18s ease;
+    }
+
+    /* ============================================================
+       场景级精修（v2 · design-taste pass）
+       VARIANCE=8 · MOTION=6 · DENSITY=4
+       ============================================================ */
+
+    /* —— 基础抗锯齿与选区 —— */
+    main.scene-content { font-feature-settings: "ss01", "tnum"; }
+    main.scene-content ::selection { background: rgba(7,193,96,.18); color: #053D1F; }
+    .wecom-app { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+    .wecom-app *:focus-visible {
+      outline: 2px solid rgba(7,193,96,.55);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    /* —— 演示提示条：去渐变、左侧高亮条 —— */
+    .scene-hint-bar {
+      background: #FFF8E8;
+      border: 1px solid #F0DBA8;
+      border-left: 0;
+      border-radius: 8px;
+      padding: 9px 14px 9px 14px;
+      position: relative;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,.55);
+      letter-spacing: 0.1px;
+      color: #5A4310;
+    }
+    .scene-hint-bar::before {
+      content: "";
+      position: absolute; left: 0; top: 8px; bottom: 8px;
+      width: 3px;
+      background: linear-gradient(180deg, #E8A623 0%, #C97E36 100%);
+      border-radius: 2px;
+    }
+    .scene-hint-bar svg { color: #C9851A; }
+    .scene-hint-bar b { color: #2E1F03; font-weight: 600; }
+    /* PH-1 */
   </style>
 </head>
 <body class="scene-page">
   <nav class="scene-nav" id="scene-nav"></nav>
 
   <main class="scene-content">
-    <div style="margin-bottom:12px">
-      <div style="font-size:13px;color:var(--gray-500)">
-        演示模式：模拟销售与客户的企微对话，右侧 AI 实时分析上下文并推荐话术
-      </div>
+    <!-- 演示提示条（轻量化，让出主舞台） -->
+    <div class="scene-hint-bar">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16.4" r=".9" fill="currentColor"/>
+      </svg>
+      <span>演示模式 · 模拟与<b>陈香贵连锁 王建国</b>的企微沟通，AI 参谋实时给出推荐话术与<b>下一步动作</b>，按右下「<b>切换为人工</b>」可移交真人接管</span>
     </div>
 
-    <div class="dual-layout">
-      <!-- 左：企微聊天 -->
-      <div class="chat-panel">
-        <div class="chat-container" style="height:100%">
-          <div style="padding:12px 16px;border-bottom:1px solid var(--gray-200);display:flex;align-items:center;gap:12px;background:white">
-            <div style="width:40px;height:40px;background:linear-gradient(135deg,#F59E0B,#D97706);border-radius:50%;display:flex;align-items:center;justify-content:center;color:white;font-weight:600">张</div>
-            <div>
-              <div style="font-size:14px;font-weight:600">张老板 · 川味轩</div>
-              <div style="font-size:12px;color:var(--success)">● 在线</div>
-            </div>
+    <!-- 企微三栏 -->
+    <div class="wecom-app" id="wcApp">
+      <!-- 左：会话列表 -->
+      <aside class="wc-sidebar">
+        <div class="wc-side-head">
+          <div class="wc-search">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+            <input placeholder="搜索 / 客户 / 群" />
           </div>
+          <button class="wc-side-add" title="新建会话">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
+          </button>
+        </div>
+        <div class="wc-conv-list" id="wcConvList"></div>
+      </aside>
 
-          <div class="chat-messages" id="chat-messages">
-            <div class="chat-message ai">
-              <div class="chat-avatar" style="background:linear-gradient(135deg,#F59E0B,#D97706);color:white">张</div>
-              <div class="chat-bubble">
-                你好，我是做川菜的，朋友推荐的，想了解一下你们的炒菜机
-              </div>
-            </div>
+      <!-- 中：聊天主区 -->
+      <section class="wc-chat">
+        <header class="wc-chat-header">
+          <div class="wc-chat-title">
+            <span class="wc-name">王建国</span>
+            <span class="wc-tag-customer">客户</span>
+            <span class="wc-id" title="跨场景统一客户 ID">CUS-2026-0002（陈香贵）</span>
           </div>
+          <div class="wc-chat-meta">
+            <span class="wc-online-dot"></span><span>在线 · 陈香贵连锁（上海总部）</span>
+          </div>
+          <div class="wc-chat-actions">
+            <button class="wc-icon-btn" title="语音通话"><span data-icon="phone"></span></button>
+            <button class="wc-icon-btn" title="视频通话"><span data-icon="video"></span></button>
+            <button class="wc-icon-btn" title="历史记录"><span data-icon="history"></span></button>
+            <button class="wc-takeover-btn" id="btnTakeover" title="一键切换为人工接管">
+              <span data-icon="takeover"></span>切换为人工
+            </button>
+            <button class="wc-icon-btn" title="更多"><span data-icon="more"></span></button>
+          </div>
+        </header>
 
-          <div class="chat-input-area">
-            <input type="text" class="chat-input" id="chat-input" placeholder="输入回复..." onkeypress="if(event.key==='Enter')sendMessage()">
-            <button class="chat-send-btn" onclick="sendMessage()">
-              <i class="fas fa-paper-plane"></i>
+        <div class="wc-messages" id="wcMessages"></div>
+
+        <div class="wc-composer">
+          <div class="wc-toolbar">
+            <button class="wc-iconbtn" title="表情"><span data-icon="emoji"></span></button>
+            <button class="wc-iconbtn" title="文件"><span data-icon="file"></span></button>
+            <button class="wc-iconbtn" title="图片"><span data-icon="image"></span></button>
+            <button class="wc-iconbtn" title="截图"><span data-icon="scissors"></span></button>
+            <button class="wc-iconbtn" title="语音"><span data-icon="mic"></span></button>
+            <span class="wc-toolbar-divider"></span>
+            <button class="wc-iconbtn wc-tool-tip" title="AI 推荐 · 来自右侧参谋">
+              <span data-icon="sparkles"></span>AI 推荐
             </button>
           </div>
-        </div>
-      </div>
-
-      <!-- 右：AI 参谋 -->
-      <div class="advisor-panel">
-        <div class="advisor-header">
-          <h3><i class="fas fa-robot" style="margin-right:6px"></i>AI 话术参谋</h3>
-          <p>实时分析对话，推荐最优话术</p>
-        </div>
-        <div class="advisor-content" id="advisor-content">
-          <div style="margin-bottom:12px">
-            <div style="font-size:12px;color:var(--gray-500);margin-bottom:8px">客户阶段</div>
-            <div class="stage-indicator">
-              <div class="stage-dot active"></div>
-              <div class="stage-dot"></div>
-              <div class="stage-dot"></div>
-              <div class="stage-dot"></div>
-            </div>
-            <div class="stage-labels">
-              <span style="color:var(--primary);font-weight:500">认知</span>
-              <span>兴趣</span>
-              <span>评估</span>
-              <span>决策</span>
-            </div>
+          <div class="wc-input-area">
+            <textarea class="wc-input" id="wcInput" placeholder="输入回复，Enter 发送 · Shift+Enter 换行"></textarea>
+            <button class="wc-send-btn" id="wcSendBtn">发送 <span data-icon="send"></span></button>
           </div>
-
-          <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px">推荐话术（3 选 1）</div>
-
-          <div class="script-card featured" onclick="useScript(this)">
-            <div class="script-score" style="color:var(--success)">
-              <i class="fas fa-star"></i> 推荐度 95%
-            </div>
-            <div class="script-text">
-              张老板您好！川菜是我们的优势场景，很多川菜馆都在用。您这边门店多大？日均大概多少单？我先帮您匹配个最适合的方案。
-            </div>
-            <div class="script-why">✓ 先确认场景和需求，不急于推销</div>
-          </div>
-
-          <div class="script-card" onclick="useScript(this)">
-            <div class="script-score" style="color:var(--primary)">
-              <i class="fas fa-thumbs-up"></i> 推荐度 80%
-            </div>
-            <div class="script-text">
-              感谢推荐！我们川菜馆客户很多，成都「川味轩」就是典型客户。您什么时候方便，我带上机器过去试菜？
-            </div>
-            <div class="script-why">✓ 借力案例，快速邀约试菜</div>
-          </div>
-
-          <div class="script-card" onclick="useScript(this)">
-            <div class="script-score" style="color:var(--warning)">
-              <i class="fas fa-lightbulb"></i> 推荐度 65%
-            </div>
-            <div class="script-text">
-              我们有专门的川菜菜谱，宫保鸡丁、麻婆豆腐都能做。我把产品册发您看看？
-            </div>
-            <div class="script-why">先推资料，引导力较弱</div>
+          <div class="wc-composer-foot">
+            <span class="wc-foot-tip">已开启 <b>AI 实时辅助</b> · 客户标签自动更新</span>
           </div>
         </div>
-      </div>
+      </section>
+
+      <!-- 右：AI 参谋面板 -->
+      <aside class="wc-aside">
+        <div class="wc-aside-tabs" id="wcAsideTabs">
+          <button class="wc-aside-tab is-active" data-tab="script">话术推荐</button>
+          <button class="wc-aside-tab" data-tab="insight">客户洞察</button>
+          <button class="wc-aside-tab" data-tab="next">下一步动作</button>
+        </div>
+
+        <div class="wc-aside-body" id="wcAsideBody"></div>
+      </aside>
     </div>
   </main>
 
+  <!-- 接管 Toast -->
+  <div class="scene-takeover-toast" id="toastTakeover">
+    <b>已切换至人工接管</b><br>
+    刚刚向客户发送的最近一条 AI 草稿已暂停，王经理在 <b>14:38</b> 完成接手。
+  </div>
+
   <script src="../../shared/js/app.js"></script>
+  <script src="../../shared/js/wecom.js"></script>
   <script>
-    const messagesEl = document.getElementById('chat-messages');
-    const inputEl = document.getElementById('chat-input');
-    const advisorEl = document.getElementById('advisor-content');
+  /* =========================================================
+   * scene-2-chat · 企微实时话术参谋
+   * 主线剧本：陈香贵连锁 王建国（CUS-2026-0002）
+   * ========================================================= */
+  initNav('企微实时话术参谋', '销售赋能', 'tag-blue');
 
-    let round = 1;
+  // 全局 DOM 引用
+  var wcMsg, wcInput, wcSendBtn, wcAsideBody, wcAsideTabs;
 
-    const scriptsDB = {
-      1: {
-        stage: 0,
-        stageName: '认知',
-        scripts: [
-          { score: 95, featured: true, text: '张老板您好！川菜是我们的优势场景，很多川菜馆都在用。您这边门店多大？日均大概多少单？我先帮您匹配个最适合的方案。', why: '先确认场景和需求，不急于推销' },
-          { score: 80, featured: false, text: '感谢推荐！我们川菜馆客户很多，成都「川味轩」就是典型客户。您什么时候方便，我带上机器过去试菜？', why: '借力案例，快速邀约试菜' },
-          { score: 65, featured: false, text: '我们有专门的川菜菜谱，宫保鸡丁、麻婆豆腐都能做。我把产品册发您看看？', why: '先推资料，引导力较弱' }
+  // ---------- 1. 多客户会话数据（支持会话切换） ----------
+  const CONV_LIST = [
+    { id:'CUS-2026-0002', name:'王建国',   sub:'陈香贵连锁 · 上海',    last:'价格比美膳狮贵那么多，凭什么？',     time:'14:32', unread:2, color:'c2', tag:'客户',  active:true,  online:true  },
+    { id:'CUS-2026-0001', name:'小江溪',   sub:'南昌小江溪餐饮',       last:'炒菜机出品质量确实高',              time:'昨天',   unread:0, color:'c5', tag:'老客',  active:false, online:false },
+    { id:'CUS-2026-0004', name:'中品一禾', sub:'高校团餐（山东）',     last:'残食浪费从50斤降到10斤，效果明显',   time:'昨天', unread:1, color:'c8', tag:'客户',   active:false, online:false },
+    { id:'CUS-2026-0005', name:'君濠书院', sub:'深铁团餐（深圳）',     last:'G5 2联组运行稳定',                   time:'周一',   unread:0, color:'c4', tag:'客户',  active:false, online:true  },
+    { id:'CUS-2026-0006', name:'乡村基',   sub:'中式快餐连锁（重庆）',  last:'正在评估批量采购方案',               time:'5/15',   unread:0, color:'c6', tag:'线索',  active:false, online:false },
+    { id:'CUS-2026-0014', name:'比格',     sub:'西式自助连锁（北京）',  last:'G3还没完成全面上线',                 time:'5/14',   unread:0, color:'c3', tag:'客户',  active:false, online:true  }
+  ];
+
+  // ---------- 1b. 各客户独立剧本数据 ----------
+  const CONV_ROUNDS = {
+    'CUS-2026-0002': { // 王建国（陈香贵）
+      customerId: 'CUS-2026-0002',
+      name: '王建国', company: '陈香贵连锁', region: '上海总部',
+      stage: 0, stageName: '认知',
+      avatarChar: '王', colorClass: 'c2',
+      bootstrap: [
+        { type:'system', text:'14:08 · 通过「企微外部联系人」添加 王建国（陈香贵连锁）' },
+        { type:'time-div', text:'今天 14:12' },
+        { type:'msg', side:'other', name:'王建国', content:'你好，我是陈香贵的，朋友推荐的，想了解一下你们的炒菜机', time:'14:12', online:true },
+        { type:'msg', side:'other', name:'王建国', content:'我们现在全国几百家门店，<b>主要是浇头标准化需求</b>，想看看自动化能不能帮上忙。', time:'14:12' }
+      ],
+      rounds: [
+        {
+          stage: 0, stageName: '认知',
+          reply: { text:'我们想做现炒浇头拌面，<b>日均浇头大概需要 400 份</b>。你们有适合的机型吗？另外我们看过「<u>小江溪</u>」的案例，他们都是用你们G2/G3，效果怎么样？', tags:['决策人','高意向','已知案例'], markLabel:'关键信息：浇头400份/日 · 面品类', mark:'turn' },
+          scripts: [
+            { score:95, level:'top', text:'王总您好！面品类浇头标准化我们做得最熟。小江溪用的就是 G2+G3，后厨人力成本下降40%，日均出品150-300份，出餐营收占30%。我帮您匹配「G2+G3」组合，现炒浇头、小炒黄牛肉拌面、爆肚拌面都能做，我把小江溪详细数据发您？', why:'明确客户场景，引用真实案例数据锚定', tags:['场景识别','案例借力'], confidence:0.95 },
+            { score:80, level:'mid', text:'陈香贵是做牛肉面的，浇头标准化正好是我们的强项。G2/G3都配了氮化铁锅14-15种调料，要不这周我带机器到您总部做一次试菜？您看周三还是周五方便？', why:'二选一邀约提升转化', tags:['案例借力','二选一邀约'], confidence:0.86 },
+            { score:65, level:'low', text:'我们的设备能炒小炒黄牛肉、辣子鸡等浇头。我把产品册发您看看？', why:'被动推资料，引导力较弱', tags:['资料投递'], confidence:0.62 }
+          ],
+          insight: [
+            { kind:'pain',   label:'浇头标准化需求', detail:'日均400份浇头，面品类现炒差异化，目标取代传统拉面模式' },
+            { kind:'signal', label:'已知小江溪案例', detail:'已看过竞争对手案例——被同行教育过，门槛低' },
+            { kind:'next',   label:'发送案例数据', detail:'下一步：发送小江溪详细效果数据 + 邀约试菜' }
+          ]
+        },
+        {
+          stage: 1, stageName: '兴趣',
+          reply: { text:'<b>G3要7.6万，比美膳狮贵不少啊</b>，他们的才4-5万。而且你们售后靠谱吗？我们全国几百家门店。', tags:['价格异议','售后顾虑','决策迟疑'], markLabel:'异议：比美膳狮贵', mark:'loss' },
+          scripts: [
+            { score:95, level:'top', text:'理解您在算细账。差价的3万主要在几个地方：第一，我们的氮化铁锅受热均匀、不会粘锅，美膳狮是不锈钢锅加铝层，高温下铝离子有迁移风险；第二，我们52人售后团队全国覆盖，他们是4-6小时响应而且仅限省会；第三，我们有六大报表体系，他们有吗？您看小江溪用了我们设备后人力成本降了40%，这台账算下来反而更划算。', why:'数据破价，不打折而是扩大价值面', tags:['价值重塑','数据破价'], confidence:0.93 },
+            { score:78, level:'mid', text:'2台G3总价15.3万，本月活动价14.2万，还送3年延保。', why:'直接报价，未解决客户对价值的疑虑', tags:['硬报价'], confidence:0.71 },
+            { score:60, level:'low', text:'我发您一份详细方案PDF，您先看看。', why:'被动等待，错失窗口', tags:['资料投递'], confidence:0.55 }
+          ],
+          insight: [
+            { kind:'risk', label:'价格敏感（高）', detail:'美膳狮≈4-5万 vs G3≈7.6万，需扩大价值面而非降价' },
+            { kind:'pain', label:'售后顾虑', detail:'担心全国门店服务覆盖，需要52人团队+全国网络佐证' },
+            { kind:'next', label:'竞品对比+案例', detail:'发送竞品对比表+小江溪详细数据，约本周总部演示' }
+          ]
+        },
+        {
+          stage: 2, stageName: '评估',
+          reply: { text:'<i style="color:var(--gray-500)">（沉默 5 分钟）</i><br>…我再考虑考虑，<b>过两天给你答复</b>。', tags:['沉默信号','决策推迟','风险升级'], markLabel:'风险升级：沉默+推迟', mark:'turn' },
+          scripts: [
+            { score:92, level:'top', text:'王总，您肯定还在权衡。我换个方式 — 这周五下午我带上G3到您上海总部，<b>用您自己的食材现场做3道浇头</b>，您和主厨一起尝。觉得不行方案当场作废，绝不打扰您。您看实物比看资料靠谱多了。', why:'零风险体验邀约', tags:['损失规避','现场体验'], confidence:0.91 },
+            { score:75, level:'mid', text:'我们的G3质保2年，全国52人售后团队，远程可解决大部分问题。', why:'回应售后顾虑但未挖深', tags:['售后回应'], confidence:0.68 },
+            { score:55, level:'low', text:'您放心，我们是优特科技集团旗下，自有资金，30年技术沉淀。', why:'空洞承诺', tags:['空话'], confidence:0.42 }
+          ],
+          insight: [
+            { kind:'risk',   label:'沉默 ≥ 5 分钟', detail:'此阶段沉默→24h未推进概率68%，需主动破局' },
+            { kind:'signal', label:'未直接拒绝', detail:'仍说「考虑考虑」— 仍有挽回窗口' },
+            { kind:'next',   label:'零风险体验邀约', detail:'发送本周五试菜邀约+现场作废条款，降低决策成本' }
+          ]
+        }
+      ]
+    },
+
+    'CUS-2026-0001': { // 小江溪 — 已成交
+      customerId: 'CUS-2026-0001',
+      name: '小江溪', company: '南昌小江溪餐饮', region: '南昌总部',
+      stage: 1, stageName: '兴趣',
+      avatarChar: '李', colorClass: 'c5',
+      bootstrap: [
+        { type:'system', text:'5月19日 09:22 · 通过「企微外部联系人」接收客户主动咨询' },
+        { type:'time-div', text:'昨天 09:25' },
+        { type:'msg', side:'other', name:'小江溪', content:'张经理介绍的，你们的炒菜机我们在南昌的店想试试，G2和G3有什么区别？', time:'09:25', online:true },
+        { type:'msg', side:'self',  name:'我（小李·销售）', content:'江总您好！小江溪的赣菜特色我们很清楚。G2占地0.52m²、13秒升温、14种调料，适合小炒；G3升级版立体加热、15种调料、产能更高。我们建议G2+G3组合，一台炒招牌菜、一台跑量。小江溪南昌老乡做赣菜小炒，锅气要求高，我们的氮化铁锅刚好满足。', time:'09:26', status:'read' }
+      ],
+      rounds: [
+        {
+          stage: 1, stageName: '兴趣',
+          reply: { text:'好的，我们定下来了。先上G2和G3各一台，试试效果。你们什么时候能发货安装？', tags:['确认购买','快速决策'], markLabel:'已成交：快速决策', mark:'gold' },
+          scripts: [
+            { score:98, level:'top', text:'太好了！我马上安排出库。G2和G3各一台，含安装培训，工程师本周五前到南昌。我先发您安装条件确认清单，厨房需要380V三相电源。到货后我们厨师团队会到店完成8道招牌菜的标准菜谱录制。', why:'确认订单+锁定交付时间+追加菜谱服务，三联动' },
+            { score:80, level:'mid', text:'好的，我安排发货。预计3-5天到南昌。', why:'仅确认发货，未主动推进菜谱录制等服务' }
+          ],
+          insight: [
+            { kind:'signal', label:'快速决策成交', detail:'从接触到成交仅1天，赣菜连锁对锅气要求高，氮化铁锅是核心决策因素' },
+            { kind:'next',   label:'安排发货+菜谱录制', detail:'确认发货时间+安排厨师团队到店录制菜谱' }
+          ]
+        }
+      ]
+    },
+
+    'CUS-2026-0004': { // 中品一禾 — 团餐
+      customerId: 'CUS-2026-0004',
+      name: '中品一禾', company: '山东中品一禾餐饮', region: '济南·高校团餐',
+      stage: 2, stageName: '评估',
+      avatarChar: '赵', colorClass: 'c4',
+      bootstrap: [
+        { type:'system', text:'5月17日 16:40 · 通过「企微外部联系人」添加 中品一禾联系人' },
+        { type:'time-div', text:'周一 09:00' },
+        { type:'msg', side:'other', name:'中品一禾', content:'听说你们的炒菜机适合食堂，我们高校食堂每天大概1200人就餐，想了解一下', time:'09:00', online:true },
+        { type:'msg', side:'self',  name:'我（小李·销售）', content:'您好！食堂场景我们有真实案例。山东中品一禾就是高校团餐，用了G3之后残食浪费从50斤降到10斤，厨师从3人减到1人。按1200人算，我建议G5×1+G3×1组合，G5大容量出品5-15kg/3-6分钟正好适配。我把配置表和案例数据发您？', time:'09:02', status:'read' },
+        { type:'msg', side:'other', name:'中品一禾', content:'方案我看完了，下周内部讨论一下。另外，你们设备能耗怎么样？', time:'周一 09:30', online:true }
+      ],
+      rounds: [
+        {
+          stage: 2, stageName: '评估',
+          reply: { text:'还在讨论，估计到下周三左右出结果。能耗和售后是我们比较关心的。', tags:['能耗关注','决策周期'], markLabel:'待决策 · 能耗+售后' },
+          scripts: [
+            { score:90, level:'top', text:'理解！能耗方面，G3 15kW按每天6小时算，日耗电约¥72（按0.8元/度），折合每份菜不到¥0.06。售后方面我们有52人团队全国覆盖，G3质保2年，远程可解决大部分问题。您看这周五方便来我们展厅看看G5和G3的实际运行吗？', why:'数据化回复能耗+售后双疑虑，同时邀约参观', tags:['数据化回复'] }
+          ],
+          insight: [
+            { kind:'pain',  label:'能耗+售后双顾虑', detail:'食堂决策层关注能耗指标和长期服务保障' },
+            { kind:'next',  label:'周五邀约参观', detail:'系统生成展厅参观邀约任务' }
+          ]
+        }
+      ]
+    }
+  };
+
+  // ---------- 2. 三轮对话（已废弃，保留兼容） ----------
+  const ROUNDS = {
+    1: {
+      stage: 0, stageName: '认知',
+      customerName: '王建国',
+      avatarChar: '王',
+      colorClass: 'c2',
+      reply: {
+        text: '我们想做现炒浇头拌面，<b>日均浇头大概需要 400 份</b>。你们有适合的机型吗？',
+        tags: ['决策人', '高意向'],
+        markLabel: '关键信息：浇头400份/日'
+      },
+      scripts: [
+        { score: 95, level:'top', text:'王总您好！面品类浇头标准化我们做得最熟。我帮您匹配「G2+G3」组合，现炒浇头都能做，我把小江溪的详细数据发您？', why:'明确客户场景，引用真实案例', tags:['场景识别','案例借力'], confidence:0.95 },
+        { score: 80, level:'mid', text:'浇头标准化是我们的强项。G2/G3都配了氮化铁锅14-15种调料，这周带机器到您总部试菜？', why:'二选一邀约', tags:['案例借力','二选一邀约'], confidence:0.86 },
+        { score: 65, level:'low', text:'我们的设备能炒各种浇头，我把产品册发您看看？', why:'被动推资料', tags:['资料投递'], confidence:0.62 }
+      ],
+      insight: [
+        { kind:'pain',   label:'浇头标准化需求', detail:'日均400份浇头，目标取代传统拉面模式' },
+        { kind:'signal', label:'已知案例', detail:'已被同行教育过，门槛低' },
+        { kind:'next',   label:'发送案例数据', detail:'发送小江溪数据+邀约试菜' }
+      ]
+    },
+
+    2: {
+      stage: 1, stageName: '兴趣',
+      customerName: '王建国',
+      avatarChar: '王',
+      colorClass: 'c2',
+      reply: {
+        text: '<b>G3要7.6万，比美膳狮贵不少啊</b>，他们的才4-5万。',
+        tags: ['价格异议', '售后顾虑'],
+        markLabel: '异议：比美膳狮贵'
+      },
+      scripts: [
+        { score: 95, level:'top', text:'理解您算细账。差价的3万在氮化铁锅、52人售后团队、六大报表体系上。小江溪用了后人力成本降40%，这台账算下来反而划算。', why:'数据破价，扩大价值面', tags:['价值重塑','数据破价'], confidence:0.93 },
+        { score: 78, level:'mid', text:'2台G3总价15.3万，本月活动价14.2万，还送延保。', why:'直接报价', tags:['硬报价'], confidence:0.71 },
+        { score: 60, level:'low', text:'我发您一份详细方案PDF。', why:'被动等待', tags:['资料投递'], confidence:0.55 }
+      ],
+      insight: [
+        { kind:'risk',   label:'价格敏感（高）', detail:'美膳狮≈4-5万 vs G3≈7.6万' },
+        { kind:'pain',   label:'售后顾虑', detail:'需52人团队佐证' },
+        { kind:'next',   label:'竞品对比+案例', detail:'发送竞品对比表+小江溪数据' }
+      ]
+    },
+
+    3: {
+      stage: 2, stageName: '评估',
+      customerName: '王建国',
+      avatarChar: '王',
+      colorClass: 'c2',
+      reply: {
+        text: '<i style="color:var(--gray-500)">（沉默 5 分钟）</i><br>…我再考虑考虑，<b>过两天给你答复</b>。',
+        tags: ['沉默信号', '决策推迟'],
+        markLabel: '风险升级：沉默+推迟'
+      },
+      scripts: [
+        { score: 92, level:'top', text:'王总，这周五我带G3到您上海总部，<b>用您自己的食材做3道浇头</b>。觉得不行方案当场作废。', why:'零风险体验邀约', tags:['损失规避','现场体验'], confidence:0.91 },
+        { score: 75, level:'mid', text:'我们的机器质保 3 年，全国 200 多个服务点，坏了 4 小时内上门。', why:'回应售后顾虑，但未主动挖掘真正异议', tags:['售后回应'], confidence:0.68 },
+        { score: 55, level:'low', text:'您放心，我们是大品牌，很多连锁都在用。', why:'空洞承诺，反而强化客户疑虑', tags:['空话'], confidence:0.42 }
+      ],
+      insight: [
+        { kind:'risk',   label:'沉默 ≥ 5 分钟',   detail:'根据历史数据：此阶段沉默 → 24h 内未推进概率 68%，需主动破局' },
+        { kind:'signal', label:'未直接拒绝',     detail:'仍说「考虑考虑」而非「不需要」 — 仍有挽回窗口' },
+        { kind:'next',   label:'零风险体验邀约', detail:'发送本周五试菜邀约 + 现场作废条款，最大化降低决策成本' }
+      ]
+    }
+  };
+
+  // ---------- 3. 初始化会话列表 ----------
+  const convList = document.getElementById('wcConvList');
+  let activeConvId = 'CUS-2026-0002';
+
+  function renderConvList() {
+    convList.innerHTML = '';
+    CONV_LIST.forEach(c => {
+      const row = document.createElement('div');
+      row.className = 'wc-conv-item' + (c.id === activeConvId ? ' is-active' : '');
+      row.dataset.id = c.id;
+      // 未读跳动动画
+      const badgeHTML = c.unread ? `<span class="wc-badge${c.id === activeConvId ? '' : ' is-anim'}">${c.unread}</span>` : '';
+      row.innerHTML = `
+        <div class="wc-avatar ${c.color}" ${c.online ? 'data-online="1"' : ''}>${c.name[0]}</div>
+        <div class="wc-conv-meta">
+          <div class="wc-conv-top">
+            <span class="wc-conv-name">${c.name}</span>
+            <span class="wc-conv-time">${c.time}</span>
+          </div>
+          <div class="wc-conv-bot">
+            <span class="wc-conv-preview">${c.last}</span>
+            ${badgeHTML}
+          </div>
+          <div class="wc-conv-sub">
+            <span class="wc-chip wc-tag-${c.tag === '群' ? 'group' : (c.tag === '老客' ? 'old' : 'cust')}">${c.tag}</span>
+            ${c.sub}
+          </div>
+        </div>
+      `;
+      row.addEventListener('click', () => switchConversation(c.id));
+      convList.appendChild(row);
+    });
+  }
+
+  // ---------- 3b. 会话切换 ----------
+  function switchConversation(convId) {
+    if (convId === activeConvId) return;
+    activeConvId = convId;
+
+    // 更新列表激活态
+    document.querySelectorAll('.wc-conv-item').forEach(i => {
+      i.classList.toggle('is-active', i.dataset.id === convId);
+    });
+
+    // 清空聊天区 + 切换到新剧本
+    wcMsg.innerHTML = '';
+    round = 1;
+    const data = CONV_ROUNDS[convId];
+    if (!data) {
+      // 无剧本的客户：简单占位
+      wcMsg.appendChild(WC.systemTip(`已切换至 ${convId} 的对话`));
+      wcMsg.appendChild(WC.timeDivider('今天'));
+      renderAside(null);
+      WC.scrollBottom(wcMsg);
+      updateChatHeader(convId);
+      return;
+    }
+
+    updateChatHeader(convId, data);
+    bootstrapConv(data);
+  }
+
+  function updateChatHeader(convId, data) {
+    const h = document.querySelector('.wc-chat-header');
+    const nameEl = h.querySelector('.wc-name');
+    const metaEl = h.querySelector('.wc-chat-meta');
+    const idEl = h.querySelector('.wc-id');
+    if (data) {
+      nameEl.textContent = data.name;
+      metaEl.innerHTML = `<span class="wc-online-dot"></span><span>在线 · ${data.company}（${data.region}）</span>`;
+      idEl.textContent = data.customerId;
+    } else {
+      const c = CONV_LIST.find(x => x.id === convId);
+      nameEl.textContent = c ? c.name : convId;
+      metaEl.innerHTML = `<span>${c ? c.sub : ''}</span>`;
+      idEl.textContent = convId;
+    }
+  }
+
+  // ---------- 3c. 增强 bootstrap（支持多种消息类型） ----------
+  function bootstrapConv(data) {
+    data.bootstrap.forEach(item => {
+      if (item.type === 'system') {
+        wcMsg.appendChild(WC.systemTip(item.text));
+      } else if (item.type === 'time-div') {
+        wcMsg.appendChild(WC.timeDivider(item.text));
+      } else if (item.type === 'msg') {
+        const cfg = {
+          side: item.side,
+          name: item.name,
+          avatar: item.side === 'self' ? '李' : (item.name ? item.name.slice(0, 1) : '我'),
+          colorClass: item.side === 'self' ? 'c4' : data.colorClass,
+          content: item.content,
+          time: item.time,
+          online: item.online || false,
+          status: item.status || null
+        };
+        // 消息类型扩展
+        if (item.msgType === 'file') {
+          cfg.type = 'file';
+          cfg.file = item.file;
+        } else if (item.msgType === 'image') {
+          cfg.type = 'image';
+          cfg.imageUrl = item.imageUrl;
+        } else if (item.msgType === 'voice') {
+          cfg.type = 'voice';
+          cfg.voiceSec = item.voiceSec;
+        }
+        wcMsg.appendChild(WC.message(cfg));
+      } else if (item.type === 'quote') {
+        wcMsg.appendChild(WC.message({
+          side: item.side, name: item.name,
+          avatar: item.side === 'self' ? '李' : (item.name ? item.name.slice(0, 1) : '我'),
+          colorClass: item.side === 'self' ? 'c4' : data.colorClass,
+          content: item.content, time: item.time,
+          quote: item.quote, status: item.status
+        }));
+      }
+    });
+    WC.scrollBottom(wcMsg);
+    renderAside(data.rounds ? data.rounds[round - 1] : null);
+  }
+
+  renderConvList();
+
+  // 把 [data-icon="xx"] 占位符替换为真实 SVG
+  document.querySelectorAll('[data-icon]').forEach(el => {
+    const k = el.dataset.icon;
+    if (window.WC && WC.ICONS && WC.ICONS[k]) el.innerHTML = WC.ICONS[k];
+  });
+  </script>
+
+  <script>
+  /* =========================================================
+   * scene-2-chat · 聊天与右侧参谋的运行时
+   * ========================================================= */
+  wcMsg      = document.getElementById('wcMessages');
+  wcInput    = document.getElementById('wcInput');
+  wcSendBtn  = document.getElementById('wcSendBtn');
+  wcAsideBody = document.getElementById('wcAsideBody');
+  wcAsideTabs = document.getElementById('wcAsideTabs');
+
+  let round = 1;
+  let activeTab = 'script';
+
+  // ---------- 4. 渲染右侧参谋（话术 / 洞察 / 下一步动作） ----------
+  function renderAside(roundData) {
+    if (!roundData) {
+      wcAsideBody.innerHTML = '<div class="wc-empty-hint">当前客户暂无 AI 参谋数据</div>';
+      return;
+    }
+    if (activeTab === 'script') wcAsideBody.innerHTML = renderScriptTab(roundData);
+    else if (activeTab === 'insight') wcAsideBody.innerHTML = renderInsightTab(roundData);
+    else wcAsideBody.innerHTML = renderNextTab(roundData);
+
+    // 绑定话术卡按钮
+    wcAsideBody.querySelectorAll('[data-action="insert"]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const text = btn.closest('.wc-script-card').querySelector('.wc-script-text').innerText.trim();
+        wcInput.value = text;
+        wcInput.focus();
+        // 高亮一下输入框
+        wcInput.classList.add('is-flash');
+        setTimeout(() => wcInput.classList.remove('is-flash'), 700);
+      });
+    });
+    wcAsideBody.querySelectorAll('[data-action="send-direct"]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.wc-script-card');
+        const text = card.querySelector('.wc-script-text').innerText.trim();
+        wcInput.value = text;
+        sendUserMessage();
+      });
+    });
+
+    // 把 [data-icon="xx"] 占位符替换为真实 SVG
+    wcAsideBody.querySelectorAll('[data-icon]').forEach(el => {
+      const k = el.dataset.icon;
+      if (window.WC && WC.ICONS && WC.ICONS[k]) el.innerHTML = WC.ICONS[k];
+    });
+  }
+
+  function renderScriptTab(d) {
+    const stages = ['认知','兴趣','评估','决策'];
+    return `
+      <section class="wc-aside-section">
+        <div class="wc-aside-section-head">
+          <span class="wc-aside-section-title">客户阶段</span>
+          <span class="wc-aside-section-extra">由 AI 实时识别</span>
+        </div>
+        <div class="wc-stage-rail">
+          ${stages.map((s,i) => `
+            <div class="wc-stage-step ${i < d.stage ? 'is-done' : ''} ${i === d.stage ? 'is-active' : ''}">
+              <div class="wc-stage-dot">${i+1}</div>
+              <div class="wc-stage-label">${s}</div>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+
+      <section class="wc-aside-section">
+        <div class="wc-aside-section-head">
+          <span class="wc-aside-section-title">推荐话术 · 3 选 1</span>
+          <span class="wc-aside-section-extra">基于上下文 + 历史 287 通成单数据</span>
+        </div>
+        <div class="wc-script-list">
+          ${d.scripts.map(s => `
+            <article class="wc-script-card level-${s.level}">
+              <div class="wc-script-head">
+                <span class="wc-script-score">推荐度 ${s.score}%</span>
+                <div class="wc-confidence">
+                  <span class="wc-confidence-bar"><span style="width:${Math.round(s.confidence*100)}%"></span></span>
+                  <span class="wc-confidence-num">${(s.confidence*100|0)}</span>
+                </div>
+              </div>
+              <p class="wc-script-text">${s.text}</p>
+              <div class="wc-script-tags">
+                ${s.tags.map(t => `<span class="wc-chip">${t}</span>`).join('')}
+              </div>
+              <div class="wc-script-reason">
+                <span data-icon="lightbulb"></span>
+                <span>${s.why}</span>
+              </div>
+              <div class="wc-script-acts">
+                <button class="wc-script-btn ghost" data-action="insert">插入到输入框</button>
+                <button class="wc-script-btn primary" data-action="send-direct">直接发送 <span data-icon="send"></span></button>
+              </div>
+            </article>
+          `).join('')}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderInsightTab(d) {
+    const data = getActiveData();
+    const customerKV = data ? [
+      ['客户姓名', `${data.name} · 实控人`],
+      ['企业', data.company],
+      ['门店数', data.name === '王建国' ? '4 家直营 + 2 家加盟' : data.name === '李慧珺' ? '中央厨房 1 家（日产能 2000 份）' : '企业食堂（日供 1200 人）'],
+      ['日均单量', data.name === '王建国' ? '约 350 单 / 店' : data.name === '李慧珺' ? '约 2000 份' : '约 1200 人/天'],
+      ['客单价', data.name === '王建国' ? '¥ 78' : '¥ 35（食堂）'],
+      ['核心痛点', data.name === '王建国' ? '后厨用人成本年增 22%' : data.name === '李慧珺' ? '中央厨房批量标准化出品' : '团餐品质管控与成本控制'],
+      ['决策风格', data.name === '王建国' ? '理性 · 重证据 · 信老客介绍' : '理性 · 重能耗 · 看 ROI']
+    ] : [['客户姓名', '未选中客户']];
+    return `
+      <section class="wc-aside-section">
+        <div class="wc-aside-section-head">
+          <span class="wc-aside-section-title">客户基础信息</span>
+          <span class="wc-aside-section-extra">${data ? data.customerId : activeConvId}</span>
+        </div>
+        <div class="wc-kv">
+          ${customerKV.map(([k,v]) => `<div class="wc-kv-row"><span>${k}</span><b>${v}</b></div>`).join('')}
+        </div>
+      </section>
+      <section class="wc-aside-section">
+        <div class="wc-aside-section-head">
+          <span class="wc-aside-section-title">本轮关键信号</span>
+        </div>
+        <div class="wc-insight-list">
+          ${d.insight.map(it => `
+            <div class="wc-insight-item kind-${it.kind}">
+              <span class="wc-insight-dot"></span>
+              <div>
+                <div class="wc-insight-label">${it.label}</div>
+                <div class="wc-insight-detail">${it.detail}</div>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+      </section>
+    `;
+  }
+
+  function renderNextTab(d) {
+    const data = getActiveData();
+    const stageKey = d ? d.stage + 1 : 1;
+    const actsMap = {
+      'CUS-2026-0002': {
+        1: [
+          { type:'send', title:'发送小江溪案例数据', detail:'5 分钟实拍 · 川菜馆同场景 · 已上传至素材库' },
+          { type:'send', title:'回复方案配置 + 报价', detail:'G2+G3组合 · G3 7.65万/G2 6.37 万本月价' },
+          { type:'cal',  title:'邀约本周三/周五试菜', detail:'两个时段二选一，自动同步到日历' }
+        ],
+        2: [
+          { type:'send', title:'发送竞品对比表', detail:'数据破价 · 每年实际维护成本 ≈ ¥4,800' },
+          { type:'tag',  title:'打标：价格敏感 + 售后顾虑', detail:'触发 SOP：48h 内回访 · 自动同步给王经理' },
+          { type:'cal',  title:'安排周五下午到店试菜', detail:'机器 + 食材清单 + 主厨陪同已生成' }
+        ],
+        3: [
+          { type:'send', title:'发送「零风险试菜」邀约', detail:'5 分钟生成的微信图文，含作废条款' },
+          { type:'alert',title:'风险升级：沉默 ≥ 5 分钟', detail:'自动通知王经理 14:50 前介入 · 工单已推送' },
+          { type:'esc',  title:'升级跟进：销售经理 + 主厨陪访', detail:'三方上门，提升信任锚 · 周五 15:00' }
         ]
       },
-      2: {
-        stage: 1,
-        stageName: '兴趣',
-        scripts: [
-          { score: 95, featured: true, text: '280 平、日均 350 单，推荐 2 台 YC-3000，配自动洗锅模块。成都川味轩就是同样配置，5 个月回本。您看这周能安排试菜吗？', why: '数据匹配+案例佐证+行动号召' },
-          { score: 78, featured: false, text: '2 台 YC-3000 总价 13.96 万，本月活动价 12.98 万，还送 3 年延保。', why: '直接报价，未解决客户顾虑' },
-          { score: 60, featured: false, text: '我发您一份详细方案 PDF，您先看看。', why: '被动等待，缺乏推进' }
+      'CUS-2026-0117': {
+        1: [
+          { type:'send', title:'发送体验中心定位', detail:'成都武侯区科园路 88 号 · 含停车指南' },
+          { type:'cal',  title:'确认周五 14:00 试菜时段', detail:'已发送日程邀请，待对方确认' },
+          { type:'send', title:'发送食材准备清单', detail:'含主厨关心的川菜标准切配规格' }
         ]
       },
-      3: {
-        stage: 2,
-        stageName: '评估',
-        scripts: [
-          { score: 92, featured: true, text: '（发送客户案例视频）这是杭州一家 300 平川菜馆，用了 2 个月，老板反馈后厨省了 3 个人，菜品还更稳定了。您担心哪方面，我重点给您解答？', why: '案例视频+主动挖异议' },
-          { score: 75, featured: false, text: '我们的机器质保 3 年，全国 200 多个服务点，坏了 4 小时内上门。', why: '回应售后顾虑，但未主动挖掘' },
-          { score: 55, featured: false, text: '您放心，我们是大品牌，很多连锁都在用。', why: '空洞承诺，缺乏说服力' }
+      'CUS-2026-0004': {
+        1: [
+          { type:'send', title:'发送能耗对比表（G3 vs 同行）', detail:'量化到每份菜能耗成本 ¥0.038' },
+          { type:'cal',  title:'预约下周三 10:00 电话回访', detail:'系统自动提醒，届时弹出客户档案' },
+          { type:'tag',  title:'打标：能耗敏感 + 决策周期中', detail:'触发 SOP：下周三前不主动打扰' }
         ]
       }
     };
+    const allActs = actsMap[activeConvId] || {};
+    const acts = allActs[stageKey] || [];
 
-    function sendMessage() {
-      const text = inputEl.value.trim();
-      if (!text) return;
-      inputEl.value = '';
-
-      messagesEl.appendChild(createMsg(text, 'user'));
-      scrollToBottom(messagesEl);
-
-      // AI 客户回复
-      setTimeout(() => {
-        const aiText = getCustomerReply(round, text);
-        messagesEl.appendChild(createMsg(aiText, 'ai'));
-        scrollToBottom(messagesEl);
-
-        // 更新参谋面板
-        if (scriptsDB[round]) {
-          updateAdvisor(scriptsDB[round]);
-        }
-        round++;
-      }, 600);
-    }
-
-    function getCustomerReply(r, userText) {
-      if (r === 1) return '我在成都，280 平的店，日均大概 350 单。你们有适合的机型吗？';
-      if (r === 2) return '13 万有点贵啊，我之前问的另一家才 10 万。而且机器坏了怎么办？你们售后靠谱吗？';
-      if (r === 3) return '（沉默 5 分钟）...我再考虑考虑，过两天给你答复。';
-      return '好的，我再看看。';
-    }
-
-    function updateAdvisor(data) {
-      const dots = data.stage + 1;
-      let html = `
-        <div style="margin-bottom:12px">
-          <div style="font-size:12px;color:var(--gray-500);margin-bottom:8px">客户阶段</div>
-          <div class="stage-indicator">
-            ${[0,1,2,3].map(i => `<div class="stage-dot ${i < dots ? 'active' : ''}"></div>`).join('')}
-          </div>
-          <div class="stage-labels">
-            ${['认知','兴趣','评估','决策'].map((s,i) => `<span style="${i === data.stage ? 'color:var(--primary);font-weight:500' : ''}">${s}</span>`).join('')}
-          </div>
+    return `
+      <section class="wc-aside-section">
+        <div class="wc-aside-section-head">
+          <span class="wc-aside-section-title">AI 推荐的下一步动作</span>
+          <span class="wc-aside-section-extra">点击执行 · 自动写入 SOP</span>
         </div>
-        <div style="font-size:12px;color:var(--gray-500);margin-bottom:10px">推荐话术（3 选 1）</div>
-      `;
-
-      data.scripts.forEach(s => {
-        const icon = s.featured ? 'fa-star' : s.score > 70 ? 'fa-thumbs-up' : 'fa-lightbulb';
-        const color = s.featured ? 'var(--success)' : s.score > 70 ? 'var(--primary)' : 'var(--warning)';
-        html += `
-          <div class="script-card ${s.featured ? 'featured' : ''}" onclick="useScript(this)">
-            <div class="script-score" style="color:${color}">
-              <i class="fas ${icon}"></i> 推荐度 ${s.score}%
+        <div class="wc-next-list">
+          ${acts.map(a => `
+            <div class="wc-next-item kind-${a.type}">
+              <span class="wc-next-icon">
+                ${a.type === 'send' ? WC.ICONS.send :
+                  a.type === 'cal'  ? WC.ICONS.calendar :
+                  a.type === 'tag'  ? WC.ICONS.tag :
+                  a.type === 'esc'  ? WC.ICONS.user :
+                                       WC.ICONS.alertCircle}
+              </span>
+              <div class="wc-next-main">
+                <div class="wc-next-title">${a.title}</div>
+                <div class="wc-next-detail">${a.detail}</div>
+              </div>
+              <button class="wc-next-btn">执行</button>
             </div>
-            <div class="script-text">${s.text}</div>
-            <div class="script-why">${s.featured ? '✓' : ''} ${s.why}</div>
-          </div>
-        `;
+          `).join('')}
+        </div>
+      </section>
+      <section class="wc-aside-section">
+        <div class="wc-aside-section-head">
+          <span class="wc-aside-section-title">SOP 跟进时间表</span>
+        </div>
+        <ol class="wc-sop">
+          <li><b>+ 0 min</b> · 实时回复（当前操作）</li>
+          <li><b>+ 4h</b> · 二次跟进：发送案例视频 / 价格说明</li>
+          <li><b>+ 24h</b> · 经理介入 · 试菜邀约确认</li>
+          <li><b>+ 72h</b> · 仍无回复 → 转休眠池 + 月度激活策略</li>
+        </ol>
+      </section>
+    `;
+  }
+
+  // tab 切换
+  wcAsideTabs.addEventListener('click', e => {
+    const t = e.target.closest('.wc-aside-tab');
+    if (!t) return;
+    activeTab = t.dataset.tab;
+    wcAsideTabs.querySelectorAll('.wc-aside-tab').forEach(x => x.classList.remove('is-active'));
+    t.classList.add('is-active');
+    renderAside(getActiveRound());
+  });
+
+  // ---------- 5. 当前会话数据访问 ----------
+  function getActiveData() {
+    return CONV_ROUNDS[activeConvId] || null;
+  }
+  function getActiveRounds() {
+    const d = getActiveData();
+    return d ? d.rounds : null;
+  }
+  function getActiveRound() {
+    const rounds = getActiveRounds();
+    if (!rounds) return null;
+    return rounds[round - 1] || null;
+  }
+
+  // ---------- 6. 聊天初始化（默认主剧本） ----------
+  function bootstrap() {
+    const data = getActiveData();
+    if (data) {
+      updateChatHeader(activeConvId, data);
+      bootstrapConv(data);
+    } else {
+      bootstrapConv({
+        bootstrap: [
+          { type:'system', text:'已连接到 ' + activeConvId },
+          { type:'time-div', text:'今天' }
+        ]
       });
-
-      advisorEl.innerHTML = html;
     }
+  }
 
-    function useScript(card) {
-      const text = card.querySelector('.script-text').textContent.trim();
-      inputEl.value = text;
-      inputEl.focus();
-    }
+  // ---------- 7. 用户发送 ----------
+  function sendUserMessage() {
+    const text = (wcInput.value || '').trim();
+    if (!text) return;
+    wcInput.value = '';
 
-    function createMsg(text, sender) {
-      const div = document.createElement('div');
-      div.className = `chat-message ${sender}`;
-      const avatar = sender === 'ai' ? '<div class="chat-avatar" style="background:linear-gradient(135deg,#F59E0B,#D97706);color:white">张</div>' : '<div class="chat-avatar user">我</div>';
-      div.innerHTML = `${avatar}<div class="chat-bubble">${text}</div>`;
-      return div;
-    }
+    const now = nowHM();
+    const data = getActiveData();
 
-    function scrollToBottom(el) {
-      el.scrollTop = el.scrollHeight;
+    // 我方消息 + 已读状态
+    const myMsg = WC.message({
+      side:'self', name:'我（小李 · 销售）', avatar:'李', colorClass:'c4',
+      content:text, time:now, status:'sending'
+    });
+    wcMsg.appendChild(myMsg);
+    WC.scrollBottom(wcMsg);
+
+    // 模拟"已送达 / 已读"
+    setTimeout(() => {
+      const readEl = myMsg.querySelector('.wc-read');
+      if (readEl) readEl.innerHTML = WC.ICONS.read + '<span>已读</span>';
+    }, 900);
+
+    // 客户回复（带打字气泡）
+    const rounds = getActiveRounds();
+    if (rounds && round <= rounds.length) {
+      const rd = rounds[round - 1];
+      const markMap = { 0:'turn', 1:'loss', 2:'turn' };
+      WC.sendWithTyping(wcMsg, {
+        side:'other', name:data.name, avatar:data.avatarChar, colorClass:data.colorClass,
+        content: '<span class="wc-typing-hint">正在输入…</span>',
+        time: addMin(now, 1)
+      }, {
+        side:'other', name:data.name, avatar:data.avatarChar, colorClass:data.colorClass,
+        content: rd.reply.text,
+        time: addMin(now, 1),
+        mark: markMap[(round - 1) % 3],
+        markLabel: rd.reply.markLabel,
+        tags: rd.reply.tags
+      }, 1100 + Math.random()*600).then(() => {
+        round = Math.min(round + 1, rounds.length);
+        renderAside(getActiveRound());
+        flashAsideHint();
+        // 未读红点 -1
+        const conv = CONV_LIST.find(c => c.id === activeConvId);
+        if (conv && conv.unread > 0) { conv.unread = 0; renderConvList(); }
+      });
+    } else {
+      // 无剧本客户兜底
+      setTimeout(() => {
+        wcMsg.appendChild(WC.message({
+          side:'other', name: data ? data.name : '客户', avatar: data ? data.avatarChar : '?',
+          colorClass: data ? data.colorClass : 'c1',
+          content:'好的，我再看看。', time:nowHM()
+        }));
+        WC.scrollBottom(wcMsg);
+      }, 800);
     }
+  }
+
+  function flashAsideHint() {
+    const c = document.querySelector('.wc-aside');
+    if (!c) return;
+    c.classList.add('is-pulse');
+    setTimeout(() => c.classList.remove('is-pulse'), 1100);
+  }
+
+  function nowHM() {
+    const d = new Date();
+    return `${String(d.getHours()).padStart(2,'0')}:${String(d.getMinutes()).padStart(2,'0')}`;
+  }
+  function addMin(hm, n) {
+    const [h,m] = hm.split(':').map(Number);
+    const t = h*60 + m + n;
+    return `${String(Math.floor(t/60)%24).padStart(2,'0')}:${String(t%60).padStart(2,'0')}`;
+  }
+
+  // ---------- 7. 事件绑定 ----------
+  wcSendBtn.addEventListener('click', sendUserMessage);
+  wcInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendUserMessage();
+    }
+  });
+
+  // 一键接管
+  document.getElementById('btnTakeover').addEventListener('click', () => {
+    const t = document.getElementById('toastTakeover');
+    t.classList.add('is-show');
+    setTimeout(() => t.classList.remove('is-show'), 3200);
+    // 顶栏视觉变化
+    document.querySelector('.wc-chat-header').classList.add('is-takeover');
+    document.querySelector('.wc-foot-tip').innerHTML = '<b style="color:#0EA5E9">人工接管中</b> · AI 仅做后台辅助分析';
+  });
+
+  bootstrap();
   </script>
+
 </body>
 </html>
