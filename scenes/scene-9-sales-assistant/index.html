@@ -949,6 +949,7 @@
 <!-- ── TOAST ── -->
 <div class="toast" id="toast"></div>
 
+<script src="../../shared/js/app.js"></script>
 <script>
 // ─── INIT ───
 document.addEventListener('DOMContentLoaded', () => {
@@ -956,7 +957,7 @@ document.addEventListener('DOMContentLoaded', () => {
   renderTodayDate();
   renderTasks('all');
   renderWorkbenchCustomers();
-  initNav();
+  initNavWechat();
   initFilters();
   lucide.createIcons();
 });
@@ -1027,7 +1028,7 @@ let chatHistory = [];
 let fromPage = 'today';
 
 // ─── NAV ───
-function initNav() {
+function initNavWechat() {
   document.querySelectorAll('.nav-item').forEach(btn => {
     btn.addEventListener('click', () => {
       const page = btn.dataset.page;
