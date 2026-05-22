@@ -2,8 +2,9 @@
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=375, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>销售AI助手</title>
+  <link rel="stylesheet" href="../../shared/css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -34,7 +35,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", system-ui, sans-serif;
       background: var(--bg);
       color: var(--text);
-      width: 375px;
+      max-width: 375px;
       min-height: 100vh;
       margin: 0 auto;
       overflow-x: hidden;
@@ -60,7 +61,8 @@
       bottom: 0;
       left: 50%;
       transform: translateX(-50%);
-      width: 375px;
+      max-width: 375px;
+      width: 100%;
       background: #fff;
       border-top: 1px solid var(--border);
       display: flex;
@@ -287,7 +289,8 @@
     .overlay.show { display: flex; }
     .overlay-panel {
       background: #fff;
-      width: 375px;
+      max-width: 375px;
+      width: 100%;
       max-height: 80vh;
       border-radius: 20px 20px 0 0;
       overflow: hidden;
@@ -1347,7 +1350,7 @@ function renderWorkbenchCustomers(filter) {
   const customers = q ? ALL_CUSTOMERS.filter(c => c.name.includes(q)) : ALL_CUSTOMERS;
 
   $('customer-list').innerHTML = customers.map(c => `
-    <div class="customer-item" onclick="openCustomerDetail('${c.name}')">
+    <div class="customer-item" onclick="openCustomerDetail('${c.name.replace(/'/g, "\\'")}')">
       <div class="customer-avatar">${c.avatar}</div>
       <div class="customer-info">
         <div class="customer-name">${c.name}</div>
