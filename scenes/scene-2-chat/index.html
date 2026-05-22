@@ -126,9 +126,8 @@
     </div>
   </main>
 
+  <script src="../../shared/js/app.js"></script>
   <script>
-    initNav('企微实时话术参谋', '销售赋能', 'tag-blue');
-
     const messagesEl = document.getElementById('chat-messages');
     const inputEl = document.getElementById('chat-input');
     const advisorEl = document.getElementById('advisor-content');
@@ -242,24 +241,6 @@
 
     function scrollToBottom(el) {
       el.scrollTop = el.scrollHeight;
-    }
-
-    function initNav(title, badge, badgeClass) {
-      const nav = document.getElementById('scene-nav');
-      if (!nav) return;
-      nav.innerHTML = `
-        <div class="scene-nav-inner">
-          <a href="../../index.html" class="scene-nav-back">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-            返回首页
-          </a>
-          <div style="display:flex;align-items:center;gap:12px">
-            <span class="scene-nav-title">${title}</span>
-            <span class="scene-nav-badge ${badgeClass}">${badge}</span>
-          </div>
-          <div style="width:60px"></div>
-        </div>
-      `;
     }
   </script>
 </body>
