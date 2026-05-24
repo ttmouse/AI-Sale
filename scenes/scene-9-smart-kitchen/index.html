@@ -20,66 +20,15 @@
             box-shadow:0 20px 80px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.06);
             flex-shrink:0;
         }
-        #status-bar {
-            height:44px; background:#000;
-            display:flex; justify-content:space-between; align-items:center;
-            padding:0 28px 0 24px; color:#fff; font-size:13px; font-weight:600;
-            flex-shrink:0; letter-spacing:.3px; position:relative; z-index:100;
+        /* 顶部栏（状态栏 + 导航栏）整体背景 */
+        #top-bar {
+            flex-shrink:0;
+            position:relative; z-index:100;
         }
-        #status-bar .time { font-size:15px; font-weight:700; }
-        #status-bar .right-icons { display:flex; align-items:center; gap:6px; }
-        #status-bar .battery { display:flex; align-items:center; gap:4px; }
-        #status-bar .battery .level { width:22px; height:10px; border:1.5px solid #fff; border-radius:2px; padding:1px; }
-        #status-bar .battery .level .fill { height:100%; background:#34c759; border-radius:1px; width:70%; }
+        #top-bar svg { display:block; width:100%; height:88px; }
 
-        /* 导航 */
-        #nav-bar {
-            height:52px; background:#1a1a1e;
-            display:flex; align-items:center; padding:0 8px; flex-shrink:0;
-            border-bottom:0.5px solid rgba(255,255,255,.06); position:relative; z-index:50;
-        }
-        #nav-bar .back-btn {
-            width:40px; height:40px; display:flex; align-items:center; justify-content:center;
-            border:none; background:transparent; color:#075A9A; font-size:22px; cursor:pointer;
-        }
-        #nav-bar .nav-title { flex:1; text-align:center; font-size:16px; font-weight:600; color:#fff; letter-spacing:.5px; }
-        #nav-bar .nav-right { width:40px; height:40px; display:flex; align-items:center; justify-content:center; }
-        #nav-bar .nav-right svg { width:20px; height:20px; fill:rgba(255,255,255,.6); }
 
-        /* 客户信息 */
-        #customer-header {
-            display:flex; align-items:center; gap:10px; padding:8px 14px;
-            background:#1a1a1e; flex-shrink:0; border-bottom:0.5px solid rgba(255,255,255,.06);
-        }
-        #customer-header .c-avatar {
-            width:40px; height:40px; border-radius:4px;
-            background:linear-gradient(135deg,#2d5a3d,#1a4a2e);
-            display:flex; align-items:center; justify-content:center;
-            font-size:16px; color:#fff; font-weight:600; flex-shrink:0;
-        }
-        #customer-header .c-info { flex:1; }
-        #customer-header .c-name { font-size:15px; font-weight:600; color:#e5e5e5; }
-        #customer-header .c-sub { font-size:11px; color:rgba(255,255,255,.4); margin-top:1px; }
-        #customer-header .c-badge {
-            font-size:10px; padding:2px 10px; border-radius:10px; font-weight:500; flex-shrink:0;
-            background:rgba(96,165,250,.15); color:#60A5FA;
-        }
 
-        /* 阶段进度条 */
-        #stage-bar {
-            display:flex; align-items:center; padding:4px 14px; gap:0;
-            background:#1a1a1e; flex-shrink:0; border-bottom:0.5px solid rgba(255,255,255,.06);
-        }
-        .s-dot { flex:1; display:flex; align-items:center; gap:0; }
-        .s-dot .dot { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.15); flex-shrink:0; transition:all .3s; }
-        .s-dot .dot.active { background:#60A5FA; box-shadow:0 0 6px rgba(96,165,250,.4); }
-        .s-dot .dot.done { background:#34D399; }
-        .s-dot .line { flex:1; height:2px; background:rgba(255,255,255,.1); }
-        .s-dot .line.done { background:#34D399; }
-        .s-dot:last-child .line { display:none; }
-        .s-label { font-size:9px; color:rgba(255,255,255,.3); text-align:center; white-space:nowrap; margin-top:1px; }
-        .s-label.active { color:#60A5FA; }
-        .s-label.done { color:#34D399; }
 
         /* 水印 */
         #watermark {
@@ -91,53 +40,50 @@
         /* 消息容器 */
         #chat-area {
             flex:1; overflow-y:auto; overflow-x:hidden;
-            padding:12px 10px; background:#111214; position:relative; z-index:1;
+            padding:16px 14px 12px; background:#000; position:relative; z-index:1;
             scroll-behavior:smooth;
         }
         #chat-area::-webkit-scrollbar { width:3px; }
         #chat-area::-webkit-scrollbar-track { background:transparent; }
         #chat-area::-webkit-scrollbar-thumb { background:rgba(255,255,255,.12); border-radius:2px; }
-        #messages { display:flex; flex-direction:column; gap:12px; min-height:100%; }
+        #messages { display:flex; flex-direction:column; gap:14px; min-height:100%; }
 
         /* 消息通用 */
-        .msg { max-width:88%; animation:msgIn .35s ease-out; flex-shrink:0; line-height:1.5; }
+        .msg { max-width:82%; animation:msgIn .35s ease-out; flex-shrink:0; line-height:1.5; }
         @keyframes msgIn { 0%{opacity:0;transform:translateY(6px) scale(.97)} 100%{opacity:1;transform:translateY(0) scale(1)} }
 
         .msg-time { text-align:center; font-size:10px; color:rgba(255,255,255,.3); padding:2px 0; max-width:100%; }
         .msg-system { text-align:center; font-size:11px; color:rgba(255,255,255,.35); background:rgba(255,255,255,.04); border-radius:4px; padding:4px 12px; align-self:center; max-width:72%; }
 
         /* 客户消息 */
-        .msg-customer { align-self:flex-start; display:flex; align-items:flex-start; gap:14px; max-width:88%; }
+        .msg-customer { align-self:flex-start; display:flex; align-items:flex-start; gap:14px; max-width:82%; }
         .msg-customer .msg-avatar { width:40px; height:40px; border-radius:4px; background:#3a3a3e; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.7); font-size:14px; font-weight:600; flex-shrink:0; }
         .msg-customer .msg-bubble { position:relative; }
-        .msg-customer .msg-bubble .msg-content { background:#2C2C2C; color:#D5D5D5; padding:9px 12px; border-radius:4px; font-size:14px; word-break:break-word; line-height:1.5; }
+        .msg-customer .msg-bubble .msg-content { background:#2C2C2C; color:#D5D5D5; padding:10px 12px; border-radius:4px; font-size:15px; word-break:break-word; line-height:1.5; }
         .msg-customer .msg-bubble::before { content:''; position:absolute; top:14px; left:-5px; width:0; height:0; border:5px solid transparent; border-right-color:#2C2C2C; border-left:0; border-bottom-width:4px; border-top-width:6px; }
 
         /* 销售消息 */
-        .msg-sales { align-self:flex-end; display:flex; flex-direction:row-reverse; align-items:flex-start; gap:14px; max-width:88%; }
+        .msg-sales { align-self:flex-end; display:flex; align-items:flex-start; gap:14px; max-width:82%; }
         .msg-sales .msg-avatar { width:40px; height:40px; border-radius:4px; background:#075A9A; display:flex; align-items:center; justify-content:center; color:#fff; font-size:14px; font-weight:600; flex-shrink:0; }
         .msg-sales .msg-bubble { position:relative; }
-        .msg-sales .msg-bubble .msg-content { background:#075A9A; color:#fff; padding:9px 12px; border-radius:4px; font-size:14px; word-break:break-word; line-height:1.5; }
+        .msg-sales .msg-bubble .msg-content { background:#075A9A; color:#fff; padding:10px 12px; border-radius:4px; font-size:15px; word-break:break-word; line-height:1.5; }
         .msg-sales .msg-bubble::before { content:''; position:absolute; top:14px; right:-5px; width:0; height:0; border:5px solid transparent; border-right:0; border-left-color:#075A9A; border-bottom-width:4px; border-top-width:6px; }
         .msg-sales .msg-bubble .read-tag { font-size:10px; color:rgba(255,255,255,.2); text-align:right; margin-top:2px; }
 
-        /* 商品卡片 */
-        .msg-product { align-self:flex-start; max-width:82%; background:#232428; border-radius:10px; overflow:hidden; border:0.5px solid rgba(255,255,255,.06); animation:msgIn .35s ease-out; }
-        .msg-product .prod-img { height:90px; background:linear-gradient(135deg,#1a3a4a,#0d2530); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.5); font-size:32px; }
-        .msg-product .prod-info { padding:10px 14px; }
-        .msg-product .prod-name { font-size:14px; font-weight:600; color:#fff; }
-        .msg-product .prod-desc { font-size:11px; color:rgba(255,255,255,.5); margin-top:2px; }
-        .msg-product .prod-price { font-size:15px; font-weight:700; color:#ff9500; margin-top:4px; }
+        /* 商品卡片 — 销售发出，右对齐 */
+        .msg-product { align-self:flex-end; display:flex; align-items:flex-start; gap:14px; max-width:82%; animation:msgIn .35s ease-out; }
+        .msg-product .prod-card { background:#075A9A; border-radius:4px; overflow:hidden; flex:1; min-width:0; }
+        .msg-product .prod-img { height:80px; background:linear-gradient(135deg,#1a5a3a,#0d3020); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.4); font-size:28px; }
+        .msg-product .prod-info { padding:8px 12px; }
+        .msg-product .prod-name { font-size:13px; font-weight:600; color:#fff; }
+        .msg-product .prod-desc { font-size:11px; color:rgba(255,255,255,.55); margin-top:2px; }
+        .msg-product .prod-price { font-size:14px; font-weight:700; color:#ffd60a; margin-top:3px; }
+        .msg-product .msg-avatar { width:40px; height:40px; border-radius:4px; background:#075A9A; display:flex; align-items:center; justify-content:center; color:#fff; font-size:14px; font-weight:600; flex-shrink:0; order:1; }
 
-        /* AI 卡片 */
-        .msg-ai { align-self:flex-start; max-width:85%; background:#1a2a1a; border:0.5px solid rgba(52,199,89,.2); border-radius:10px; padding:10px 12px; animation:msgIn .35s ease-out; }
-        .msg-ai .ai-header { display:flex; align-items:center; gap:6px; font-size:11px; color:#34c759; font-weight:500; margin-bottom:4px; }
-        .msg-ai .ai-body { font-size:13px; color:#d0d0d0; line-height:1.5; }
-        .msg-ai .ai-actions { display:flex; gap:6px; margin-top:6px; }
-        .msg-ai .ai-actions button { background:transparent; border:0.5px solid rgba(255,255,255,.12); color:#34c759; padding:3px 12px; border-radius:12px; font-size:11px; cursor:pointer; }
+
 
         /* 工具栏 */
-        #toolbar { background:#101114; border-top:0.5px solid rgba(255,255,255,.06); flex-shrink:0; position:relative; z-index:50; padding:8px 0; }
+        #toolbar { background:#0C0C0E; border-top:0.5px solid rgba(255,255,255,.06); flex-shrink:0; position:relative; z-index:50; padding:8px 0; }
         .tool-scroll { display:flex; gap:10px; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; padding:0 12px; scrollbar-width:none; }
         .tool-scroll::-webkit-scrollbar { display:none; }
         .tool-btn { display:flex; align-items:center; gap:7px; padding:0 15px; background:#2a2a2e; border:none; border-radius:18px; color:rgba(255,255,255,.85); font-size:14px; cursor:pointer; transition:all .15s; white-space:nowrap; flex-shrink:0; height:36px; }
@@ -147,11 +93,23 @@
         .tool-btn .badge { position:absolute; top:5px; right:5px; width:7px; height:7px; background:#ff3b30; border-radius:50%; border:1.5px solid #2a2a2e; }
 
         /* 输入框 */
-        #input-bar { display:flex; align-items:center; gap:8px; padding:6px 12px 12px; background:#101114; flex-shrink:0; }
-        #input-bar input { flex:1; height:34px; border-radius:18px; border:0.5px solid rgba(255,255,255,.12); background:#252529; color:#e5e5e5; padding:0 14px; font-size:14px; outline:none; }
-        #input-bar input::placeholder { color:rgba(255,255,255,.25); }
-        #input-bar .voice-btn { width:34px; height:34px; border-radius:50%; background:#252529; border:0.5px solid rgba(255,255,255,.12); color:rgba(255,255,255,.5); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; }
-
+        #input-bar { display:flex; align-items:center; gap:0; padding:8px 12px; background:#0C0C0E; flex-shrink:0; }
+        #input-bar .attach-btn {
+            width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+            border:none; background:transparent; cursor:pointer; flex-shrink:0;
+        }
+        #input-bar .attach-btn svg { width:28px; height:28px; fill:rgba(255,255,255,.9); }
+        #input-bar input {
+            flex:1; height:40px; border-radius:8px; border:none; background:#27282C; color:#e5e5e5;
+            padding:0 14px; font-size:15px; outline:none; margin:0 8px;
+        }
+        #input-bar input::placeholder { color:rgba(255,255,255,.3); }
+        #input-bar .right-btn {
+            width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+            border:none; background:transparent; cursor:pointer; flex-shrink:0; transition:all .15s;
+        }
+        #input-bar .right-btn:active { background:rgba(255,255,255,.1); }
+        #input-bar .right-btn svg { width:24px; height:24px; fill:rgba(255,255,255,.9); }
         /* 全屏页面 */
         .fullscreen-page {
             position:absolute; top:0; left:0; width:100%; height:100%;
@@ -198,8 +156,20 @@
         .follow-item .f-content { color:rgba(255,255,255,.6); font-size:12px; }
 
         /* 快捷回复 */
+        .stage-filter {
+            display:flex; gap:6px; padding:10px 14px 6px; overflow-x:auto;
+            flex-shrink:0; -webkit-overflow-scrolling:touch; scrollbar-width:none;
+        }
+        .stage-filter::-webkit-scrollbar { display:none; }
+        .stage-btn {
+            flex-shrink:0; padding:4px 12px; border-radius:14px;
+            font-size:12px; font-weight:600; cursor:pointer;
+            border:1px solid transparent; transition:all .15s;
+            background:rgba(255,255,255,.06); color:rgba(255,255,255,.5);
+        }
+        .stage-btn.active { border-color:rgba(255,255,255,.2); background:rgba(255,255,255,.12); color:#fff; }
         .qr-group { margin-bottom:16px; }
-        .qr-group-title { color:rgba(255,255,255,.4); font-size:12px; font-weight:500; margin-bottom:8px; }
+        .qr-group-title { font-size:12px; font-weight:600; margin-bottom:8px; }
         .qr-tags { display:flex; flex-wrap:wrap; gap:6px; }
         .qr-tag { padding:5px 12px; border-radius:14px; font-size:12px; background:rgba(255,255,255,.06); color:rgba(255,255,255,.8); cursor:pointer; transition:all .15s; }
         .qr-tag:active { background:rgba(7,90,154,.3); color:#60A5FA; }
@@ -222,46 +192,54 @@
         .obj-item:last-child { border-bottom:none; }
         .obj-item .obj-label { font-size:13px; font-weight:500; color:#e5e5e5; }
         .obj-item .obj-response { font-size:12px; color:rgba(255,255,255,.5); margin-top:3px; }
+
+        /* AI 分析页 */
+        .ai-section { margin-bottom:20px; }
+        .section-title { font-size:13px; font-weight:600; color:rgba(255,255,255,.5); margin-bottom:10px; letter-spacing:.5px; }
+        .ai-current-stage { display:flex; align-items:center; gap:8px; margin-bottom:18px; }
+        .stage-badge { padding:4px 12px; border-radius:14px; font-size:12px; font-weight:600; border:1px solid; }
+        .stage-label { font-size:11px; color:rgba(255,255,255,.35); }
+        .issue-card { background:rgba(255,255,255,.03); border-radius:8px; padding:12px; border-left:3px solid #8B5CF6; }
+        .issue-text { font-size:13px; color:#e5e5e5; line-height:1.6; font-style:italic; margin-bottom:8px; }
+        .issue-analysis { display:flex; gap:6px; flex-wrap:wrap; }
+        .issue-tag { padding:2px 8px; border-radius:10px; font-size:11px; background:rgba(255,255,255,.06); color:rgba(255,255,255,.5); }
+        .script-card { background:rgba(255,255,255,.03); border-radius:8px; padding:12px; margin-bottom:8px; border:0.5px solid rgba(255,255,255,.06); }
+        .script-card-goal { border-color:rgba(52,199,89,.2); background:rgba(52,199,89,.04); }
+        .script-step-label { font-size:11px; font-weight:600; color:rgba(255,255,255,.4); margin-bottom:6px; letter-spacing:.3px; }
+        .script-text { font-size:13px; color:#d5d5d5; line-height:1.7; margin-bottom:8px; }
+        .script-copy { padding:3px 10px; border-radius:10px; font-size:11px; border:0.5px solid rgba(255,255,255,.12); background:transparent; color:rgba(255,255,255,.5); cursor:pointer; }
+        .script-copy:active { background:rgba(255,255,255,.08); color:#60A5FA; }
+        .chat-log { background:rgba(255,255,255,.03); border-radius:8px; padding:8px 12px; }
+        .log-item { display:flex; gap:8px; padding:5px 0; border-bottom:0.5px solid rgba(255,255,255,.03); font-size:12px; line-height:1.5; }
+        .log-item:last-child { border-bottom:none; }
+        .log-role { flex-shrink:0; padding:0 6px; border-radius:3px; font-size:11px; font-weight:600; height:18px; line-height:18px; }
+        .log-customer { background:rgba(255,255,255,.08); color:rgba(255,255,255,.6); }
+        .log-sales { background:rgba(7,90,154,.3); color:#60A5FA; }
+        .log-text { color:rgba(255,255,255,.6); }
     </style>
 </head>
 <body>
 
 <div id="phone">
 
-    <!-- 状态栏 -->
-    <div id="status-bar">
-        <span class="time" id="statusTime">09:41</span>
-        <span class="right-icons">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
-            <span class="battery"><span class="level"><span class="fill"></span></span></span>
-        </span>
-    </div>
-
-    <!-- 导航 -->
-    <div id="nav-bar">
-        <button class="back-btn">&lt;</button>
-        <span class="nav-title" id="navTitle" style="cursor:pointer;" title="双击重置对话">优特智厨</span>
-        <span class="nav-right"><svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg></span>
-    </div>
-
-    <!-- 客户信息 -->
-    <div id="customer-header">
-        <div class="c-avatar">王</div>
-        <div class="c-info">
-            <div class="c-name">王刚 · 老王快餐</div>
-            <div class="c-sub">快餐简餐 · 筹备中 · 来源：抖音</div>
-        </div>
-        <div class="c-badge" id="stageBadge">P1 了解信息</div>
-    </div>
-
-    <!-- 阶段进度 -->
-    <div id="stage-bar">
-        <div class="s-dot"><div class="dot active" id="dot-1"></div><div class="line" id="line-1"></div><div class="s-label active" id="label-1">了解信息</div></div>
-        <div class="s-dot"><div class="dot" id="dot-2"></div><div class="line" id="line-2"></div><div class="s-label" id="label-2">收集需求</div></div>
-        <div class="s-dot"><div class="dot" id="dot-3"></div><div class="line" id="line-3"></div><div class="s-label" id="label-3">确认合作</div></div>
-        <div class="s-dot"><div class="dot" id="dot-4"></div><div class="line" id="line-4"></div><div class="s-label" id="label-4">试菜体验</div></div>
-        <div class="s-dot"><div class="dot" id="dot-5"></div><div class="line" id="line-5"></div><div class="s-label" id="label-5">合同签署</div></div>
-        <div class="s-dot"><div class="dot" id="dot-6"></div><div class="line"></div><div class="s-label" id="label-6">交付</div></div>
+    <!-- 顶部栏（状态栏 + 导航栏一体） -->
+    <div id="top-bar">
+        <svg width="375" height="88" viewBox="0 0 375 88" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <foreignObject x="-27.1828" y="-27.1828" width="429.366" height="142.366"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(13.59px);clip-path:url(#bgblur_0_403_772_clip_path);height:100%;width:100%"></div></foreignObject><path data-figma-bg-blur-radius="27.1828" fill-rule="evenodd" clip-rule="evenodd" d="M0 0V88H375V0H0Z" fill="black"/>
+            <rect y="87.5" width="375" height="0.5" fill="black" fill-opacity="0.1"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M341.75 66C341.75 66.9664 340.966 67.75 340 67.75C339.034 67.75 338.25 66.9664 338.25 66C338.25 65.0333 339.034 64.25 340 64.25C340.966 64.25 341.75 65.0333 341.75 66ZM347 64.25C347.966 64.25 348.75 65.0333 348.75 66C348.75 66.9664 347.966 67.75 347 67.75C346.034 67.75 345.25 66.9664 345.25 66C345.25 65.0333 346.034 64.25 347 64.25ZM355.75 66C355.75 65.0333 354.966 64.25 354 64.25C353.034 64.25 352.25 65.0333 352.25 66C352.25 66.9664 353.034 67.75 354 67.75C354.966 67.75 355.75 66.9664 355.75 66Z" fill="white"/>
+            <path opacity="0.9" d="M135.428 68.447H132.351V66.73H140.341V68.447H137.23V71.49H141.106V73.224H131.586V71.49H135.428V68.447ZM136.941 63.721C135.751 64.707 134.255 65.557 132.47 66.237L131.331 64.775C134.323 63.704 136.397 62.225 137.587 60.321H132.164V58.621H139.729V60.015C139.338 60.95 138.794 61.817 138.114 62.599C139.389 63.415 140.494 64.214 141.412 65.013L140.103 66.322C139.321 65.489 138.267 64.622 136.941 63.721ZM131.501 69.654V71.303C129.869 72.153 128.033 72.85 125.976 73.36L125.738 71.643C127.931 71.15 129.852 70.487 131.501 69.654ZM128.458 57.941L130.158 58.604C129.376 60.593 128.577 62.225 127.761 63.483C128.339 63.415 128.9 63.347 129.444 63.262C129.733 62.701 130.039 62.106 130.362 61.46L131.994 62.072C130.634 64.622 129.478 66.492 128.526 67.699C129.512 67.444 130.515 67.121 131.535 66.73V68.328C129.716 69.008 127.999 69.467 126.367 69.705L125.908 68.107C126.214 67.971 126.486 67.801 126.707 67.597C127.2 67.087 127.829 66.169 128.577 64.86C127.795 64.962 126.979 65.081 126.129 65.2L125.704 63.585C125.976 63.466 126.214 63.245 126.435 62.939C127.217 61.409 127.88 59.743 128.458 57.941ZM152.904 58.094H154.655V62.616H157.783V71.609C157.783 72.969 157.188 73.666 156.015 73.666H154.4L153.941 71.983L155.454 72.068C155.828 72.068 156.015 71.779 156.015 71.218V70.113H151.527V73.7H149.759V62.616H152.904V58.094ZM151.527 67.206V68.617H156.015V67.206H151.527ZM156.015 65.71V64.299H151.527V65.71H156.015ZM150.796 58.74C151.306 59.573 151.799 60.491 152.275 61.511L150.847 62.225C150.371 61.205 149.861 60.27 149.317 59.454L150.796 58.74ZM156.763 58.553L158.225 59.267C157.817 60.287 157.307 61.273 156.661 62.225L155.233 61.477C155.879 60.491 156.389 59.522 156.763 58.553ZM144.727 58.077L146.427 58.434C146.308 58.91 146.189 59.352 146.053 59.777H148.875V61.46H145.475C145.22 62.089 144.948 62.684 144.676 63.228H148.586V64.809H147.022V66.407H149.164V68.039H147.022V71.354C147.719 71.082 148.416 70.759 149.096 70.351L149.402 71.898C148.229 72.51 146.886 73.02 145.373 73.428L144.642 71.898C145.067 71.745 145.288 71.507 145.288 71.201V68.039H143.146V66.407H145.288V64.809H144.472V63.619C144.302 63.925 144.132 64.214 143.962 64.486L142.517 63.568C143.571 61.851 144.302 60.015 144.727 58.077ZM164.141 67.529C163.852 67.733 163.563 67.92 163.291 68.09L162.305 66.815V73.649H160.588V62.531H164.09C163.869 61.953 163.631 61.426 163.359 60.916H159.942V59.216H166.538C166.402 58.842 166.249 58.485 166.096 58.162L168.034 57.856C168.204 58.264 168.357 58.723 168.493 59.216H175.14V60.916H171.587C171.349 61.494 171.094 62.038 170.822 62.531H174.46V71.626C174.46 72.986 173.865 73.683 172.709 73.683H170.975L170.533 72.085L172.165 72.153C172.539 72.153 172.743 71.847 172.743 71.252V66.832L171.502 68.056C171.315 67.835 171.128 67.631 170.924 67.427V71.83H164.141V67.529ZM172.743 66.628V64.095H169.564C170.788 64.962 171.859 65.812 172.743 66.628ZM169.309 64.095H165.654L166.793 65.115C166.13 65.897 165.382 66.611 164.532 67.24H170.737C170.04 66.56 169.207 65.863 168.221 65.149L169.309 64.095ZM165.467 64.095H162.305V66.526C163.563 65.829 164.617 65.013 165.467 64.095ZM169.207 70.266V68.804H165.858V70.266H169.207ZM165.909 62.531H168.901C169.173 62.004 169.411 61.46 169.649 60.916H165.297C165.501 61.426 165.705 61.953 165.909 62.531ZM176.891 66.798H185.476V68.396H176.891V66.798ZM187.982 58.672H201.701V60.372H195.717V64.775H200.851V66.458H195.717V71.456H202.296V73.156H187.387V71.456H193.949V66.458H188.815V64.775H193.949V60.372H187.982V58.672ZM206.24 60.848H208.96C208.45 60.032 207.889 59.284 207.311 58.621L208.824 57.873C209.436 58.621 210.014 59.454 210.592 60.338L209.589 60.848H212.955C213.584 59.896 214.128 58.876 214.604 57.822L216.304 58.451C215.828 59.369 215.335 60.168 214.842 60.848H217.426V66.9H206.24V60.848ZM215.641 65.234V62.514H208.025V65.234H215.641ZM205.526 68.022L207.209 68.379C206.801 70.181 206.223 71.745 205.475 73.054L203.928 72.085C204.693 70.81 205.22 69.45 205.526 68.022ZM212.513 67.223C213.057 68.09 213.533 69.008 213.941 69.994L212.309 70.725C211.901 69.603 211.442 68.617 210.949 67.75L212.513 67.223ZM217.834 67.631C218.531 68.923 219.143 70.3 219.653 71.779L218.021 72.51C217.443 70.878 216.814 69.433 216.134 68.192L217.834 67.631ZM214.315 73.564H209.895C208.671 73.564 208.076 72.901 208.076 71.592V68.141H209.878V71.201C209.878 71.643 210.065 71.881 210.439 71.881H213.992C214.247 71.881 214.434 71.779 214.57 71.592C214.706 71.371 214.808 70.742 214.859 69.722L216.542 70.283C216.406 71.881 216.168 72.833 215.828 73.139C215.488 73.411 214.995 73.564 214.315 73.564ZM221.183 66.798H229.768V68.396H221.183V66.798ZM231.816 59.862H236.848C239.772 59.862 241.251 61.103 241.251 63.585C241.251 66.084 239.772 67.342 236.814 67.342H233.805V72H231.816V59.862ZM233.805 61.562V65.642H236.695C237.579 65.642 238.225 65.472 238.633 65.166C239.041 64.843 239.245 64.316 239.245 63.585C239.245 62.854 239.024 62.344 238.616 62.038C238.208 61.715 237.562 61.562 236.695 61.562H233.805ZM246.985 59.624C248.209 59.624 249.212 59.913 249.96 60.508C250.691 61.103 251.065 61.919 251.065 62.973C251.065 64.299 250.385 65.183 249.042 65.625C249.756 65.846 250.317 66.169 250.691 66.611C251.099 67.07 251.303 67.665 251.303 68.379C251.303 69.501 250.912 70.419 250.13 71.133C249.314 71.864 248.243 72.238 246.917 72.238C245.659 72.238 244.639 71.915 243.874 71.269C243.024 70.555 242.548 69.501 242.446 68.141H244.469C244.503 68.923 244.741 69.535 245.217 69.96C245.642 70.351 246.203 70.555 246.9 70.555C247.665 70.555 248.277 70.334 248.719 69.909C249.11 69.518 249.314 69.042 249.314 68.464C249.314 67.767 249.093 67.257 248.685 66.934C248.277 66.594 247.682 66.441 246.9 66.441H246.05V64.945H246.9C247.614 64.945 248.158 64.792 248.532 64.486C248.889 64.18 249.076 63.721 249.076 63.126C249.076 62.531 248.906 62.089 248.583 61.783C248.226 61.477 247.699 61.324 247.002 61.324C246.288 61.324 245.744 61.494 245.353 61.851C244.945 62.208 244.707 62.752 244.639 63.483H242.684C242.786 62.259 243.228 61.307 244.044 60.627C244.809 59.947 245.795 59.624 246.985 59.624Z" fill="white" fill-opacity="0.9"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M31.9981 73.4375L30.9526 74.5L23.279 66.7014C22.8961 66.3122 22.8961 65.6878 23.279 65.2986L30.9526 57.5L31.9981 58.5625L24.6798 66L31.9981 73.4375Z" fill="white"/>
+            <rect opacity="0.35" x="336.833" y="17.8333" width="21" height="10.3333" rx="2.16667" stroke="white" stroke-opacity="0.9"/>
+            <path opacity="0.4" d="M359.333 21V25C360.138 24.6612 360.661 23.8731 360.661 23C360.661 22.1269 360.138 21.3388 359.333 21" fill="white" fill-opacity="0.9"/>
+            <rect x="338.333" y="19.3333" width="18" height="7.33333" rx="1.33333" fill="white" fill-opacity="0.9"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M323.667 19.6152C325.892 19.6152 328.031 20.4694 329.644 22.001C329.765 22.1192 329.959 22.1177 330.079 21.9976L331.239 20.8273C331.3 20.7664 331.334 20.6839 331.333 20.598C331.333 20.5122 331.298 20.43 331.237 20.3698C327.005 16.3176 320.329 16.3176 316.097 20.3698C316.035 20.43 316.001 20.5121 316 20.5979C315.999 20.6838 316.033 20.7663 316.094 20.8273L317.255 21.9976C317.374 22.1179 317.568 22.1194 317.69 22.001C319.302 20.4693 321.442 19.6151 323.667 19.6152ZM323.667 23.4227C324.889 23.4227 326.068 23.8766 326.974 24.6964C327.097 24.8127 327.29 24.8102 327.409 24.6907L328.569 23.5204C328.63 23.459 328.663 23.3757 328.663 23.2892C328.662 23.2026 328.626 23.1201 328.564 23.0599C325.805 20.4955 321.532 20.4955 318.773 23.0599C318.71 23.1201 318.675 23.2027 318.674 23.2892C318.673 23.3758 318.707 23.4591 318.768 23.5204L319.927 24.6907C320.047 24.8102 320.24 24.8127 320.362 24.6964C321.268 23.8772 322.446 23.4232 323.667 23.4227ZM325.989 25.9846C325.991 26.0713 325.957 26.155 325.895 26.2158L323.89 28.2378C323.831 28.2972 323.751 28.3307 323.667 28.3307C323.583 28.3307 323.503 28.2972 323.445 28.2378L321.439 26.2158C321.377 26.155 321.343 26.0713 321.345 25.9845C321.347 25.8977 321.384 25.8155 321.449 25.7574C322.729 24.6751 324.605 24.6751 325.886 25.7574C325.95 25.8156 325.988 25.8978 325.989 25.9846Z" fill="white" fill-opacity="0.9"/>
+            <path fill-rule="evenodd" clip-rule="evenodd" d="M310 17.6667H309C308.448 17.6667 308 18.1144 308 18.6667V27.3333C308 27.8856 308.448 28.3333 309 28.3333H310C310.552 28.3333 311 27.8856 311 27.3333V18.6667C311 18.1144 310.552 17.6667 310 17.6667ZM304.333 20H305.333C305.886 20 306.333 20.4477 306.333 21V27.3333C306.333 27.8856 305.886 28.3333 305.333 28.3333H304.333C303.781 28.3333 303.333 27.8856 303.333 27.3333V21C303.333 20.4477 303.781 20 304.333 20ZM300.667 22.3333H299.667C299.114 22.3333 298.667 22.7811 298.667 23.3333V27.3333C298.667 27.8856 299.114 28.3333 299.667 28.3333H300.667C301.219 28.3333 301.667 27.8856 301.667 27.3333V23.3333C301.667 22.7811 301.219 22.3333 300.667 22.3333ZM296 24.3333H295C294.448 24.3333 294 24.7811 294 25.3333V27.3333C294 27.8856 294.448 28.3333 295 28.3333H296C296.552 28.3333 297 27.8856 297 27.3333V25.3333C297 24.7811 296.552 24.3333 296 24.3333Z" fill="white" fill-opacity="0.9"/>
+            <path d="M37.2073 17.4975C39.4632 17.4975 41.4261 19.1015 41.4261 22.9101V22.9247C41.4261 26.4843 39.8221 28.5937 37.1634 28.5937C35.2225 28.5937 33.7723 27.4438 33.4354 25.8251L33.4207 25.7446H35.2811L35.303 25.8178C35.5813 26.5575 36.2332 27.0409 37.1634 27.0409C38.8406 27.0409 39.5511 25.4003 39.6316 23.3788C39.6316 23.2983 39.639 23.2177 39.639 23.1371H39.4925C39.1043 23.9721 38.1814 24.7118 36.7312 24.7118C34.7024 24.7118 33.2815 23.2323 33.2815 21.2255V21.2109C33.2815 19.0649 34.9148 17.4975 37.2073 17.4975ZM37.2 23.2616C38.3938 23.2616 39.3094 22.3974 39.3094 21.2035V21.1889C39.3094 19.9804 38.3938 19.0356 37.222 19.0356C36.0574 19.0356 35.1272 19.9657 35.1272 21.1449V21.1596C35.1272 22.3827 35.9988 23.2616 37.2 23.2616ZM44.4513 21.4819C43.7848 21.4819 43.2867 20.9692 43.2867 20.3246C43.2867 19.6728 43.7848 19.1674 44.4513 19.1674C45.1251 19.1674 45.6158 19.6728 45.6158 20.3246C45.6158 20.9692 45.1251 21.4819 44.4513 21.4819ZM44.4513 26.9164C43.7848 26.9164 43.2867 26.4111 43.2867 25.7592C43.2867 25.1073 43.7848 24.602 44.4513 24.602C45.1251 24.602 45.6158 25.1073 45.6158 25.7592C45.6158 26.4111 45.1251 26.9164 44.4513 26.9164ZM52.6034 28.33V26.3012H47.4325V24.7558C48.8021 22.3754 50.3036 19.9438 51.7392 17.7612H54.4125V24.7411H55.8334V26.3012H54.4125V28.33H52.6034ZM49.1903 24.7851H52.6327V19.2699H52.5229C51.4389 20.9252 50.2157 22.8808 49.1903 24.6752V24.7851ZM59.9279 28.33V19.6215H59.8034L57.174 21.4819V19.7021L59.9353 17.7612H61.8176V28.33H59.9279Z" fill="white" fill-opacity="0.9"/>
+            <defs>
+                <clipPath id="bgblur_0_403_772_clip_path" transform="translate(27.1828 27.1828)"><path fill-rule="evenodd" clip-rule="evenodd" d="M0 0V88H375V0H0Z"/></clipPath>
+            </defs>
+        </svg>
     </div>
 
     <!-- 水印 -->
@@ -275,6 +253,10 @@
     <!-- 工具栏 -->
     <div id="toolbar">
         <div class="tool-scroll">
+            <button class="tool-btn" onclick="openPage('aiAnalysis')" id="tool-aiAnalysis">
+                <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2H22l-6 4.8 2.4 7.2L12 16l-6.4 4.8L8 14l-6-4.8h7.6z"/></svg>
+                <span class="tool-label">AI 分析</span>
+            </button>
             <button class="tool-btn" onclick="openPage('quickReply')" id="tool-quickReply">
                 <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
                 <span class="tool-label">快捷回复</span>
@@ -308,8 +290,28 @@
 
     <!-- 输入框 -->
     <div id="input-bar">
-        <input type="text" placeholder="输入消息..." disabled>
-        <div class="voice-btn">🎤</div>
+        <button class="attach-btn">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(-10, -14)">
+                    <path d="M23.9998 14.6667C31.3634 14.6667 37.3326 20.636 37.3328 27.9997C37.3328 35.3635 31.3636 41.3327 23.9998 41.3327C16.6361 41.3325 10.6667 35.3634 10.6667 27.9997C10.6669 20.6362 16.6362 14.6669 23.9998 14.6667ZM23.9998 16.2663C17.5199 16.2665 12.2665 21.5198 12.2664 27.9997C12.2664 34.4797 17.5198 39.7329 23.9998 39.7331C30.4799 39.7331 35.7332 34.4798 35.7332 27.9997C35.733 21.5197 30.4798 16.2663 23.9998 16.2663ZM25.5427 20.4577C27.4728 22.3879 28.6667 25.0544 28.6667 27.9997C28.6667 30.9452 27.473 33.6124 25.5427 35.5427L24.4109 34.4108C26.1013 32.7204 27.0671 30.4385 27.0671 27.9997C27.0671 25.561 26.1012 23.2789 24.4109 21.5886L25.5427 20.4577ZM22.9031 23.0974C24.1576 24.352 24.9333 26.0853 24.9333 27.9997C24.9333 29.9143 24.1578 31.6483 22.9031 32.903L21.7712 31.7712C22.766 30.7764 23.3337 29.4349 23.3337 27.9997C23.3337 26.5647 22.7658 25.2239 21.7712 24.2292L22.9031 23.0974ZM20.2625 25.737C20.8415 26.316 21.1999 27.1162 21.2 27.9997C21.2 28.8834 20.8415 29.6833 20.2625 30.2624L17.9998 27.9997L20.2625 25.737Z" fill="white" fill-opacity="0.9"/>
+                </g>
+            </svg>
+        </button>
+        <input type="text" placeholder="输入消息...">
+        <button class="right-btn">
+            <svg width="24" height="24" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(-297, -14)">
+                    <path d="M311 14.6667C318.363 14.6667 324.333 20.636 324.333 27.9997C324.333 35.3635 318.364 41.3327 311 41.3327C303.636 41.3325 297.667 35.3634 297.667 27.9997C297.667 20.6362 303.636 14.6669 311 14.6667ZM311 16.2663C304.52 16.2665 299.267 21.5198 299.266 27.9997C299.266 34.4797 304.52 39.7329 311 39.7331C317.48 39.7331 322.733 34.4798 322.733 27.9997C322.733 21.5197 317.48 16.2663 311 16.2663ZM319 28.6667C319 33.0848 315.418 36.6667 311 36.6667C306.582 36.6665 303 33.0847 303 28.6667H319ZM304.802 30.2663C305.512 33.0266 308.018 35.066 311 35.0661C313.982 35.0661 316.488 33.0267 317.198 30.2663H304.802ZM306.334 21.9997C307.438 21.9999 308.334 22.8954 308.334 23.9997C308.334 25.1042 307.438 25.9995 306.334 25.9997C305.229 25.9997 304.334 25.1043 304.334 23.9997C304.334 22.8953 305.229 21.9997 306.334 21.9997ZM315.667 21.9997C316.771 21.9997 317.667 22.8953 317.667 23.9997C317.667 25.1043 316.771 25.9997 315.667 25.9997C314.562 25.9997 313.667 25.1043 313.667 23.9997C313.667 22.8953 314.562 21.9997 315.667 21.9997Z" fill="white" fill-opacity="0.9"/>
+                </g>
+            </svg>
+        </button>
+        <button class="right-btn">
+            <svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g transform="translate(-337, -14)">
+                    <path d="M351 14.6667C358.363 14.6667 364.333 20.636 364.333 27.9997C364.333 35.3635 358.364 41.3327 351 41.3327C343.636 41.3325 337.667 35.3634 337.667 27.9997C337.667 20.6362 343.636 14.6669 351 14.6667ZM351 16.2663C344.52 16.2665 339.267 21.5198 339.266 27.9997C339.266 34.4797 344.52 39.7329 351 39.7331C357.48 39.7331 362.733 34.4798 362.733 27.9997C362.733 21.5197 357.48 16.2663 351 16.2663ZM351.801 27.1999H357.667V28.8005H351.801V34.6667H350.2V28.8005H344.334V27.1999H350.2V21.3337H351.801V27.1999Z" fill="white" fill-opacity="0.9"/>
+                </g>
+            </svg>
+        </button>
     </div>
 
     <!-- ===== 全屏页面 ===== -->
@@ -321,38 +323,135 @@
             <span class="page-title">快捷回复</span>
             <span class="page-spacer"></span>
         </div>
+        <div class="stage-filter" id="stageFilter">
+            <button class="stage-btn active" data-stage="all" style="background:rgba(255,255,255,.08);color:rgba(255,255,255,.8)">全部</button>
+            <button class="stage-btn" data-stage="p1" style="background:#60A5FA22;color:#60A5FA;border-color:#60A5FA44">P1</button>
+            <button class="stage-btn" data-stage="p2" style="background:#34D39922;color:#34D399;border-color:#34D39944">P2</button>
+            <button class="stage-btn" data-stage="p3" style="background:#FBBF2422;color:#FBBF24;border-color:#FBBF2444">P3</button>
+            <button class="stage-btn" data-stage="p4" style="background:#F9731622;color:#F97316;border-color:#F9731644">P4</button>
+            <button class="stage-btn" data-stage="p5" style="background:#8B5CF622;color:#8B5CF6;border-color:#8B5CF644">P5</button>
+            <button class="stage-btn" data-stage="p6" style="background:#10B98122;color:#10B981;border-color:#10B98144">P6</button>
+            <button class="stage-btn" data-stage="p7" style="background:#6366F122;color:#6366F1;border-color:#6366F144">P7</button>
+        </div>
+        <div class="page-body" id="qrBody">
+            <div class="qr-group" data-stage="p1">
+                <div class="qr-group-title" style="color:#60A5FA">P1 · 开场破冰</div>
+                <div class="qr-tags">
+                    <span class="qr-tag">王总您好！我是优特智厨的销售顾问小陈，今天联系您是想跟您聊聊智能炒菜机怎么帮咱们餐厅降本增效 😊</span>
+                    <span class="qr-tag">王总下午好！上次您提过想了解自动化出餐方案，我今天特意整理了咱们G3和G5两款机型的详细资料</span>
+                    <span class="qr-tag">王总您好，打扰了！我们店最近上了套智能炒菜设备，想请您抽空来试菜体验一下~</span>
+                </div>
+            </div>
+            <div class="qr-group" data-stage="p2">
+                <div class="qr-group-title" style="color:#34D399">P2 · 需求摸底</div>
+                <div class="qr-tags">
+                    <span class="qr-tag">王总，想先了解一下您现在的后厨情况——目前一天大概出多少份餐？炒菜师傅有几位呀？</span>
+                    <span class="qr-tag">您目前最头痛的是招工难、人员不稳定，还是出餐效率跟不上？</span>
+                    <span class="qr-tag">您现在后厨用的什么灶？人工成本大概占营业额的比例您有算过吗？</span>
+                </div>
+            </div>
+            <div class="qr-group" data-stage="p3">
+                <div class="qr-group-title" style="color:#FBBF24">P3 · 方案推荐</div>
+                <div class="qr-tags">
+                    <span class="qr-tag">像您这个量级，我推荐G3标准款——单锅容量1-5kg，立体加热精准控温，一个人就能操作，日均出餐300份无压力</span>
+                    <span class="qr-tag">G5适合食堂团餐场景，大容量批量出餐，一次可炒10-20人份，立省2个炒锅岗位</span>
+                    <span class="qr-tag">我们还有一个组合方案：G3炒菜 + M1煸锅 + 智能保温台，整套出餐动线只需要2个人</span>
+                </div>
+            </div>
+            <div class="qr-group" data-stage="p4">
+                <div class="qr-group-title" style="color:#F97316">P4 · 价值展示</div>
+                <div class="qr-tags">
+                    <span class="qr-tag">我给您算一笔账：一台G3一个月省人工8000-10000，加上效率提升多接的外卖单，8-12个月就能回本</span>
+                    <span class="qr-tag">这台机内置1300+菜谱，温度曲线全部标准化，您的厨师再也不用凭经验——出品稳定，口味统一</span>
+                    <span class="qr-tag">我们有个客户做快餐的，3个师傅减到1个，月均外卖从800单提升到1500单，回购率还涨了15%</span>
+                </div>
+            </div>
+            <div class="qr-group" data-stage="p5">
+                <div class="qr-group-title" style="color:#8B5CF6">P5 · 异议化解</div>
+                <div class="qr-tags">
+                    <span class="qr-tag">明白您觉得价格偏高，但换个角度——这边一个炒锅师傅月薪7000+，一年84000，设备一次投入用5年以上</span>
+                    <span class="qr-tag">口味方面您放心，我们和烹饪大师联合研发的菜谱，炒出来跟老师傅一个水准，欢迎随时来店里试菜！</span>
+                    <span class="qr-tag">维修售后不用担心——全国50+服务网点，4小时响应，备件本地仓随时调货，不影响正常经营</span>
+                    <span class="qr-tag">有分期方案：首付40%，剩余可分12期，月供压力小</span>
+                </div>
+            </div>
+            <div class="qr-group" data-stage="p6">
+                <div class="qr-group-title" style="color:#10B981">P6 · 促成邀约</div>
+                <div class="qr-tags">
+                    <span class="qr-tag">王总，要不这周六来我们展厅实地看看？现场给您演示G3和G5，还能试菜对比口感</span>
+                    <span class="qr-tag">我现在可以先发您一段G3炒菜的实操视频，看完您觉得合适，我们再约时间详谈</span>
+                    <span class="qr-tag">如果您今天定下来，我可以申请一个试装名额——免费试用15天，满意再付款</span>
+                </div>
+            </div>
+            <div class="qr-group" data-stage="p7">
+                <div class="qr-group-title" style="color:#6366F1">P7 · 跟进维护</div>
+                <div class="qr-tags">
+                    <span class="qr-tag">王总，设备用了一周了，感觉怎么样？有没有什么需要我这边协调的？</span>
+                    <span class="qr-tag">我们下个月有个老客户交流会，想邀请您来分享使用心得，同时看看我们的新品~</span>
+                    <span class="qr-tag">最近我们出了一批新菜谱（红烧肉/鱼香肉丝升级版），已经同步到设备后台了，您直接选就行</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI 分析 -->
+    <div class="fullscreen-page" id="page-aiAnalysis">
+        <div class="page-header">
+            <button class="page-close" data-page="aiAnalysis">×</button>
+            <span class="page-title">AI 销售建议</span>
+            <span class="page-spacer"></span>
+        </div>
         <div class="page-body">
-            <div class="qr-group">
-                <div class="qr-group-title">🤝 开场问候</div>
-                <div class="qr-tags" data-group="greeting">
-                    <span class="qr-tag">您好！欢迎咨询优特智厨 😊</span>
-                    <span class="qr-tag">您好！很高兴为您服务，请问有什么可以帮您的？</span>
-                    <span class="qr-tag">感谢您的咨询，祝您生意兴隆！🎉</span>
+            <!-- 阶段标识 -->
+            <div class="ai-current-stage">
+                <div class="stage-badge" style="background:#8B5CF622;color:#8B5CF6;border-color:#8B5CF644">P5 · 异议化解</div>
+                <div class="stage-label">当前阶段</div>
+            </div>
+
+            <!-- 客户当前问题 -->
+            <div class="ai-section">
+                <div class="section-title">客户当前的关切</div>
+                <div class="issue-card">
+                    <div class="issue-text">"你们价格为什么比同行贵这么多？跟美膳狮比优势在哪？"</div>
+                    <div class="issue-analysis">
+                        <span class="issue-tag">价格敏感</span>
+                        <span class="issue-tag">竞品对比</span>
+                        <span class="issue-tag">犹豫期</span>
+                    </div>
                 </div>
             </div>
-            <div class="qr-group">
-                <div class="qr-group-title">🎯 场景推荐</div>
-                <div class="qr-tags" data-group="scene">
-                    <span class="qr-tag">快餐简餐推荐G3，单锅容量1-5kg，立体加热温控精准</span>
-                    <span class="qr-tag">食堂团餐推荐G5，大容量批量出餐，性价比高</span>
-                    <span class="qr-tag">火锅店推荐我们的智能汤锅，底料熬制标准化</span>
-                    <span class="qr-tag">明档小炒推荐M1，轻巧灵活，单份出餐</span>
+
+            <!-- 承接问题 → 可执行话术 -->
+            <div class="ai-section">
+                <div class="section-title">🎯 先承接问题 · 再引导目标</div>
+
+                <div class="script-card">
+                    <div class="script-step-label">Step 1 · 认可顾虑 + 补充价值</div>
+                    <div class="script-text">王总您说得对，价格确实比市面上一些品牌高。这背后的原因是我们在加热控温的稳定性上投入了大量研发——1300多项专利，陶瓷投料阀成本是同行3倍，但换来的是设备5年不出大故障。您做餐饮也知道，设备一坏影响一整天的生意，这个稳定性的价值其实远高于那30%的价差。</div>
+                    <button class="script-copy" data-text="王总您说得对，价格确实比市面上一些品牌高。这背后的原因是我们在加热控温的稳定性上投入了大量研发——1300多项专利，陶瓷投料阀成本是同行3倍，但换来的是设备5年不出大故障。您做餐饮也知道，设备一坏影响一整天的生意，这个稳定性的价值其实远高于那30%的价差。">📋 复制话术</button>
+                </div>
+
+                <div class="script-card">
+                    <div class="script-step-label">Step 2 · 差异化对比 + 建立信任</div>
+                    <div class="script-text">说到美膳狮，其实我们定位不太一样——他们是互联网打法，我们做实业出身。好比说，我们的铁锅+立体加热炒出来有锅气，这是传统师傅最看重的；数字温控相当于自带巡航，竞品只是定速巡航。母公司做电力出身，设备加热控温这块的底子，业内没几家能比。</div>
+                    <button class="script-copy" data-text="说到美膳狮，其实我们定位不太一样——他们是互联网打法，我们做实业出身。好比说，我们的铁锅+立体加热炒出来有锅气，这是传统师傅最看重的；数字温控相当于自带巡航，竞品只是定速巡航。母公司做电力出身，设备加热控温这块的底子，业内没几家能比。">📋 复制话术</button>
+                </div>
+
+                <div class="script-card script-card-goal">
+                    <div class="script-step-label">Step 3 · 转向目标：邀约试菜</div>
+                    <div class="script-text">王总，光说不如亲自体验。这周六有空来我们展厅试菜吗？我们现场用G3给您炒几个菜，您对比一下口感和出餐效率，比我说一万句都强。另外我可以帮您算一笔具体的账——按您现在的单量，用G3一个月能省多少人工。</div>
+                    <button class="script-copy" data-text="王总，光说不如亲自体验。这周六有空来我们展厅试菜吗？我们现场用G3给您炒几个菜，您对比一下口感和出餐效率，比我说一万句都强。另外我可以帮您算一笔具体的账——按您现在的单量，用G3一个月能省多少人工。">📋 复制话术</button>
                 </div>
             </div>
-            <div class="qr-group">
-                <div class="qr-group-title">💰 价格异议</div>
-                <div class="qr-tags" data-group="price">
-                    <span class="qr-tag">我们专注炒菜机20年，1300+专利，用料和服务都是行业顶尖</span>
-                    <span class="qr-tag">可以从ROI角度算账：月省人力8000-12000，8-14个月回本</span>
-                    <span class="qr-tag">我们有分期方案，首付40%剩余一年分期</span>
-                </div>
-            </div>
-            <div class="qr-group">
-                <div class="qr-group-title">🔧 售后保障</div>
-                <div class="qr-tags" data-group="service">
-                    <span class="qr-tag">设备稳定性行业领先，故障率最低，加热控温搅拌基本不出问题</span>
-                    <span class="qr-tag">在线远程指导 + 下一餐段前上门，各地有备件仓</span>
-                    <span class="qr-tag">一年质保，可购延保，4小时响应机制</span>
+
+            <!-- 对话参考 -->
+            <div class="ai-section">
+                <div class="section-title">对话回溯</div>
+                <div class="chat-log">
+                    <div class="log-item"><span class="log-role log-customer">客户</span><span class="log-text">你们价格为什么比同行贵这么多？我了解了下比橡鹭贵了30%</span></div>
+                    <div class="log-item"><span class="log-role log-sales">销售</span><span class="log-text">解释了1300+专利、陶瓷结构用料、母公司背景</span></div>
+                    <div class="log-item"><span class="log-role log-customer">客户</span><span class="log-text">那美膳狮也有类似的产品，你们跟美膳狮比优势在哪？</span></div>
+                    <div class="log-item"><span class="log-role log-sales">销售</span><span class="log-text">铁锅锅气、数字温控、实业背景三大优势</span></div>
                 </div>
             </div>
         </div>
@@ -609,15 +708,6 @@
 (function() {
     'use strict';
 
-    // 状态栏时间
-    function updateTime() {
-        const now = new Date();
-        document.getElementById('statusTime').textContent =
-            String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
-    }
-    updateTime();
-    setInterval(updateTime, 10000);
-
     // 水印
     (function initWatermark() {
         const c = document.getElementById('watermark');
@@ -638,6 +728,7 @@
     const chatArea = document.getElementById('chat-area');
 
     const pages = {
+        aiAnalysis: document.getElementById('page-aiAnalysis'),
         quickReply: document.getElementById('page-quickReply'),
         productGallery: document.getElementById('page-productGallery'),
         objections: document.getElementById('page-objections'),
@@ -669,13 +760,10 @@
 
             case 'product':
                 const pn = extra?.name || '产品', pd = extra?.desc || '', pp = extra?.price || '';
-                d.innerHTML = `<div class="prod-img" style="background:linear-gradient(135deg,${extra?.color||'#1a4a3a'},#0d2530);">🍳</div><div class="prod-info"><div class="prod-name">${escapeHtml(pn)}</div><div class="prod-desc">${escapeHtml(pd)}</div><div class="prod-price">${escapeHtml(pp)}</div></div>`;
+                d.innerHTML = `<div class="prod-card"><div class="prod-img" style="background:linear-gradient(135deg,${extra?.color||'#1a5a3a'},#0d3020);">🍳</div><div class="prod-info"><div class="prod-name">${escapeHtml(pn)}</div><div class="prod-desc">${escapeHtml(pd)}</div><div class="prod-price">${escapeHtml(pp)}</div></div></div><div class="msg-avatar">销</div>`;
                 break;
 
-            case 'ai':
-                const at = extra?.title || '💡 AI 建议', ab = extra?.text || '';
-                d.innerHTML = `<div class="ai-header">🤖 ${escapeHtml(at)}</div><div class="ai-body">${escapeHtml(ab)}<div class="ai-actions"><button>使用</button><button>忽略</button></div></div>`;
-                break;
+            // AI 卡片已移除，改为工具栏按钮入口
 
             default: d.textContent = content;
         }
@@ -684,24 +772,7 @@
         requestAnimationFrame(() => { chatArea.scrollTop = chatArea.scrollHeight; });
     }
 
-    // 阶段
-    const stageLabels = ['','了解信息','收集需求','确认合作','试菜体验','合同签署','交付'];
-    const stageColors = ['','#60A5FA','#34D399','#FBBF24','#F97316','#8B5CF6','#10B981'];
 
-    function setStage(s) {
-        for (let i = 1; i <= 6; i++) {
-            const dot = document.getElementById('dot-'+i);
-            const line = document.getElementById('line-'+i);
-            const label = document.getElementById('label-'+i);
-            dot.className = 'dot'; if(line) line.className = 'line'; label.className = 's-label';
-            if (i < s) { dot.classList.add('done'); if(line) line.classList.add('done'); label.classList.add('done'); }
-            else if (i === s) { dot.classList.add('active'); label.classList.add('active'); }
-        }
-        const badge = document.getElementById('stageBadge');
-        badge.textContent = 'P'+s+' '+stageLabels[s];
-        badge.style.background = (stageColors[s]||'#60A5FA') + '22';
-        badge.style.color = stageColors[s]||'#60A5FA';
-    }
 
     // 全屏页面控制
     function openPage(key) {
@@ -753,7 +824,6 @@
         { type:'customer', content:'听起来不错，但你们价格为什么比同行贵这么多？我了解了下比橡鹭贵了30%' },
         { type:'sales', content:'这个价格差异主要来自几个方面：\n\n1⃣ 研发投入——1300多项专利，行业最多\n2⃣ 用料扎实——投料管阀用的陶瓷结构，成本比同行贵3倍，但就是为了减少售后\n3⃣ 企业背景——母公司做电力出身，设备稳定性有保障\n4⃣ 服务体系——全国本地化服务团队\n\n小菜园、乡村基这些头部连锁都用了五六百台，不是单纯看价格的' },
 
-        { type:'ai', content:'💡 建议：客户已提出价格异议，可以补充ROI数据增强说服力', extra:{title:'💡 AI 销售建议', text:'客户对价格敏感，建议从人力节省角度算账：月省8000-12000元，8-14个月回本。可提分期方案降低门槛。'} },
 
         { type:'customer', content:'那美膳狮也有类似的产品，你们跟美膳狮比优势在哪？我们也在看他们家的' },
         { type:'sales', content:'好问题！核心优势三点：\n\n1⃣ 出品口感——我们是铁锅+立体加热，锅气足，炒出来更好吃\n2⃣ 温控技术——数字温控，相当于自带巡航，竞品只是定速巡航\n3⃣ 企业背景——母公司做电力出身，设备加热/控温/搅拌的稳定性有保障\n\n美膳狮是互联网打法，我们做实业，稳扎稳打' },
@@ -801,7 +871,6 @@
             return;
         }
         const item = flow[flowIndex++];
-        if (item.stage) setStage(item.stage);
         addMessage(item.type, item.content, item.extra || {});
         let delay = item.delay || 1200;
         if (item.type === 'sales' || item.type === 'customer') {
@@ -818,23 +887,64 @@
 
     window.restartFlow = function() {
         flowRunning = false; clearTimeout(flowTimer);
-        messagesEl.innerHTML = ''; flowIndex = 0; setStage(1);
+        messagesEl.innerHTML = ''; flowIndex = 0;
         document.getElementById('btnPlay').textContent = '▶';
         startFlow();
     };
 
     // 导航双击重置
-    document.getElementById('navTitle').addEventListener('dblclick', window.restartFlow);
+    // 导航栏已内聚为 SVG，标题点击事件移除
 
-    // 初始化
-    setStage(1);
+    // 阶段筛选
+    document.querySelectorAll('.stage-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const stage = this.dataset.stage;
+            document.querySelectorAll('.stage-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelectorAll('#qrBody .qr-group').forEach(g => {
+                g.style.display = (stage === 'all' || g.dataset.stage === stage) ? '' : 'none';
+            });
+        });
+    });
 
-    // 快捷回复点击
+    // 快捷回复点击 → 填入输入框 + 聚焦
     document.querySelectorAll('.qr-tag').forEach(el => {
         el.addEventListener('click', function() {
             const text = this.textContent.trim();
-            if (text) { /* future: paste to input */ }
+            if (text) {
+                const input = document.querySelector('#input-bar input');
+                if (input) { input.value = text; input.focus(); }
+            }
         });
+    });
+
+    // 复制话术 → 填入输入框
+    document.querySelectorAll('.script-copy').forEach(el => {
+        el.addEventListener('click', function() {
+            const input = document.querySelector('#input-bar input');
+            if (input && this.dataset.text) {
+                input.value = this.dataset.text;
+                input.focus();
+                this.textContent = '✓ 已填入';
+                setTimeout(() => { this.textContent = '📋 复制话术'; }, 1500);
+            }
+        });
+    });
+
+    // 回车发送消息
+    document.querySelector('#input-bar input')?.addEventListener('keydown', function(e) {
+        if (e.key !== 'Enter' || !this.value.trim()) return;
+        e.preventDefault();
+        const text = this.value.trim();
+        this.value = '';
+        const msgs = document.getElementById('messages');
+        if (!msgs) return;
+        const div = document.createElement('div');
+        div.className = 'msg msg-sales';
+        div.style.cssText = 'align-self:flex-end;display:flex;align-items:flex-start;gap:14px;max-width:82%;animation:msgIn .35s ease-out;';
+        div.innerHTML = '<div class="msg-bubble"><div class="msg-content" style="background:#075A9A;color:#fff;padding:10px 12px;border-radius:4px;font-size:15px;word-break:break-word;line-height:1.5;">' + text.replace(/</g,'&lt;') + '</div></div>';
+        msgs.appendChild(div);
+        div.scrollIntoView({ behavior: 'smooth', block: 'end' });
     });
 
     // 标签添加
