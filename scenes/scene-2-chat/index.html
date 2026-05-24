@@ -10,37 +10,22 @@
   <style>
     /* 场景级覆盖：scene-content 留出三栏布局所需的高度 */
     main.scene-content { padding: 14px 18px 28px; max-width: 1480px; }
-    .scene-hint-bar {
-      display:flex; align-items:center; gap:10px;
-      padding:10px 14px; margin-bottom:12px;
-      background: linear-gradient(90deg, #FFFAF1 0%, #FFF7E0 100%);
-      border:1px solid #F4D58A; border-left:3px solid #E0A52A;
-      border-radius: 10px;
-      font-size: 12.5px; color:#6B4D14;
-    }
-    .scene-hint-bar svg { flex:none; color:#C28615; }
-    .scene-hint-bar b { color:#3F2E08; font-weight:600; }
+    .scene-hint-bar { display: none; }
     .wecom-app { height: calc(100vh - 168px); min-height: 620px; }
-    /* 故事剧本卡（隐藏式，hover 顶栏 ID 时浮出） */
+    /* 接管提示（轻量） */
     .scene-takeover-toast {
       position: fixed; right: 22px; bottom: 22px;
-      background:#0F172A; color:#fff; padding:12px 16px;
-      border-radius:12px; box-shadow:0 14px 36px rgba(15,23,42,.32);
-      font-size:12.5px; line-height:1.55; max-width: 280px;
-      transform: translateY(140%); opacity:0;
-      transition: all .35s cubic-bezier(.25,.8,.3,1.05);
+      background:#1E293B; color:#E2E8F0; padding:10px 14px;
+      border-radius:8px; box-shadow:0 4px 16px rgba(0,0,0,.15);
+      font-size:12px; line-height:1.5; max-width: 240px;
+      transform: translateY(120%); opacity:0;
+      transition: all .3s ease;
       z-index: 90; pointer-events:none;
     }
     .scene-takeover-toast.is-show { transform: translateY(0); opacity:1; }
-    .scene-takeover-toast b { color:#5EEAD4; font-weight:600; }
-    /* 未读红点动画 */
-    @keyframes badge-pop {
-      0%   { transform: scale(1); }
-      40%  { transform: scale(1.35); }
-      70%  { transform: scale(0.9); }
-      100% { transform: scale(1); }
-    }
-    .wc-badge.is-anim { animation: badge-pop 0.5s ease; }
+    .scene-takeover-toast b { color:#5EEAD4; font-weight:500; }
+    /* 未读红点 — 静默态 */
+    .wc-badge.is-anim { }
     /* 空状态提示 */
     .wc-empty-hint {
       padding: 32px 16px;
@@ -48,30 +33,53 @@
       color: var(--gray-400, #94A3B8);
       font-size: 13px;
     }
-    /* 切换会话过渡 */
-    .wc-chat-header { transition: background 0.25s; }
-    .wc-chat-header.is-switching { background: rgba(37,99,235,0.06); }
+    /* 切换会话 — 极轻过渡 */
+    .wc-chat-header.is-switching { background: #F8F9FA; }
     /* 引用气泡内提示 */
     .wc-typing-hint { color: var(--gray-400, #94A3B8); font-style: italic; font-size: 13px; }
     /* 接管状态 */
     .wc-chat-header.is-takeover {
-      background: linear-gradient(90deg, rgba(14,165,233,0.08), rgba(14,165,233,0.03)) !important;
-      border-bottom: 1.5px solid rgba(14,165,233,0.25);
+      background: rgba(14,165,233,0.04) !important;
+      border-bottom: 1px solid rgba(14,165,233,0.2);
     }
-    /* AI 参谋面板脉冲 */
-    .wc-aside.is-pulse {
-      animation: aside-pulse 0.8s ease;
+    /* 右栏底部接管开关 */
+    .wc-aside-footer {
+      flex-shrink: 0;
+      border-top: 1px solid var(--wc-divider);
+      padding: 8px 14px;
+      background: #FAFBFC;
     }
-    @keyframes aside-pulse {
-      0%,100% { box-shadow: none; }
-      40%      { box-shadow: 0 0 0 3px rgba(37,99,235,0.18); }
-    }
-    /* 插入输入框高亮 */
-    .wc-input.is-flash {
-      background: rgba(7,193,96,0.05) !important;
-      box-shadow: inset 0 0 0 2px rgba(7,193,96,0.32) !important;
+    .wc-aside-takeover {
+      width: 100%;
+      height: 30px;
+      border: 1px dashed #C9CDD4;
+      background: transparent;
+      color: var(--wc-text-tertiary);
       border-radius: 4px;
-      transition: all 0.18s ease;
+      font-size: 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: all .15s ease;
+    }
+    .wc-aside-takeover:hover {
+      border-color: var(--wc-brand);
+      color: var(--wc-brand);
+      background: rgba(7,193,96,.05);
+    }
+    .wc-aside-takeover svg { width: 14px; height: 14px; }
+    .wc-aside-takeover.is-active {
+      border-style: solid;
+      border-color: #0EA5E9;
+      color: #0EA5E9;
+      background: rgba(14,165,233,.06);
+    }
+    /* 输入框高亮 */
+    .wc-input.is-flash {
+      background: #F8F9FA !important;
+      transition: background 0.15s ease;
     }
 
     /* ============================================================
@@ -111,18 +119,180 @@
     .scene-hint-bar svg { color: #C9851A; }
     .scene-hint-bar b { color: #2E1F03; font-weight: 600; }
     /* PH-1 */
+
+    /* ============================================================
+       CRM 阶段可视化 + 滞留风险指示
+       ============================================================ */
+    .crm-stage-bar {
+      display: flex; align-items: center; gap: 2px;
+      padding: 12px 10px 10px;
+      background: #F8FAFC;
+      border-bottom: 1px solid var(--gray-200, #E2E8F0);
+    }
+    .crm-stage-node {
+      flex: 1; text-align: center;
+      position: relative; cursor: pointer;
+      transition: all 0.2s;
+    }
+    .crm-stage-node .crm-dot {
+      width: 18px; height: 18px;
+      border-radius: 50%;
+      margin: 0 auto 3px;
+      background: #CBD5E1;
+      border: 2px solid #F8FAFC;
+      transition: all 0.3s;
+      position: relative; z-index: 2;
+    }
+    .crm-stage-node.active .crm-dot {
+      background: #07C160;
+      box-shadow: 0 0 0 2px rgba(7,193,96,0.25);
+    }
+    .crm-stage-node.done .crm-dot {
+      background: #10B981;
+    }
+    .crm-stage-node .crm-label {
+      font-size: 10px; color: #94A3B8;
+      white-space: nowrap; overflow: hidden;
+      text-overflow: ellipsis; max-width: 100%;
+      transition: color 0.3s;
+    }
+    .crm-stage-node.active .crm-label { color: #065F46; font-weight: 600; }
+    .crm-stage-node .crm-dwell {
+      font-size: 9px; color: #94A3B8;
+      margin-top: 1px;
+    }
+    .crm-stage-node .crm-conv {
+      font-size: 8px; color: #CBD5E1;
+    }
+    /* 连接线 */
+    .crm-stage-bar .crm-connector {
+      flex: 0 0 6px;
+      height: 2px;
+      background: #CBD5E1;
+      margin-bottom: 18px;
+      border-radius: 1px;
+    }
+    .crm-stage-bar .crm-connector.done {
+      background: #10B981;
+    }
+    /* 风险指示 */
+    .crm-stage-node.risk-warn .crm-dot {
+      background: #F59E0B;
+      box-shadow: 0 0 0 3px rgba(245,158,11,0.25);
+      animation: pulse-warn 1.5s infinite;
+    }
+    .crm-stage-node.risk-danger .crm-dot {
+      background: #EF4444;
+      box-shadow: 0 0 0 3px rgba(239,68,68,0.25);
+      animation: pulse-danger 1.2s infinite;
+    }
+    @keyframes pulse-warn {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+    }
+    @keyframes pulse-danger {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+    .crm-risk-banner {
+      padding: 8px 12px; margin: 0 10px 8px;
+      border-radius: 6px; font-size: 12px;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .crm-risk-banner.warn {
+      background: #FFFBEB; border: 1px solid #FDE68A;
+      color: #92400E;
+    }
+    .crm-risk-banner.danger {
+      background: #FEF2F2; border: 1px solid #FECACA;
+      color: #991B1B;
+    }
+    .crm-risk-banner svg { flex-shrink: 0; }
+    .crm-risk-banner span { font-size: 11px; line-height: 1.4; }
+    .crm-bar-wrapper { overflow: hidden; }
+    .crm-stage-bar { overflow: hidden; }
+    .crm-label { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 26px; font-size: 10px; }
+    .crm-dwell { white-space: nowrap; font-size: 9px; }
+
+
+    /* 锁定右侧面板高度，防止内容撑开网格行 */
+    .wecom-app { overflow: hidden; grid-template-columns: 240px 1fr 260px; }
+    .wc-aside { min-height: 0; overflow: hidden; }
+    .wc-aside-body { min-height: 0; }
+
+    /* P0-4：右栏降噪 — 轻量化、去评分感、更抽屉 */
+    .wc-aside { background: #F8F9FB; border-left-color: #E5E7EB; }
+    .wc-aside-section { background: #FFFFFF; border: 1px solid #EEF0F2; border-radius: 6px; box-shadow: none; }
+    .wc-script-card { border-color: #F0F1F3; transition: none; box-shadow: none; }
+    .wc-script-card:hover { border-color: #D0D2D6; }
+    .wc-script-card:active { transform: none; }
+    .wc-script-card + .wc-script-card { margin-top: 6px; }
+    .wc-script-score { font-size: 11px; color: var(--wc-text-tertiary, #86909C); font-weight: 400; }
+    .wc-script-score b { font-weight: 500; }
+    .wc-script-reason { padding: 4px 0 0; border: none; }
+
+    /* 全局精细度提升 */
+    .wc-aside-body { padding: 10px 12px 12px; gap: 8px; }
+    .wc-aside-section { padding: 8px 10px 8px; }
+    .wc-script-acts { flex-wrap: nowrap; overflow: hidden; }
+    .wc-aside-footer { padding: 6px 10px; }
+    .wc-aside-takeover { height: 28px; font-size: 11px; gap: 4px; }
+
+    /* P1：会话列表紧凑 + 去绿条选中态 + 标签轻量化 */
+    .wc-conv-item { padding: 6px 12px; grid-template-columns: 30px 1fr; gap: 6px; }
+    .wc-conv-item.is-active { background: #F0F1F3; box-shadow: none; }
+    .wc-avatar { width: 30px; height: 30px; font-size: 12px; }
+    .wc-conv-name { font-size: 13px; line-height: 1.3; }
+    .wc-conv-preview { font-size: 10px; line-height: 1.3; margin-top: 0; }
+    /* 标签默认隐藏，hover时显示 */
+    .wc-conv-item .wc-tag-customer,
+    .wc-conv-item .wc-tag-group,
+    .wc-conv-item .wc-tag-old,
+    .wc-conv-item .wc-tag-cust { display: none; }
+    .wc-conv-item:hover .wc-tag-customer,
+    .wc-conv-item:hover .wc-tag-cust { display: inline-block; }
+
+    /* 防溢出 — 所有文字按钮截断 */
+    .wc-aside-tab { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; flex: 1; }
+    .wc-script-btn { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .wc-aside-takeover { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+    /* P1：消息区更紧凑 */
+    .wc-messages { padding: 8px 14px; gap: 4px; }
+    .wc-time-divider { font-size: 10px; padding: 2px 8px; margin: 6px 0; }
+    .wc-msg + .wc-msg { margin-top: 2px; }
+    /* 阶段详情悬浮提示 */
+    .crm-stage-node:hover .crm-stage-tooltip {
+      opacity: 1; transform: translateY(0);
+    }
+    .crm-stage-tooltip {
+      position: absolute; bottom: calc(100% + 8px); left: 50%;
+      transform: translateX(-50%) translateY(4px);
+      background: #1E293B; color: #fff;
+      padding: 6px 10px; border-radius: 6px;
+      font-size: 11px; white-space: nowrap;
+      opacity: 0; pointer-events: none;
+      transition: all 0.2s; z-index: 20;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+    .crm-stage-tooltip::after {
+      content: ''; position: absolute; top: 100%; left: 50%;
+      transform: translateX(-50%);
+      border: 5px solid transparent; border-top-color: #1E293B;
+    }
   </style>
 </head>
 <body class="scene-page">
   <nav class="scene-nav" id="scene-nav"></nav>
 
   <main class="scene-content">
-    <!-- 演示提示条（轻量化，让出主舞台） -->
-    <div class="scene-hint-bar">
+    <!-- 演示提示条（默认隐藏，通过 ?demo=true 或点击右上角 ? 显示） -->
+    <div class="scene-hint-bar" id="sceneHintBar" hidden>
       <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">
         <circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16.4" r=".9" fill="currentColor"/>
       </svg>
-      <span>演示模式 · 模拟与<b>陈香贵连锁 王建国</b>的企微沟通，AI 参谋实时给出推荐话术与<b>下一步动作</b>，按右下「<b>切换为人工</b>」可移交真人接管</span>
+      <span>演示模式 · 模拟与<b>陈香贵连锁 王建国</b>的企微沟通，AI 参谋实时给出推荐话术与<b>下一步动作</b></span>
+      <button class="wc-hint-close" onclick="document.getElementById('sceneHintBar').hidden=true" style="margin-left:auto;background:none;border:none;color:#8B6914;cursor:pointer;font-size:16px;">×</button>
     </div>
 
     <!-- 企微三栏 -->
@@ -131,7 +301,6 @@
       <aside class="wc-sidebar">
         <div class="wc-side-head">
           <div class="wc-search">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
             <input placeholder="搜索 / 客户 / 群" />
           </div>
           <button class="wc-side-add" title="新建会话">
@@ -146,19 +315,8 @@
         <header class="wc-chat-header">
           <div class="wc-chat-title">
             <span class="wc-name">王建国</span>
-            <span class="wc-tag-customer">客户</span>
-            <span class="wc-id" title="跨场景统一客户 ID">CUS-2026-0002（陈香贵）</span>
-          </div>
-          <div class="wc-chat-meta">
-            <span class="wc-online-dot"></span><span>在线 · 陈香贵连锁（上海总部）</span>
           </div>
           <div class="wc-chat-actions">
-            <button class="wc-icon-btn" title="语音通话"><span data-icon="phone"></span></button>
-            <button class="wc-icon-btn" title="视频通话"><span data-icon="video"></span></button>
-            <button class="wc-icon-btn" title="历史记录"><span data-icon="history"></span></button>
-            <button class="wc-takeover-btn" id="btnTakeover" title="一键切换为人工接管">
-              <span data-icon="takeover"></span>切换为人工
-            </button>
             <button class="wc-icon-btn" title="更多"><span data-icon="more"></span></button>
           </div>
         </header>
@@ -172,17 +330,10 @@
             <button class="wc-iconbtn" title="图片"><span data-icon="image"></span></button>
             <button class="wc-iconbtn" title="截图"><span data-icon="scissors"></span></button>
             <button class="wc-iconbtn" title="语音"><span data-icon="mic"></span></button>
-            <span class="wc-toolbar-divider"></span>
-            <button class="wc-iconbtn wc-tool-tip" title="AI 推荐 · 来自右侧参谋">
-              <span data-icon="sparkles"></span>AI 推荐
-            </button>
           </div>
           <div class="wc-input-area">
-            <textarea class="wc-input" id="wcInput" placeholder="输入回复，Enter 发送 · Shift+Enter 换行"></textarea>
-            <button class="wc-send-btn" id="wcSendBtn">发送 <span data-icon="send"></span></button>
-          </div>
-          <div class="wc-composer-foot">
-            <span class="wc-foot-tip">已开启 <b>AI 实时辅助</b> · 客户标签自动更新</span>
+            <textarea class="wc-input" id="wcInput" placeholder="输入消息..."></textarea>
+            <button class="wc-iconbtn" id="wcSendBtn" title="发送"><span data-icon="send"></span></button>
           </div>
         </div>
       </section>
@@ -196,6 +347,13 @@
         </div>
 
         <div class="wc-aside-body" id="wcAsideBody"></div>
+        <!-- 接管切换（右栏底部轻量开关） -->
+        <div class="wc-aside-footer">
+          <button class="wc-aside-takeover" id="btnTakeover">
+            <span data-icon="takeover"></span>
+            <span>切换为人工接管</span>
+          </button>
+        </div>
       </aside>
     </div>
   </main>
@@ -218,6 +376,62 @@
   // 全局 DOM 引用
   var wcMsg, wcInput, wcSendBtn, wcAsideBody, wcAsideTabs;
 
+  // ============ 0. CRM 阶段定义（数据驱动） ============
+  const CRM_STAGES = [
+    { id:'P1', name:'了解信息', convRate:36.63, dwellAvg:13, dwellRisk:7,  weight:'需求挖掘',   desc:'信息收集与初步接触' },
+    { id:'P2', name:'收集需求', convRate:52.01, dwellAvg:9,  dwellRisk:7,  weight:'方案引导',   desc:'深挖场景与痛点' },
+    { id:'P3', name:'确认合作', convRate:73.66, dwellAvg:4,  dwellRisk:7,  weight:'试菜邀约',   desc:'方案评估与确认' },
+    { id:'P4', name:'合同签署', convRate:97.75, dwellAvg:2,  dwellRisk:7,  weight:'合同推进',   desc:'商务条款与签约' },
+    { id:'P5', name:'发货',     convRate:72.61, dwellAvg:5,  dwellRisk:7,  weight:'发货确认',   desc:'订单生产与物流' },
+    { id:'P6', name:'已回款',   convRate:76.78, dwellAvg:3,  dwellRisk:7,  weight:'催款跟进',   desc:'回款管理' },
+    { id:'P7', name:'已交付',   convRate:100,   dwellAvg:0,  dwellRisk:0,  weight:'转介绍',     desc:'交付验收与售后' }
+  ];
+
+  /** 阶段名简写映射 */
+  const STAGE_MAP = { 0:'P1', 1:'P2', 2:'P3', 3:'P4', 4:'P5', 5:'P6', 6:'P7' };
+  const STAGE_NAMES = CRM_STAGES.map(s => s.id);
+
+  /** 计算动态话术权重：基于阶段转化率 */
+  function calcScriptWeight(baseScore, stageIdx, scriptTags) {
+    const stage = CRM_STAGES[stageIdx] || CRM_STAGES[0];
+    const convFactor = stage.convRate / 100;
+    // P1: 需求挖掘类提权, 资料投递类降权
+    // P4+: 合同推进类提权
+    let adj = 1.0;
+    if (stageIdx === 0) { // P1 了解信息
+      if (scriptTags.includes('场景识别') || scriptTags.includes('需求挖掘')) adj = 1.15;
+      if (scriptTags.includes('资料投递')) adj = 0.75;
+    } else if (stageIdx === 1) { // P2 收集需求
+      if (scriptTags.includes('案例借力') || scriptTags.includes('二选一邀约')) adj = 1.12;
+    } else if (stageIdx === 2) { // P3 确认合作
+      if (scriptTags.includes('损失规避') || scriptTags.includes('现场体验')) adj = 1.15;
+    } else if (stageIdx >= 3 && stageIdx <= 4) { // P4-P5 合同/发货
+      if (scriptTags.includes('价值重塑') || scriptTags.includes('数据破价')) adj = 1.10;
+    } else if (stageIdx >= 5) { // P6-P7 回款/交付
+      if (scriptTags.includes('转介绍') || scriptTags.includes('服务保障')) adj = 1.10;
+    }
+    // 低转化率阶段降低整体信心
+    const confidenceBase = Math.min(convFactor / 0.7, 1.3);
+    return Math.min(Math.round(baseScore * adj * confidenceBase), 99);
+  }
+
+  /** 模拟在阶段停留天数 */
+  function getDwellDays(stageIdx) {
+    // 基于阶段索引模拟：越早的阶段停留越久
+    const base = [14, 9, 5, 3, 5, 3, 1];
+    return base[stageIdx] || 3;
+  }
+
+  /** 获取阶段风险等级 */
+  function getStageRisk(stageIdx) {
+    const dwell = getDwellDays(stageIdx);
+    const stage = CRM_STAGES[stageIdx];
+    if (!stage || stage.dwellRisk === 0) return 'none';
+    if (dwell >= 14) return 'danger';
+    if (dwell >= 7) return 'warn';
+    return 'none';
+  }
+
   // ---------- 1. 多客户会话数据（支持会话切换） ----------
   const CONV_LIST = [
     { id:'CUS-2026-0002', name:'王建国',   sub:'陈香贵连锁 · 上海',    last:'价格比美膳狮贵那么多，凭什么？',     time:'14:32', unread:2, color:'c2', tag:'客户',  active:true,  online:true  },
@@ -233,7 +447,7 @@
     'CUS-2026-0002': { // 王建国（陈香贵）
       customerId: 'CUS-2026-0002',
       name: '王建国', company: '陈香贵连锁', region: '上海总部',
-      stage: 0, stageName: '认知',
+      stage: 0, stageName: 'P1 了解信息',
       avatarChar: '王', colorClass: 'c2',
       bootstrap: [
         { type:'system', text:'14:08 · 通过「企微外部联系人」添加 王建国（陈香贵连锁）' },
@@ -243,7 +457,7 @@
       ],
       rounds: [
         {
-          stage: 0, stageName: '认知',
+          stage: 0, stageName: 'P1 了解信息', crmStage:'P1',
           reply: { text:'我们想做现炒浇头拌面，<b>日均浇头大概需要 400 份</b>。你们有适合的机型吗？另外我们看过「<u>小江溪</u>」的案例，他们都是用你们G2/G3，效果怎么样？', tags:['决策人','高意向','已知案例'], markLabel:'关键信息：浇头400份/日 · 面品类', mark:'turn' },
           scripts: [
             { score:95, level:'top', text:'王总您好！面品类浇头标准化我们做得最熟。小江溪用的就是 G2+G3，后厨人力成本下降40%，日均出品150-300份，出餐营收占30%。我帮您匹配「G2+G3」组合，现炒浇头、小炒黄牛肉拌面、爆肚拌面都能做，我把小江溪详细数据发您？', why:'明确客户场景，引用真实案例数据锚定', tags:['场景识别','案例借力'], confidence:0.95 },
@@ -257,7 +471,7 @@
           ]
         },
         {
-          stage: 1, stageName: '兴趣',
+          stage: 1, stageName: 'P2 收集需求', crmStage:'P2',
           reply: { text:'<b>G3要7.6万，比美膳狮贵不少啊</b>，他们的才4-5万。而且你们售后靠谱吗？我们全国几百家门店。', tags:['价格异议','售后顾虑','决策迟疑'], markLabel:'异议：比美膳狮贵', mark:'loss' },
           scripts: [
             { score:95, level:'top', text:'理解您在算细账。差价的3万主要在几个地方：第一，我们的氮化铁锅受热均匀、不会粘锅，美膳狮是不锈钢锅加铝层，高温下铝离子有迁移风险；第二，我们52人售后团队全国覆盖，他们是4-6小时响应而且仅限省会；第三，我们有六大报表体系，他们有吗？您看小江溪用了我们设备后人力成本降了40%，这台账算下来反而更划算。', why:'数据破价，不打折而是扩大价值面', tags:['价值重塑','数据破价'], confidence:0.93 },
@@ -271,7 +485,7 @@
           ]
         },
         {
-          stage: 2, stageName: '评估',
+          stage: 2, stageName: 'P3 确认合作', crmStage:'P3',
           reply: { text:'<i style="color:var(--gray-500)">（沉默 5 分钟）</i><br>…我再考虑考虑，<b>过两天给你答复</b>。', tags:['沉默信号','决策推迟','风险升级'], markLabel:'风险升级：沉默+推迟', mark:'turn' },
           scripts: [
             { score:92, level:'top', text:'王总，您肯定还在权衡。我换个方式 — 这周五下午我带上G3到您上海总部，<b>用您自己的食材现场做3道浇头</b>，您和主厨一起尝。觉得不行方案当场作废，绝不打扰您。您看实物比看资料靠谱多了。', why:'零风险体验邀约', tags:['损失规避','现场体验'], confidence:0.91 },
@@ -474,19 +688,13 @@
   }
 
   function updateChatHeader(convId, data) {
-    const h = document.querySelector('.wc-chat-header');
-    const nameEl = h.querySelector('.wc-name');
-    const metaEl = h.querySelector('.wc-chat-meta');
-    const idEl = h.querySelector('.wc-id');
+    const nameEl = document.querySelector('.wc-chat-header .wc-name');
+    if (!nameEl) return;
     if (data) {
       nameEl.textContent = data.name;
-      metaEl.innerHTML = `<span class="wc-online-dot"></span><span>在线 · ${data.company}（${data.region}）</span>`;
-      idEl.textContent = data.customerId;
     } else {
       const c = CONV_LIST.find(x => x.id === convId);
       nameEl.textContent = c ? c.name : convId;
-      metaEl.innerHTML = `<span>${c ? c.sub : ''}</span>`;
-      idEl.textContent = convId;
     }
   }
 
@@ -593,38 +801,74 @@
     });
   }
 
-  function renderScriptTab(d) {
-    const stages = ['认知','兴趣','评估','决策'];
-    return `
-      <section class="wc-aside-section">
-        <div class="wc-aside-section-head">
-          <span class="wc-aside-section-title">客户阶段</span>
-          <span class="wc-aside-section-extra">由 AI 实时识别</span>
-        </div>
-        <div class="wc-stage-rail">
-          ${stages.map((s,i) => `
-            <div class="wc-stage-step ${i < d.stage ? 'is-done' : ''} ${i === d.stage ? 'is-active' : ''}">
-              <div class="wc-stage-dot">${i+1}</div>
-              <div class="wc-stage-label">${s}</div>
-            </div>
-          `).join('')}
-        </div>
-      </section>
+  /* 渲染 CRM 阶段进度条（P1-P7）*/
+  function renderStageBar(currentStageIdx) {
+    const idx = currentStageIdx || 0;
+    let html = '<div class="crm-stage-bar">';
+    CRM_STAGES.forEach((s, i) => {
+      if (i > 0) {
+        const connDone = i <= idx ? 'done' : '';
+        html += `<div class="crm-connector ${connDone}"></div>`;
+      }
+      const isActive = i === idx ? 'active' : '';
+      const isDone = i < idx ? 'done' : '';
+      const dwell = getDwellDays(i);
+      const risk = getStageRisk(i);
+      const riskClass = risk !== 'none' && i === idx ? `risk-${risk}` : '';
+      const convText = i < CRM_STAGES.length - 1 ? s.convRate + '%' : '—';
+      html += `
+        <div class="crm-stage-node ${isActive} ${isDone} ${riskClass}">
+          <div class="crm-dot">
+            <div class="crm-stage-tooltip">${s.id} ${s.name} · ${s.desc}<br>转化率 ${convText} · 平均${s.dwellAvg}天</div>
+          </div>
+          <div class="crm-label">${s.id}</div>
+          ${i === idx ? '<div class="crm-dwell">' + dwell + '天</div>' : ''}
+        </div>`;
+    });
+    html += '</div>';
 
+    // 风险横幅
+    const stageRisk = getStageRisk(idx);
+    if (stageRisk === 'warn') {
+      const stage = CRM_STAGES[idx];
+      html += '<div class="crm-risk-banner warn">' +
+        '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01"/><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/></svg>' +
+        '<span>⚠ <b>超 ' + stage.dwellAvg + ' 天</b> · ' + stage.id + ' 已停留 ' + getDwellDays(idx) + ' 天，建议主动推进</span></div>';
+    } else if (stageRisk === 'danger') {
+      const stage = CRM_STAGES[idx];
+      html += '<div class="crm-risk-banner danger">' +
+        '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M15 9l-6 6M9 9l6 6"/></svg>' +
+        '<span>🔴 <b>已超期</b> · ' + stage.id + ' 已停留 ' + getDwellDays(idx) + ' 天，建议触发升级机制</span></div>';
+    }
+    return html;
+  }
+
+  function renderScriptTab(d) {
+    const data = getActiveData();
+    const currentStageIdx = data ? data.stage : 0;
+    const stageBarHtml = renderStageBar(currentStageIdx);
+    const stageDef = CRM_STAGES[currentStageIdx] || CRM_STAGES[0];
+
+    // 安全兜底：d 可能无 scripts
+    const scripts = (d && d.scripts) || [];
+    if (scripts.length === 0) {
+      return stageBarHtml + '<div class="wc-empty-hint" style="padding:20px 10px">暂无推荐话术</div>';
+    }
+
+    return stageBarHtml + `
       <section class="wc-aside-section">
         <div class="wc-aside-section-head">
-          <span class="wc-aside-section-title">推荐话术 · 3 选 1</span>
-          <span class="wc-aside-section-extra">基于上下文 + 历史 287 通成单数据</span>
+          <span class="wc-aside-section-title">推荐话术 · ${stageDef.id} ${stageDef.name}</span>
+          <span class="wc-aside-section-extra">转化率 ${stageDef.convRate}%</span>
         </div>
         <div class="wc-script-list">
-          ${d.scripts.map(s => `
+          ${scripts.map(s => {
+            const dynamicScore = calcScriptWeight(s.score, currentStageIdx, s.tags || []);
+            const scoreLabel = dynamicScore >= 85 ? '⭐ 首选' : dynamicScore >= 65 ? '备选' : '参考';
+            return `
             <article class="wc-script-card level-${s.level}">
               <div class="wc-script-head">
-                <span class="wc-script-score">推荐度 ${s.score}%</span>
-                <div class="wc-confidence">
-                  <span class="wc-confidence-bar"><span style="width:${Math.round(s.confidence*100)}%"></span></span>
-                  <span class="wc-confidence-num">${(s.confidence*100|0)}</span>
-                </div>
+                <span class="wc-script-score"><b>${dynamicScore}%</b> · ${scoreLabel}</span>
               </div>
               <p class="wc-script-text">${s.text}</p>
               <div class="wc-script-tags">
@@ -639,7 +883,8 @@
                 <button class="wc-script-btn primary" data-action="send-direct">直接发送 <span data-icon="send"></span></button>
               </div>
             </article>
-          `).join('')}
+          `;
+        }).join('')}
         </div>
       </section>
     `;
@@ -647,40 +892,61 @@
 
   function renderInsightTab(d) {
     const data = getActiveData();
-    const customerKV = data ? [
-      ['客户姓名', `${data.name} · 实控人`],
-      ['企业', data.company],
-      ['门店数', data.name === '王建国' ? '4 家直营 + 2 家加盟' : data.name === '李慧珺' ? '中央厨房 1 家（日产能 2000 份）' : '企业食堂（日供 1200 人）'],
-      ['日均单量', data.name === '王建国' ? '约 350 单 / 店' : data.name === '李慧珺' ? '约 2000 份' : '约 1200 人/天'],
-      ['客单价', data.name === '王建国' ? '¥ 78' : '¥ 35（食堂）'],
-      ['核心痛点', data.name === '王建国' ? '后厨用人成本年增 22%' : data.name === '李慧珺' ? '中央厨房批量标准化出品' : '团餐品质管控与成本控制'],
-      ['决策风格', data.name === '王建国' ? '理性 · 重证据 · 信老客介绍' : '理性 · 重能耗 · 看 ROI']
-    ] : [['客户姓名', '未选中客户']];
+    const currentStageIdx = data ? data.stage : 0;
+    const stageDef = CRM_STAGES[currentStageIdx] || CRM_STAGES[0];
+    const dwell = getDwellDays(currentStageIdx);
+
+    // 客户基础信息（安全兜底）
+    const customerKV = data ? {
+      '客户姓名': `${data.name} · 实控人`,
+      '企业': data.company,
+      '当前阶段': `${stageDef.id} ${stageDef.name} · 已停留 ${dwell} 天`,
+      '→下一阶段转化率': `${stageDef.convRate}%`,
+      '同类客户平均停留': `${stageDef.dwellAvg} 天`,
+      '门店数': data.name === '王建国' ? '4 家直营 + 2 家加盟' : data.name === '李慧珺' ? '中央厨房 1 家（日产能 2000 份）' : '企业食堂（日供 1200 人）',
+      '日均单量': data.name === '王建国' ? '约 350 单 / 店' : data.name === '李慧珺' ? '约 2000 份' : '约 1200 人/天',
+      '客单价': data.name === '王建国' ? '¥ 78' : '¥ 35（食堂）',
+      '核心痛点': data.name === '王建国' ? '后厨用人成本年增 22%' : data.name === '李慧珺' ? '中央厨房批量标准化出品' : '团餐品质管控与成本控制',
+      '决策风格': data.name === '王建国' ? '理性 · 重证据 · 信老客介绍' : '理性 · 重能耗 · 看 ROI'
+    } : { '客户姓名': '未选中客户' };
+
+    // 本轮关键信号（安全兜底）
+    const insightItems = (d && d.insight) || [];
+    const dotColorMap = { pain:'warn', signal:'', risk:'risk', next:'' };
+
     return `
       <section class="wc-aside-section">
         <div class="wc-aside-section-head">
           <span class="wc-aside-section-title">客户基础信息</span>
           <span class="wc-aside-section-extra">${data ? data.customerId : activeConvId}</span>
         </div>
-        <div class="wc-kv">
-          ${customerKV.map(([k,v]) => `<div class="wc-kv-row"><span>${k}</span><b>${v}</b></div>`).join('')}
-        </div>
+        <dl class="wc-kv">
+          ${Object.entries(customerKV).map(([k,v]) => `
+            <dt>${k}</dt><dd>${v}</dd>
+          `).join('')}
+        </dl>
       </section>
+
       <section class="wc-aside-section">
         <div class="wc-aside-section-head">
           <span class="wc-aside-section-title">本轮关键信号</span>
+          <span class="wc-aside-section-extra">${insightItems.length} 项</span>
         </div>
+        ${insightItems.length === 0 ? '<div class="wc-empty-hint">暂无关键信号</div>' : `
         <div class="wc-insight-list">
-          ${d.insight.map(it => `
-            <div class="wc-insight-item kind-${it.kind}">
-              <span class="wc-insight-dot"></span>
-              <div>
-                <div class="wc-insight-label">${it.label}</div>
-                <div class="wc-insight-detail">${it.detail}</div>
+          ${insightItems.map(it => {
+            const dotClass = dotColorMap[it.kind] || '';
+            const icon = it.kind === 'pain' ? '⚠️' : it.kind === 'risk' ? '🔴' : it.kind === 'next' ? '👉' : '💡';
+            return `
+            <div class="wc-insight-item" style="padding:6px 0;border-bottom:1px solid #F0F1F3">
+              <span class="wc-insight-dot ${dotClass}" style="margin-top:7px"></span>
+              <div style="min-width:0">
+                <div style="font-size:12px;font-weight:500;color:var(--wc-text-primary)">${icon} ${it.label}</div>
+                <div style="font-size:11px;color:var(--wc-text-tertiary);margin-top:2px;line-height:1.45">${it.detail}</div>
               </div>
-            </div>
-          `).join('')}
-        </div>
+            </div>`;
+          }).join('')}
+        </div>`}
       </section>
     `;
   }
@@ -864,10 +1130,7 @@
   }
 
   function flashAsideHint() {
-    const c = document.querySelector('.wc-aside');
-    if (!c) return;
-    c.classList.add('is-pulse');
-    setTimeout(() => c.classList.remove('is-pulse'), 1100);
+    // light touch — just a subtle bg change, no animation needed
   }
 
   function nowHM() {
@@ -889,14 +1152,15 @@
     }
   });
 
-  // 一键接管
-  document.getElementById('btnTakeover').addEventListener('click', () => {
+  // 一键接管（右栏底部）
+  document.getElementById('btnTakeover').addEventListener('click', function() {
     const t = document.getElementById('toastTakeover');
     t.classList.add('is-show');
-    setTimeout(() => t.classList.remove('is-show'), 3200);
+    setTimeout(() => t.classList.remove('is-show'), 2800);
     // 顶栏视觉变化
     document.querySelector('.wc-chat-header').classList.add('is-takeover');
-    document.querySelector('.wc-foot-tip').innerHTML = '<b style="color:#0EA5E9">人工接管中</b> · AI 仅做后台辅助分析';
+    this.classList.add('is-active');
+    this.innerHTML = '<span data-icon="takeover"></span><span>人工接管中</span>';
   });
 
   bootstrap();

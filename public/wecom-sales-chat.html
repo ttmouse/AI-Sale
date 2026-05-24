@@ -197,7 +197,7 @@
             z-index: 1;
             display: flex;
             flex-direction: column;
-            gap: 14px;
+            gap: 8px;
             min-height: 100%;
         }
 
@@ -246,101 +246,29 @@
         /* —— 客户消息（左/灰） —— */
         .msg-customer {
             align-self: flex-start;
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            max-width: 82%;
-        }
-        .msg-customer .msg-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 4px;
-            background: #3a3a3e;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: rgba(255, 255, 255, .7);
-            font-size: 14px;
-            font-weight: 600;
-            flex-shrink: 0;
-        }
-        .msg-customer .msg-bubble {
-            position: relative;
-        }
-        .msg-customer .msg-bubble .msg-content {
-            background: #2C2C2C;
-            color: #D5D5D5;
-            padding: 10px 12px;
-            border-radius: 4px;
+            background: #232428;
+            color: #e5e5e5;
+            padding: 10px 14px;
+            border-radius: 6px 18px 18px 18px;
             font-size: 15px;
             word-break: break-word;
-            line-height: 1.5;
         }
-        .msg-customer .msg-bubble::before {
-            content: '';
-            position: absolute;
-            top: 14px;
-            left: -5px;
-            width: 0;
-            height: 0;
-            border: 5px solid transparent;
-            border-right-color: #2C2C2C;
-            border-left: 0;
-            border-bottom-width: 4px;
-            border-top-width: 6px;
+        .msg-customer .sender-label {
+            font-size: 11px;
+            color: rgba(255, 255, 255, .3);
+            margin-bottom: 2px;
+            display: block;
         }
 
         /* —— 销售消息（右/蓝） —— */
         .msg-sales {
             align-self: flex-end;
-            display: flex;
-            align-items: flex-start;
-            gap: 14px;
-            max-width: 82%;
-        }
-        .msg-sales .msg-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 4px;
-            background: #075A9A;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fff;
-            font-size: 14px;
-            font-weight: 600;
-            flex-shrink: 0;
-        }
-        .msg-sales .msg-bubble {
-            position: relative;
-        }
-        .msg-sales .msg-bubble .msg-content {
             background: #075A9A;
             color: #fff;
-            padding: 10px 12px;
-            border-radius: 4px;
+            padding: 10px 14px;
+            border-radius: 18px 6px 18px 18px;
             font-size: 15px;
             word-break: break-word;
-            line-height: 1.5;
-        }
-        .msg-sales .msg-bubble::before {
-            content: '';
-            position: absolute;
-            top: 14px;
-            right: -5px;
-            width: 0;
-            height: 0;
-            border: 5px solid transparent;
-            border-right: 0;
-            border-left-color: #075A9A;
-            border-bottom-width: 4px;
-            border-top-width: 6px;
-        }
-        .msg-sales .msg-bubble .read-tag {
-            font-size: 10px;
-            color: rgba(255, 255, 255, .2);
-            text-align: right;
-            margin-top: 2px;
         }
 
         /* —— 图片消息 —— */
@@ -488,196 +416,57 @@
             color: rgba(255, 255, 255, .3);
         }
 
-        /* ===== 会话业务工具快捷入口 ===== */
+        /* ===== 底部工具栏 ===== */
         #toolbar {
             background: #101114;
             border-top: 0.5px solid rgba(255, 255, 255, .06);
+            padding: 6px 6px 2px;
             flex-shrink: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
             position: relative;
             z-index: 50;
-            padding: 8px 0;
         }
-
-        .tool-scroll {
-            display: flex;
-            gap: 10px;
-            overflow-x: auto;
-            overflow-y: hidden;
-            -webkit-overflow-scrolling: touch;
-            padding: 0 12px;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-        .tool-scroll::-webkit-scrollbar {
-            display: none;
-        }
-
         .tool-btn {
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 7px;
-            padding: 0 15px;
-            background: #2a2a2e;
+            gap: 1px;
+            padding: 4px 6px;
+            background: transparent;
             border: none;
-            border-radius: 18px;
-            color: rgba(255, 255, 255, .85);
-            font-size: 14px;
+            color: #8a8b8f;
+            font-size: 10px;
             cursor: pointer;
+            border-radius: 6px;
+            min-width: 40px;
             transition: all .15s;
             position: relative;
             -webkit-tap-highlight-color: transparent;
-            white-space: nowrap;
-            flex-shrink: 0;
-            height: 36px;
+        }
+        .tool-btn span {
+            font-size: 18px;
+            line-height: 1.2;
+        }
+        .tool-btn .label {
+            font-size: 9px;
+            color: rgba(255, 255, 255, .45);
+            letter-spacing: .2px;
         }
         .tool-btn:active {
-            background: #3a3a3e;
-            transform: scale(.96);
+            background: rgba(255, 255, 255, .08);
+            transform: scale(.94);
         }
-
-        .tool-btn .tool-icon {
-            width: 17px;
-            height: 17px;
-            flex-shrink: 0;
-            color: rgba(255, 255, 255, .65);
-            display: block;
-        }
-
-        .tool-btn .tool-label {
-            font-size: 14px;
-            font-weight: 400;
-            letter-spacing: .3px;
-            color: rgba(255, 255, 255, .85);
-        }
-
         .tool-btn .badge {
             position: absolute;
-            top: 5px;
-            right: 5px;
+            top: 0;
+            right: 2px;
             width: 7px;
             height: 7px;
             background: #ff3b30;
             border-radius: 50%;
-            border: 1.5px solid #2a2a2e;
-        }
-
-        /* ===== 全屏业务窗口 ===== */
-        .fullscreen-page {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 300;
-            background: #111214;
-            transform: translateY(100%);
-            transition: transform .35s cubic-bezier(.22, 1, .36, 1);
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            will-change: transform;
-            border-radius: 0;
-        }
-        .fullscreen-page.open {
-            transform: translateY(0);
-        }
-
-        .page-header {
-            display: flex;
-            align-items: center;
-            height: 52px;
-            padding: 0 12px;
-            background: #111214;
-            border-bottom: 0.5px solid #222329;
-            flex-shrink: 0;
-        }
-        .page-close {
-            width: 44px;
-            height: 44px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: none;
-            background: transparent;
-            color: #fff;
-            font-size: 26px;
-            cursor: pointer;
-            flex-shrink: 0;
-            -webkit-tap-highlight-color: transparent;
-            transition: opacity .15s;
-        }
-        .page-close:active {
-            opacity: .6;
-        }
-        .page-title {
-            flex: 1;
-            text-align: center;
-            font-size: 17px;
-            font-weight: 500;
-            color: #fff;
-            letter-spacing: .3px;
-        }
-        .page-spacer {
-            width: 44px;
-            flex-shrink: 0;
-        }
-
-        .page-body {
-            flex: 1;
-            overflow-y: auto;
-            padding: 16px;
-            -webkit-overflow-scrolling: touch;
-            background: #111214;
-        }
-        .page-body::-webkit-scrollbar {
-            width: 3px;
-        }
-        .page-body::-webkit-scrollbar-track {
-            background: transparent;
-        }
-        .page-body::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, .12);
-            border-radius: 2px;
-        }
-
-        .page-footer {
-            flex-shrink: 0;
-            padding: 12px 16px 20px;
-            background: #111214;
-            border-top: 0.5px solid #222329;
-        }
-
-        .page-footer .btn-primary {
-            background: #075A9A;
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 15px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            transition: all .15s;
-        }
-        .page-footer .btn-primary:active {
-            background: #064a82;
-            transform: scale(.98);
-        }
-        .page-footer .btn-secondary {
-            background: rgba(255,255,255,.08);
-            color: #fff;
-            border: none;
-            border-radius: 8px;
-            padding: 12px;
-            font-size: 15px;
-            font-weight: 500;
-            cursor: pointer;
-            width: 100%;
-            transition: all .15s;
-        }
-        .page-footer .btn-secondary:active {
-            background: rgba(255,255,255,.12);
-            transform: scale(.98);
+            border: 1px solid #101114;
         }
 
         /* ===== 输入栏 ===== */
@@ -1273,85 +1062,16 @@
             <div id="messages"></div>
         </div>
 
-        <!-- ====== 会话业务工具快捷入口 ====== -->
+        <!-- ====== 底部工具栏 ====== -->
         <div id="toolbar">
-            <div class="tool-scroll">
-                <button class="tool-btn" data-panel="profile">
-                    <svg class="tool-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <circle cx="10" cy="7" r="3"/>
-                        <path d="M3 18c0-4 3-7 7-7s7 3 7 7"/>
-                    </svg>
-                    <span class="tool-label">客户资料</span>
-                </button>
-                <button class="tool-btn" data-panel="quickReply">
-                    <svg class="tool-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18 10a8 8 0 10-14.8 4.2L2 18l4.2-1.2A8 8 0 0018 10z"/>
-                    </svg>
-                    <span class="tool-label">快捷回复</span>
-                </button>
-                <button class="tool-btn" data-panel="productGallery">
-                    <svg class="tool-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="2" width="7" height="7" rx="1"/>
-                        <rect x="11" y="2" width="7" height="7" rx="1"/>
-                        <rect x="2" y="11" width="7" height="7" rx="1"/>
-                        <rect x="11" y="11" width="7" height="7" rx="1"/>
-                    </svg>
-                    <span class="tool-label">商品图册</span>
-                </button>
-                <button class="tool-btn" data-panel="miniApp">
-                    <svg class="tool-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="2" width="7" height="7" rx="1.5"/>
-                        <rect x="11" y="2" width="7" height="7" rx="1.5"/>
-                        <rect x="2" y="11" width="7" height="7" rx="1.5"/>
-                        <rect x="11" y="11" width="7" height="7" rx="1.5"/>
-                    </svg>
-                    <span class="tool-label">内部小程序</span>
-                </button>
-                <button class="tool-btn" data-panel="tags">
-                    <svg class="tool-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M3 3l3-1 8 8-3 3-8-8 1-3z"/>
-                        <circle cx="5.5" cy="5.5" r="1" fill="currentColor"/>
-                    </svg>
-                    <span class="tool-label">客户标签</span>
-                </button>
-                <button class="tool-btn" data-panel="followUp">
-                    <svg class="tool-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M5 2h10a1 1 0 011 1v14a1 1 0 01-1 1H5a1 1 0 01-1-1V3a1 1 0 011-1z"/>
-                        <path d="M7 7h6M7 10h6M7 13h4"/>
-                    </svg>
-                    <span class="tool-label">跟进记录</span>
-                </button>
-                <button class="tool-btn" data-panel="appointment">
-                    <svg class="tool-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <rect x="2" y="3" width="16" height="14" rx="2"/>
-                        <path d="M2 7h16M6 1v3M14 1v3"/>
-                        <path d="M6 11h2v2H6zM10 11h2v2h-2zM14 11h2v2h-2z"/>
-                    </svg>
-                    <span class="tool-label">预约到店</span>
-                </button>
-                <button class="tool-btn" data-panel="payment">
-                    <svg class="tool-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M10 2v16M6 6l4-4 4 4M6 14l4 4 4-4"/>
-                    </svg>
-                    <span class="tool-label">转账收款</span>
-                </button>
-                <button class="tool-btn" data-panel="proposal">
-                    <svg class="tool-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 4h12v12H4z"/>
-                        <path d="M8 8h4M8 11h4M8 14h2"/>
-                        <path d="M14 8l2 2-2 2"/>
-                    </svg>
-                    <span class="tool-label">发送方案</span>
-                </button>
-                <button class="tool-btn" data-panel="aiHelper">
-                    <svg class="tool-icon" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M10 2l1.5 4.5L16 8l-4.5 1.5L10 14l-1.5-4.5L4 8l4.5-1.5L10 2z"/>
-                        <path d="M14 14l-1 2M6 14l1 2M10 16v2"/>
-                    </svg>
-                    <span class="tool-label">AI 助手</span>
-                    <span class="badge"></span>
-                </button>
-            </div>
+            <button class="tool-btn" data-panel="profile"><span>👤</span><span class="label">客户资料</span></button>
+            <button class="tool-btn" data-panel="quickReply"><span>💬</span><span class="label">快捷回复</span></button>
+            <button class="tool-btn" data-panel="productGallery"><span>📋</span><span class="label">商品图册</span></button>
+            <button class="tool-btn" data-panel="miniApp"><span>📱</span><span class="label">小程序</span></button>
+            <button class="tool-btn" data-panel="tags"><span>🏷️</span><span class="label">标签</span></button>
+            <button class="tool-btn" data-panel="followUp"><span>📝</span><span class="label">跟进记录</span></button>
+            <button class="tool-btn" data-panel="appointment"><span>📅</span><span class="label">预约到店</span></button>
+            <button class="tool-btn" data-panel="aiHelper"><span>🤖</span><span class="label">AI助手</span><span class="badge"></span></button>
         </div>
 
         <!-- ====== 输入栏 ====== -->
@@ -1365,17 +1085,19 @@
         </div>
 
         <!-- ============================================================ -->
-        <!-- ====== 全屏业务窗口 ====== -->
+        <!-- ====== 面板系统 ====== -->
         <!-- ============================================================ -->
 
-        <!-- ===== 客户资料 ===== -->
-        <div class="fullscreen-page" id="page-profile">
-            <div class="page-header">
-                <button class="page-close" data-page="profile">×</button>
-                <span class="page-title">客户资料</span>
-                <span class="page-spacer"></span>
+        <!-- 遮罩 -->
+        <div class="panel-overlay" id="panelOverlay"></div>
+
+        <!-- ===== 客户资料面板 ===== -->
+        <div class="panel" id="panel-profile">
+            <div class="panel-header">
+                <span class="panel-title">客户资料</span>
+                <button class="panel-close" data-panel="profile">✕</button>
             </div>
-            <div class="page-body">
+            <div class="panel-body">
                 <div class="profile-avatar">
                     <div class="avatar">李</div>
                     <div class="info">
@@ -1389,8 +1111,8 @@
                 <div class="profile-item"><span class="label">意向课程</span><span class="value">少儿网球启蒙班</span></div>
                 <div class="profile-item"><span class="label">来源渠道</span><span class="value">朋友圈广告</span></div>
                 <div class="profile-item"><span class="label">跟进状态</span><span class="value" style="color:#34c759">待体验</span></div>
-                <div style="margin-top:16px;">
-                    <div style="color:rgba(255,255,255,.4);font-size:12px;margin-bottom:8px;font-weight:500;">客户标签</div>
+                <div style="margin-top:10px;">
+                    <div style="color:rgba(255,255,255,.4);font-size:12px;margin-bottom:6px;">标签</div>
                     <div class="profile-tags">
                         <span class="tag">新客户</span>
                         <span class="tag">附近小区</span>
@@ -1398,181 +1120,119 @@
                         <span class="tag">朋友圈来源</span>
                     </div>
                 </div>
-                <div style="margin-top:18px;border-top:0.5px solid rgba(255,255,255,.06);padding-top:14px;">
-                    <div style="color:rgba(255,255,255,.4);font-size:12px;margin-bottom:8px;font-weight:500;">历史记录</div>
-                    <div class="follow-item"><span class="f-time">09:30</span><span class="f-content">客户首次咨询，已介绍课程情况</span></div>
-                    <div class="follow-item"><span class="f-time">昨天</span><span class="f-content">客户通过朋友圈广告添加，未沟通</span></div>
-                    <div class="follow-item"><span class="f-time">3天前</span><span class="f-content">线索分配至销售组，来源：朋友圈广告落地页</span></div>
-                </div>
-                <div style="margin-top:14px;border-top:0.5px solid rgba(255,255,255,.06);padding-top:14px;">
-                    <div style="color:rgba(255,255,255,.4);font-size:12px;margin-bottom:8px;font-weight:500;">负责销售</div>
-                    <div style="color:#ccc;font-size:14px;">张销售 · 客户经理</div>
-                    <div style="color:rgba(255,255,255,.25);font-size:11px;margin-top:2px;">最近跟进：今天 09:30</div>
-                </div>
             </div>
         </div>
 
-        <!-- ===== 快捷回复 ===== -->
-        <div class="fullscreen-page" id="page-quickReply">
-            <div class="page-header">
-                <button class="page-close" data-page="quickReply">×</button>
-                <span class="page-title">快捷回复</span>
-                <span class="page-spacer"></span>
+        <!-- ===== 快捷回复面板 ===== -->
+        <div class="panel" id="panel-quickReply">
+            <div class="panel-header">
+                <span class="panel-title">快捷回复</span>
+                <button class="panel-close" data-panel="quickReply">✕</button>
             </div>
-            <div class="page-body">
+            <div class="panel-body">
                 <div class="qr-categories" id="qrCats">
-                    <button class="cat active" data-cat="first">首次咨询</button>
-                    <button class="cat" data-cat="price">价格异议</button>
-                    <button class="cat" data-cat="booking">预约到店</button>
+                    <button class="cat active" data-cat="greeting">问候语</button>
                     <button class="cat" data-cat="course">课程介绍</button>
-                    <button class="cat" data-cat="teacher">老师介绍</button>
-                    <button class="cat" data-cat="after">售后跟进</button>
+                    <button class="cat" data-cat="price">价格说明</button>
+                    <button class="cat" data-cat="booking">预约引导</button>
+                    <button class="cat" data-cat="faq">常见问题</button>
                 </div>
                 <div class="qr-list" id="qrList"></div>
             </div>
         </div>
 
-        <!-- ===== 商品图册 ===== -->
-        <div class="fullscreen-page" id="page-productGallery">
-            <div class="page-header">
-                <button class="page-close" data-page="productGallery">×</button>
-                <span class="page-title">商品图册</span>
-                <span class="page-spacer"></span>
+        <!-- ===== 商品图册面板 ===== -->
+        <div class="panel" id="panel-productGallery">
+            <div class="panel-header">
+                <span class="panel-title">商品图册</span>
+                <button class="panel-close" data-panel="productGallery">✕</button>
             </div>
-            <div class="page-body">
+            <div class="panel-body">
                 <div class="prod-grid" id="prodGrid"></div>
             </div>
         </div>
 
-        <!-- ===== 内部小程序 ===== -->
-        <div class="fullscreen-page" id="page-miniApp">
-            <div class="page-header">
-                <button class="page-close" data-page="miniApp">×</button>
-                <span class="page-title">内部小程序</span>
-                <span class="page-spacer"></span>
+        <!-- ===== 内部小程序面板 ===== -->
+        <div class="panel" id="panel-miniApp">
+            <div class="panel-header">
+                <span class="panel-title">内部小程序</span>
+                <button class="panel-close" data-panel="miniApp">✕</button>
             </div>
-            <div class="page-body">
+            <div class="panel-body">
                 <div class="miniapp-container">
                     <div class="app-header">
                         <div class="app-icon">🎾</div>
                         <div class="app-title">网球CRM助手</div>
                     </div>
                     <div class="app-body">
-                        <div style="padding:10px 0;color:#ccc;font-size:13px;border-bottom:0.5px solid rgba(255,255,255,.06);">
-                            <div style="color:rgba(255,255,255,.4);font-size:11px;margin-bottom:4px;">当前客户</div>
-                            <div>李明轩 · 6岁 · 启蒙班意向</div>
-                        </div>
-                        <div style="margin-top:12px;">
-                            <div class="form-group">
-                                <label>选择预约日期</label>
-                                <input type="date" id="miniDate" value="2025-03-16" />
-                            </div>
-                            <div class="form-group">
-                                <label>选择预约时间</label>
-                                <select id="miniTime">
-                                    <option value="09:00">09:00</option>
-                                    <option value="10:00">10:00</option>
-                                    <option value="14:00">14:00</option>
-                                    <option value="15:00">15:00</option>
-                                    <option value="16:00" selected>16:00</option>
-                                    <option value="17:00">17:00</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>备注</label>
-                                <textarea id="miniNote" placeholder="例如：体验课评估">到店评估 · 启蒙班</textarea>
-                            </div>
-                        </div>
+                        <div class="app-row" data-action="学员管理"><span class="row-icon">👦</span> 学员管理 · 查看李明轩档案</div>
+                        <div class="app-row" data-action="课程管理"><span class="row-icon">📚</span> 课程管理 · 启蒙班排课</div>
+                        <div class="app-row" data-action="考勤签到"><span class="row-icon">✅</span> 考勤签到 · 今日体验课</div>
+                        <div class="app-row" data-action="数据看板"><span class="row-icon">📊</span> 数据看板 · 本月转化率</div>
                         <div style="margin-top:8px;color:rgba(255,255,255,.2);font-size:11px;text-align:center;">企业微信 · 内部应用</div>
                     </div>
                 </div>
             </div>
-            <div class="page-footer">
-                <button class="btn-primary" id="createAppointmentBtn">创建预约</button>
-            </div>
         </div>
 
-        <!-- ===== 客户标签 ===== -->
-        <div class="fullscreen-page" id="page-tags">
-            <div class="page-header">
-                <button class="page-close" data-page="tags">×</button>
-                <span class="page-title">客户标签</span>
-                <span class="page-spacer"></span>
+        <!-- ===== 客户标签面板 ===== -->
+        <div class="panel" id="panel-tags">
+            <div class="panel-header">
+                <span class="panel-title">客户标签</span>
+                <button class="panel-close" data-panel="tags">✕</button>
             </div>
-            <div class="page-body">
+            <div class="panel-body">
                 <div class="tag-group">
-                    <div class="group-title">已选标签</div>
+                    <div class="group-title">已添加标签</div>
                     <div class="tags" id="activeTags">
                         <span class="tag active">新客户</span>
                         <span class="tag active">附近小区</span>
+                        <span class="tag active">适龄</span>
+                        <span class="tag active">朋友圈来源</span>
                     </div>
                 </div>
                 <div class="tag-group">
-                    <div class="group-title">可选标签（点击添加）</div>
+                    <div class="group-title">推荐标签（点击添加）</div>
                     <div class="tags" id="suggestTags">
                         <span class="tag addable" data-tag="高意向">+ 高意向</span>
-                        <span class="tag addable" data-tag="价格敏感">+ 价格敏感</span>
-                        <span class="tag addable" data-tag="复购客户">+ 复购客户</span>
-                        <span class="tag addable" data-tag="到店预约">+ 到店预约</span>
-                        <span class="tag addable" data-tag="需要跟进">+ 需要跟进</span>
-                        <span class="tag addable" data-tag="少儿网球">+ 少儿网球</span>
-                        <span class="tag addable" data-tag="实战提升">+ 实战提升</span>
-                        <span class="tag addable" data-tag="家长决策">+ 家长决策</span>
+                        <span class="tag addable" data-tag="试听预约中">+ 试听预约中</span>
+                        <span class="tag addable" data-tag="已到店">+ 已到店</span>
+                        <span class="tag addable" data-tag="已报名">+ 已报名</span>
+                        <span class="tag addable" data-tag="转介绍">+ 转介绍</span>
                     </div>
                 </div>
-            </div>
-            <div class="page-footer">
-                <button class="btn-primary" id="saveTagsBtn">保存标签</button>
             </div>
         </div>
 
-        <!-- ===== 跟进记录 ===== -->
-        <div class="fullscreen-page" id="page-followUp">
-            <div class="page-header">
-                <button class="page-close" data-page="followUp">×</button>
-                <span class="page-title">跟进记录</span>
-                <span class="page-spacer"></span>
+        <!-- ===== 跟进记录面板 ===== -->
+        <div class="panel" id="panel-followUp">
+            <div class="panel-header">
+                <span class="panel-title">跟进记录</span>
+                <button class="panel-close" data-panel="followUp">✕</button>
             </div>
-            <div class="page-body">
-                <div style="margin-bottom:16px;">
-                    <div style="color:rgba(255,255,255,.4);font-size:12px;margin-bottom:8px;font-weight:500;">历史记录</div>
-                    <div class="follow-item"><span class="f-time">09:30</span><span class="f-content">客户首次咨询，已介绍课程情况，发送了体验课商品卡，客户感兴趣</span></div>
-                    <div class="follow-item"><span class="f-time">昨天</span><span class="f-content">客户通过朋友圈广告添加，未沟通</span></div>
-                    <div class="follow-item"><span class="f-time">3天前</span><span class="f-content">线索分配至销售组，来源：朋友圈广告落地页</span></div>
+            <div class="panel-body">
+                <div class="follow-item">
+                    <span class="f-time">09:30</span>
+                    <span class="f-content">客户首次咨询，已介绍课程情况，发送了体验课商品卡，客户感兴趣</span>
                 </div>
-                <div style="border-top:0.5px solid rgba(255,255,255,.06);padding-top:14px;">
-                    <div style="color:rgba(255,255,255,.4);font-size:12px;margin-bottom:10px;font-weight:500;">本次跟进</div>
-                    <div class="form-group">
-                        <label>沟通摘要</label>
-                        <textarea id="followSummary" placeholder="本次沟通的主要内容...">客户咨询课程，已发送体验课商品卡，客户表示感兴趣</textarea>
-                    </div>
-                    <div class="form-group">
-                        <label>客户关注点</label>
-                        <input type="text" id="followFocus" value="课程价格、上课时间、教练资质" placeholder="客户关注什么" />
-                    </div>
-                    <div class="form-group">
-                        <label>下一步动作</label>
-                        <input type="text" id="followNext" value="确认体验课时间，跟进转化" placeholder="下一步计划" />
-                    </div>
-                    <div class="form-group">
-                        <label>下次跟进时间</label>
-                        <input type="date" id="followDate" value="2025-03-18" />
-                    </div>
+                <div class="follow-item">
+                    <span class="f-time">昨天</span>
+                    <span class="f-content">客户通过朋友圈广告添加，未沟通</span>
                 </div>
-            </div>
-            <div class="page-footer">
-                <button class="btn-primary" id="saveFollowUpBtn">保存跟进记录</button>
+                <div class="follow-item">
+                    <span class="f-time">3天前</span>
+                    <span class="f-content">线索分配至销售组，来源：朋友圈广告落地页</span>
+                </div>
             </div>
         </div>
 
-        <!-- ===== 预约到店 ===== -->
-        <div class="fullscreen-page" id="page-appointment">
-            <div class="page-header">
-                <button class="page-close" data-page="appointment">×</button>
-                <span class="page-title">预约到店</span>
-                <span class="page-spacer"></span>
+        <!-- ===== 预约到店面板 ===== -->
+        <div class="panel" id="panel-appointment">
+            <div class="panel-header">
+                <span class="panel-title">预约到店</span>
+                <button class="panel-close" data-panel="appointment">✕</button>
             </div>
-            <div class="page-body">
+            <div class="panel-body">
                 <div class="form-group">
                     <label>客户姓名</label>
                     <input type="text" id="apptName" value="李明轩" placeholder="请输入姓名" />
@@ -1600,97 +1260,19 @@
                     <label>备注</label>
                     <textarea id="apptNote" placeholder="例如：体验课，孩子6岁">预约体验课 · 启蒙班</textarea>
                 </div>
-            </div>
-            <div class="page-footer">
                 <button class="btn-primary" id="apptSubmit">确认预约</button>
             </div>
         </div>
 
-        <!-- ===== 转账收款 ===== -->
-        <div class="fullscreen-page" id="page-payment">
-            <div class="page-header">
-                <button class="page-close" data-page="payment">×</button>
-                <span class="page-title">转账收款</span>
-                <span class="page-spacer"></span>
+        <!-- ===== AI助手面板 ===== -->
+        <div class="panel" id="panel-aiHelper">
+            <div class="panel-header">
+                <span class="panel-title">AI 助手</span>
+                <button class="panel-close" data-panel="aiHelper">✕</button>
             </div>
-            <div class="page-body">
-                <div style="padding:60px 0;text-align:center;">
-                    <div style="font-size:48px;margin-bottom:16px;opacity:.4;">💳</div>
-                    <div style="color:rgba(255,255,255,.4);font-size:14px;">收款功能已就绪</div>
-                    <div style="color:rgba(255,255,255,.2);font-size:12px;margin-top:8px;">支持微信支付、扫码收款</div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ===== 发送方案 ===== -->
-        <div class="fullscreen-page" id="page-proposal">
-            <div class="page-header">
-                <button class="page-close" data-page="proposal">×</button>
-                <span class="page-title">发送方案</span>
-                <span class="page-spacer"></span>
-            </div>
-            <div class="page-body">
-                <div style="margin-bottom:16px;">
-                    <div style="color:rgba(255,255,255,.4);font-size:12px;margin-bottom:8px;font-weight:500;">推荐方案 · 少儿网球启蒙</div>
-                    <div class="prod-card" style="background:rgba(255,255,255,.04);border-radius:10px;overflow:hidden;border:0.5px solid rgba(255,255,255,.06);margin-bottom:10px;">
-                        <div class="pimg" style="height:80px;background:linear-gradient(135deg,#1a4a3a,#0d2530);display:flex;align-items:center;justify-content:center;font-size:28px;color:rgba(255,255,255,.3);">🎾</div>
-                        <div class="pinfo" style="padding:10px 12px;">
-                            <div class="pname" style="color:#fff;font-size:14px;font-weight:500;">启蒙班体验课方案</div>
-                            <div style="color:rgba(255,255,255,.35);font-size:12px;margin-top:2px;">适合4-6岁零基础学员 · 60分钟/节</div>
-                            <div style="color:#ff9500;font-size:16px;font-weight:700;margin-top:4px;">¥99</div>
-                        </div>
-                    </div>
-                    <div class="prod-card" style="background:rgba(255,255,255,.04);border-radius:10px;overflow:hidden;border:0.5px solid rgba(255,255,255,.06);margin-bottom:10px;">
-                        <div class="pimg" style="height:80px;background:linear-gradient(135deg,#2a3a5a,#0d2530);display:flex;align-items:center;justify-content:center;font-size:28px;color:rgba(255,255,255,.3);">🏆</div>
-                        <div class="pinfo" style="padding:10px 12px;">
-                            <div class="pname" style="color:#fff;font-size:14px;font-weight:500;">季度成长方案</div>
-                            <div style="color:rgba(255,255,255,.35);font-size:12px;margin-top:2px;">12节课程 + 定制网球装备</div>
-                            <div style="color:#ff9500;font-size:16px;font-weight:700;margin-top:4px;">¥3,680</div>
-                        </div>
-                    </div>
-                    <div style="color:rgba(255,255,255,.3);font-size:12px;margin-top:4px;">* 可根据客户需求个性化调整方案内容</div>
-                </div>
-            </div>
-            <div class="page-footer">
-                <button class="btn-primary" id="sendProposalBtn">发送给客户</button>
-            </div>
-        </div>
-
-        <!-- ===== AI 助手 ===== -->
-        <div class="fullscreen-page" id="page-aiHelper">
-            <div class="page-header">
-                <button class="page-close" data-page="aiHelper">×</button>
-                <span class="page-title">AI 助手</span>
-                <span class="page-spacer"></span>
-            </div>
-            <div class="page-body">
-                <div style="background:rgba(52,199,89,.06);border:0.5px solid rgba(52,199,89,.12);border-radius:10px;padding:14px;margin-bottom:14px;">
-                    <div style="color:rgba(255,255,255,.35);font-size:11px;margin-bottom:6px;">客户意图识别</div>
-                    <div style="color:#34c759;font-size:14px;font-weight:500;">提升实战能力</div>
-                </div>
-                <div style="background:rgba(7,90,154,.08);border:0.5px solid rgba(7,90,154,.15);border-radius:10px;padding:14px;margin-bottom:14px;">
-                    <div style="color:rgba(255,255,255,.35);font-size:11px;margin-bottom:6px;">客户阶段判断</div>
-                    <div style="color:#58b4ff;font-size:14px;font-weight:500;">高意向 · 决策阶段</div>
-                </div>
-                <div style="background:rgba(255,255,255,.04);border-radius:10px;padding:14px;margin-bottom:14px;">
-                    <div style="color:rgba(255,255,255,.35);font-size:11px;margin-bottom:8px;">推荐下一步动作</div>
-                    <div style="color:#ccc;font-size:13px;line-height:1.6;">
-                        <div>1️⃣ 确认客户到店时间</div>
-                        <div>2️⃣ 发送课程详细介绍</div>
-                        <div>3️⃣ 创建预约待办</div>
-                        <div>4️⃣ 准备水平评估方案</div>
-                    </div>
-                </div>
-                <div style="margin-bottom:10px;">
-                    <div style="color:rgba(255,255,255,.4);font-size:12px;margin-bottom:8px;font-weight:500;">建议回复</div>
-                    <div class="ai-item" id="aiSuggestionItem" style="background:rgba(52,199,89,.06);border:0.5px solid rgba(52,199,89,.12);border-radius:10px;padding:12px 14px;cursor:pointer;transition:all .15s;">
-                        <div class="ai-sug-text" style="color:#ccc;font-size:14px;line-height:1.5;">明白，这种情况建议先做一次30分钟水平评估，看一下发球、接发和对抗稳定性，再决定后续课程方案。</div>
-                    </div>
-                </div>
-            </div>
-            <div class="page-footer" style="display:flex;gap:10px;">
-                <button class="btn-secondary" id="fillInputBtn" style="flex:1;">填入输入框</button>
-                <button class="btn-secondary" id="genFollowUpBtn" style="flex:1;">生成跟进记录</button>
+            <div class="panel-body">
+                <div style="color:rgba(255,255,255,.4);font-size:12px;margin-bottom:10px;">根据对话上下文，推荐以下回复</div>
+                <div class="ai-suggestions" id="aiSuggestions"></div>
             </div>
         </div>
 
@@ -1735,26 +1317,30 @@
             // -------- DOM 引用 --------
             const messagesEl = document.getElementById('messages');
             const chatArea = document.getElementById('chat-area');
+            const overlay = document.getElementById('panelOverlay');
             const chatInput = document.getElementById('chatInput');
             const sendBtn = document.getElementById('sendBtn');
 
-            // 所有全屏业务窗口
-            const pages = {
-                profile: document.getElementById('page-profile'),
-                quickReply: document.getElementById('page-quickReply'),
-                productGallery: document.getElementById('page-productGallery'),
-                miniApp: document.getElementById('page-miniApp'),
-                tags: document.getElementById('page-tags'),
-                followUp: document.getElementById('page-followUp'),
-                appointment: document.getElementById('page-appointment'),
-                payment: document.getElementById('page-payment'),
-                proposal: document.getElementById('page-proposal'),
-                aiHelper: document.getElementById('page-aiHelper'),
+            // 所有面板
+            const panels = {
+                profile: document.getElementById('panel-profile'),
+                quickReply: document.getElementById('panel-quickReply'),
+                productGallery: document.getElementById('panel-productGallery'),
+                miniApp: document.getElementById('panel-miniApp'),
+                tags: document.getElementById('panel-tags'),
+                followUp: document.getElementById('panel-followUp'),
+                appointment: document.getElementById('panel-appointment'),
+                aiHelper: document.getElementById('panel-aiHelper'),
             };
-            const pageKeys = Object.keys(pages);
+            const panelKeys = Object.keys(panels);
 
             // -------- 状态 --------
-            let currentPage = null;
+            let currentPanel = null;
+            let flowRunning = false;
+            let flowPaused = false;
+            let flowTimer = null;
+            let flowIndex = 0;
+            let autoFlow = []; // 将在 init 时生成
 
             // -------- 消息渲染 --------
             function addMessage(type, content, extra) {
@@ -1771,22 +1357,16 @@
                         break;
 
                     case 'customer':
-                        msgDiv.innerHTML = `
-                            <div class="msg-avatar">客</div>
-                            <div class="msg-bubble">
-                                <div class="msg-content">${escapeHtml(content)}</div>
-                            </div>
-                        `;
+                        msgDiv.innerHTML = '<span class="sender-label">客户</span>' + escapeHtml(content);
                         break;
 
                     case 'sales':
-                        msgDiv.innerHTML = `
-                            <div class="msg-bubble">
-                                <div class="msg-content">${escapeHtml(content)}</div>
-                                <div class="read-tag">已读</div>
-                            </div>
-                            <div class="msg-avatar">销</div>
-                        `;
+                        msgDiv.textContent = content;
+                        // 已读标记
+                        const readTag = document.createElement('div');
+                        readTag.className = 'read-tag';
+                        readTag.textContent = '已读';
+                        msgDiv.appendChild(readTag);
                         break;
 
                     case 'image':
@@ -1862,70 +1442,88 @@
                 });
             }
 
-
-
-            // -------- 全屏页面控制 --------
-            function openPage(key) {
-                if (currentPage === key) return;
-                closePage();
-                const page = pages[key];
-                if (!page) return;
-                page.classList.add('open');
-                currentPage = key;
-                // 特定页面初始化
-                if (key === 'quickReply') renderQuickReplies('first');
-                if (key === 'productGallery') renderProducts();
-            }
-
-            function closePage() {
-                if (currentPage) {
-                    const page = pages[currentPage];
-                    if (page) page.classList.remove('open');
-                    currentPage = null;
-                }
-            }
-
-            // -------- 快捷回复数据 (新分类) --------
+            // -------- 快捷回复数据 --------
             const quickReplies = {
-                first: [
-                    { label: '开场白', text: '您好！欢迎咨询少儿网球课程 😊 请问您的孩子多大了呢？' },
-                    { label: '课程推荐', text: '我们针对4-12岁孩子分龄教学，可以先了解一下孩子的运动基础 😊' },
-                    { label: '了解需求', text: '请问您想让孩子通过网球提升哪方面呢？体能、兴趣还是竞技？' },
-                ],
-                price: [
-                    { label: '体验课价格', text: '体验课仅需¥99，含1节专业课程+运动能力评估，性价比超高！' },
-                    { label: '课程包价格', text: '我们有季度包¥3680（12节）、半年包¥6680（24节）、年卡¥11800（48节），送不同装备 🎁' },
-                    { label: '对比优势', text: '对比其他机构，我们小班教学（4-6人），专业教练持证上岗，单价更优 👍' },
-                ],
-                booking: [
-                    { label: '预约体验', text: '您可以预约一节体验课，让孩子亲身体验网球的乐趣 😊' },
-                    { label: '预约引导', text: '请问您这周六上午方便过来吗？我们可以安排体验课~' },
-                    { label: '到店提醒', text: '来体验时请给孩子穿运动服和运动鞋，带上水杯，我们会提供所有装备 ☀️' },
+                greeting: [
+                    { label: '通用问候', text: '您好！欢迎咨询少儿网球课程 😊' },
+                    { label: '客户回复后', text: '您好！很高兴为您服务，请问有什么可以帮您的？' },
+                    { label: '结束问候', text: '感谢您的咨询，祝孩子健康成长！🎾' },
                 ],
                 course: [
                     { label: '课程简介', text: '我们为4-12岁孩子提供专业网球课程，分启蒙班(4-6岁)、基础班(7-9岁)、进阶班(10-12岁)，小班教学(4-6人/班)。' },
                     { label: '课程特色', text: '专业教练指导 + 趣味训练 + 体能提升，让孩子在快乐中学习网球 🎾' },
                     { label: '上课时间', text: '课程时长60分钟/节，建议每周1-2次，固定时间上课效果更好哦~' },
                 ],
-                teacher: [
-                    { label: '教练团队', text: '我们的教练都是专业网球出身，持ITF/PTR国际认证，平均教龄5年+，非常有耐心 🏅' },
-                    { label: '教学风格', text: '寓教于乐，以游戏化教学为主，让孩子在玩中学，不会觉得枯燥' },
-                    { label: '师生配比', text: '每班4-6人小班，确保每个孩子都能得到充分关注和指导 👨‍🏫' },
+                price: [
+                    { label: '体验卡', text: '体验课仅需¥99，含1节专业课程+运动能力评估，性价比超高！' },
+                    { label: '季度包', text: '季度课程包¥3680，共12节课，赠送定制网球装备一套 🎁' },
+                    { label: '年卡优惠', text: '年卡¥11800（48节），送全套装备+假期集训+生日派对，平均每节仅¥245' },
                 ],
-                after: [
-                    { label: '课后反馈', text: '每节课后教练会发送课堂反馈，包括学习内容和进步情况 📋' },
-                    { label: '续费提醒', text: '课程到期前我们会提前提醒您，老学员续费有专属优惠 🎁' },
-                    { label: '售后联系', text: '如有任何问题，可以随时联系我们，也可以联系您的专属课程顾问 😊' },
+                booking: [
+                    { label: '预约体验', text: '您可以预约一节体验课，让孩子亲身体验网球乐趣 😊' },
+                    { label: '预约引导', text: '请问您这周六上午方便过来吗？我们可以安排体验课~' },
+                    { label: '到店提醒', text: '来体验时请给孩子穿运动服和运动鞋，带上水杯，我们会提供所有装备 ☀️' },
+                ],
+                faq: [
+                    { label: '零基础', text: '零基础完全没问题！我们的课程就是为零基础孩子设计的，教练会从最基础的动作教起 👍' },
+                    { label: '接送问题', text: '我们场馆在市中心，交通便利，门前有停车场，也可以地铁直达哦~' },
+                    { label: '教练资质', text: '我们的教练都是专业网球出身，持ITF/PTR认证，有多年少儿教学经验 🏅' },
                 ],
             };
 
             // -------- 商品数据 --------
             const products = [
-                { name: '体验课·启蒙班', desc: '含1节体验课+专业运动评估 · 适合4-6岁', price: '¥99', color: '#1a4a3a', emoji: '🎾' },
-                { name: '季度课程包', desc: '12节课程+送定制网球装备 · 适合稳步提升', price: '¥3,680', color: '#2a3a5a', emoji: '🏆' },
-                { name: '半年课程包', desc: '24节课程+送装备+假期集训', price: '¥6,680', color: '#4a2a5a', emoji: '⭐' },
-                { name: '年卡课程包', desc: '48节+全套装备+生日派对 · 性价比最高', price: '¥11,800', color: '#5a3a1a', emoji: '👑' },
+                { name: '体验课·启蒙班', desc: '含1节体验课+专业运动评估', price: '¥99', color: '#1a4a3a',
+                emoji: '🎾' },
+                { name: '季度课程包', desc: '12节课程+送定制网球装备', price: '¥3,680', color: '#2a3a5a',
+                emoji: '🏆' },
+                { name: '半年课程包', desc: '24节课程+送装备+假期集训', price: '¥6,680', color: '#4a2a5a',
+                emoji: '⭐' },
+                { name: '年卡课程包', desc: '48节+全套装备+生日派对', price: '¥11,800', color: '#5a3a1a',
+                emoji: '👑' },
             ];
+
+            // -------- AI 建议 --------
+            const aiSuggestionsData = [
+                { title: '💡 到店提醒', text: '温馨提示：来体验时请给孩子穿运动服和运动鞋，带上水杯哦~ ☀️ 我们准备了专业儿童网球装备，孩子空手来就可以啦！' },
+                { title: '💡 课程推荐', text: '根据孩子6岁年龄，启蒙班非常适合！建议先购买体验课¥99，孩子喜欢再报季度包，现在报名还送定制装备 🎁' },
+                { title: '💡 跟进策略', text: '客户意向度高，建议尽快确认体验课时间，体验后24小时内跟进转化，配合限时优惠促进成单 💪' },
+            ];
+
+            // -------- 面板控制 --------
+            function openPanel(key) {
+                if (currentPanel === key) return;
+                closePanel(false);
+                const panel = panels[key];
+                if (!panel) return;
+                panel.classList.add('open');
+                overlay.classList.add('active');
+                currentPanel = key;
+                // 特定面板初始化
+                if (key === 'quickReply') renderQuickReplies('greeting');
+                if (key === 'productGallery') renderProducts();
+                if (key === 'aiHelper') renderAISuggestions();
+            }
+
+            function closePanel(closeOverlay = true) {
+                if (currentPanel) {
+                    const panel = panels[currentPanel];
+                    if (panel) panel.classList.remove('open');
+                    currentPanel = null;
+                }
+                if (closeOverlay) overlay.classList.remove('active');
+            }
+
+            function closeCurrentPanel() {
+                if (currentPanel) {
+                    const key = currentPanel;
+                    panels[key].classList.remove('open');
+                    currentPanel = null;
+                    overlay.classList.remove('active');
+                } else {
+                    overlay.classList.remove('active');
+                }
+            }
 
             // -------- 快捷回复渲染 --------
             function renderQuickReplies(category) {
@@ -1935,25 +1533,31 @@
                 items.forEach((item, idx) => {
                     const div = document.createElement('div');
                     div.className = 'qr-item';
-                    div.innerHTML = `<div class="qr-label">${escapeHtml(item.label)}</div><div>${escapeHtml(item.text)}</div>`;
+                    div.innerHTML =
+                        `<div class="qr-label">${escapeHtml(item.label)}</div><div>${escapeHtml(item.text)}</div>`;
                     div.dataset.text = item.text;
+                    div.dataset.idx = idx;
                     div.addEventListener('click', function() {
                         const text = this.dataset.text;
                         if (text) {
-                            // 将话术填入输入框，不直接发送
-                            chatInput.value = text;
-                            chatInput.focus();
-                            closePage();
+                            addMessage('sales', text);
+                            // 模拟已读
+                            closePanel(true);
+                            // 如果流程正在运行，暂停一下让用户看到
+                            if (flowRunning) {
+                                // 不打断流程，但让手动发送后的流程继续
+                            }
                         }
                     });
                     list.appendChild(div);
                 });
+                // 高亮分类
                 document.querySelectorAll('#qrCats .cat').forEach(c => {
                     c.classList.toggle('active', c.dataset.cat === category);
                 });
             }
 
-            // -------- 商品渲染（每个卡片加发送按钮） --------
+            // -------- 商品渲染 --------
             function renderProducts() {
                 const grid = document.getElementById('prodGrid');
                 grid.innerHTML = '';
@@ -1967,46 +1571,77 @@
                             <div class="pprice">${escapeHtml(p.price)}</div>
                             <div class="pdesc">${escapeHtml(p.desc)}</div>
                         </div>
-                        <div style="padding:6px 10px 10px;">
-                            <button class="prod-send-btn" data-idx="${idx}" style="width:100%;background:#075A9A;color:#fff;border:none;border-radius:6px;padding:6px 0;font-size:12px;cursor:pointer;">发送</button>
-                        </div>
                     `;
-                    div.querySelector('.prod-send-btn').addEventListener('click', function(e) {
-                        e.stopPropagation();
+                    div.dataset.idx = idx;
+                    div.addEventListener('click', function() {
                         const idx = parseInt(this.dataset.idx);
                         const prod = products[idx];
                         if (prod) {
-                            addMessage('product', '', { name: prod.name, desc: prod.desc, price: prod.price, color: prod.color });
-                            closePage();
+                            addMessage('product', '', {
+                                name: prod.name,
+                                desc: prod.desc,
+                                price: prod.price,
+                                color: prod.color
+                            });
+                            closePanel(true);
                         }
                     });
                     grid.appendChild(div);
                 });
             }
 
+            // -------- AI 建议渲染 --------
+            function renderAISuggestions() {
+                const container = document.getElementById('aiSuggestions');
+                container.innerHTML = '';
+                aiSuggestionsData.forEach((item, idx) => {
+                    const div = document.createElement('div');
+                    div.className = 'ai-item';
+                    div.innerHTML =
+                        `<div class="ai-sug-title">${escapeHtml(item.title)}</div><div class="ai-sug-text">${escapeHtml(item.text)}</div>`;
+                    div.dataset.idx = idx;
+                    div.addEventListener('click', function() {
+                        const idx = parseInt(this.dataset.idx);
+                        const sug = aiSuggestionsData[idx];
+                        if (sug) {
+                            // 使用该建议 → 以AI卡片形式发送到聊天区
+                            addMessage('ai', '', { title: sug.title, text: sug.text });
+                            closePanel(true);
+                        }
+                    });
+                    container.appendChild(div);
+                });
+            }
+
             // -------- 工具栏按钮事件 --------
             document.querySelectorAll('.tool-btn').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    const pageKey = this.dataset.panel;
-                    if (pageKey && pages[pageKey]) {
-                        if (currentPage === pageKey) {
-                            closePage();
+                    const panelKey = this.dataset.panel;
+                    if (panelKey && panels[panelKey]) {
+                        if (currentPanel === panelKey) {
+                            closePanel(true);
                         } else {
-                            openPage(pageKey);
+                            openPanel(panelKey);
                         }
                     }
                 });
             });
 
-            // -------- 全屏页面关闭事件（×按钮） --------
-            document.querySelectorAll('.page-close').forEach(btn => {
+            // -------- 面板关闭事件 --------
+            overlay.addEventListener('click', closeCurrentPanel);
+            document.querySelectorAll('.panel-close').forEach(btn => {
                 btn.addEventListener('click', function() {
-                    closePage();
+                    const key = this.dataset.panel;
+                    if (key && panels[key]) {
+                        panels[key].classList.remove('open');
+                        if (currentPanel === key) currentPanel = null;
+                        overlay.classList.remove('active');
+                    }
                 });
             });
 
             // -------- 快捷回复分类切换 --------
-            document.getElementById('qrCats')?.addEventListener('click', function(e) {
+            document.getElementById('qrCats').addEventListener('click', function(e) {
                 const cat = e.target.closest('.cat');
                 if (cat) {
                     const category = cat.dataset.cat;
@@ -2014,7 +1649,7 @@
                 }
             });
 
-            // -------- 标签交互（点击添加） --------
+            // -------- 标签面板交互 --------
             document.getElementById('suggestTags')?.addEventListener('click', function(e) {
                 const tag = e.target.closest('.tag.addable');
                 if (tag) {
@@ -2031,68 +1666,19 @@
                 }
             });
 
-            // -------- 保存标签 --------
-            document.getElementById('saveTagsBtn')?.addEventListener('click', function() {
-                const tags = document.querySelectorAll('#activeTags .tag');
-                const tagNames = Array.from(tags).map(t => t.textContent).join('、');
-                addMessage('system', '✅ 销售已为客户添加标签：' + (tagNames || '（无）'));
-                closePage();
-            });
-
-            // -------- 保存跟进记录 --------
-            document.getElementById('saveFollowUpBtn')?.addEventListener('click', function() {
-                const summary = document.getElementById('followSummary')?.value || '';
-                const focus = document.getElementById('followFocus')?.value || '';
-                const next = document.getElementById('followNext')?.value || '';
-                addMessage('system', '✅ 已保存本次跟进记录');
-                closePage();
-            });
-
-            // -------- 预约提交（原预约到店页面） --------
+            // -------- 预约提交 --------
             document.getElementById('apptSubmit')?.addEventListener('click', function() {
                 const name = document.getElementById('apptName').value || '李明轩';
                 const date = document.getElementById('apptDate').value || '本周六';
                 const time = document.getElementById('apptTime').value || '10:00';
                 const note = document.getElementById('apptNote').value || '体验课';
-                addMessage('sales', `已为您预约 ${date} ${time}，${name}，备注：${note} 🎾 到时见！`);
-                addMessage('system', '✅ 预约到店已创建');
-                closePage();
+                const msg = `已为您预约 ${date} ${time}，${name}，备注：${note} 🎾 到时见！`;
+                addMessage('sales', msg);
+                addMessage('system', '预约到店已创建');
+                closePanel(true);
             });
 
-            // -------- 内部小程序创建预约 --------
-            document.getElementById('createAppointmentBtn')?.addEventListener('click', function() {
-                const date = document.getElementById('miniDate')?.value || '本周三';
-                const time = document.getElementById('miniTime')?.value || '16:30';
-                const note = document.getElementById('miniNote')?.value || '到店评估';
-                addMessage('system', '📱 已生成预约待办：' + date + ' ' + time + ' ' + note);
-                addMessage('sales', `我这边已经帮您登记了 ${date} ${time} 的${note}。`);
-                closePage();
-            });
-
-            // -------- 发送方案 --------
-            document.getElementById('sendProposalBtn')?.addEventListener('click', function() {
-                addMessage('product', '', { name: '启蒙班体验课方案', desc: '适合4-6岁零基础学员 · 60分钟/节', price: '¥99', color: '#1a4a3a' });
-                addMessage('sales', '给您推荐这个启蒙班体验课方案，可以先让孩子试试看 👍');
-                closePage();
-            });
-
-            // -------- AI 助手：填入输入框 --------
-            document.getElementById('fillInputBtn')?.addEventListener('click', function() {
-                const sugText = document.querySelector('#aiSuggestionItem .ai-sug-text')?.textContent || '';
-                if (sugText) {
-                    chatInput.value = sugText;
-                    chatInput.focus();
-                    closePage();
-                }
-            });
-
-            // -------- AI 助手：生成跟进记录 --------
-            document.getElementById('genFollowUpBtn')?.addEventListener('click', function() {
-                addMessage('system', '✅ AI 已自动生成跟进记录摘要');
-                closePage();
-            });
-
-            // -------- AI卡片按钮事件（委托，聊天区AI卡片） --------
+            // -------- AI卡片按钮事件（委托） --------
             messagesEl.addEventListener('click', function(e) {
                 const btn = e.target.closest('[data-action]');
                 if (!btn) return;
@@ -2101,7 +1687,10 @@
                 if (action === 'use-ai' && msgDiv) {
                     const body = msgDiv.querySelector('.ai-body');
                     if (body) {
-                        addMessage('sales', body.textContent);
+                        const text = body.textContent;
+                        // 把AI建议转为销售消息发送
+                        addMessage('sales', text);
+                        // 移除AI卡片或标记已使用
                         msgDiv.style.opacity = '0.4';
                         msgDiv.style.pointerEvents = 'none';
                         const h = msgDiv.querySelector('.ai-header');
@@ -2118,6 +1707,7 @@
                 if (!text) return;
                 addMessage('sales', text);
                 chatInput.value = '';
+                // 简单模拟客户自动回复（非流程中）
                 setTimeout(() => {
                     const autoReplies = ['好的，了解了 👍', '嗯嗯，还有问题想问', '谢谢您！'];
                     const reply = autoReplies[Math.floor(Math.random() * autoReplies.length)];
@@ -2133,52 +1723,71 @@
             //  自动对话流程
             // ================================================================
 
-            let flowRunning = false;
-            let flowTimer = null;
-            let flowIndex = 0;
-            let autoFlow = [];
-
+            // 流程步骤定义
             function buildFlow() {
                 return [
+                    // ---- 开场 ----
                     { type: 'time', text: '09:30', delay: 400 },
                     { type: 'system', text: '客户进入会话', delay: 300 },
                     { type: 'customer', text: '你好，请问你们有少儿网球课程吗？', delay: 600 },
-                    { type: 'action', action: 'openPage', page: 'profile', delay: 800 },
+                    { type: 'action', action: 'openPanel', panel: 'profile', delay: 800 },
                     { type: 'system', text: '销售正在查看客户资料...', delay: 1200 },
-                    { type: 'action', action: 'closePage', delay: 1000 },
+                    { type: 'action', action: 'closePanel', delay: 1000 },
                     { type: 'sales', text: '有的呢！我们专门为4-12岁的小朋友设计了网球课程 😊', delay: 600 },
                     { type: 'sales', text: '请问您的孩子多大了呢？', delay: 800 },
+
+                    // ---- 客户回复 ----
                     { type: 'customer', text: '今年6岁，刚上一年级', delay: 1000 },
-                    { type: 'action', action: 'openPage', page: 'quickReply', delay: 500 },
+
+                    { type: 'action', action: 'openPanel', panel: 'quickReply', delay: 500 },
                     { type: 'system', text: '销售正在使用快捷回复话术...', delay: 800 },
                     { type: 'action', action: 'selectQuickReply', category: 'course', index: 0, delay: 1200 },
-                    { type: 'action', action: 'closePage', delay: 300 },
+                    { type: 'action', action: 'closePanel', delay: 300 },
+
                     { type: 'sales', text: '那正好适合我们的启蒙班！课程根据年龄分班，4-6岁是启蒙班，7-9岁是基础班', delay: 600 },
-                    { type: 'sales', text: '专业教练指导、小班教学（4-6人）、趣味训练，让孩子在快乐中学习网球 🎾', delay: 1000 },
+                    { type: 'sales', text: '我们的课程特色是：专业教练指导、小班教学（4-6人）、趣味训练，让孩子在快乐中学习网球 🎾', delay: 1000 },
+
+                    // ---- 价格咨询 ----
                     { type: 'customer', text: '听起来不错，价格怎么收费的？', delay: 1000 },
-                    { type: 'action', action: 'openPage', page: 'productGallery', delay: 600 },
+
+                    { type: 'action', action: 'openPanel', panel: 'productGallery', delay: 600 },
                     { type: 'system', text: '销售正在发送商品图册...', delay: 1000 },
                     { type: 'action', action: 'selectProduct', index: 0, delay: 1500 },
-                    { type: 'action', action: 'closePage', delay: 300 },
+                    { type: 'action', action: 'closePanel', delay: 300 },
+
+                    // 商品卡片已通过 selectProduct 发送
                     { type: 'sales', text: '给您推荐这个体验课，可以先让孩子试试 👍', delay: 600 },
+
                     { type: 'customer', text: '想先体验一下，能预约一节体验课吗？', delay: 1200 },
-                    { type: 'action', action: 'openPage', page: 'appointment', delay: 600 },
+
+                    // ---- 预约流程 ----
+                    { type: 'action', action: 'openPanel', panel: 'appointment', delay: 600 },
                     { type: 'system', text: '销售正在创建预约到店...', delay: 1200 },
+                    { type: 'action', action: 'autoFillAppointment', delay: 800 },
                     { type: 'action', action: 'submitAppointment', delay: 1200 },
-                    { type: 'action', action: 'closePage', delay: 300 },
+                    { type: 'action', action: 'closePanel', delay: 300 },
+
                     { type: 'sales', text: '好的，已为您预约本周六（3月16日）上午10:00，体验课哦！🎾', delay: 600 },
                     { type: 'sales', text: '请问您方便加个微信，到时候给您发定位和注意事项 😊', delay: 1000 },
+
+                    // ---- AI 助手 ----
                     { type: 'customer', text: '好的，谢谢！到时候见', delay: 1000 },
-                    { type: 'action', action: 'openPage', page: 'aiHelper', delay: 800 },
+
+                    { type: 'action', action: 'openPanel', panel: 'aiHelper', delay: 800 },
                     { type: 'system', text: '销售正在使用AI助手生成跟进建议...', delay: 1400 },
-                    { type: 'action', action: 'fillAIInput', delay: 1800 },
-                    { type: 'action', action: 'closePage', delay: 300 },
+                    { type: 'action', action: 'selectAI', index: 0, delay: 1800 },
+                    { type: 'action', action: 'closePanel', delay: 300 },
+
+                    // AI卡片已通过 selectAI 发送到聊天区
+                    { type: 'sales', text: '温馨提示：来体验时请给孩子穿运动服和运动鞋，带上水杯哦~ 我们提供专业球拍和球 ☀️', delay: 800 },
+
                     { type: 'customer', text: '太好了，很期待！', delay: 1000 },
                     { type: 'sales', text: '到时见！祝孩子玩得开心 🎾😊', delay: 600 },
                     { type: 'system', text: '—— 会话演示结束 ——', delay: 600 },
                 ];
             }
 
+            // -------- 流程执行 --------
             function startFlow() {
                 if (flowRunning) return;
                 autoFlow = buildFlow();
@@ -2192,82 +1801,189 @@
                     flowRunning = false;
                     return;
                 }
-                const step = autoFlow[flowIndex++];
-                try { processStep(step); } catch (e) { console.warn('Flow step error:', e); }
-                flowTimer = setTimeout(executeStep, step.delay || 600);
+                const step = autoFlow[flowIndex];
+                flowIndex++;
+
+                // 处理步骤
+                try {
+                    processStep(step);
+                } catch (e) {
+                    console.warn('Flow step error:', e);
+                }
+
+                // 调度下一步
+                const delay = step.delay || 600;
+                flowTimer = setTimeout(executeStep, delay);
             }
 
             function processStep(step) {
                 switch (step.type) {
-                    case 'time': addMessage('time', step.text); break;
-                    case 'system': addMessage('system', step.text); break;
-                    case 'customer': addMessage('customer', step.text); break;
-                    case 'sales': addMessage('sales', step.text); break;
-                    case 'action': handleFlowAction(step); break;
+                    case 'time':
+                        addMessage('time', step.text);
+                        break;
+                    case 'system':
+                        addMessage('system', step.text);
+                        break;
+                    case 'customer':
+                        addMessage('customer', step.text);
+                        break;
+                    case 'sales':
+                        addMessage('sales', step.text);
+                        break;
+                    case 'action':
+                        handleFlowAction(step);
+                        break;
+                    default:
+                        break;
                 }
             }
 
             function handleFlowAction(step) {
-                switch (step.action) {
-                    case 'openPage':
-                        if (step.page && pages[step.page]) openPage(step.page);
+                const action = step.action;
+                switch (action) {
+                    case 'openPanel':
+                        if (step.panel && panels[step.panel]) {
+                            openPanel(step.panel);
+                        }
                         break;
-                    case 'closePage':
-                        closePage();
+                    case 'closePanel':
+                        closePanel(true);
                         break;
                     case 'selectQuickReply':
-                        const cat = step.category || 'first';
+                        // 选择快捷回复 → 发送为销售消息
+                        const cat = step.category || 'greeting';
                         const idx = step.index || 0;
                         const items = quickReplies[cat];
-                        if (items && items[idx]) addMessage('sales', items[idx].text);
+                        if (items && items[idx]) {
+                            addMessage('sales', items[idx].text);
+                        }
                         break;
                     case 'selectProduct':
                         const pIdx = step.index || 0;
                         const prod = products[pIdx];
-                        if (prod) addMessage('product', '', { name: prod.name, desc: prod.desc, price: prod.price, color: prod.color });
+                        if (prod) {
+                            addMessage('product', '', {
+                                name: prod.name,
+                                desc: prod.desc,
+                                price: prod.price,
+                                color: prod.color
+                            });
+                        }
+                        break;
+                    case 'selectAI':
+                        const aiIdx = step.index || 0;
+                        const sug = aiSuggestionsData[aiIdx];
+                        if (sug) {
+                            addMessage('ai', '', { title: sug.title, text: sug.text });
+                        }
+                        break;
+                    case 'autoFillAppointment':
+                        // 自动填充预约表单（已默认填充）
                         break;
                     case 'submitAppointment':
+                        // 模拟提交预约 → 发送系统消息
                         addMessage('system', '✅ 预约到店已创建（周六 10:00 体验课）');
                         break;
-                    case 'fillAIInput':
-                        chatInput.value = '温馨提示：来体验时请给孩子穿运动服和运动鞋，带上水杯哦~ 我们提供专业球拍和球 ☀️';
+                    default:
                         break;
                 }
             }
 
+            // -------- 停止流程 --------
             function stopFlow() {
                 flowRunning = false;
-                if (flowTimer) { clearTimeout(flowTimer); flowTimer = null; }
+                if (flowTimer) {
+                    clearTimeout(flowTimer);
+                    flowTimer = null;
+                }
             }
 
+            // -------- 重置流程（用于重播） --------
             function resetFlow() {
                 stopFlow();
                 messagesEl.innerHTML = '';
                 flowIndex = 0;
-                setTimeout(startFlow, 300);
+                // 重新构建流程数据
+                setTimeout(() => {
+                    startFlow();
+                }, 300);
             }
 
             // ================================================================
             //  初始化
             // ================================================================
 
+            // 页面加载后自动启动对话
             window.addEventListener('load', function() {
+                // 延迟一点点启动，让UI先渲染
                 setTimeout(startFlow, 600);
             });
 
+            // 支持重播：点击导航标题重置（隐藏功能）
             document.querySelector('#nav .title')?.addEventListener('dblclick', function() {
                 resetFlow();
             });
 
-            // 暴露调试变量
+            // 防止面板打开时误触背景
+            document.addEventListener('touchmove', function(e) {
+                // 不阻止默认行为，只是防止面板滚动穿透由CSS处理
+            }, { passive: true });
+
+            // 小程序行点击反馈
+            document.querySelectorAll('.app-row').forEach(row => {
+                row.addEventListener('click', function() {
+                    const action = this.dataset.action;
+                    if (action) {
+                        addMessage('system', '📱 打开内部小程序 · ' + action);
+                        // 模拟小程序推送消息
+                        setTimeout(() => {
+                            addMessage('system', '📱 小程序：已获取李明轩学员档案');
+                        }, 400);
+                        closePanel(true);
+                    }
+                });
+            });
+
+            // 如果用户手动输入发送，自动流程暂停一下（不打断，但让用户消息显示）
+            const origSend = sendMessage;
+            sendMessage = function() {
+                const text = chatInput.value.trim();
+                if (!text) return;
+                addMessage('sales', text);
+                chatInput.value = '';
+                // 如果流程在运行，延迟一下继续
+                if (flowRunning) {
+                    // 不打断流程，只是让流程暂停一下再继续
+                }
+                // 客户自动回复
+                setTimeout(() => {
+                    const replies = ['好的~', '嗯嗯，了解', '谢谢您！', '还有问题想问一下'];
+                    const r = replies[Math.floor(Math.random() * replies.length)];
+                    addMessage('customer', r);
+                }, 1000 + Math.random() * 600);
+            };
+            // 重新绑定
+            sendBtn.addEventListener('click', origSend);
+            chatInput.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') origSend();
+            });
+
+            // 暴露一些变量到控制台便于调试
             window.__wechatDemo = {
-                startFlow, stopFlow, resetFlow, addMessage,
-                openPage, closePage, pages, products, quickReplies,
+                startFlow,
+                stopFlow,
+                resetFlow,
+                addMessage,
+                openPanel,
+                closePanel,
+                panels,
+                products,
+                quickReplies,
             };
 
             console.log('✅ 企业微信销售聊天模拟已启动');
             console.log('💡 双击导航标题可重置对话');
-            console.log('📦 点击入口打开全屏业务窗口');
+            console.log('📦 快捷回复/商品图册/AI助手 均可在面板中点击使用');
 
         })();
     </script>

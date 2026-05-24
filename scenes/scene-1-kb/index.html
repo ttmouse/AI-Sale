@@ -21,6 +21,8 @@
         <button class="quick-tag" onclick="ask('YC-2000和竞品A对比')">竞品对比</button>
         <button class="quick-tag" onclick="ask('机器多久能回本？')">回本周期</button>
         <button class="quick-tag" onclick="ask('你们售后怎么保障？')">售后政策</button>
+        <button class="quick-tag" onclick="ask('我是百度搜到你们的，想了解下智能炒菜机')" style="background:#FFFBEB;border-color:#FDE68A">来源归因（投放）</button>
+        <button class="quick-tag" onclick="ask('朋友介绍来的，听说你们的机器不错')" style="background:#ECFDF5;border-color:#A7F3D0">来源归因（自拓）</button>
       </div>
     </div>
 
@@ -57,18 +59,202 @@
     const messagesEl = document.getElementById('chat-messages');
     const inputEl = document.getElementById('chat-input');
 
-    // 知识库数据（简化版，实际从 JSON 加载）
-    const KB = {
-      'YC-1000': 'YC-1000 创业款\n• 价格：2.98 万\n• 功率：8kW | 产能：80-120 单/日\n• 尺寸：600×600×850mm\n• 适用：创业小店、私房菜\n• 亮点：占地面积小、即插即用',
-      'YC-2000': 'YC-2000 标准款（主推）\n• 价格：4.28 万\n• 功率：12kW | 产能：200-300 单/日\n• 尺寸：800×750×950mm\n• 适用：中型快餐、食堂、小型火锅\n• 亮点：性价比高、出餐快、菜谱丰富',
-      'YC-3000': 'YC-3000 旗舰款\n• 价格：6.98 万\n• 功率：18kW | 产能：400-600 单/日\n• 尺寸：1000×900×1050mm\n• 适用：大型餐饮、连锁门店、酒店厨房\n• 亮点：大产能、支持定制菜谱、联网管理',
-      '食堂': '食堂场景推荐方案\n━━━━━━━━━━━━━━━━━━\n• 推荐机型：YC-2000 × 2-3 台\n• 配套：自动洗锅模块 + 智能调料机\n• 优势：已服务 200+ 企业食堂\n• 效果：平均出餐效率提升 60%\n• 案例：阿里西溪食堂（500平，3台YC-3000，日供2000份）',
-      '川菜': '川菜馆推荐方案\n━━━━━━━━━━━━━━━━━━\n• 推荐机型：YC-3000 × 2 台\n• 配套：排烟系统 + 专用操作台 + 自动洗锅\n• 预估投入：12-15 万\n• 回本周期：5-8 个月\n• 案例：成都「川味轩」（280平，2台YC-3000，5个月回本）',
-      '竞品': '核心竞争优势\n━━━━━━━━━━━━━━━━━━\n1. 温控精度 ±1℃（竞品 ±3-5℃）\n2. 菜谱 800+，每月更新 50+（竞品 150-200）\n3. 质保 3 年 + 终身维护（竞品 1-2 年）\n4. 上门响应 < 4 小时（竞品 24-48 小时）',
-      '回本': '回本周期计算\n━━━━━━━━━━━━━━━━━━\n以 YC-2000 为例（4.28万）：\n• 日均节省 2 个厨师（月薪 6000/人）\n• 月省人力成本：12,000 元\n• 理论回本：3.5 个月\n• 实际平均：6-8 个月（考虑淡旺季）\n\n以 YC-3000 为例（6.98万）：\n• 日均节省 3 个厨师\n• 月省人力成本：18,000 元\n• 理论回本：4 个月\n• 实际平均：8-12 个月',
-      '售后': '售后服务保障\n━━━━━━━━━━━━━━━━━━\n• 质保：3 年整机质保（YC-1000 为 2 年）\n• 维护：质保期后终身维护，只收配件成本\n• 响应：全国 200+ 服务网点，4 小时响应\n• 培训：免费上门安装 + 使用培训\n• 升级：菜谱云端更新，终身免费',
+    // ===== 数据加载（从 JSON，替代硬编码 KB）=====
+    let DB = { products: [], cases: [], faq: [], comparisons: [] };
+    let dataReady = false;
+
+    async function loadDB() {
+      try {
+        const [prods, cases, dict] = await Promise.all([
+          fetch('/data/products.json').then(r => r.json()),
+          fetch('/data/cases.json').then(r => r.json()),
+          fetch('/data/dict.json').then(r => r.json()),
+        ]);
+        DB.products = prods.products || [];
+        DB.cases = cases.cases || [];
+        DB.faq = prods.faq || [];
+        DB.comparisons = prods.comparisons || [];
+        // 构建快速查找索引
+        DB.byModel = {};
+        DB.products.forEach(p => { DB.byModel[p.id] = p; DB.byModel[p.name] = p; });
+        dataReady = true;
+      } catch (e) {
+        console.warn('数据加载失败，使用降级文本', e);
+        dataReady = false;
+      }
+    }
+
+    // ===== 格式化工具 =====
+    function fmtPrice(price) {
+      if (!price) return '按需报价';
+      return '¥' + (price / 10000).toFixed(2).replace(/\.?0+$/, '') + '万';
+    }
+
+    function fmtProductCard(p) {
+      return `${p.name}\n` +
+        `• 价格：${fmtPrice(p.price)}\n` +
+        `• 功率：${p.power} | 产能：${p.throughput}\n` +
+        `• 尺寸：${p.dimensions}\n` +
+        `• 适用：${(p.scenes || []).join(' / ')}\n` +
+        `• 亮点：${(p.highlights || []).join('、')}\n` +
+        `• 质保：${p.warranty || '—'}`;
+    }
+
+    function fmtCaseCard(c) {
+      return `【${c.name}】${c.type} · ${c.city}\n` +
+        `• 设备：${(c.products || []).join('、')}\n` +
+        `• 规模：${c.size} | 日均 ${c.dailyOrders} 单\n` +
+        `• 投入：${fmtPrice(c.totalPrice)}\n` +
+        `• 回本：${c.paybackMonths} 个月\n` +
+        `• 证言："${c.quote}" — ${c.quoteFrom}\n` +
+        `• 成效：${(c.highlights || []).join(' / ')}`;
+    }
+
+    // ===== 查询引擎（数据驱动）=====
+    function findAnswer(text) {
+      if (!dataReady) {
+        return '⏳ 知识库加载中，请稍后再试…';
+      }
+
+      const lower = text.toLowerCase();
+
+      // 1. 来源归因（保持原有逻辑）
+      const sourceInfo = detectSource(text);
+      if (sourceInfo) {
+        return `【来源识别：${sourceInfo.source}流量】\n━━━━━━━━━━━━━━━━━━\n${sourceInfo.response}`;
+      }
+
+      // 2. 精确型号查询（匹配 ID 或产品名中的子串）
+      const matchedProd = DB.products.find(p =>
+        lower.includes(p.id.toLowerCase()) ||
+        lower.includes(p.name.toLowerCase().replace(/[（(].*[）)]/, ''))
+      );
+      if (matchedProd) {
+        let reply = `📋 ${fmtProductCard(matchedProd)}\n━━━━━━━━━━━━━━━━━━\n`;
+        // 附带相关案例
+        const relatedCases = DB.cases.filter(c =>
+          c.products && c.products.some(p => p.includes(matchedProd.id.split('-')[0]))
+        ).slice(0, 2);
+        if (relatedCases.length) {
+          reply += '\n📊 相关案例：\n' + relatedCases.map(c => fmtCaseCard(c)).join('\n━━━\n');
+        }
+        reply += '\n📄 数据来源：产品手册 / 案例库';
+        return reply;
+      }
+
+      // 3. 场景推荐（按客户类型 + 场景关键词匹配）
+      const sceneMatch = DB.products.filter(p =>
+        (p.scenes || []).some(s => lower.includes(s)) ||
+        (p.customerTypes || []).some(ct => lower.includes(ct))
+      );
+      if (sceneMatch.length > 0) {
+        const top = sceneMatch.slice(0, 2);
+        let reply = '🔍 根据您描述的场景，推荐以下配置：\n━━━━━━━━━━━━━━━━━━\n';
+        reply += top.map((p, i) =>
+          `方案 ${i + 1}：${fmtProductCard(p)}`
+        ).join('\n━━━\n');
+        // 引用同类型案例
+        const sceneCases = DB.cases.filter(c =>
+          top.some(p => c.products && c.products.some(cp => cp.includes(p.id.split('-')[0])))
+        ).slice(0, 1);
+        if (sceneCases.length) {
+          reply += '\n━━━━━━━━━━━━━━━━━━\n📊 同类案例参考：\n';
+          reply += fmtCaseCard(sceneCases[0]);
+        }
+        reply += '\n📄 数据来源：产品手册 / 案例库 #' + (sceneCases[0]?.id || '—');
+        return reply;
+      }
+
+      // 4. 竞品对比
+      if (lower.includes('比') || lower.includes('优势') || lower.includes('竞品') || lower.includes('对比')) {
+        if (DB.comparisons.length) {
+          let reply = '📊 核心竞争优势对比\n━━━━━━━━━━━━━━━━━━\n';
+          reply += DB.comparisons.map(c =>
+            `• ${c.item}：我们 ${c.our} | 竞品A ${c.competitorA} | 竞品B ${c.competitorB}`
+          ).join('\n');
+          reply += '\n\n📄 数据来源：产品对比表 v3.2';
+          return reply;
+        }
+      }
+
+      // 5. 回本周期估算
+      if (lower.includes('回本') || lower.includes('多久') || lower.includes('回收') || lower.includes('周期')) {
+        const fc = DB.cases.filter(c => c.paybackMonths).slice(0, 3);
+        if (fc.length) {
+          let reply = '📈 回本周期参考（基于真实案例）\n━━━━━━━━━━━━━━━━━━\n';
+          reply += fc.map(c =>
+            `• ${c.name}（${c.type}）：设备 ${fmtPrice(c.totalPrice)}，${c.paybackMonths} 个月回本` +
+            (c.staffReduced ? `，后厨减少 ${c.staffReduced} 人` : '')
+          ).join('\n');
+          reply += '\n\n💡 平均回本月数：' +
+            Math.round(fc.reduce((s, c) => s + c.paybackMonths, 0) / fc.length) + ' 个月';
+          reply += '\n📄 数据来源：案例库';
+          return reply;
+        }
+      }
+
+      // 6. FAQ（售后 / 安装 / 质保等）
+      if (lower.includes('售后') || lower.includes('质保') || lower.includes('保修') ||
+          lower.includes('安装') || lower.includes('维修') || lower.includes('保障')) {
+        const faqMatch = DB.faq.filter(f =>
+          lower.includes('安装') ? f.q.includes('安装') :
+          lower.includes('售后') || lower.includes('维修') ? f.q.includes('售后') :
+          f.q.includes('回本') || f.q.includes('能做')
+        );
+        if (faqMatch.length) {
+          return '❓ ' + faqMatch.map(f => `Q: ${f.q}\nA: ${f.a}`).join('\n\n━━━\n\n');
+        }
+      }
+
+      // 7. 阶段定义查询
+      if (lower.includes('P1') || lower.includes('P2') || lower.includes('P3') || lower.includes('P4') || lower.includes('P5') || lower.includes('P6') || lower.includes('P7') || lower.includes('阶段') || (lower.includes('漏斗') && !lower.includes('比')) || lower.includes('转化率')) {
+        const stages = [
+          { code: 'P1', label: '了解信息', desc: '客户初次接触，获取产品资料、了解基本功能。首触达→发资料→确认客户基本信息' },
+          { code: 'P2', label: '收集需求', desc: '销售已获取客户场景信息（面积/单量/痛点）。需求采集→方案初步匹配→报价准备' },
+          { code: 'P3', label: '确认合作', desc: '客户已试菜/看方案，进入合作意向确认。试菜跟进→方案细调→商务磋商' },
+          { code: 'P4', label: '合同签署', desc: '双方达成一致，进入合同流程。条款确认→审批流转→首付款跟进' },
+          { code: 'P5', label: '发货', desc: '合同签署完成，进入执行阶段。发货安排→物流跟踪→到货确认' },
+          { code: 'P6', label: '已回款', desc: '全部款项（含尾款）已到账。对账确认→发票开具' },
+          { code: 'P7', label: '已交付', desc: '设备安装调试+客户培训+菜谱录制完成。交付确认→售后对接' },
+        ];
+        return '📊 销售机会阶段（P1~P7 全链路漏斗）\n━━━━━━━━━━━━━━━━━━━━━━━━━\n\n' + stages.map(s =>
+          `${s.code} ${s.label}：${s.desc}`
+        ).join('\n\n') + '\n\n📄 数据来源：CRM/OA 业务定义 v1.0';
+      }
+
+      // 8. 退路
+      return '抱歉，您的问题我当前知识库没有精确匹配。\n\n' +
+        '您可以试试：\n' +
+        '• 问具体型号：如"G3 什么参数？"\n' +
+        '• 描述餐厅场景：如"团餐500人推荐什么？"\n' +
+        '• 竞品对比：如"和美膳狮比怎么样？"\n' +
+        '• 回本估算：如"多久能回本？"\n' +
+        '• 阶段定义：如"P1 是什么意思？"\n\n' +
+        '如果急需，可以转人工客服为您解答 🙋';
+    }
+
+    // ===== 来源归因策略（保持原有逻辑）=====
+    const SOURCE_STRATEGIES = {
+      '投放': {
+        keywords: ['百度','广告','搜到','看到','推荐','推广','抖音'],
+        response: '感谢您的关注！（公司背书）我们是优特科技集团旗下，30年技术沉淀，已服务全国3000+餐饮客户，包括老乡鸡、阿里食堂等标杆。<br><br>（信任建设）您是通过<b>%s</b>了解到的对吗？我们很重视每一位客户，能否先了解下您的餐厅类型和规模？我帮您匹配最适合的方案。'
+      },
+      '自拓': {
+        keywords: ['朋友','介绍','同行','转介绍','展会','老客户'],
+        response: '太好了！有熟客背书说明您已经了解过我们的基本实力。<br><br>（场景匹配）咱们直接聊需求，您这边是开新店还是老店升级？面积多大？日均大概多少单？我直接给您出方案。'
+      }
     };
 
+    function detectSource(text) {
+      for (const [source, config] of Object.entries(SOURCE_STRATEGIES)) {
+        for (const kw of config.keywords) {
+          if (text.includes(kw)) return { source, response: config.response.replace('%s', kw) };
+        }
+      }
+      return null;
+    }
+
+    // ===== UI 交互（保持不变）=====
     function ask(text) {
       inputEl.value = text;
       sendMessage();
@@ -81,11 +267,10 @@
 
       messagesEl.appendChild(createMessageBubble(text, 'user'));
       scrollToBottom(messagesEl);
-
       messagesEl.appendChild(createLoadingBubble());
       scrollToBottom(messagesEl);
 
-      mockDelay(800).then(() => {
+      mockDelay(600).then(() => {
         removeLoadingBubble();
         const reply = findAnswer(text);
         messagesEl.appendChild(createMessageBubble(reply, 'ai'));
@@ -93,22 +278,10 @@
       });
     }
 
-    function findAnswer(text) {
-      const lower = text.toLowerCase();
-      for (const [key, value] of Object.entries(KB)) {
-        if (lower.includes(key.toLowerCase())) return value;
-      }
-      // 场景匹配
-      if (lower.includes('300') || lower.includes('川菜')) return KB['川菜'];
-      if (lower.includes('食堂') || lower.includes('企业')) return KB['食堂'];
-      if (lower.includes('比') || lower.includes('优势')) return KB['竞品'];
-      if (lower.includes('回') || lower.includes('多久')) return KB['回本'];
-      if (lower.includes('售后') || lower.includes('保')) return KB['售后'];
+    // 启动：预加载数据
+    loadDB();
 
-      return '抱歉，这个问题我还在学习中。建议您换个问法，比如：\n• "食堂推荐什么机型？"\n• "YC-2000 什么参数？"\n• "和 XX 品牌对比"\n• "多久能回本？"';
-    }
-
-    // 简化的工具函数（内联避免依赖加载顺序）
+    // 简化的工具函数（内联版本）
     function createMessageBubble(content, sender) {
       const div = document.createElement('div');
       div.className = `chat-message ${sender}`;

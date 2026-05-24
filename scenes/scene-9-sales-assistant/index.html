@@ -343,6 +343,24 @@
     .task-tag.normal { background: #E8F0FE; color: var(--primary); }
     .task-tag.done { background: #E8F5E9; color: var(--green); }
 
+    /* ─── P 阶段标签 ─── */
+    .pstage {
+      display: inline-block;
+      font-size: 10px;
+      font-weight: 600;
+      padding: 1px 6px;
+      border-radius: 4px;
+      line-height: 1.5;
+      letter-spacing: 0.02em;
+      margin-top: 3px;
+    }
+    .pstage-P0 { background: #F1F5F9; color: #64748B; }
+    .pstage-P1 { background: #EFF6FF; color: #3B82F6; }
+    .pstage-P2 { background: #ECFDF5; color: #10B981; }
+    .pstage-P3 { background: #FFFBEB; color: #D97706; }
+    .pstage-P4 { background: #FFF7ED; color: #EA580C; }
+    .pstage-P5 { background: #F0FDF4; color: #16A34A; }
+
     .task-ai-reason {
       font-size: 12px;
       color: var(--text-secondary);
@@ -1244,7 +1262,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // ─── 数据 ───
   const ALL_TASKS = [
     {
-      id:'t1', customer:'李波波', stage:'续费评估', priority:'high', priorityLabel:'高优先级',
+      id:'t1', customer:'李波波', stage:'续费评估', pStage:'P4', priority:'high', priorityLabel:'高优先级',
       ai:'最近24小时查看报价方案3次，已5天未跟进，存在竞品流失风险。',
       action:'今天先确认价格顾虑，再推荐续费优惠方案。',
       last:'5天前', trigger:'客户重新查看报价方案',
@@ -1262,7 +1280,7 @@ document.addEventListener('DOMContentLoaded', () => {
       nextStep:'明天上午10点前确认客户是否接受一个月短周期方案。'
     },
     {
-      id:'t2', customer:'陈晓峰', stage:'报价阶段', priority:'normal', priorityLabel:'需推进',
+      id:'t2', customer:'陈晓峰', stage:'报价阶段', pStage:'P3', priority:'normal', priorityLabel:'需推进',
       ai:'客户已收到报价3天，尚未回复，建议主动跟进确认是否有疑问。',
       action:'今天发送产品对比表，询问客户顾虑点。',
       last:'3天前', trigger:'报价发送后待回复',
@@ -1270,7 +1288,7 @@ document.addEventListener('DOMContentLoaded', () => {
       status:'pending'
     },
     {
-      id:'t3', customer:'王莉莉', stage:'试听后跟进', priority:'normal', priorityLabel:'待转化',
+      id:'t3', customer:'王莉莉', stage:'试听后跟进', pStage:'P2', priority:'normal', priorityLabel:'待转化',
       ai:'客户试听完成已2天，体验反馈良好，建议趁热打铁推动签约。',
       action:'致电确认试听体验，推送限时签约优惠。',
       last:'2天前', trigger:'试听课程完成',
@@ -1278,7 +1296,7 @@ document.addEventListener('DOMContentLoaded', () => {
       status:'pending'
     },
     {
-      id:'t4', customer:'赵明', stage:'续费到期', priority:'risk', priorityLabel:'风险客户',
+      id:'t4', customer:'赵明', stage:'续费到期', pStage:'P0', priority:'risk', priorityLabel:'风险客户',
       ai:'会员到期已3天尚未续费，服务即将中断，需紧急联系处理。',
       action:'立即联系客户说明到期影响，推荐续费方案。',
       last:'7天前', trigger:'会员到期未续费',
@@ -1291,12 +1309,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // 工作台客户数据
   const ALL_CUSTOMERS = [
-    { name:'李波波', company:'个人会员', stage:'续费评估', tag:'高优先级', tagClass:'high', time:'5分钟前', color:'#5B8FF9' },
-    { name:'陈晓峰', company:'个人会员', stage:'报价阶段', tag:'跟进中', tagClass:'normal', time:'1小时前', color:'#61DDAA' },
-    { name:'王莉莉', company:'个人会员', stage:'试听跟进', tag:'跟进中', tagClass:'normal', time:'3小时前', color:'#F6BD16' },
-    { name:'赵明', company:'个人会员', stage:'续费到期', tag:'风险客户', tagClass:'risk', time:'昨天', color:'#E86452' },
-    { name:'张华', company:'企业会员', stage:'已成交', tag:'已成交', tagClass:'done', time:'周一', color:'#6DC8EC' },
-    { name:'刘洋', company:'个人会员', stage:'新线索', tag:'新客户', tagClass:'normal', time:'周一', color:'#9270CA' },
+    { name:'李波波', company:'个人会员', stage:'续费评估', pStage:'P4', tag:'高优先级', tagClass:'high', time:'5分钟前', color:'#5B8FF9' },
+    { name:'陈晓峰', company:'个人会员', stage:'报价阶段', pStage:'P3', tag:'跟进中', tagClass:'normal', time:'1小时前', color:'#61DDAA' },
+    { name:'王莉莉', company:'个人会员', stage:'试听跟进', pStage:'P2', tag:'跟进中', tagClass:'normal', time:'3小时前', color:'#F6BD16' },
+    { name:'赵明', company:'个人会员', stage:'续费到期', pStage:'P0', tag:'风险客户', tagClass:'risk', time:'昨天', color:'#E86452' },
+    { name:'张华', company:'企业会员', stage:'已成交', pStage:'P5', tag:'已成交', tagClass:'done', time:'周一', color:'#6DC8EC' },
+    { name:'刘洋', company:'个人会员', stage:'新线索', pStage:'P1', tag:'新客户', tagClass:'normal', time:'周一', color:'#9270CA' },
   ];
 
   // ─── 状态变量 ───
@@ -1329,6 +1347,8 @@ document.addEventListener('DOMContentLoaded', () => {
   setInterval(updateTime, 10000);
 
   // ─── 首页：任务渲染 ───
+  const PSTAGE_LABEL = { P0:'沉睡', P1:'认知期', P2:'兴趣期', P3:'评估期', P4:'决策期', P5:'已成交' };
+
   function renderTasks(filter) {
     currentFilter = filter;
     const list = $('taskList');
@@ -1344,12 +1364,14 @@ document.addEventListener('DOMContentLoaded', () => {
       const isDone = t.status === 'done';
       const card = document.createElement('div');
       card.className = 'task-card';
+      const psLabel = PSTAGE_LABEL[t.pStage] || '';
       card.dataset.taskId = t.id;
       card.innerHTML = `
         <div class="task-card-top">
           <div>
             <div class="task-customer">${t.customer}</div>
             <div class="task-stage">${t.stage}</div>
+            ${t.pStage ? `<span class="pstage pstage-${t.pStage}">${t.pStage} ${psLabel}</span>` : ''}
           </div>
           <span class="task-tag ${tagClass}">${tagLabel}</span>
         </div>
@@ -1499,6 +1521,12 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="detail-field">
         <div class="detail-label">客户信息</div>
         <div class="detail-value" style="font-weight:600">${task.customer} · ${task.stage}</div>
+      </div>
+      <div class="detail-field">
+        <div class="detail-label">销售阶段</div>
+        <div class="detail-value">
+          ${task.pStage ? `<span class="pstage pstage-${task.pStage}" style="font-size:12px;padding:2px 8px">${task.pStage} ${PSTAGE_LABEL[task.pStage] || ''}</span>` : ''}
+        </div>
       </div>
       <div class="detail-field">
         <div class="detail-label">当前状态</div>
@@ -1713,6 +1741,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <div class="c-desc">${c.company} · ${c.stage}</div>
           <div class="c-meta">
             <span class="c-tag ${c.tagClass}">${c.tag}</span>
+            ${c.pStage ? `<span class="pstage pstage-${c.pStage}" style="margin-top:0">${c.pStage}</span>` : ''}
           </div>
         </div>
         <div class="c-time">${c.time}</div>

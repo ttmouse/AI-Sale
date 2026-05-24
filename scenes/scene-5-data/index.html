@@ -179,12 +179,13 @@
     initNav('客户个性化数据应答', '客户运营', 'tag-green');
 
     const customers = [
-      { id: 1, name: '张建国', company: '川香阁连锁', industry: '川菜连锁', scale: '3家门店，日均500单', model: 'YC-2000 × 3', amount: '12.8万', stage: '跟进中', level: 'A级', contact: '138****5678', last: '2026-05-18', sales: '李明', avatar: '张' },
-      { id: 2, name: '王小丽', company: '美味食堂', industry: '企业食堂', scale: '1家，日均800人', model: 'YC-3000 × 2', amount: '15.6万', stage: '已成交', level: 'S级', contact: '139****1234', last: '2026-05-19', sales: '张强', avatar: '王' },
-      { id: 3, name: '刘大伟', company: '老街烧烤', industry: '烧烤夜宵', scale: '2家门店', model: 'YC-1000 × 2', amount: '6.5万', stage: '试菜中', level: 'B级', contact: '137****9876', last: '2026-05-15', sales: '李明', avatar: '刘' },
-      { id: 4, name: '陈美华', company: '悦来快餐', industry: '快餐连锁', scale: '5家门店', model: 'YC-2000 × 5', amount: '22.0万', stage: '报价中', level: 'A级', contact: '136****3456', last: '2026-05-17', sales: '张强', avatar: '陈' },
-      { id: 5, name: '赵铁军', company: '军工食堂', industry: '单位食堂', scale: '1家，日均1200人', model: 'YC-3000 × 3', amount: '24.5万', stage: '已成交', level: 'S级', contact: '135****7890', last: '2026-05-20', sales: '王芳', avatar: '赵' },
-      { id: 6, name: '孙晓燕', company: '燕记面馆', industry: '粉面快餐', scale: '1家门店', model: 'YC-1000 × 1', amount: '3.5万', stage: '沉睡', level: 'C级', contact: '134****2468', last: '2026-04-10', sales: '李明', avatar: '孙' },
+      // 添加 hasEnterprise 字段模拟企业关联状态（CRM 数据 79.5% 为空）
+      { id: 1, name: '张建国', company: '川香阁连锁', industry: '川菜连锁', scale: '3家门店，日均500单', model: 'YC-2000 × 3', amount: '12.8万', stage: '跟进中', level: 'A级', contact: '138****5678', last: '2026-05-18', sales: '李明', avatar: '张', hasEnterprise: true },
+      { id: 2, name: '王小丽', company: '美味食堂', industry: '企业食堂', scale: '1家，日均800人', model: 'YC-3000 × 2', amount: '15.6万', stage: '已成交', level: 'S级', contact: '139****1234', last: '2026-05-19', sales: '张强', avatar: '王', hasEnterprise: true },
+      { id: 3, name: '刘大伟', company: '老街烧烤', industry: '烧烤夜宵', scale: '2家门店', model: 'YC-1000 × 2', amount: '6.5万', stage: '试菜中', level: 'B级', contact: '137****9876', last: '2026-05-15', sales: '李明', avatar: '刘', hasEnterprise: true },
+      { id: 4, name: '陈美华', company: '',          industry: '快餐连锁', scale: '5家门店', model: 'YC-2000 × 5', amount: '22.0万', stage: '报价中', level: 'A级', contact: '136****3456', last: '2026-05-17', sales: '张强', avatar: '陈', hasEnterprise: false },
+      { id: 5, name: '赵铁军', company: '军工食堂', industry: '单位食堂', scale: '1家，日均1200人', model: 'YC-3000 × 3', amount: '24.5万', stage: '已成交', level: 'S级', contact: '135****7890', last: '2026-05-20', sales: '王芳', avatar: '赵', hasEnterprise: true },
+      { id: 6, name: '孙晓燕', company: '',          industry: '粉面快餐', scale: '1家门店', model: 'YC-1000 × 1', amount: '3.5万', stage: '沉睡', level: 'C级', contact: '134****2468', last: '2026-04-10', sales: '李明', avatar: '孙', hasEnterprise: false },
     ];
 
     const mockData = {
@@ -258,8 +259,8 @@
         <div class="customer-item ${c.id === currentCustomer.id ? 'active' : ''}" data-id="${c.id}">
           <div class="customer-avatar">${c.avatar}</div>
           <div class="customer-info">
-            <div class="customer-name">${c.name} · ${c.company}</div>
-            <div class="customer-meta">${c.industry} · ${c.stage}</div>
+            <div class="customer-name">${c.name} ${c.company ? '· ' + c.company : ''}</div>
+            <div class="customer-meta">${c.industry} · ${c.stage}${!c.hasEnterprise ? ' · <span style="color:#DC2626">企业未关联</span>' : ''}</div>
           </div>
         </div>
       `).join('');
@@ -276,7 +277,8 @@
 
     function renderProfile() {
       document.getElementById('profileAvatar').textContent = currentCustomer.avatar;
-      document.getElementById('profileName').textContent = `${currentCustomer.name} · ${currentCustomer.company}`;
+      const companyDisplay = currentCustomer.company || '<span style="color:#DC2626">未关联企业</span>';
+      document.getElementById('profileName').innerHTML = `${currentCustomer.name} · ${companyDisplay}`;
       document.getElementById('profileMeta').textContent = `${currentCustomer.industry} · ${currentCustomer.scale} · ${currentCustomer.stage} · 销售：${currentCustomer.sales}`;
       document.getElementById('profileStage').textContent = currentCustomer.stage;
       document.getElementById('profileLevel').textContent = currentCustomer.level;
@@ -286,6 +288,20 @@
       document.getElementById('pModel').textContent = currentCustomer.model;
       document.getElementById('pAmount').textContent = currentCustomer.amount;
       document.getElementById('pLast').textContent = currentCustomer.last;
+
+      // 企业字段空提示（CRM 数据 79.5% 为空）
+      const enterpriseBanner = document.getElementById('enterpriseBanner');
+      if (!currentCustomer.hasEnterprise) {
+        if (!enterpriseBanner) {
+          const banner = document.createElement('div');
+          banner.id = 'enterpriseBanner';
+          banner.style.cssText = 'padding:10px 14px;margin-bottom:12px;background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;font-size:13px;color:#92400E;display:flex;align-items:center;gap:8px';
+          banner.innerHTML = '<span style="font-size:18px">💡</span> 该客户尚未关联企业，是否<a href="#" style="color:#2563EB;font-weight:500;text-decoration:underline" onclick="alert(\'已发送至 CRM 数据补全队列\');return false">补充企业信息</a>？<span style="font-size:11px;color:#A16207;margin-left:auto">79.5% 的线索存在此缺口</span>';
+          document.getElementById('profileCard').insertBefore(banner, document.getElementById('profileCard').firstChild);
+        }
+      } else if (enterpriseBanner) {
+        enterpriseBanner.remove();
+      }
 
       renderCustomerList();
     }

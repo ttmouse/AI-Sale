@@ -107,6 +107,42 @@
       { id: 'L012', source: '抖音评论', content: '这个比XX品牌贵啊', grade: 'B', tags: ['比价','竞品提及'], reason: '主动提及竞品并比价，说明在对比阶段，有机会转化', action: '发送竞品对比资料' },
     ];
 
+    /** 来源类型判定及转化率权重 */
+    const SOURCE_WEIGHTS = {
+      '百度推广': { type:'投放', weight:-1, convRate:'4.4%', desc:'市场投放来源，企业转化率低（4.4%）' },
+      '抖音私信': { type:'投放', weight:-1, convRate:'4.4%', desc:'市场投放来源，企业转化率低（4.4%）' },
+      '抖音评论': { type:'投放', weight:-1, convRate:'4.4%', desc:'市场投放来源，企业转化率低（4.4%）' },
+      '转介绍':   { type:'自拓', weight:+1, convRate:'12.6%', desc:'自有渠道来源，企业转化率较高（12.6%）' },
+      '展会':     { type:'自拓', weight:+1, convRate:'12.6%', desc:'自有渠道来源，企业转化率较高（12.6%）' },
+      '电话':     { type:'自拓', weight:0,  convRate:'12.6%', desc:'需进一步确认来源' },
+      '官网留言': { type:'自拓', weight:0,  convRate:'12.6%', desc:'自有渠道来源，企业转化率较高（12.6%）' }
+    };
+
+    /** 来源调整评级 */
+    function adjustGradeBySource(baseGrade, source) {
+      const sw = SOURCE_WEIGHTS[source] || { weight:0 };
+      const gradeOrder = ['C','B','A','S'];
+      const idx = gradeOrder.indexOf(baseGrade);
+      if (idx === -1) return baseGrade;
+      const newIdx = Math.max(0, Math.min(3, idx + sw.weight));
+      return gradeOrder[newIdx];
+    }
+
+    /** 检查是否需要标记偏差提醒 */
+    function getSourceWarning(grade, source, tags) {
+      const sw = SOURCE_WEIGHTS[source];
+      if (!sw) return null;
+      // 投放线索获评 S 但未关联企业 → 待验证
+      if (sw.type === '投放' && grade === 'S' && !tags.includes('已关联企业')) {
+        return { level:'warn', text:'⚠ 待验证：投放来源 S 级但未关联企业，建议核实后定级' };
+      }
+      // 自拓线索获评 C 但来源优质 → 建议重新评估
+      if (sw.type === '自拓' && grade === 'C') {
+        return { level:'info', text:'ℹ 建议重新评估：自拓来源线索，企业转化率较高（12.6%）' };
+      }
+      return null;
+    }
+
     function loadDemoData() {
       // 补充到 50 条
       allLeads = [...demoLeads];
@@ -127,15 +163,29 @@
       ];
 
       for (let i = 13; i <= 50; i++) {
-        const grade = grades[Math.floor(Math.random() * grades.length)];
+        const baseGrade = grades[Math.floor(Math.random() * grades.length)];
+        const source = sources[Math.floor(Math.random() * sources.length)];
+        const finalGrade = adjustGradeBySource(baseGrade, source);
+        const sw = SOURCE_WEIGHTS[source] || {};
+        const tags = [types[Math.floor(Math.random() * types.length)]];
+        if (sw.type === '投放') tags.push('投放流量');
+        else if (sw.type === '自拓') tags.push('自拓线索');
+        if (finalGrade === 'S') tags.push('高意向');
+        else if (finalGrade === 'A') tags.push('中意向');
+        else tags.push('低意向');
+
+        let reason = `基于咨询内容和关键词判定为 ${baseGrade} 级`;
+        if (sw.weight === -1) reason += `；来源（${source}）为市场投放，评级下调一档`;
+        if (sw.weight === 1) reason += `；来源（${source}）为销售自拓，评级上调一档`;
+
         allLeads.push({
           id: `L${String(i).padStart(3, '0')}`,
-          source: sources[Math.floor(Math.random() * sources.length)],
+          source: source,
           content: contents[Math.floor(Math.random() * contents.length)],
-          grade: grade,
-          tags: [types[Math.floor(Math.random() * types.length)], grade === 'S' ? '高意向' : grade === 'A' ? '中意向' : '低意向'],
-          reason: `基于咨询内容和关键词判定为 ${grade} 级`,
-          action: grade === 'S' ? '立即分配给资深销售' : grade === 'A' ? '电话回访，深挖需求' : '发送资料，长期跟进'
+          grade: finalGrade,
+          tags: tags,
+          reason: reason,
+          action: finalGrade === 'S' ? '立即分配给资深销售' : finalGrade === 'A' ? '电话回访，深挖需求' : '发送资料，长期跟进'
         });
       }
 
@@ -147,12 +197,16 @@
       const tbody = document.getElementById('leads-tbody');
       tbody.innerHTML = leads.map(l => {
         const gradeColors = { S: 'status-green', A: 'status-blue', B: 'status-yellow', C: 'status-gray' };
+        const warning = getSourceWarning(l.grade, l.source, l.tags);
+        const warningBadge = warning
+          ? `<span class="tag" style="margin:2px;background:${warning.level === 'warn' ? '#FEF3C7' : '#DBEAFE'};color:${warning.level === 'warn' ? '#92400E' : '#1E40AF'};border:none">${warning.text}</span>`
+          : '';
         return `
           <tr>
             <td><strong>${l.id}</strong></td>
-            <td>${l.source}</td>
+            <td>${l.source}${SOURCE_WEIGHTS[l.source] ? '<br><span style="font-size:11px;color:var(--gray-400)">' + SOURCE_WEIGHTS[l.source].convRate + '</span>' : ''}</td>
             <td style="max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${l.content}">${l.content}</td>
-            <td><span class="status-badge ${gradeColors[l.grade]}">${l.grade} 级</span></td>
+            <td><span class="status-badge ${gradeColors[l.grade]}">${l.grade} 级</span>${warningBadge}</td>
             <td>${l.tags.map(t => `<span class="tag" style="margin:2px">${t}</span>`).join('')}</td>
             <td style="font-size:12px;color:var(--gray-600);max-width:250px">${l.reason}</td>
             <td style="font-size:13px">${l.action}</td>

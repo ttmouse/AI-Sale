@@ -1,152 +1,232 @@
 {
+  "company": "优特智厨",
   "cases": [
     {
       "id": "C001",
-      "name": "川味轩",
-      "type": "川菜馆",
-      "size": "280平",
-      "city": "成都",
-      "products": ["YC-3000 × 2台"],
-      "totalPrice": 139600,
-      "dailyOrders": 350,
-      "staffReduced": 3,
-      "paybackMonths": 5,
-      "quote": "用了 3 个月，后厨从 8 个人减到 5 个，菜品稳定性提高了很多，客诉反而少了。",
-      "quoteFrom": "张老板",
-      "highlights": ["出餐速度提升 40%", "人力成本降低 38%", "菜品标准化"],
-      "date": "2024-03"
+      "name": "小江溪",
+      "brand": "南昌小江溪餐饮管理有限公司",
+      "type": "赣菜连锁",
+      "cuisine": "赣菜/江西地方菜",
+      "city": "南昌",
+      "region": "第一大区",
+      "products": [
+        "G2 × 1台",
+        "G3 × 1台"
+      ],
+      "totalPrice": 140000,
+      "dailyOrders": "150~300份",
+      "staffCostReduction": "40%",
+      "revenueShare": "炒菜机出餐营收占比30%",
+      "paybackMonths": 8,
+      "quote": "客户关注炒菜机一年多，最终优特以锅气更足、服务响应更快胜出。",
+      "highlights": [
+        "后厨人力成本下降40%",
+        "日均出品150-300份",
+        "出餐营收占比30%",
+        "厨师5人→3人"
+      ],
+      "painPoints": [
+        "江西菜要求大火快炒锅气足",
+        "厨师人才不足",
+        "招人成本高"
+      ],
+      "solution": "1人操作2台设备，完成8道标准菜谱录制",
+      "date": "2025"
     },
     {
       "id": "C002",
-      "name": "快食尚",
-      "type": "快餐店",
-      "size": "120平",
-      "city": "杭州",
-      "products": ["YC-2000 × 1台"],
-      "totalPrice": 42800,
-      "dailyOrders": 450,
-      "staffReduced": 2,
-      "paybackMonths": 3,
-      "quote": "中午高峰期再也不慌了，以前 3 个厨师手忙脚乱，现在 1 个人看着机器就行。",
-      "quoteFrom": "李店长",
-      "highlights": ["出餐速度提升 50%", "高峰期零积压", "3个月回本"],
-      "date": "2024-01"
+      "name": "陈香贵",
+      "brand": "上海陈香贵餐饮管理有限公司",
+      "type": "面品类连锁",
+      "cuisine": "兰州牛肉面+现炒浇头",
+      "city": "上海",
+      "region": "第五大区",
+      "products": [
+        "G2",
+        "G3"
+      ],
+      "totalPrice": 150000,
+      "paybackMonths": 6,
+      "quote": "使用炒菜机后营业额提高20-25%，从传统拉面店成功转型现炒浇头拌面。",
+      "highlights": [
+        "营业额提高20-25%",
+        "现炒浇头标准化",
+        "SKU扩展成功",
+        "全国400+门店"
+      ],
+      "painPoints": [
+        "小炒浇头用工成本高",
+        "菜品口味受厨师影响",
+        "连锁复制依赖厨师"
+      ],
+      "solution": "G2/G3实现浇头标准化烹饪，总部研发菜品通过菜谱同步下发",
+      "date": "2025"
     },
     {
       "id": "C003",
-      "name": "阿里西溪食堂",
-      "type": "企业食堂",
-      "size": "500平",
-      "city": "杭州",
-      "products": ["YC-3000 × 3台", "自动洗锅模块 × 2"],
-      "totalPrice": 235200,
-      "dailyOrders": 2000,
-      "staffReduced": 6,
-      "paybackMonths": 8,
-      "quote": "万人食堂的供餐压力以前很大，现在中午 11:30-12:30 一个小时内能完成 2000 份出餐。",
-      "quoteFrom": "食堂主管",
-      "highlights": ["万人食堂供餐", "出餐效率提升 60%", "食品安全可追溯"],
-      "date": "2023-11"
+      "name": "黑土风情",
+      "brand": "东北鲜渔村餐饮管理有限公司",
+      "type": "铁锅炖连锁",
+      "cuisine": "东北菜/铁锅炖",
+      "city": "东北（总部）",
+      "products": [
+        "G3 1.6定制版 × 2台"
+      ],
+      "totalPrice": 170000,
+      "dailyOrders": "每天24次烹饪",
+      "paybackMonths": 10,
+      "quote": "使用设备门店后厨实现零厨师运营。为铁锅炖定制了高汤投料系统、料汁系统和防洒接菜盆。",
+      "highlights": [
+        "后厨零厨师",
+        "12道铁锅炖菜谱标准化",
+        "3大定制化方案"
+      ],
+      "painPoints": [
+        "铁锅炖烹饪时间不标准",
+        "对厨师依赖强",
+        "难以规模化复制"
+      ],
+      "solution": "定制高汤投料+料汁+防洒接菜盆，G3定制版标准化烹饪",
+      "date": "2025"
     },
     {
       "id": "C004",
-      "name": "辣妹子火锅",
-      "type": "火锅店",
-      "size": "320平",
-      "city": "长沙",
-      "products": ["YC-2000 × 2台"],
-      "totalPrice": 85600,
-      "dailyOrders": 280,
-      "staffReduced": 2,
-      "paybackMonths": 6,
-      "quote": "炒底料和炒配菜都用机器，味道比人工还稳定，厨师都服气了。",
-      "quoteFrom": "老板娘",
-      "highlights": ["火锅底料标准化", "配菜效率提升", "味道一致性"],
-      "date": "2024-02"
+      "name": "山东中品一禾",
+      "brand": "山东中品一禾（高校团餐）",
+      "type": "高校团餐",
+      "city": "山东",
+      "products": [
+        "G3 1.6 × 2-3台"
+      ],
+      "totalPrice": 200000,
+      "staffCostReduction": "厨师3人→1人",
+      "wasteBefore": "50斤/餐",
+      "wasteAfter": "10斤/餐",
+      "paybackMonths": 12,
+      "quote": "残食浪费从每餐50斤降到10斤，降了80%。",
+      "highlights": [
+        "残食浪费降80%",
+        "厨师3人→1人",
+        "特色菜谱库70道"
+      ],
+      "painPoints": [
+        "出品口味波动大",
+        "残食浪费严重"
+      ],
+      "solution": "G3替代传统电磁灶，70道特色菜谱库+SOP质检",
+      "date": "2025"
     },
     {
       "id": "C005",
-      "name": "盖浇王",
-      "type": "快餐店",
-      "size": "180平",
-      "city": "上海",
-      "products": ["YC-2000 × 2台"],
-      "totalPrice": 85600,
-      "dailyOrders": 600,
-      "staffReduced": 3,
-      "paybackMonths": 4,
-      "quote": "日均 600 单，以前 5 个厨师，现在 2 个人就够了，省下来的钱半年就能买第二台。",
-      "quoteFrom": "王老板",
-      "highlights": ["日均 600 单", "后厨人力减少 60%", "4个月回本"],
-      "date": "2024-04"
-    },
-    {
-      "id": "C006",
-      "name": "维也纳酒店",
-      "type": "酒店厨房",
-      "size": "400平",
+      "name": "深铁前海君濠书院",
+      "brand": "深铁前海君濠书院（团餐）",
+      "type": "机构团餐",
       "city": "深圳",
-      "products": ["YC-3000 × 2台", "智能调料机 × 1"],
-      "totalPrice": 149200,
-      "dailyOrders": 500,
-      "staffReduced": 4,
-      "paybackMonths": 10,
-      "quote": "酒店早餐和中餐都用，客人反馈菜品质感提升了，厨师长说终于不用凌晨 4 点起床备菜了。",
-      "quoteFrom": "餐饮总监",
-      "highlights": ["酒店全场景覆盖", "早餐备菜自动化", "品质提升"],
-      "date": "2023-09"
+      "products": [
+        "G5 520 2联组"
+      ],
+      "totalPrice": 378880,
+      "paybackMonths": 14,
+      "quote": "每餐减少翻锅时间40分钟，劳动强度大幅降低。",
+      "highlights": [
+        "每餐减翻锅40分钟",
+        "可优化约2名人员",
+        "G5 2联组大容量"
+      ],
+      "painPoints": [
+        "80电磁灶出品波动",
+        "劳动强度大"
+      ],
+      "solution": "G5 520 2联组替代传统电磁灶，出品稳定SOP执行",
+      "date": "2025"
     }
   ],
   "solutions": [
     {
-      "type": "快餐店",
-      "sizeRange": "80-200平",
-      "dailyOrders": "300-600单",
-      "recommend": "YC-2000 × 1-2台",
-      "accessories": ["专用操作台", "排烟系统"],
-      "budget": "5-10万",
-      "payback": "3-6个月",
-      "cases": ["C002", "C005"]
-    },
-    {
-      "type": "川菜/湘菜馆",
-      "sizeRange": "200-400平",
-      "dailyOrders": "250-400单",
-      "recommend": "YC-3000 × 2台",
-      "accessories": ["专用操作台", "排烟系统", "自动洗锅模块"],
-      "budget": "12-18万",
-      "payback": "5-8个月",
-      "cases": ["C001", "C004"]
-    },
-    {
-      "type": "企业食堂",
-      "sizeRange": "300-800平",
-      "dailyOrders": "1000-3000单",
-      "recommend": "YC-3000 × 2-4台",
-      "accessories": ["自动洗锅模块", "智能调料机", "排烟系统"],
-      "budget": "20-40万",
+      "type": "正餐小炒/连锁餐饮",
+      "recommend": "G2 × 1-2台",
+      "budget": "6-15万",
       "payback": "6-12个月",
-      "cases": ["C003"]
+      "cases": [
+        "C001",
+        "C002"
+      ]
     },
     {
-      "type": "火锅店",
-      "sizeRange": "200-500平",
-      "dailyOrders": "200-500单",
-      "recommend": "YC-2000/3000 × 2台",
-      "accessories": ["专用操作台", "排烟系统"],
-      "budget": "8-15万",
+      "type": "快餐/美食广场",
+      "recommend": "G2/G3 × 1-2台",
+      "budget": "7-18万",
       "payback": "4-8个月",
-      "cases": ["C004"]
+      "cases": [
+        "C001"
+      ]
     },
     {
-      "type": "酒店厨房",
-      "sizeRange": "300-600平",
-      "dailyOrders": "300-800单",
-      "recommend": "YC-3000 × 2台 + 定制",
-      "accessories": ["智能调料机", "自动洗锅模块"],
-      "budget": "15-25万",
+      "type": "团餐/政企食堂",
+      "recommend": "200-400人:G3×2 | 500-800人:G5×1+G3×1 | 1000-1500人:G5×2",
+      "budget": "15-50万",
+      "payback": "8-14个月",
+      "cases": [
+        "C004",
+        "C005"
+      ]
+    },
+    {
+      "type": "明档/快餐连锁",
+      "recommend": "L4 × 1-2台 或 M1 × 1-2台",
+      "budget": "5-12万",
+      "payback": "6-10个月"
+    },
+    {
+      "type": "铁锅炖/重烹饪场景",
+      "recommend": "G3定制版 × 2台",
+      "budget": "15-20万",
       "payback": "8-12个月",
-      "cases": ["C006"]
+      "cases": [
+        "C003"
+      ]
     }
-  ]
+  ],
+  "customerList": {
+    "totalCount": 39,
+    "categories": {
+      "专业餐饮连锁": {
+        "count": 17,
+        "representative": [
+          "小江溪",
+          "陈香贵",
+          "乡村基",
+          "同庆楼",
+          "小菜园"
+        ]
+      },
+      "团餐/机构食堂": {
+        "count": 9,
+        "representative": [
+          "四川电子科技大学",
+          "西南财经大学",
+          "国家能源神东煤炭",
+          "泰康之家"
+        ]
+      },
+      "酒店": {
+        "count": 3,
+        "representative": [
+          "希尔顿花园酒店",
+          "三亚潮悦荷泰酒店"
+        ]
+      },
+      "其他/中央厨房": {
+        "count": 7,
+        "representative": [
+          "海澳思中央厨房",
+          "惠小程中央厨房"
+        ]
+      }
+    },
+    "mediaRights": {
+      "可放宣传册": "26家",
+      "可拍摄视频": "8家"
+    }
+  }
 }
