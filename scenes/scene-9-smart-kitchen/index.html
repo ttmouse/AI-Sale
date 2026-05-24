@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>智能厨具 · 销售对话</title>
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        body {
+            background:#1a1a1a;
+            display:flex; justify-content:center; align-items:center;
+            min-height:100vh;
+            font-family:-apple-system,BlinkMacSystemFont,"PingFang SC","Helvetica Neue",Roboto,sans-serif;
+            -webkit-font-smoothing:antialiased;
+        }
+        #phone {
+            width:390px; height:844px;
+            background:#000; border-radius:40px; overflow:hidden;
+            position:relative; display:flex; flex-direction:column;
+            box-shadow:0 20px 80px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.06);
+            flex-shrink:0;
+        }
+        #status-bar {
+            height:44px; background:#000;
+            display:flex; justify-content:space-between; align-items:center;
+            padding:0 28px 0 24px; color:#fff; font-size:13px; font-weight:600;
+            flex-shrink:0; letter-spacing:.3px; position:relative; z-index:100;
+        }
+        #status-bar .time { font-size:15px; font-weight:700; }
+        #status-bar .right-icons { display:flex; align-items:center; gap:6px; }
+        #status-bar .battery { display:flex; align-items:center; gap:4px; }
+        #status-bar .battery .level { width:22px; height:10px; border:1.5px solid #fff; border-radius:2px; padding:1px; }
+        #status-bar .battery .level .fill { height:100%; background:#34c759; border-radius:1px; width:70%; }
+
+        /* 导航 */
+        #nav-bar {
+            height:52px; background:#1a1a1e;
+            display:flex; align-items:center; padding:0 8px; flex-shrink:0;
+            border-bottom:0.5px solid rgba(255,255,255,.06); position:relative; z-index:50;
+        }
+        #nav-bar .back-btn {
+            width:40px; height:40px; display:flex; align-items:center; justify-content:center;
+            border:none; background:transparent; color:#075A9A; font-size:22px; cursor:pointer;
+        }
+        #nav-bar .nav-title { flex:1; text-align:center; font-size:16px; font-weight:600; color:#fff; letter-spacing:.5px; }
+        #nav-bar .nav-right { width:40px; height:40px; display:flex; align-items:center; justify-content:center; }
+        #nav-bar .nav-right svg { width:20px; height:20px; fill:rgba(255,255,255,.6); }
+
+        /* 客户信息 */
+        #customer-header {
+            display:flex; align-items:center; gap:10px; padding:8px 14px;
+            background:#1a1a1e; flex-shrink:0; border-bottom:0.5px solid rgba(255,255,255,.06);
+        }
+        #customer-header .c-avatar {
+            width:40px; height:40px; border-radius:4px;
+            background:linear-gradient(135deg,#2d5a3d,#1a4a2e);
+            display:flex; align-items:center; justify-content:center;
+            font-size:16px; color:#fff; font-weight:600; flex-shrink:0;
+        }
+        #customer-header .c-info { flex:1; }
+        #customer-header .c-name { font-size:15px; font-weight:600; color:#e5e5e5; }
+        #customer-header .c-sub { font-size:11px; color:rgba(255,255,255,.4); margin-top:1px; }
+        #customer-header .c-badge {
+            font-size:10px; padding:2px 10px; border-radius:10px; font-weight:500; flex-shrink:0;
+            background:rgba(96,165,250,.15); color:#60A5FA;
+        }
+
+        /* 阶段进度条 */
+        #stage-bar {
+            display:flex; align-items:center; padding:4px 14px; gap:0;
+            background:#1a1a1e; flex-shrink:0; border-bottom:0.5px solid rgba(255,255,255,.06);
+        }
+        .s-dot { flex:1; display:flex; align-items:center; gap:0; }
+        .s-dot .dot { width:7px; height:7px; border-radius:50%; background:rgba(255,255,255,.15); flex-shrink:0; transition:all .3s; }
+        .s-dot .dot.active { background:#60A5FA; box-shadow:0 0 6px rgba(96,165,250,.4); }
+        .s-dot .dot.done { background:#34D399; }
+        .s-dot .line { flex:1; height:2px; background:rgba(255,255,255,.1); }
+        .s-dot .line.done { background:#34D399; }
+        .s-dot:last-child .line { display:none; }
+        .s-label { font-size:9px; color:rgba(255,255,255,.3); text-align:center; white-space:nowrap; margin-top:1px; }
+        .s-label.active { color:#60A5FA; }
+        .s-label.done { color:#34D399; }
+
+        /* 水印 */
+        #watermark {
+            position:absolute; top:0; left:0; width:100%; height:100%;
+            z-index:0; overflow:hidden; pointer-events:none; opacity:.15; font-size:12px; color:#aaa; font-weight:300; letter-spacing:1px;
+        }
+        #watermark span { position:absolute; transform:rotate(-25deg); white-space:nowrap; user-select:none; }
+
+        /* 消息容器 */
+        #chat-area {
+            flex:1; overflow-y:auto; overflow-x:hidden;
+            padding:12px 10px; background:#111214; position:relative; z-index:1;
+            scroll-behavior:smooth;
+        }
+        #chat-area::-webkit-scrollbar { width:3px; }
+        #chat-area::-webkit-scrollbar-track { background:transparent; }
+        #chat-area::-webkit-scrollbar-thumb { background:rgba(255,255,255,.12); border-radius:2px; }
+        #messages { display:flex; flex-direction:column; gap:12px; min-height:100%; }
+
+        /* 消息通用 */
+        .msg { max-width:88%; animation:msgIn .35s ease-out; flex-shrink:0; line-height:1.5; }
+        @keyframes msgIn { 0%{opacity:0;transform:translateY(6px) scale(.97)} 100%{opacity:1;transform:translateY(0) scale(1)} }
+
+        .msg-time { text-align:center; font-size:10px; color:rgba(255,255,255,.3); padding:2px 0; max-width:100%; }
+        .msg-system { text-align:center; font-size:11px; color:rgba(255,255,255,.35); background:rgba(255,255,255,.04); border-radius:4px; padding:4px 12px; align-self:center; max-width:72%; }
+
+        /* 客户消息 */
+        .msg-customer { align-self:flex-start; display:flex; align-items:flex-start; gap:14px; max-width:88%; }
+        .msg-customer .msg-avatar { width:40px; height:40px; border-radius:4px; background:#3a3a3e; display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.7); font-size:14px; font-weight:600; flex-shrink:0; }
+        .msg-customer .msg-bubble { position:relative; }
+        .msg-customer .msg-bubble .msg-content { background:#2C2C2C; color:#D5D5D5; padding:9px 12px; border-radius:4px; font-size:14px; word-break:break-word; line-height:1.5; }
+        .msg-customer .msg-bubble::before { content:''; position:absolute; top:14px; left:-5px; width:0; height:0; border:5px solid transparent; border-right-color:#2C2C2C; border-left:0; border-bottom-width:4px; border-top-width:6px; }
+
+        /* 销售消息 */
+        .msg-sales { align-self:flex-end; display:flex; flex-direction:row-reverse; align-items:flex-start; gap:14px; max-width:88%; }
+        .msg-sales .msg-avatar { width:40px; height:40px; border-radius:4px; background:#075A9A; display:flex; align-items:center; justify-content:center; color:#fff; font-size:14px; font-weight:600; flex-shrink:0; }
+        .msg-sales .msg-bubble { position:relative; }
+        .msg-sales .msg-bubble .msg-content { background:#075A9A; color:#fff; padding:9px 12px; border-radius:4px; font-size:14px; word-break:break-word; line-height:1.5; }
+        .msg-sales .msg-bubble::before { content:''; position:absolute; top:14px; right:-5px; width:0; height:0; border:5px solid transparent; border-right:0; border-left-color:#075A9A; border-bottom-width:4px; border-top-width:6px; }
+        .msg-sales .msg-bubble .read-tag { font-size:10px; color:rgba(255,255,255,.2); text-align:right; margin-top:2px; }
+
+        /* 商品卡片 */
+        .msg-product { align-self:flex-start; max-width:82%; background:#232428; border-radius:10px; overflow:hidden; border:0.5px solid rgba(255,255,255,.06); animation:msgIn .35s ease-out; }
+        .msg-product .prod-img { height:90px; background:linear-gradient(135deg,#1a3a4a,#0d2530); display:flex; align-items:center; justify-content:center; color:rgba(255,255,255,.5); font-size:32px; }
+        .msg-product .prod-info { padding:10px 14px; }
+        .msg-product .prod-name { font-size:14px; font-weight:600; color:#fff; }
+        .msg-product .prod-desc { font-size:11px; color:rgba(255,255,255,.5); margin-top:2px; }
+        .msg-product .prod-price { font-size:15px; font-weight:700; color:#ff9500; margin-top:4px; }
+
+        /* AI 卡片 */
+        .msg-ai { align-self:flex-start; max-width:85%; background:#1a2a1a; border:0.5px solid rgba(52,199,89,.2); border-radius:10px; padding:10px 12px; animation:msgIn .35s ease-out; }
+        .msg-ai .ai-header { display:flex; align-items:center; gap:6px; font-size:11px; color:#34c759; font-weight:500; margin-bottom:4px; }
+        .msg-ai .ai-body { font-size:13px; color:#d0d0d0; line-height:1.5; }
+        .msg-ai .ai-actions { display:flex; gap:6px; margin-top:6px; }
+        .msg-ai .ai-actions button { background:transparent; border:0.5px solid rgba(255,255,255,.12); color:#34c759; padding:3px 12px; border-radius:12px; font-size:11px; cursor:pointer; }
+
+        /* 工具栏 */
+        #toolbar { background:#101114; border-top:0.5px solid rgba(255,255,255,.06); flex-shrink:0; position:relative; z-index:50; padding:8px 0; }
+        .tool-scroll { display:flex; gap:10px; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; padding:0 12px; scrollbar-width:none; }
+        .tool-scroll::-webkit-scrollbar { display:none; }
+        .tool-btn { display:flex; align-items:center; gap:7px; padding:0 15px; background:#2a2a2e; border:none; border-radius:18px; color:rgba(255,255,255,.85); font-size:14px; cursor:pointer; transition:all .15s; white-space:nowrap; flex-shrink:0; height:36px; }
+        .tool-btn:active { background:#3a3a3e; transform:scale(.96); }
+        .tool-btn .tool-icon { width:17px; height:17px; flex-shrink:0; color:rgba(255,255,255,.65); display:block; }
+        .tool-btn .tool-label { font-size:14px; font-weight:400; letter-spacing:.3px; color:rgba(255,255,255,.85); }
+        .tool-btn .badge { position:absolute; top:5px; right:5px; width:7px; height:7px; background:#ff3b30; border-radius:50%; border:1.5px solid #2a2a2e; }
+
+        /* 输入框 */
+        #input-bar { display:flex; align-items:center; gap:8px; padding:6px 12px 12px; background:#101114; flex-shrink:0; }
+        #input-bar input { flex:1; height:34px; border-radius:18px; border:0.5px solid rgba(255,255,255,.12); background:#252529; color:#e5e5e5; padding:0 14px; font-size:14px; outline:none; }
+        #input-bar input::placeholder { color:rgba(255,255,255,.25); }
+        #input-bar .voice-btn { width:34px; height:34px; border-radius:50%; background:#252529; border:0.5px solid rgba(255,255,255,.12); color:rgba(255,255,255,.5); display:flex; align-items:center; justify-content:center; cursor:pointer; font-size:16px; }
+
+        /* 全屏页面 */
+        .fullscreen-page {
+            position:absolute; top:0; left:0; width:100%; height:100%;
+            z-index:300; background:#111214;
+            transform:translateY(100%);
+            transition:transform .35s cubic-bezier(.22,1,.36,1);
+            display:flex; flex-direction:column; overflow:hidden; will-change:transform;
+        }
+        .fullscreen-page.open { transform:translateY(0); }
+        .page-header { display:flex; align-items:center; height:52px; padding:0 12px; background:#111214; border-bottom:0.5px solid #222329; flex-shrink:0; }
+        .page-close { width:44px; height:44px; display:flex; align-items:center; justify-content:center; border:none; background:transparent; color:#fff; font-size:26px; cursor:pointer; flex-shrink:0; }
+        .page-close:active { opacity:.6; }
+        .page-title { flex:1; text-align:center; font-size:17px; font-weight:500; color:#fff; letter-spacing:.3px; }
+        .page-spacer { width:44px; flex-shrink:0; }
+        .page-body { flex:1; overflow-y:auto; padding:16px; background:#111214; }
+        .page-body::-webkit-scrollbar { width:3px; }
+        .page-body::-webkit-scrollbar-track { background:transparent; }
+        .page-body::-webkit-scrollbar-thumb { background:rgba(255,255,255,.12); border-radius:2px; }
+        .page-footer { flex-shrink:0; padding:12px 16px 20px; background:#111214; border-top:0.5px solid #222329; }
+        .page-footer .btn-primary { background:#075A9A; color:#fff; border:none; border-radius:8px; padding:12px; font-size:15px; font-weight:600; cursor:pointer; width:100%; transition:all .15s; }
+        .page-footer .btn-primary:active { background:#0a4a7a; transform:scale(.98); }
+        .page-footer .btn-success { background:#34c759; }
+        .page-footer .btn-success:active { background:#28a745; }
+
+        /* 页面内组件 */
+        .tag-group { margin-bottom:18px; }
+        .group-title { color:rgba(255,255,255,.35); font-size:12px; font-weight:500; margin-bottom:8px; }
+        .tags { display:flex; flex-wrap:wrap; gap:6px; }
+        .tag { display:inline-block; padding:4px 12px; border-radius:14px; font-size:12px; background:rgba(255,255,255,.06); color:rgba(255,255,255,.7); }
+        .tag.active { background:rgba(7,90,154,.3); color:#60A5FA; }
+        .tag.addable { cursor:pointer; }
+        .tag.addable:active { background:rgba(255,255,255,.12); }
+
+        .form-group { margin-bottom:14px; }
+        .form-group label { display:block; font-size:12px; color:rgba(255,255,255,.4); margin-bottom:6px; font-weight:500; }
+        .form-group input, .form-group select, .form-group textarea {
+            width:100%; padding:10px 12px; border-radius:6px; border:0.5px solid rgba(255,255,255,.1);
+            background:rgba(255,255,255,.04); color:#e5e5e5; font-size:14px; outline:none;
+        }
+        .form-group textarea { height:70px; resize:vertical; }
+
+        .follow-item { display:flex; gap:10px; padding:8px 0; border-bottom:0.5px solid rgba(255,255,255,.04); }
+        .follow-item .f-time { color:rgba(255,255,255,.3); font-size:11px; flex-shrink:0; min-width:50px; }
+        .follow-item .f-content { color:rgba(255,255,255,.6); font-size:12px; }
+
+        /* 快捷回复 */
+        .qr-group { margin-bottom:16px; }
+        .qr-group-title { color:rgba(255,255,255,.4); font-size:12px; font-weight:500; margin-bottom:8px; }
+        .qr-tags { display:flex; flex-wrap:wrap; gap:6px; }
+        .qr-tag { padding:5px 12px; border-radius:14px; font-size:12px; background:rgba(255,255,255,.06); color:rgba(255,255,255,.8); cursor:pointer; transition:all .15s; }
+        .qr-tag:active { background:rgba(7,90,154,.3); color:#60A5FA; }
+
+        .prod-grid { display:flex; flex-direction:column; gap:10px; }
+        .prod-card { background:rgba(255,255,255,.04); border-radius:10px; overflow:hidden; border:0.5px solid rgba(255,255,255,.06); }
+        .prod-card .pimg { height:80px; display:flex; align-items:center; justify-content:center; font-size:28px; color:rgba(255,255,255,.3); }
+        .prod-card .pinfo { padding:10px 12px; }
+        .prod-card .pname { color:#fff; font-size:14px; font-weight:500; }
+        .prod-card .pdesc { color:rgba(255,255,255,.35); font-size:11px; margin-top:2px; }
+        .prod-card .pprice { color:#ff9500; font-size:15px; font-weight:700; margin-top:4px; }
+
+        .sop-item { padding:10px 12px; border-bottom:0.5px solid rgba(255,255,255,.04); }
+        .sop-item:last-child { border-bottom:none; }
+        .sop-item .sop-step { font-size:11px; font-weight:600; }
+        .sop-item .sop-title { font-size:14px; color:#e5e5e5; margin:2px 0; }
+        .sop-item .sop-desc { font-size:11px; color:rgba(255,255,255,.4); }
+
+        .obj-item { padding:10px 0; border-bottom:0.5px solid rgba(255,255,255,.04); }
+        .obj-item:last-child { border-bottom:none; }
+        .obj-item .obj-label { font-size:13px; font-weight:500; color:#e5e5e5; }
+        .obj-item .obj-response { font-size:12px; color:rgba(255,255,255,.5); margin-top:3px; }
+    </style>
+</head>
+<body>
+
+<div id="phone">
+
+    <!-- 状态栏 -->
+    <div id="status-bar">
+        <span class="time" id="statusTime">09:41</span>
+        <span class="right-icons">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 9l2 2c4.97-4.97 13.03-4.97 18 0l2-2C16.93 2.93 7.08 2.93 1 9zm8 8l3 3 3-3c-1.65-1.66-4.34-1.66-6 0zm-4-4l2 2c2.76-2.76 7.24-2.76 10 0l2-2C15.14 9.14 8.87 9.14 5 13z"/></svg>
+            <span class="battery"><span class="level"><span class="fill"></span></span></span>
+        </span>
+    </div>
+
+    <!-- 导航 -->
+    <div id="nav-bar">
+        <button class="back-btn">&lt;</button>
+        <span class="nav-title" id="navTitle" style="cursor:pointer;" title="双击重置对话">优特智厨</span>
+        <span class="nav-right"><svg viewBox="0 0 24 24"><path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/></svg></span>
+    </div>
+
+    <!-- 客户信息 -->
+    <div id="customer-header">
+        <div class="c-avatar">王</div>
+        <div class="c-info">
+            <div class="c-name">王刚 · 老王快餐</div>
+            <div class="c-sub">快餐简餐 · 筹备中 · 来源：抖音</div>
+        </div>
+        <div class="c-badge" id="stageBadge">P1 了解信息</div>
+    </div>
+
+    <!-- 阶段进度 -->
+    <div id="stage-bar">
+        <div class="s-dot"><div class="dot active" id="dot-1"></div><div class="line" id="line-1"></div><div class="s-label active" id="label-1">了解信息</div></div>
+        <div class="s-dot"><div class="dot" id="dot-2"></div><div class="line" id="line-2"></div><div class="s-label" id="label-2">收集需求</div></div>
+        <div class="s-dot"><div class="dot" id="dot-3"></div><div class="line" id="line-3"></div><div class="s-label" id="label-3">确认合作</div></div>
+        <div class="s-dot"><div class="dot" id="dot-4"></div><div class="line" id="line-4"></div><div class="s-label" id="label-4">试菜体验</div></div>
+        <div class="s-dot"><div class="dot" id="dot-5"></div><div class="line" id="line-5"></div><div class="s-label" id="label-5">合同签署</div></div>
+        <div class="s-dot"><div class="dot" id="dot-6"></div><div class="line"></div><div class="s-label" id="label-6">交付</div></div>
+    </div>
+
+    <!-- 水印 -->
+    <div id="watermark"></div>
+
+    <!-- 聊天区 -->
+    <div id="chat-area">
+        <div id="messages"></div>
+    </div>
+
+    <!-- 工具栏 -->
+    <div id="toolbar">
+        <div class="tool-scroll">
+            <button class="tool-btn" onclick="openPage('quickReply')" id="tool-quickReply">
+                <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                <span class="tool-label">快捷回复</span>
+            </button>
+            <button class="tool-btn" onclick="openPage('productGallery')" id="tool-productGallery">
+                <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                <span class="tool-label">产品图鉴</span>
+            </button>
+            <button class="tool-btn" onclick="openPage('objections')" id="tool-objections">
+                <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+                <span class="tool-label">异议话术</span>
+            </button>
+            <button class="tool-btn" onclick="openPage('customerProfile')" id="tool-customerProfile">
+                <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <span class="tool-label">客户标签</span>
+            </button>
+            <button class="tool-btn" onclick="openPage('proposal')" id="tool-proposal">
+                <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                <span class="tool-label">发送方案</span>
+            </button>
+            <button class="tool-btn" onclick="openPage('appointment')" id="tool-appointment">
+                <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                <span class="tool-label">预约试菜</span>
+            </button>
+            <button class="tool-btn" onclick="openPage('followUp')" id="tool-followUp">
+                <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                <span class="tool-label">跟进记录</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- 输入框 -->
+    <div id="input-bar">
+        <input type="text" placeholder="输入消息..." disabled>
+        <div class="voice-btn">🎤</div>
+    </div>
+
+    <!-- ===== 全屏页面 ===== -->
+
+    <!-- 快捷回复 -->
+    <div class="fullscreen-page" id="page-quickReply">
+        <div class="page-header">
+            <button class="page-close" data-page="quickReply">×</button>
+            <span class="page-title">快捷回复</span>
+            <span class="page-spacer"></span>
+        </div>
+        <div class="page-body">
+            <div class="qr-group">
+                <div class="qr-group-title">🤝 开场问候</div>
+                <div class="qr-tags" data-group="greeting">
+                    <span class="qr-tag">您好！欢迎咨询优特智厨 😊</span>
+                    <span class="qr-tag">您好！很高兴为您服务，请问有什么可以帮您的？</span>
+                    <span class="qr-tag">感谢您的咨询，祝您生意兴隆！🎉</span>
+                </div>
+            </div>
+            <div class="qr-group">
+                <div class="qr-group-title">🎯 场景推荐</div>
+                <div class="qr-tags" data-group="scene">
+                    <span class="qr-tag">快餐简餐推荐G3，单锅容量1-5kg，立体加热温控精准</span>
+                    <span class="qr-tag">食堂团餐推荐G5，大容量批量出餐，性价比高</span>
+                    <span class="qr-tag">火锅店推荐我们的智能汤锅，底料熬制标准化</span>
+                    <span class="qr-tag">明档小炒推荐M1，轻巧灵活，单份出餐</span>
+                </div>
+            </div>
+            <div class="qr-group">
+                <div class="qr-group-title">💰 价格异议</div>
+                <div class="qr-tags" data-group="price">
+                    <span class="qr-tag">我们专注炒菜机20年，1300+专利，用料和服务都是行业顶尖</span>
+                    <span class="qr-tag">可以从ROI角度算账：月省人力8000-12000，8-14个月回本</span>
+                    <span class="qr-tag">我们有分期方案，首付40%剩余一年分期</span>
+                </div>
+            </div>
+            <div class="qr-group">
+                <div class="qr-group-title">🔧 售后保障</div>
+                <div class="qr-tags" data-group="service">
+                    <span class="qr-tag">设备稳定性行业领先，故障率最低，加热控温搅拌基本不出问题</span>
+                    <span class="qr-tag">在线远程指导 + 下一餐段前上门，各地有备件仓</span>
+                    <span class="qr-tag">一年质保，可购延保，4小时响应机制</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 产品图鉴 -->
+    <div class="fullscreen-page" id="page-productGallery">
+        <div class="page-header">
+            <button class="page-close" data-page="productGallery">×</button>
+            <span class="page-title">产品图鉴</span>
+            <span class="page-spacer"></span>
+        </div>
+        <div class="page-body">
+            <div class="prod-grid">
+                <div class="prod-card">
+                    <div class="pimg" style="background:linear-gradient(135deg,#1a4a3a,#0d2530);">🍳</div>
+                    <div class="pinfo">
+                        <div class="pname">G3 智能炒菜机</div>
+                        <div class="pdesc">适合快餐/简餐 · 单锅1-5kg · 立体加热 · 4路粉料+8路液体调料 · 数字温控</div>
+                        <div class="pprice">¥49,800 起</div>
+                    </div>
+                </div>
+                <div class="prod-card">
+                    <div class="pimg" style="background:linear-gradient(135deg,#2a3a5a,#0d2530);">🔥</div>
+                    <div class="pinfo">
+                        <div class="pname">M1 明档小炒机</div>
+                        <div class="pdesc">适合明档/快餐 · 单份出餐 · 轻巧灵活 · 最佳烹饪量1-3kg · 适合盖浇饭</div>
+                        <div class="pprice">¥38,000</div>
+                    </div>
+                </div>
+                <div class="prod-card">
+                    <div class="pimg" style="background:linear-gradient(135deg,#4a2a5a,#0d2530);">🥘</div>
+                    <div class="pinfo">
+                        <div class="pname">G5 大型炒菜机</div>
+                        <div class="pdesc">适合团餐/食堂 · 大容量批量出餐 · 产能高 · 稳定可靠</div>
+                        <div class="pprice">¥68,000</div>
+                    </div>
+                </div>
+                <div class="prod-card">
+                    <div class="pimg" style="background:linear-gradient(135deg,#5a3a1a,#0d2530);">⚙️</div>
+                    <div class="pinfo">
+                        <div class="pname">配套设备</div>
+                        <div class="pdesc">投菜盒子 ¥2,800 / 调料模块 ¥3,200 / 定制操作台 ¥4,500 / 智能蒸柜</div>
+                        <div class="pprice">按需配置</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 异议话术 -->
+    <div class="fullscreen-page" id="page-objections">
+        <div class="page-header">
+            <button class="page-close" data-page="objections">×</button>
+            <span class="page-title">异议话术</span>
+            <span class="page-spacer"></span>
+        </div>
+        <div class="page-body">
+            <div class="obj-item">
+                <div class="obj-label">💰 "你们价格太贵了"</div>
+                <div class="obj-response">从ROI切入：算人力节省、回本周期。我们专注炒菜机20年，1300+专利，用料和服务都是行业顶尖。小菜园、乡村基都是我们的客户。</div>
+            </div>
+            <div class="obj-item">
+                <div class="obj-label">🤔 "我再考虑考虑"</div>
+                <div class="obj-response">了解真实顾虑（预算？对比？没想清楚？），制造紧迫感：目前产能紧张，订货周期延长。</div>
+            </div>
+            <div class="obj-item">
+                <div class="obj-label">⚔️ "竞品比你们便宜"</div>
+                <div class="obj-response">了解具体对比哪家，差异化介绍：我们的铁锅锅气更好、温控技术更精准（自带巡航 vs 定速巡航）、母公司电力背景设备更稳定。</div>
+            </div>
+            <div class="obj-item">
+                <div class="obj-label">🔧 "售后怎么保障？"</div>
+                <div class="obj-response">故障率行业最低。在线指导+下一餐段前上门。各地备件仓。一年质保可购延保。24小时在线客服48小时内联系。</div>
+            </div>
+            <div class="obj-item">
+                <div class="obj-label">📅 "试用为什么要收费？"</div>
+                <div class="obj-response">来展厅试菜免费！上门试用因涉及运输、安装、厨师差旅等成本收费，但成交后可抵扣设备款。</div>
+            </div>
+            <div class="obj-item">
+                <div class="obj-label">👨‍🍳 "一天培训够吗？"</div>
+                <div class="obj-response">正常一天完全够，培训流程成熟。还有操作视频、自学习材料，后期远程指导。学不会可延时。</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 客户标签 -->
+    <div class="fullscreen-page" id="page-customerProfile">
+        <div class="page-header">
+            <button class="page-close" data-page="customerProfile">×</button>
+            <span class="page-title">客户标签</span>
+            <span class="page-spacer"></span>
+        </div>
+        <div class="page-body">
+            <div class="tag-group">
+                <div class="group-title">已选标签</div>
+                <div class="tags" id="activeTags">
+                    <span class="tag active">新客户</span>
+                    <span class="tag active">快餐简餐</span>
+                    <span class="tag active">筹备中</span>
+                </div>
+            </div>
+            <div class="tag-group">
+                <div class="group-title">推荐标签（点击添加）</div>
+                <div class="tags" id="suggestTags">
+                    <span class="tag addable" data-tag="高意向">+ 高意向</span>
+                    <span class="tag addable" data-tag="价格敏感">+ 价格敏感</span>
+                    <span class="tag addable" data-tag="对比竞品">+ 对比竞品</span>
+                    <span class="tag addable" data-tag="预约试菜">+ 预约试菜</span>
+                    <span class="tag addable" data-tag="需要跟进">+ 需要跟进</span>
+                    <span class="tag addable" data-tag="快餐连锁">+ 快餐连锁</span>
+                    <span class="tag addable" data-tag="抖音线索">+ 抖音线索</span>
+                </div>
+            </div>
+            <div class="tag-group" style="margin-top:20px;padding-top:16px;border-top:0.5px solid rgba(255,255,255,.06);">
+                <div class="group-title">客户画像</div>
+                <div class="info-item" style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;">
+                    <span style="color:rgba(255,255,255,.4);">经营类型</span>
+                    <span style="color:#e5e5e5;">快餐简餐 · 盖浇饭</span>
+                </div>
+                <div class="info-item" style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;">
+                    <span style="color:rgba(255,255,255,.4);">门店面积</span>
+                    <span style="color:#e5e5e5;">150㎡</span>
+                </div>
+                <div class="info-item" style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;">
+                    <span style="color:rgba(255,255,255,.4);">日均单量</span>
+                    <span style="color:#e5e5e5;">预计 200-300 单</span>
+                </div>
+                <div class="info-item" style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;">
+                    <span style="color:rgba(255,255,255,.4);">预算范围</span>
+                    <span style="color:#e5e5e5;">5-10 万</span>
+                </div>
+                <div class="info-item" style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;">
+                    <span style="color:rgba(255,255,255,.4);">核心痛点</span>
+                    <span style="color:#e5e5e5;">厨师难招 / 出品不稳定 / 想标准化</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 发送方案 -->
+    <div class="fullscreen-page" id="page-proposal">
+        <div class="page-header">
+            <button class="page-close" data-page="proposal">×</button>
+            <span class="page-title">发送方案</span>
+            <span class="page-spacer"></span>
+        </div>
+        <div class="page-body">
+            <div style="margin-bottom:16px;">
+                <div style="color:rgba(255,255,255,.35);font-size:12px;margin-bottom:10px;font-weight:500;">推荐方案 · 快餐店标配</div>
+                <div class="prod-card" style="border-left:3px solid #60A5FA;">
+                    <div class="pimg" style="height:80px;background:linear-gradient(135deg,#1a4a3a,#0d2530);">🍳</div>
+                    <div class="pinfo">
+                        <div class="pname">方案A：G3 标准版单机</div>
+                        <div class="pdesc">G3标准版×1 + 基础培训 + 标准菜谱包</div>
+                        <div class="pprice">¥49,800</div>
+                    </div>
+                </div>
+                <div class="prod-card" style="margin-top:8px;border-left:3px solid #34D399;">
+                    <div class="pimg" style="height:80px;background:linear-gradient(135deg,#2a3a5a,#0d2530);">🔥</div>
+                    <div class="pinfo">
+                        <div class="pname">方案B：G3 升级版套装</div>
+                        <div class="pdesc">G3升级版×1 + 投菜盒子 + 调料模块 + 操作台 + 上门培训</div>
+                        <div class="pprice">¥59,800</div>
+                    </div>
+                </div>
+                <div class="prod-card" style="margin-top:8px;border-left:3px solid #FBBF24;">
+                    <div class="pimg" style="height:80px;background:linear-gradient(135deg,#4a2a5a,#0d2530);">⚙️</div>
+                    <div class="pinfo">
+                        <div class="pname">方案C：双机配置</div>
+                        <div class="pdesc">G3×2台 + 配套设备 + 3天驻场培训 + 菜谱定制</div>
+                        <div class="pprice">¥98,000</div>
+                    </div>
+                </div>
+                <div style="color:rgba(255,255,255,.3);font-size:11px;margin-top:8px;">* 可根据客户需求个性化调整</div>
+            </div>
+        </div>
+        <div class="page-footer">
+            <button class="btn-primary" id="sendProposalBtn">发送给客户</button>
+        </div>
+    </div>
+
+    <!-- 预约试菜 -->
+    <div class="fullscreen-page" id="page-appointment">
+        <div class="page-header">
+            <button class="page-close" data-page="appointment">×</button>
+            <span class="page-title">预约试菜</span>
+            <span class="page-spacer"></span>
+        </div>
+        <div class="page-body">
+            <div class="form-group">
+                <label>客户姓名</label>
+                <input type="text" value="王刚" placeholder="请输入姓名" />
+            </div>
+            <div class="form-group">
+                <label>联系电话</label>
+                <input type="tel" value="13812345678" placeholder="请输入电话" />
+            </div>
+            <div class="form-group">
+                <label>预约日期</label>
+                <input type="date" value="2025-05-30" />
+            </div>
+            <div class="form-group">
+                <label>试菜菜品</label>
+                <textarea placeholder="客户门店主推菜品">鱼香肉丝盖饭、宫保鸡丁、回锅肉</textarea>
+            </div>
+            <div class="form-group">
+                <label>备注</label>
+                <textarea placeholder="其他需求">150㎡快餐店，预计200-300单/日</textarea>
+            </div>
+        </div>
+        <div class="page-footer">
+            <button class="btn-primary" id="apptSubmitBtn">确认预约</button>
+        </div>
+    </div>
+
+    <!-- 跟进记录 -->
+    <div class="fullscreen-page" id="page-followUp">
+        <div class="page-header">
+            <button class="page-close" data-page="followUp">×</button>
+            <span class="page-title">跟进记录</span>
+            <span class="page-spacer"></span>
+        </div>
+        <div class="page-body">
+            <div style="margin-bottom:16px;">
+                <div style="color:rgba(255,255,255,.35);font-size:12px;margin-bottom:8px;font-weight:500;">历史记录</div>
+                <div class="follow-item"><span class="f-time">今天</span><span class="f-content">客户详细咨询G3，提出价格异议和竞品对比，已解答并邀请试菜</span></div>
+                <div class="follow-item"><span class="f-time">昨天</span><span class="f-content">客户通过抖音添加，询问炒菜机基本情况，已发产品资料</span></div>
+                <div class="follow-item"><span class="f-time">3天前</span><span class="f-content">线索分配，来源：抖音广告落地页</span></div>
+            </div>
+            <div style="border-top:0.5px solid rgba(255,255,255,.06);padding-top:14px;">
+                <div style="color:rgba(255,255,255,.35);font-size:12px;margin-bottom:10px;font-weight:500;">本次跟进</div>
+                <div class="form-group">
+                    <label>沟通摘要</label>
+                    <textarea id="followSummary" placeholder="本次沟通主要内容...">客户咨询G3详情，对价格有异议，已对比竞品差异并邀请周六试菜</textarea>
+                </div>
+                <div class="form-group">
+                    <label>客户关注点</label>
+                    <input type="text" id="followFocus" value="价格、竞品对比（美膳狮/橡鹭）、售后保障、培训" />
+                </div>
+                <div class="form-group">
+                    <label>下一步动作</label>
+                    <input type="text" id="followNext" value="周六试菜跟进，准备快餐菜品方案" />
+                </div>
+            </div>
+        </div>
+        <div class="page-footer">
+            <button class="btn-primary" id="saveFollowUpBtn">保存跟进记录</button>
+        </div>
+    </div>
+
+</div><!-- /phone -->
+
+<script>
+(function() {
+    'use strict';
+
+    // 状态栏时间
+    function updateTime() {
+        const now = new Date();
+        document.getElementById('statusTime').textContent =
+            String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+    }
+    updateTime();
+    setInterval(updateTime, 10000);
+
+    // 水印
+    (function initWatermark() {
+        const c = document.getElementById('watermark');
+        const texts = ['优特智厨 · 智能厨具', '销售对话', '智能厨具 · 销售赋能'];
+        for (let i = 0; i < 18; i++) {
+            const s = document.createElement('span');
+            s.textContent = texts[i % 3];
+            s.style.left = (i * 97 + 23) % 380 + 'px';
+            s.style.top = (i * 73 + 41) % 700 + 20 + 'px';
+            s.style.fontSize = (11 + (i % 3) * 2) + 'px';
+            s.style.opacity = 0.12 + (i % 4) * 0.02;
+            c.appendChild(s);
+        }
+    })();
+
+    // DOM
+    const messagesEl = document.getElementById('messages');
+    const chatArea = document.getElementById('chat-area');
+
+    const pages = {
+        quickReply: document.getElementById('page-quickReply'),
+        productGallery: document.getElementById('page-productGallery'),
+        objections: document.getElementById('page-objections'),
+        customerProfile: document.getElementById('page-customerProfile'),
+        proposal: document.getElementById('page-proposal'),
+        appointment: document.getElementById('page-appointment'),
+        followUp: document.getElementById('page-followUp'),
+    };
+    const pageKeys = Object.keys(pages);
+    let currentPage = null;
+
+    function escapeHtml(t) { return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;'); }
+
+    function addMessage(type, content, extra) {
+        const d = document.createElement('div');
+        d.className = 'msg msg-' + type;
+
+        switch (type) {
+            case 'time': d.textContent = content; break;
+            case 'system': d.textContent = content; break;
+
+            case 'customer':
+                d.innerHTML = `<div class="msg-avatar">王</div><div class="msg-bubble"><div class="msg-content">${escapeHtml(content)}</div></div>`;
+                break;
+
+            case 'sales':
+                d.innerHTML = `<div class="msg-bubble"><div class="msg-content">${escapeHtml(content)}</div><div class="read-tag">已读</div></div><div class="msg-avatar">销</div>`;
+                break;
+
+            case 'product':
+                const pn = extra?.name || '产品', pd = extra?.desc || '', pp = extra?.price || '';
+                d.innerHTML = `<div class="prod-img" style="background:linear-gradient(135deg,${extra?.color||'#1a4a3a'},#0d2530);">🍳</div><div class="prod-info"><div class="prod-name">${escapeHtml(pn)}</div><div class="prod-desc">${escapeHtml(pd)}</div><div class="prod-price">${escapeHtml(pp)}</div></div>`;
+                break;
+
+            case 'ai':
+                const at = extra?.title || '💡 AI 建议', ab = extra?.text || '';
+                d.innerHTML = `<div class="ai-header">🤖 ${escapeHtml(at)}</div><div class="ai-body">${escapeHtml(ab)}<div class="ai-actions"><button>使用</button><button>忽略</button></div></div>`;
+                break;
+
+            default: d.textContent = content;
+        }
+
+        messagesEl.appendChild(d);
+        requestAnimationFrame(() => { chatArea.scrollTop = chatArea.scrollHeight; });
+    }
+
+    // 阶段
+    const stageLabels = ['','了解信息','收集需求','确认合作','试菜体验','合同签署','交付'];
+    const stageColors = ['','#60A5FA','#34D399','#FBBF24','#F97316','#8B5CF6','#10B981'];
+
+    function setStage(s) {
+        for (let i = 1; i <= 6; i++) {
+            const dot = document.getElementById('dot-'+i);
+            const line = document.getElementById('line-'+i);
+            const label = document.getElementById('label-'+i);
+            dot.className = 'dot'; if(line) line.className = 'line'; label.className = 's-label';
+            if (i < s) { dot.classList.add('done'); if(line) line.classList.add('done'); label.classList.add('done'); }
+            else if (i === s) { dot.classList.add('active'); label.classList.add('active'); }
+        }
+        const badge = document.getElementById('stageBadge');
+        badge.textContent = 'P'+s+' '+stageLabels[s];
+        badge.style.background = (stageColors[s]||'#60A5FA') + '22';
+        badge.style.color = stageColors[s]||'#60A5FA';
+    }
+
+    // 全屏页面控制
+    function openPage(key) {
+        if (currentPage === key) return;
+        closePage();
+        const page = pages[key];
+        if (!page) return;
+        page.classList.add('open');
+        currentPage = key;
+    }
+
+    function closePage() {
+        if (currentPage) {
+            const page = pages[currentPage];
+            if (page) page.classList.remove('open');
+            currentPage = null;
+        }
+    }
+
+    // 全屏页面关闭按钮
+    document.querySelectorAll('.page-close').forEach(btn => {
+        btn.addEventListener('click', function() {
+            closePage();
+        });
+    });
+
+    window.openPage = openPage;
+    window.closePage = closePage;
+
+    // 工具按钮 badge 更新
+    function updateToolBadge(key, show) {
+        const btn = document.getElementById('tool-'+key);
+        if (!btn) return;
+        if (show) { const b = document.createElement('span'); b.className='badge'; btn.appendChild(b); }
+        else { const b = btn.querySelector('.badge'); if(b) b.remove(); }
+    }
+
+    // 聊天对话流
+    const flow = [
+        { type:'time', content:'5月24日 周一' },
+        { type:'customer', content:'你好，我在抖音上看到你们炒菜机器人，想了解一下' },
+        { type:'sales', content:'您好！欢迎咨询优特智厨 🍳\n\n我们专注智能炒菜设备近20年，全国首批研发厂家之一，1300+专利。请问您是什么类型的餐饮呢？我帮您做初步推荐', stage:1 },
+
+        { type:'customer', content:'我做快餐的，主打盖浇饭那些，正在筹备新店' },
+        { type:'sales', content:'了解！请问店面大概多大面积？日均预计出多少单？我帮您匹配最合适的方案', stage:2 },
+        { type:'customer', content:'租了个150平的铺子，预计一天200-300单吧' },
+        { type:'sales', content:'这个量非常合适！推荐我们的G3系列智能炒菜机：\n\n• 单锅容量1-5kg，立体加热温控精准\n• 4路粉料+8路液体调料\n• 铁锅炒制，锅气足\n\n盖浇饭的浇头、炒菜都能搞定，一个人可以同时操作2-3台' },
+
+        { type:'customer', content:'听起来不错，但你们价格为什么比同行贵这么多？我了解了下比橡鹭贵了30%' },
+        { type:'sales', content:'这个价格差异主要来自几个方面：\n\n1⃣ 研发投入——1300多项专利，行业最多\n2⃣ 用料扎实——投料管阀用的陶瓷结构，成本比同行贵3倍，但就是为了减少售后\n3⃣ 企业背景——母公司做电力出身，设备稳定性有保障\n4⃣ 服务体系——全国本地化服务团队\n\n小菜园、乡村基这些头部连锁都用了五六百台，不是单纯看价格的' },
+
+        { type:'ai', content:'💡 建议：客户已提出价格异议，可以补充ROI数据增强说服力', extra:{title:'💡 AI 销售建议', text:'客户对价格敏感，建议从人力节省角度算账：月省8000-12000元，8-14个月回本。可提分期方案降低门槛。'} },
+
+        { type:'customer', content:'那美膳狮也有类似的产品，你们跟美膳狮比优势在哪？我们也在看他们家的' },
+        { type:'sales', content:'好问题！核心优势三点：\n\n1⃣ 出品口感——我们是铁锅+立体加热，锅气足，炒出来更好吃\n2⃣ 温控技术——数字温控，相当于自带巡航，竞品只是定速巡航\n3⃣ 企业背景——母公司做电力出身，设备加热/控温/搅拌的稳定性有保障\n\n美膳狮是互联网打法，我们做实业，稳扎稳打' },
+
+        { type:'customer', content:'我买设备就是为了省人，但听说有人用了反而更忙了，一个人盯着机器、一个人切配、还要专门配人做预制，这不是反而增加人了吗？' },
+        { type:'sales', content:'这种情况我们遇到过。省人的前提是重新设计动线，而不是简单替换。可能的原因：\n\n1⃣ 设备数量不够，高峰期排队\n2⃣ 切配和机器操作没有协同\n3⃣ 工序菜和工艺菜没有区分\n\n我们有专业团队上门看场地、规划动线，确保真正省人提效' },
+
+        { type:'customer', content:'嗯你说的有道理，但我还是想再考虑考虑，毕竟投资不小' },
+        { type:'sales', content:'完全理解！要不这样，这周六有空来我们展厅试菜？我安排厨师用您门店的食材，按您的SOP现场炒制，您亲自尝尝出品、感受一下操作流程，试完再决定也不迟', stage:3 },
+        { type:'customer', content:'试菜收费吗？听说你们试用要收费' },
+        { type:'sales', content:'来展厅试菜是免费的！您说的收费是上门试用那种，涉及运输、安装、厨师差旅等成本所以收费，但成交了可以抵扣设备款' },
+
+        { type:'customer', content:'那售后呢？设备坏了影响出餐怎么办？' },
+        { type:'sales', content:'您担心的很正常。我们的保障有三层：\n\n1⃣ 设备本身很稳定，故障率行业最低\n2⃣ 每天开班前2分钟验证调料，可避免95%的问题\n3⃣ 真有问题先在线指导，解决不了保证下一餐段前上门\n\n各地都有备件仓，配件随时调拨' },
+
+        { type:'customer', content:'一天培训够用吗？我怕学不会' },
+        { type:'sales', content:'正常一天完全够。我们的培训流程很成熟，而且培训后有操作视频、自学习材料，随时远程指导。学不会可以延时' },
+        { type:'customer', content:'行吧，那这周六我去看看' },
+        { type:'sales', content:'好的！我安排厨师准备好，周六上午10点来展厅方便吗？我提前备好您门店的菜品，到现场直接炒给您看', stage:4 },
+
+        { type:'time', content:'5月25日 周二' },
+        { type:'system', content:'🎯 销售已预约周六试菜，阶段更新为 P4 试菜体验' },
+        { type:'sales', content:'王总，刚跟厨师确认好了，周六10点我们展厅见！地址我发您 📍\n\n另外我把G3的产品资料和几个快餐客户案例先发您，有空可以先看看~' },
+        { type:'customer', content:'收到，周六见' },
+        { type:'product', content:'', extra:{ name:'G3 智能炒菜机', desc:'适合快餐/简餐 · 立体加热 · 4粉料+8液体调料 · 出品锅气足', price:'¥49,800起', color:'#1a4a3a' } },
+    ];
+
+    // 自动播放
+    let flowRunning = false, flowTimer = null, flowIndex = 0;
+
+    function buildFlow() { /* flow already defined */ }
+
+    function startFlow() {
+        if (flowRunning) return;
+        flowRunning = true;
+        document.getElementById('btnPlay').textContent = '⏸';
+        flowIndex = 0;
+        playNext();
+    }
+
+    function playNext() {
+        if (!flowRunning || flowIndex >= flow.length) {
+            flowRunning = false;
+            document.getElementById('btnPlay').textContent = '▶';
+            return;
+        }
+        const item = flow[flowIndex++];
+        if (item.stage) setStage(item.stage);
+        addMessage(item.type, item.content, item.extra || {});
+        let delay = item.delay || 1200;
+        if (item.type === 'sales' || item.type === 'customer') {
+            const len = (item.content || '').length;
+            if (len > 80) delay = Math.min(1800 + len * 15, 4000);
+        }
+        flowTimer = setTimeout(playNext, delay);
+    }
+
+    window.togglePlay = function() {
+        if (flowRunning) { flowRunning = false; clearTimeout(flowTimer); document.getElementById('btnPlay').textContent = '▶'; }
+        else startFlow();
+    };
+
+    window.restartFlow = function() {
+        flowRunning = false; clearTimeout(flowTimer);
+        messagesEl.innerHTML = ''; flowIndex = 0; setStage(1);
+        document.getElementById('btnPlay').textContent = '▶';
+        startFlow();
+    };
+
+    // 导航双击重置
+    document.getElementById('navTitle').addEventListener('dblclick', window.restartFlow);
+
+    // 初始化
+    setStage(1);
+
+    // 快捷回复点击
+    document.querySelectorAll('.qr-tag').forEach(el => {
+        el.addEventListener('click', function() {
+            const text = this.textContent.trim();
+            if (text) { /* future: paste to input */ }
+        });
+    });
+
+    // 标签添加
+    document.querySelectorAll('.tag.addable').forEach(el => {
+        el.addEventListener('click', function() {
+            const tag = this.getAttribute('data-tag') || this.textContent.replace(/^\+ /,'');
+            if (!tag) return;
+            const container = document.getElementById('activeTags');
+            const span = document.createElement('span');
+            span.className = 'tag active';
+            span.textContent = tag;
+            container.appendChild(span);
+            this.remove();
+        });
+    });
+
+    // 按钮反馈
+    document.querySelectorAll('.page-footer .btn-primary').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const orig = this.textContent;
+            this.textContent = '✓ 已' + (orig.includes('发送')?'发送':orig.includes('保存')?'保存':orig.includes('确认')?'确认':'完成');
+            this.style.background = '#34c759';
+            setTimeout(() => { this.textContent = orig; this.style.background = ''; }, 1500);
+        });
+    });
+
+    // 注入播放/暂停控制
+    const controlsDiv = document.createElement('div');
+    controlsDiv.style.cssText = 'position:absolute;bottom:180px;right:-48px;display:flex;flex-direction:column;gap:6px;z-index:100;';
+    controlsDiv.innerHTML = `
+        <button id="btnPlay" onclick="togglePlay()" style="width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.1);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);">▶</button>
+        <button onclick="restartFlow()" style="width:36px;height:36px;border-radius:50%;border:none;background:rgba(255,255,255,.1);color:#fff;font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(4px);">⟳</button>
+    `;
+    document.getElementById('phone').appendChild(controlsDiv);
+
+    // 自动开始
+    setTimeout(startFlow, 500);
+
+})();
+</script>
+</body>
+</html>
