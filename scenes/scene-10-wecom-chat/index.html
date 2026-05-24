@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="../../shared/favicon.svg">
+  <title>场景10 · 企微聊天</title>
+  <link rel="stylesheet" href="../../shared/css/styles.css">
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --wc-green: #07C160;
+      --wc-green-dark: #06AD56;
+      --wc-bg: #EDEDED;
+      --wc-chat-bg: #F5F5F5;
+      --wc-header-bg: #FFFFFF;
+      --wc-text: #1F2329;
+      --wc-text-secondary: #4E5969;
+      --wc-text-tertiary: #86909C;
+      --wc-divider: #E5E6EB;
+      --wc-bubble-self: #95EC69;
+      --wc-bubble-other: #FFFFFF;
+      --safe-bottom: env(safe-area-inset-bottom, 0px);
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", system-ui, sans-serif;
+      background: #E0E0E0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    /* ─── 手机框 ─── */
+    .phone-frame {
+      width: 375px;
+      height: 740px;
+      background: var(--wc-bg);
+      border-radius: 32px;
+      overflow: hidden;
+      box-shadow: 0 8px 40px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      border: 1px solid rgba(255,255,255,0.3);
+    }
+
+    /* ─── 状态栏（iOS 风格） ─── */
+    .status-bar {
+      height: 44px;
+      background: var(--wc-header-bg);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px 0 20px;
+      font-size: 12px;
+      font-weight: 600;
+      color: #1A1A1A;
+      flex-shrink: 0;
+    }
+    .status-time { font-weight: 700; font-size: 15px; letter-spacing: 0.5px; }
+    .status-icons { display: flex; gap: 6px; align-items: center; }
+    .status-icons svg { display: block; }
+    .status-signal { width: 18px; height: 12px; }
+    .status-wifi { width: 16px; height: 12px; }
+    .status-battery { width: 25px; height: 12px; }
+
+    /* ─── 导航栏 ─── */
+    .nav-bar {
+      height: 48px;
+      background: var(--wc-header-bg);
+      border-bottom: 1px solid var(--wc-divider);
+      display: flex;
+      align-items: center;
+      padding: 0 8px;
+      flex-shrink: 0;
+      position: relative;
+      z-index: 10;
+    }
+    .nav-back {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--wc-text);
+      flex-shrink: 0;
+      padding: 4px 4px 4px 0;
+      font-size: 13px;
+      font-family: inherit;
+      min-width: 60px;
+      text-decoration: none;
+    }
+    .nav-back svg { width: 20px; height: 20px; flex-shrink: 0; }
+    .nav-back-label {
+      font-size: 13px;
+      color: inherit;
+      white-space: nowrap;
+    }
+    .nav-title {
+      flex: 1;
+      text-align: center;
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--wc-text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      padding: 0 4px;
+    }
+    .nav-actions {
+      display: flex;
+      gap: 0;
+      flex-shrink: 0;
+      min-width: 60px;
+      justify-content: flex-end;
+    }
+    .nav-action {
+      width: 36px;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border: none;
+      background: none;
+      color: var(--wc-text);
+      border-radius: 8px;
+      transition: background .15s;
+    }
+    .nav-action:hover { background: rgba(0,0,0,0.05); }
+    .nav-action svg { width: 21px; height: 21px; }
+
+    /* ─── 聊天视图 ─── */
+    .chat-view {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: #EDEDED;
+      overflow: hidden;
+    }
+
+    .chat-header-info {
+      padding: 7px 16px;
+      background: #F7F7F7;
+      border-bottom: 1px solid #E0E0E0;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .chat-header-info .name { font-size: 14px; font-weight: 600; color: var(--wc-text); }
+    .chat-header-info .status { font-size: 11px; color: var(--wc-text-tertiary); margin-top: 1px; }
+
+    .chat-msgs {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 14px 10px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chat-sys-tip {
+      align-self: center;
+      font-size: 11px;
+      color: var(--wc-text-tertiary);
+      background: rgba(0,0,0,0.04);
+      padding: 2px 10px;
+      border-radius: 4px;
+      margin: 6px 0 10px;
+    }
+    .chat-time-div {
+      align-self: center;
+      font-size: 11px;
+      color: var(--wc-text-tertiary);
+      background: rgba(0,0,0,0.05);
+      padding: 1px 8px;
+      border-radius: 4px;
+      margin: 14px 0 10px;
+    }
+
+    .msg-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      max-width: 86%;
+      animation: msgIn .26s cubic-bezier(0.16, 1, 0.3, 1) both;
+      margin-bottom: 10px;
+    }
+    .msg-row.right {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+    @keyframes msgIn {
+      from { opacity: 0; transform: translateY(6px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .msg-avatar {
+      width: 34px; height: 34px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .msg-avatar.c2 { background: #61DDAA; }
+    .msg-avatar.c4 { background: #E86452; }
+    .msg-avatar.sales { background: #5B8FF9; }
+
+    .msg-content { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+    .msg-name { font-size: 11px; color: var(--wc-text-tertiary); padding-left: 2px; }
+    .msg-row.right .msg-name { text-align: right; padding-left: 0; padding-right: 2px; }
+
+    .msg-bubble {
+      background: var(--wc-bubble-other);
+      color: var(--wc-text);
+      padding: 8px 12px;
+      border-radius: 4px 12px 12px 4px;
+      font-size: 14px;
+      line-height: 1.55;
+      word-break: break-word;
+      white-space: pre-wrap;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.03);
+    }
+    .msg-row.right .msg-bubble {
+      background: var(--wc-bubble-self);
+      color: var(--wc-text);
+      border-radius: 12px 4px 4px 12px;
+    }
+
+    /* ─── 小程序卡片（聊天中展示 — 左图右文） ───
+     * 真实的企微小程序分享卡片 = 左侧封面图 + 右侧标题/来源 + 小程序标识
+     * 紧凑水平布局，保留头图视觉特征但去除冗余按钮
+     ─── */
+    .mp-card-bubble {
+      display: flex;
+      background: #FFFFFF;
+      border: 1px solid #E8E8E8;
+      border-radius: 6px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.2s ease;
+      width: 252px;
+      min-height: 64px;
+      text-decoration: none;
+      color: inherit;
+    }
+    .mp-card-bubble:hover {
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+    }
+    .mp-card-bubble:active {
+      opacity: 0.85;
+    }
+
+    /* 左侧封面图（小程序卡片核心视觉特征） */
+    .mp-card-cover {
+      width: 64px;
+      min-height: 64px;
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #1AAD19 0%, #0D8C0D 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .mp-card-cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at 70% 20%, rgba(255,255,255,0.20) 0%, transparent 60%);
+    }
+    .mp-card-cover svg {
+      width: 24px; height: 24px;
+      position: relative;
+      z-index: 1;
+      opacity: 0.9;
+    }
+
+    /* 右侧内容区 */
+    .mp-card-right {
+      flex: 1;
+      min-width: 0;
+      padding: 8px 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 3px;
+    }
+    .mp-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--wc-text);
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .mp-card-desc {
+      font-size: 11px;
+      color: var(--wc-text-secondary);
+      line-height: 1.4;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .mp-card-footer-row {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      margin-top: 1px;
+    }
+    .mp-card-source-icon {
+      width: 14px; height: 14px;
+      border-radius: 3px;
+      background: linear-gradient(135deg, #07C160 0%, #059669 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .mp-card-source-icon svg { width: 9px; height: 9px; }
+    .mp-card-source-name {
+      font-size: 10px;
+      color: var(--wc-text-tertiary);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .mp-card-mini-tag {
+      font-size: 9px;
+      color: var(--wc-green);
+      background: rgba(7, 193, 96, 0.08);
+      padding: 0 4px;
+      border-radius: 2px;
+      line-height: 1.5;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+
+    /* ─── 输入区 ─── */
+    .chat-input-area {
+      background: #F7F7F7;
+      border-top: 1px solid #D9D9D9;
+      padding: 6px 8px 8px;
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .chat-input-area .input-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: none;
+      border-radius: 6px;
+      color: #5F5F5F;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background .15s;
+      padding: 0;
+    }
+    .chat-input-area .input-btn:hover { background: rgba(0,0,0,0.05); }
+    .chat-input-area .input-btn:active { background: rgba(0,0,0,0.10); }
+    .chat-input-area .input-btn svg { width: 22px; height: 22px; }
+
+    .chat-input-area .input-field-wrap {
+      flex: 1;
+      background: #FFFFFF;
+      border: 1px solid #D9D9D9;
+      border-radius: 6px;
+      display: flex;
+      align-items: flex-end;
+      min-height: 36px;
+      transition: border-color .15s;
+    }
+    .chat-input-area .input-field-wrap:focus-within {
+      border-color: var(--wc-green);
+    }
+    .chat-input-area .input-field-wrap textarea {
+      flex: 1;
+      min-height: 22px;
+      max-height: 80px;
+      border: none;
+      outline: none;
+      background: transparent;
+      padding: 7px 8px;
+      font-size: 14px;
+      line-height: 1.5;
+      font-family: inherit;
+      resize: none;
+    }
+    .chat-input-area .input-actions {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      flex-shrink: 0;
+    }
+    .chat-input-area .send-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: var(--wc-green);
+      border-radius: 6px;
+      color: #fff;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background .15s;
+    }
+    .chat-input-area .send-btn.show { display: flex; }
+    .chat-input-area .send-btn:hover { background: var(--wc-green-dark); }
+    .chat-input-area .send-btn:active { transform: scale(0.93); }
+    .chat-input-area .send-btn svg { width: 18px; height: 18px; }
+  </style>
+</head>
+<body>
+
+<div class="phone-frame">
+  <!-- 状态栏 -->
+  <div class="status-bar">
+    <span class="status-time" id="statusTime">14:38</span>
+    <span class="status-icons">
+      <svg class="status-signal" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="0.5" y="8" width="3" height="3.5" rx="0.5"/><rect x="4.5" y="5.5" width="3" height="6" rx="0.5"/><rect x="8.5" y="3" width="3" height="8.5" rx="0.5"/><rect x="12.5" y="0.5" width="3" height="11" rx="0.5"/></svg>
+      <svg class="status-wifi" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 6.5a12 12 0 0 1 15 0"/><path d="M4.5 9a7.5 7.5 0 0 1 9 0"/><path d="M8 11.5A1 1 0 0 1 10 11.5"/></svg>
+      <svg class="status-battery" viewBox="0 0 25 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="0.5" y="0.5" width="20" height="11" rx="2"/><rect x="4" y="4" width="8" height="4" rx="0.5" fill="currentColor"/><path d="M22.5 4.5v3a1.5 1.5 0 0 0 0-3z"/></svg>
+    </span>
+  </div>
+
+  <!-- 导航栏 -->
+  <div class="nav-bar">
+    <a class="nav-back" href="../../index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span class="nav-back-label">返回</span>
+    </a>
+    <span class="nav-title">王建国</span>
+    <div class="nav-actions">
+      <span class="nav-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15.05 5A5 5 0 0 1 19 8.95M15.05 5A5 5 0 0 0 11 3a5 5 0 0 0-5 5v1.05M15.05 5A11 11 0 0 1 22 12M17.94 16.94A10 10 0 0 1 12 19.5"/><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72a2 2 0 0 1 1.72 2z"/></svg></span>
+      <span class="nav-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="5" cy="12" r="1" fill="currentColor"/><circle cx="19" cy="12" r="1" fill="currentColor"/></svg></span>
+    </div>
+  </div>
+
+  <!-- 聊天视图 -->
+  <div class="chat-view">
+    <div class="chat-header-info">
+      <div class="name">王建国</div>
+      <div class="status">在线 · 陈香贵连锁（上海总部）</div>
+    </div>
+
+    <div class="chat-msgs" id="chatMsgs">
+      <div class="chat-sys-tip">14:08 · 通过「企微外部联系人」添加</div>
+      <div class="chat-time-div">今天 14:12</div>
+
+      <!-- 客户消息 -->
+      <div class="msg-row">
+        <div class="msg-avatar c2">王</div>
+        <div class="msg-content">
+          <div class="msg-name">王建国</div>
+          <div class="msg-bubble">你好，我是陈香贵的，想了解一下你们的炒菜机</div>
+        </div>
+      </div>
+
+      <div class="msg-row">
+        <div class="msg-avatar c2">王</div>
+        <div class="msg-content">
+          <div class="msg-name">王建国</div>
+          <div class="msg-bubble">我们现在全国几百家门店，主要是浇头标准化需求，看看自动化能不能帮上忙。</div>
+        </div>
+      </div>
+
+      <!-- 我方消息 -->
+      <div class="msg-row right">
+        <div class="msg-avatar sales">李</div>
+        <div class="msg-content">
+          <div class="msg-name">我 · 销售</div>
+          <div class="msg-bubble">王总您好！浇头标准化我们最熟，我帮你匹配 G2+G3 组合，日产 400 份没问题。我把我们的小程序发您，里面有详细案例和数据！</div>
+        </div>
+      </div>
+
+      <!-- 小程序卡片 -->
+      <div class="chat-time-div">14:15</div>
+      <div class="msg-row">
+        <div class="msg-avatar c2">王</div>
+        <div class="msg-content">
+          <div class="msg-name">王建国</div>
+          <div class="msg-bubble" style="padding:0;background:transparent;box-shadow:none">
+            <a class="mp-card-bubble" href="../scene-9-sales-assistant/index.html">
+              <div class="mp-card-cover">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+              </div>
+              <div class="mp-card-right">
+                <div class="mp-card-title">G3智能炒菜机 · 小江溪案例数据</div>
+                <div class="mp-card-desc">人力成本降40%，日均出品200份，3个月回本</div>
+                <div class="mp-card-footer-row">
+                  <span class="mp-card-source-icon">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+                  </span>
+                  <span class="mp-card-source-name">AI-Sale 销售助手</span>
+                  <span class="mp-card-mini-tag">小程序</span>
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 输入区 -->
+    <div class="chat-input-area">
+      <button class="input-btn" id="voiceBtn" title="语音">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+      </button>
+      <div class="input-field-wrap">
+        <textarea placeholder="输入消息" rows="1" id="chatInput"></textarea>
+      </div>
+      <div class="input-actions">
+        <button class="input-btn" id="emojiBtn" title="表情">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9" y2="9"/><line x1="15" y1="9" x2="15" y2="9"/></svg>
+        </button>
+        <button class="input-btn" id="moreBtn" title="更多">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="12" cy="5" r="1" fill="currentColor"/><circle cx="12" cy="19" r="1" fill="currentColor"/></svg>
+        </button>
+        <button class="send-btn" id="sendBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="../../shared/js/app.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  lucide.createIcons();
+  initNav('企微聊天', '功能演示', 'tag-green');
+
+  const chatInput = document.getElementById('chatInput');
+  const sendBtn = document.getElementById('sendBtn');
+  const chatMsgs = document.getElementById('chatMsgs');
+
+  // ─── 状态栏时间 ───
+  function updateTime() {
+    const d = new Date();
+    document.getElementById('statusTime').textContent =
+      String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
+  }
+  updateTime();
+  setInterval(updateTime, 10000);
+
+  // ─── 聊天消息系统 ───
+  const AI_REPLIES = [
+    '好的，我马上整理一下发给您！',
+    '收到，我这边先让技术出个对比方案。',
+    '王总放心，这个我们做过很多案例了。',
+    '明白，那我把报价单一并准备上。',
+    '没问题，今天下班前给您发过去。',
+    '了解，我约一下展厅参观时间？',
+    '好的王总，还有其它需要了解的随时说！',
+  ];
+
+  function appendMessage(text, isSelf) {
+    const row = document.createElement('div');
+    row.className = 'msg-row' + (isSelf ? ' right' : '');
+    const now = new Date();
+    const timeStr = String(now.getHours()).padStart(2,'0') + ':' + String(now.getMinutes()).padStart(2,'0');
+    const sep = document.createElement('div');
+    sep.className = 'chat-time-div';
+    sep.textContent = timeStr;
+    chatMsgs.appendChild(sep);
+
+    if (isSelf) {
+      row.innerHTML = `
+        <div class="msg-avatar sales">李</div>
+        <div class="msg-content">
+          <div class="msg-name">我 · 销售</div>
+          <div class="msg-bubble">${text}</div>
+        </div>`;
+    } else {
+      row.innerHTML = `
+        <div class="msg-avatar c2">王</div>
+        <div class="msg-content">
+          <div class="msg-name">王建国</div>
+          <div class="msg-bubble">${text}</div>
+        </div>`;
+    }
+    chatMsgs.appendChild(row);
+    chatMsgs.scrollTop = chatMsgs.scrollHeight;
+  }
+
+  let aiReplyTimer = null;
+
+  function sendMessage() {
+    const text = chatInput.value.trim();
+    if (!text) return;
+    appendMessage(text, true);
+    chatInput.value = '';
+    chatInput.dispatchEvent(new Event('input'));
+
+    if (aiReplyTimer) clearTimeout(aiReplyTimer);
+    aiReplyTimer = setTimeout(() => {
+      const reply = AI_REPLIES[Math.floor(Math.random() * AI_REPLIES.length)];
+      appendMessage(reply, false);
+    }, 600 + Math.random() * 800);
+  }
+
+  function updateSendBtn() {
+    sendBtn.classList.toggle('show', chatInput.value.trim().length > 0);
+  }
+
+  sendBtn.addEventListener('click', sendMessage);
+  chatInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+  chatInput.addEventListener('input', () => {
+    updateSendBtn();
+    chatInput.style.height = 'auto';
+    chatInput.style.height = Math.min(chatInput.scrollHeight, 80) + 'px';
+  });
+  updateSendBtn();
+
+  // ─── 底部按钮 ───
+  document.getElementById('voiceBtn').addEventListener('click', () => {
+    const tip = document.createElement('div');
+    tip.style.cssText = 'position:absolute;bottom:70px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,0.7);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;z-index:99;animation:msgIn .26s ease;pointer-events:none';
+    tip.textContent = '🎤 长按说话';
+    document.querySelector('.chat-input-area').appendChild(tip);
+    setTimeout(() => tip.remove(), 1500);
+  });
+  document.getElementById('emojiBtn').addEventListener('click', () => {
+    chatInput.value += '😊👍🎉';
+    chatInput.dispatchEvent(new Event('input'));
+    chatInput.focus();
+  });
+  document.getElementById('moreBtn').addEventListener('click', () => {
+    const tip = document.createElement('div');
+    tip.style.cssText = 'position:absolute;bottom:70px;right:10px;background:rgba(0,0,0,0.7);color:#fff;padding:8px 16px;border-radius:8px;font-size:13px;z-index:99;animation:msgIn .26s ease;pointer-events:none';
+    tip.textContent = '📎 图片 · 文件 · 位置';
+    document.querySelector('.chat-input-area').appendChild(tip);
+    setTimeout(() => tip.remove(), 1500);
+  });
+});
+</script>
+</body>
+</html>
