@@ -174,13 +174,20 @@
         .qr-tag { padding:5px 12px; border-radius:14px; font-size:12px; background:rgba(255,255,255,.06); color:rgba(255,255,255,.8); cursor:pointer; transition:all .15s; }
         .qr-tag:active { background:rgba(7,90,154,.3); color:#60A5FA; }
 
-        .prod-grid { display:flex; flex-direction:column; gap:10px; }
-        .prod-card { background:rgba(255,255,255,.04); border-radius:10px; overflow:hidden; border:0.5px solid rgba(255,255,255,.06); }
-        .prod-card .pimg { height:80px; display:flex; align-items:center; justify-content:center; font-size:28px; color:rgba(255,255,255,.3); }
-        .prod-card .pinfo { padding:10px 12px; }
-        .prod-card .pname { color:#fff; font-size:14px; font-weight:500; }
+        .prod-filter { display:flex; gap:6px; margin-bottom:12px; overflow-x:auto; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+        .prod-filter::-webkit-scrollbar { display:none; }
+        .prod-filter-btn { flex-shrink:0; padding:4px 12px; border-radius:14px; font-size:12px; border:0.5px solid rgba(255,255,255,.08); background:transparent; color:rgba(255,255,255,.5); cursor:pointer; }
+        .prod-filter-btn.active { background:rgba(7,90,154,.25); color:#60A5FA; border-color:rgba(7,90,154,.3); }
+        .prod-grid { display:flex; flex-direction:column; gap:8px; }
+        .prod-card { background:rgba(255,255,255,.04); border-radius:10px; overflow:hidden; border:0.5px solid rgba(255,255,255,.06); cursor:pointer; transition:all .15s; }
+        .prod-card:active { background:rgba(255,255,255,.08); transform:scale(.98); }
+        .prod-card .pimg { height:70px; display:flex; align-items:center; justify-content:center; font-size:26px; }
+        .prod-card .pinfo { padding:8px 12px 10px; }
+        .prod-card .pname { color:#fff; font-size:14px; font-weight:600; }
         .prod-card .pdesc { color:rgba(255,255,255,.35); font-size:11px; margin-top:2px; }
-        .prod-card .pprice { color:#ff9500; font-size:15px; font-weight:700; margin-top:4px; }
+        .prod-card .pprice { color:#ffd60a; font-size:14px; font-weight:700; margin-top:3px; }
+        .prod-card .ptags { display:flex; gap:4px; margin-top:6px; flex-wrap:wrap; }
+        .prod-card .ptag { padding:1px 7px; border-radius:8px; font-size:10px; background:rgba(255,255,255,.06); color:rgba(255,255,255,.4); }
 
         .sop-item { padding:10px 12px; border-bottom:0.5px solid rgba(255,255,255,.04); }
         .sop-item:last-child { border-bottom:none; }
@@ -188,10 +195,59 @@
         .sop-item .sop-title { font-size:14px; color:#e5e5e5; margin:2px 0; }
         .sop-item .sop-desc { font-size:11px; color:rgba(255,255,255,.4); }
 
-        .obj-item { padding:10px 0; border-bottom:0.5px solid rgba(255,255,255,.04); }
+        .obj-item { padding:12px; border-bottom:0.5px solid rgba(255,255,255,.04); cursor:pointer; }
         .obj-item:last-child { border-bottom:none; }
-        .obj-item .obj-label { font-size:13px; font-weight:500; color:#e5e5e5; }
-        .obj-item .obj-response { font-size:12px; color:rgba(255,255,255,.5); margin-top:3px; }
+        .obj-item:active { background:rgba(255,255,255,.03); }
+        .obj-freq { font-size:10px; font-weight:600; margin-bottom:4px; }
+        .obj-freq-high { color:#ff6b6b; }
+        .obj-freq-mid { color:#ffd93d; }
+        .obj-freq-low { color:rgba(255,255,255,.3); }
+        .obj-item .obj-label { font-size:14px; font-weight:600; color:#e5e5e5; }
+        .obj-item .obj-strategy { font-size:11px; color:rgba(255,255,255,.35); margin:3px 0 4px; }
+        .obj-item .obj-response { font-size:12px; color:rgba(255,255,255,.55); line-height:1.6; }
+
+        /* 客户画像 */
+        .profile-section { margin-bottom:16px; }
+        .profile-header { display:flex; gap:12px; align-items:center; margin-bottom:14px; }
+        .profile-avatar { width:44px; height:44px; border-radius:8px; background:#075A9A; display:flex; align-items:center; justify-content:center; color:#fff; font-size:18px; font-weight:600; flex-shrink:0; }
+        .profile-name { font-size:15px; font-weight:600; color:#e5e5e5; }
+        .profile-role { font-size:11px; font-weight:400; color:rgba(255,255,255,.4); margin-left:6px; }
+        .profile-contact { font-size:12px; color:rgba(255,255,255,.35); margin-top:2px; }
+        .profile-grid { display:grid; grid-template-columns:1fr 1fr; gap:8px; margin-bottom:8px; }
+        .profile-cell { background:rgba(255,255,255,.03); border-radius:8px; padding:10px; }
+        .profile-cell-label { font-size:10px; font-weight:600; color:rgba(255,255,255,.35); text-transform:uppercase; margin-bottom:3px; }
+        .profile-cell-value { font-size:14px; font-weight:600; color:#e5e5e5; }
+        .profile-cell-desc { font-size:10px; color:rgba(255,255,255,.3); margin-top:2px; }
+        .profile-section-title { font-size:12px; font-weight:600; color:rgba(255,255,255,.4); margin-bottom:8px; }
+
+        /* 发送方案 */
+        .proposal-banner { background:rgba(7,90,154,.12); border:0.5px solid rgba(7,90,154,.25); border-radius:8px; padding:10px 14px; margin-bottom:12px; font-size:12px; color:rgba(255,255,255,.55); }
+        .proposal-match { font-size:13px; font-weight:600; color:#60A5FA; margin-bottom:2px; }
+        .proposal-plan { background:rgba(255,255,255,.03); border-radius:10px; padding:12px; margin-bottom:10px; border:0.5px solid rgba(255,255,255,.06); cursor:pointer; transition:all .15s; }
+        .proposal-plan:active { background:rgba(255,255,255,.08); transform:scale(.98); }
+        .plan-badge { display:inline-block; padding:2px 8px; border-radius:8px; font-size:10px; font-weight:700; margin-bottom:6px; }
+        .plan-header { font-size:15px; font-weight:600; color:#e5e5e5; margin-bottom:4px; }
+        .plan-items { font-size:12px; color:rgba(255,255,255,.45); line-height:1.5; }
+        .plan-roi { display:flex; gap:12px; margin-top:8px; flex-wrap:wrap; }
+        .roi-item { font-size:11px; color:rgba(255,255,255,.4); }
+        .roi-item strong { color:#e5e5e5; }
+        .plan-action { margin-top:8px; font-size:12px; color:#60A5FA; }
+
+        /* 跟进记录 */
+        .follow-timeline { position:relative; padding-left:20px; margin-bottom:16px; }
+        .follow-timeline::before { content:''; position:absolute; left:7px; top:8px; bottom:8px; width:1px; background:rgba(255,255,255,.08); }
+        .tl-item { position:relative; margin-bottom:16px; }
+        .tl-item:last-child { margin-bottom:0; }
+        .tl-dot { position:absolute; left:-17px; top:4px; width:12px; height:12px; border-radius:50%; border:2px solid #111214; }
+        .tl-current .tl-dot { box-shadow:0 0 0 3px rgba(139,92,246,.3); }
+        .tl-stage { font-size:13px; font-weight:600; color:#e5e5e5; }
+        .tl-time { font-size:11px; font-weight:400; color:rgba(255,255,255,.3); margin-left:6px; }
+        .tl-text { font-size:12px; color:rgba(255,255,255,.5); margin-top:3px; line-height:1.5; }
+        .tl-tags { display:flex; gap:4px; margin-top:4px; flex-wrap:wrap; }
+        .tl-tag { padding:1px 6px; border-radius:6px; font-size:10px; background:rgba(255,255,255,.05); color:rgba(255,255,255,.35); }
+        .follow-next { background:rgba(52,199,89,.04); border:0.5px solid rgba(52,199,89,.12); border-radius:8px; padding:12px; }
+        .follow-next-title { font-size:13px; font-weight:600; color:#34c759; margin-bottom:6px; }
+        .follow-next-item { font-size:12px; color:rgba(255,255,255,.55); padding:3px 0; line-height:1.5; }
 
         /* AI 分析页 */
         .ai-section { margin-bottom:20px; }
@@ -285,6 +341,10 @@
                 <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
                 <span class="tool-label">跟进记录</span>
             </button>
+            <a class="tool-btn" href="../scene-11-sales-assistant/index.html" style="background:rgba(255,255,255,.04);text-decoration:none;">
+                <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M12 8v4l2 2"/></svg>
+                <span class="tool-label" style="font-size:12px;">销售助手</span>
+            </a>
         </div>
     </div>
 
@@ -465,37 +525,118 @@
             <span class="page-spacer"></span>
         </div>
         <div class="page-body">
-            <div class="prod-grid">
-                <div class="prod-card">
-                    <div class="pimg" style="background:linear-gradient(135deg,#1a4a3a,#0d2530);">🍳</div>
+            <div class="prod-filter" id="prodFilter">
+                <button class="prod-filter-btn active" data-cat="all">全部</button>
+                <button class="prod-filter-btn" data-cat="wok">智能炒菜</button>
+                <button class="prod-filter-btn" data-cat="steamer">蒸柜</button>
+                <button class="prod-filter-btn" data-cat="fryer">油炸</button>
+                <button class="prod-filter-btn" data-cat="roaster">烤箱</button>
+                <button class="prod-filter-btn" data-cat="soup">汤锅</button>
+            </div>
+            <div class="prod-grid" id="prodGrid">
+                <div class="prod-card" data-cat="wok" onclick="sendProduct('G3 智能炒菜机','适合快餐/简餐 · 单锅1-5kg · 立体加热 · 4粉料+8液体 · 数字温控','¥49,800 起','#1a5a3a')">
+                    <div class="pimg" style="background:linear-gradient(135deg,#1a4a3a,#0d3020);">🍳</div>
                     <div class="pinfo">
                         <div class="pname">G3 智能炒菜机</div>
-                        <div class="pdesc">适合快餐/简餐 · 单锅1-5kg · 立体加热 · 4路粉料+8路液体调料 · 数字温控</div>
+                        <div class="pdesc">单锅1-5kg · 立体加热 · 4粉料+8液体 · 数字温控</div>
                         <div class="pprice">¥49,800 起</div>
+                        <div class="ptags">
+                            <span class="ptag">快餐简餐</span>
+                            <span class="ptag">连锁品牌</span>
+                            <span class="ptag">川菜</span>
+                            <span class="ptag">湘菜</span>
+                        </div>
                     </div>
                 </div>
-                <div class="prod-card">
+                <div class="prod-card" data-cat="wok" onclick="sendProduct('M1 明档小炒机','适合明档/快餐 · 单份出餐 · 最佳烹饪量1-3kg · 盖浇饭','¥38,000','#2a4a5a')">
                     <div class="pimg" style="background:linear-gradient(135deg,#2a3a5a,#0d2530);">🔥</div>
                     <div class="pinfo">
                         <div class="pname">M1 明档小炒机</div>
-                        <div class="pdesc">适合明档/快餐 · 单份出餐 · 轻巧灵活 · 最佳烹饪量1-3kg · 适合盖浇饭</div>
+                        <div class="pdesc">单份出餐 · 轻巧灵活 · 最佳烹饪量1-3kg · 盖浇饭</div>
                         <div class="pprice">¥38,000</div>
+                        <div class="ptags">
+                            <span class="ptag">创业小店</span>
+                            <span class="ptag">盖浇饭</span>
+                            <span class="ptag">粤菜</span>
+                        </div>
                     </div>
                 </div>
-                <div class="prod-card">
-                    <div class="pimg" style="background:linear-gradient(135deg,#4a2a5a,#0d2530);">🥘</div>
+                <div class="prod-card" data-cat="wok" onclick="sendProduct('G5 大型炒菜机','适合团餐/食堂 · 大容量批量出餐 · 一次10-20人份 · 稳定可靠','¥68,000','#3a2a5a')">
+                    <div class="pimg" style="background:linear-gradient(135deg,#3a2a5a,#0d2530);">🥘</div>
                     <div class="pinfo">
                         <div class="pname">G5 大型炒菜机</div>
-                        <div class="pdesc">适合团餐/食堂 · 大容量批量出餐 · 产能高 · 稳定可靠</div>
+                        <div class="pdesc">大容量批量出餐 · 一次10-20人份 · 适合团餐食堂</div>
                         <div class="pprice">¥68,000</div>
+                        <div class="ptags">
+                            <span class="ptag">食堂团餐</span>
+                            <span class="ptag">中央厨房</span>
+                            <span class="ptag">鲁菜</span>
+                        </div>
                     </div>
                 </div>
-                <div class="prod-card">
-                    <div class="pimg" style="background:linear-gradient(135deg,#5a3a1a,#0d2530);">⚙️</div>
+                <div class="prod-card" data-cat="steamer" onclick="sendProduct('智能蒸柜','蒸菜/点心/米饭 · 多层设计 · 精准控温定时','¥28,000 起','#1a3a5a')">
+                    <div class="pimg" style="background:linear-gradient(135deg,#1a3a5a,#0d2530);">♨️</div>
                     <div class="pinfo">
-                        <div class="pname">配套设备</div>
-                        <div class="pdesc">投菜盒子 ¥2,800 / 调料模块 ¥3,200 / 定制操作台 ¥4,500 / 智能蒸柜</div>
-                        <div class="pprice">按需配置</div>
+                        <div class="pname">智能蒸柜</div>
+                        <div class="pdesc">蒸菜/点心/米饭 · 多层设计 · 精准控温定时</div>
+                        <div class="pprice">¥28,000 起</div>
+                        <div class="ptags">
+                            <span class="ptag">点心早茶</span>
+                            <span class="ptag">蒸菜</span>
+                            <span class="ptag">酒店餐饮</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="prod-card" data-cat="fryer" onclick="sendProduct('智能油炸机','炸鸡/薯条/天妇罗 · 自动滤油 · 恒温控制','¥32,000 起','#5a3a1a')">
+                    <div class="pimg" style="background:linear-gradient(135deg,#5a3a1a,#0d2530);">🍟</div>
+                    <div class="pinfo">
+                        <div class="pname">智能油炸机</div>
+                        <div class="pdesc">炸鸡/薯条/天妇罗 · 自动滤油 · 恒温控制</div>
+                        <div class="pprice">¥32,000 起</div>
+                        <div class="ptags">
+                            <span class="ptag">油炸</span>
+                            <span class="ptag">快餐</span>
+                            <span class="ptag">异国料理</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="prod-card" data-cat="roaster" onclick="sendProduct('智能烤箱','烤肉/烘焙/焗饭 · 上下独立控温 · 多层同烤','¥38,000 起','#5a2a1a')">
+                    <div class="pimg" style="background:linear-gradient(135deg,#5a2a1a,#0d2530);">🥩</div>
+                    <div class="pinfo">
+                        <div class="pname">智能烤箱</div>
+                        <div class="pdesc">烤肉/烘焙/焗饭 · 上下独立控温 · 多层同烤</div>
+                        <div class="pprice">¥38,000 起</div>
+                        <div class="ptags">
+                            <span class="ptag">烧烤烤肉</span>
+                            <span class="ptag">西餐</span>
+                            <span class="ptag">烘焙</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="prod-card" data-cat="soup" onclick="sendProduct('智能汤锅','炖汤/火锅底料/煮面 · 大容量 · 自动搅拌','¥22,000 起','#1a5a4a')">
+                    <div class="pimg" style="background:linear-gradient(135deg,#1a4a3a,#0d2530);">🍲</div>
+                    <div class="pinfo">
+                        <div class="pname">智能汤锅</div>
+                        <div class="pdesc">炖汤/火锅底料/煮面 · 大容量 · 自动搅拌</div>
+                        <div class="pprice">¥22,000 起</div>
+                        <div class="ptags">
+                            <span class="ptag">火锅串串</span>
+                            <span class="ptag">汤品</span>
+                            <span class="ptag">粉面</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="prod-card" data-cat="wok" onclick="sendProduct('组合方案 G3+M1+保温台','G3炒菜 + M1煸锅 + 智能保温台 · 整套出餐仅需2人','详情咨询','#2a5a3a')">
+                    <div class="pimg" style="background:linear-gradient(135deg,#2a4a3a,#0d3020);">🧩</div>
+                    <div class="pinfo">
+                        <div class="pname">组合方案 G3+M1+保温台</div>
+                        <div class="pdesc">G3炒菜 + M1煸锅 + 智能保温台 · 整套出餐仅需2人</div>
+                        <div class="pprice">详情咨询</div>
+                        <div class="ptags">
+                            <span class="ptag">定制方案</span>
+                            <span class="ptag">连锁品牌</span>
+                            <span class="ptag">云厨房</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -510,29 +651,53 @@
             <span class="page-spacer"></span>
         </div>
         <div class="page-body">
-            <div class="obj-item">
-                <div class="obj-label">💰 "你们价格太贵了"</div>
-                <div class="obj-response">从ROI切入：算人力节省、回本周期。我们专注炒菜机20年，1300+专利，用料和服务都是行业顶尖。小菜园、乡村基都是我们的客户。</div>
+            <div class="obj-item" onclick="copyScript(this)">
+                <div class="obj-freq obj-freq-high">最高频</div>
+                <div class="obj-label">💰 "价格太贵了"</div>
+                <div class="obj-strategy">策略：从ROI/人力节省/回本周期切入</div>
+                <div class="obj-response">王总您说得对，价格确实比同行高一些。但换个角度算——一个炒锅师傅月薪7000+，一年84000。G3一台能用5年以上，相当于一次性投入换5年人力节省。加上效率提升多接的外卖单，8-12个月就能回本。我们专注炒菜机20年，1300+专利，小菜园、乡村基这些头部连锁都用了五六百台。</div>
             </div>
-            <div class="obj-item">
-                <div class="obj-label">🤔 "我再考虑考虑"</div>
-                <div class="obj-response">了解真实顾虑（预算？对比？没想清楚？），制造紧迫感：目前产能紧张，订货周期延长。</div>
+            <div class="obj-item" onclick="copyScript(this)">
+                <div class="obj-freq obj-freq-high">高频</div>
+                <div class="obj-label">🤔 "再考虑考虑"</div>
+                <div class="obj-strategy">策略：制造紧迫感，了解真实顾虑</div>
+                <div class="obj-response">王总，方便问一下您主要顾虑的是什么？是预算、还在对比其他家，还是对效果有疑问？我跟您说实话，目前G3产能确实紧张，订货周期已经从两周延长到一个月了。早定下来还能赶上当前这批货。</div>
             </div>
-            <div class="obj-item">
-                <div class="obj-label">⚔️ "竞品比你们便宜"</div>
-                <div class="obj-response">了解具体对比哪家，差异化介绍：我们的铁锅锅气更好、温控技术更精准（自带巡航 vs 定速巡航）、母公司电力背景设备更稳定。</div>
+            <div class="obj-item" onclick="copyScript(this)">
+                <div class="obj-freq obj-freq-high">高频</div>
+                <div class="obj-label">⚔️ "在对比竞品"</div>
+                <div class="obj-strategy">策略：了解竞品方案，突出差异化优势</div>
+                <div class="obj-response">了解。美膳狮是互联网打法，我们做实业出身，定位不太一样。我们的铁锅+立体加热炒出来有锅气，数字温控相当于自带巡航，竞品只是定速巡航。母公司做电力出身，设备加热控温的稳定性行业领先——这个对餐厅来说是最关键的。</div>
             </div>
-            <div class="obj-item">
-                <div class="obj-label">🔧 "售后怎么保障？"</div>
-                <div class="obj-response">故障率行业最低。在线指导+下一餐段前上门。各地备件仓。一年质保可购延保。24小时在线客服48小时内联系。</div>
+            <div class="obj-item" onclick="copyScript(this)">
+                <div class="obj-freq obj-freq-mid">中频</div>
+                <div class="obj-label">📉 "预算不够"</div>
+                <div class="obj-strategy">策略：分期/租赁方案，降低门槛</div>
+                <div class="obj-response">理解，设备投入确实不小。我们有分期方案——首付40%，剩余可分12期，月供压力小很多。还有租赁方案，按月付费。这样您不用一次性大额支出，设备带来的效率提升当月就能覆盖月租。</div>
             </div>
-            <div class="obj-item">
-                <div class="obj-label">📅 "试用为什么要收费？"</div>
-                <div class="obj-response">来展厅试菜免费！上门试用因涉及运输、安装、厨师差旅等成本收费，但成交后可抵扣设备款。</div>
+            <div class="obj-item" onclick="copyScript(this)">
+                <div class="obj-freq obj-freq-mid">中频</div>
+                <div class="obj-label">📐 "场地不支持"</div>
+                <div class="obj-strategy">策略：上门测量，提供改造方案</div>
+                <div class="obj-response">这个您放心，我们可以安排工程师上门实地测量，给您出一套改造方案。G3占地面积很小，也就一个灶台大小，大多数厨房都能放得下。改造费用也不高，一般几千块钱就能搞定。</div>
             </div>
-            <div class="obj-item">
-                <div class="obj-label">👨‍🍳 "一天培训够吗？"</div>
-                <div class="obj-response">正常一天完全够，培训流程成熟。还有操作视频、自学习材料，后期远程指导。学不会可延时。</div>
+            <div class="obj-item" onclick="copyScript(this)">
+                <div class="obj-freq obj-freq-mid">中频</div>
+                <div class="obj-label">👨‍🍳 "担心没人会用"</div>
+                <div class="obj-strategy">策略：免费培训，远程指导</div>
+                <div class="obj-response">培训您放心——一天足够上手了，流程很成熟。我们配了操作视频、自学习材料，后期还有远程指导。万一学不会可以延时，不限次数。而且设备操作界面是中文触屏，一看就懂。</div>
+            </div>
+            <div class="obj-item" onclick="copyScript(this)">
+                <div class="obj-freq obj-freq-low">低</div>
+                <div class="obj-label">⚡ "担心不稳定"</div>
+                <div class="obj-strategy">策略：案例见证，实地考察安排</div>
+                <div class="obj-response">设备稳定性是我们最自信的——故障率行业最低，加热控温搅拌基本不出问题。小菜园500多家门店都在用。如果您不放心，我可以安排您去附近的客户店里实地看看，他们用了两年的设备状态怎么样。</div>
+            </div>
+            <div class="obj-item" onclick="copyScript(this)">
+                <div class="obj-freq obj-freq-low">中低</div>
+                <div class="obj-label">🔧 "担心售后"</div>
+                <div class="obj-strategy">策略：4小时响应，质保条款，入网协议</div>
+                <div class="obj-response">售后这块我们有完善体系：全国50+服务网点，4小时响应机制，备件本地仓随时调货，不影响正常经营。一年质保，可购延保。在线远程指导+下一餐段前上门，各地都有备件仓。</div>
             </div>
         </div>
     </div>
@@ -541,51 +706,59 @@
     <div class="fullscreen-page" id="page-customerProfile">
         <div class="page-header">
             <button class="page-close" data-page="customerProfile">×</button>
-            <span class="page-title">客户标签</span>
+            <span class="page-title">客户画像</span>
             <span class="page-spacer"></span>
         </div>
         <div class="page-body">
-            <div class="tag-group">
-                <div class="group-title">已选标签</div>
+            <div class="profile-section">
+                <div class="profile-header">
+                    <div class="profile-avatar">王</div>
+                    <div class="profile-meta">
+                        <div class="profile-name">王刚<span class="profile-role">老板/创始人</span></div>
+                        <div class="profile-contact">138****5678 · 华东·杭州</div>
+                    </div>
+                </div>
+            </div>
+            <div class="profile-grid">
+                <div class="profile-cell">
+                    <div class="profile-cell-label">客户类型</div>
+                    <div class="profile-cell-value">快餐简餐</div>
+                    <div class="profile-cell-desc">标准化快餐，80~200㎡，预算5~15万</div>
+                </div>
+                <div class="profile-cell">
+                    <div class="profile-cell-label">决策角色</div>
+                    <div class="profile-cell-value">老板</div>
+                    <div class="profile-cell-desc">最终决策人，关注投资回报率</div>
+                </div>
+                <div class="profile-cell">
+                    <div class="profile-cell-label">线索来源</div>
+                    <div class="profile-cell-value">抖音</div>
+                    <div class="profile-cell-desc">转化率中，平均周期15天</div>
+                </div>
+                <div class="profile-cell">
+                    <div class="profile-cell-label">当前阶段</div>
+                    <div class="profile-cell-value" style="color:#8B5CF6;">P5 · 异议化解</div>
+                    <div class="profile-cell-desc">等待试菜邀约跟进</div>
+                </div>
+            </div>
+            <div class="profile-section" style="margin-top:16px;">
+                <div class="profile-section-title">核心属性</div>
                 <div class="tags" id="activeTags">
-                    <span class="tag active">新客户</span>
-                    <span class="tag active">快餐简餐</span>
-                    <span class="tag active">筹备中</span>
+                    <span class="tag active" style="background:rgba(7,90,154,.25);color:#60A5FA;">新客户</span>
+                    <span class="tag active" style="background:rgba(7,90,154,.25);color:#60A5FA;">快餐简餐</span>
+                    <span class="tag active" style="background:rgba(7,90,154,.25);color:#60A5FA;">筹备中</span>
+                    <span class="tag active" style="background:rgba(255,149,0,.2);color:#ff9500;">价格敏感</span>
+                    <span class="tag active" style="background:rgba(139,92,246,.2);color:#8B5CF6;">对比竞品</span>
                 </div>
             </div>
-            <div class="tag-group">
-                <div class="group-title">推荐标签（点击添加）</div>
+            <div class="profile-section">
+                <div class="profile-section-title">添加标签</div>
                 <div class="tags" id="suggestTags">
-                    <span class="tag addable" data-tag="高意向">+ 高意向</span>
-                    <span class="tag addable" data-tag="价格敏感">+ 价格敏感</span>
-                    <span class="tag addable" data-tag="对比竞品">+ 对比竞品</span>
-                    <span class="tag addable" data-tag="预约试菜">+ 预约试菜</span>
-                    <span class="tag addable" data-tag="需要跟进">+ 需要跟进</span>
-                    <span class="tag addable" data-tag="快餐连锁">+ 快餐连锁</span>
-                    <span class="tag addable" data-tag="抖音线索">+ 抖音线索</span>
-                </div>
-            </div>
-            <div class="tag-group" style="margin-top:20px;padding-top:16px;border-top:0.5px solid rgba(255,255,255,.06);">
-                <div class="group-title">客户画像</div>
-                <div class="info-item" style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;">
-                    <span style="color:rgba(255,255,255,.4);">经营类型</span>
-                    <span style="color:#e5e5e5;">快餐简餐 · 盖浇饭</span>
-                </div>
-                <div class="info-item" style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;">
-                    <span style="color:rgba(255,255,255,.4);">门店面积</span>
-                    <span style="color:#e5e5e5;">150㎡</span>
-                </div>
-                <div class="info-item" style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;">
-                    <span style="color:rgba(255,255,255,.4);">日均单量</span>
-                    <span style="color:#e5e5e5;">预计 200-300 单</span>
-                </div>
-                <div class="info-item" style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;">
-                    <span style="color:rgba(255,255,255,.4);">预算范围</span>
-                    <span style="color:#e5e5e5;">5-10 万</span>
-                </div>
-                <div class="info-item" style="display:flex;justify-content:space-between;padding:6px 0;font-size:13px;">
-                    <span style="color:rgba(255,255,255,.4);">核心痛点</span>
-                    <span style="color:#e5e5e5;">厨师难招 / 出品不稳定 / 想标准化</span>
+                    <span class="tag addable" data-tag="高意向" style="cursor:pointer;">+ 高意向</span>
+                    <span class="tag addable" data-tag="预约试菜" style="cursor:pointer;">+ 预约试菜</span>
+                    <span class="tag addable" data-tag="需要跟进" style="cursor:pointer;">+ 需要跟进</span>
+                    <span class="tag addable" data-tag="连锁品牌" style="cursor:pointer;">+ 连锁品牌</span>
+                    <span class="tag addable" data-tag="抖音线索" style="cursor:pointer;">+ 抖音线索</span>
                 </div>
             </div>
         </div>
@@ -599,37 +772,44 @@
             <span class="page-spacer"></span>
         </div>
         <div class="page-body">
-            <div style="margin-bottom:16px;">
-                <div style="color:rgba(255,255,255,.35);font-size:12px;margin-bottom:10px;font-weight:500;">推荐方案 · 快餐店标配</div>
-                <div class="prod-card" style="border-left:3px solid #60A5FA;">
-                    <div class="pimg" style="height:80px;background:linear-gradient(135deg,#1a4a3a,#0d2530);">🍳</div>
-                    <div class="pinfo">
-                        <div class="pname">方案A：G3 标准版单机</div>
-                        <div class="pdesc">G3标准版×1 + 基础培训 + 标准菜谱包</div>
-                        <div class="pprice">¥49,800</div>
-                    </div>
-                </div>
-                <div class="prod-card" style="margin-top:8px;border-left:3px solid #34D399;">
-                    <div class="pimg" style="height:80px;background:linear-gradient(135deg,#2a3a5a,#0d2530);">🔥</div>
-                    <div class="pinfo">
-                        <div class="pname">方案B：G3 升级版套装</div>
-                        <div class="pdesc">G3升级版×1 + 投菜盒子 + 调料模块 + 操作台 + 上门培训</div>
-                        <div class="pprice">¥59,800</div>
-                    </div>
-                </div>
-                <div class="prod-card" style="margin-top:8px;border-left:3px solid #FBBF24;">
-                    <div class="pimg" style="height:80px;background:linear-gradient(135deg,#4a2a5a,#0d2530);">⚙️</div>
-                    <div class="pinfo">
-                        <div class="pname">方案C：双机配置</div>
-                        <div class="pdesc">G3×2台 + 配套设备 + 3天驻场培训 + 菜谱定制</div>
-                        <div class="pprice">¥98,000</div>
-                    </div>
-                </div>
-                <div style="color:rgba(255,255,255,.3);font-size:11px;margin-top:8px;">* 可根据客户需求个性化调整</div>
+            <div class="proposal-banner">
+                <div class="proposal-match">🥇 最适合当前客户</div>
+                <div>快餐简餐 · 150㎡ · 预计200-300单/日</div>
             </div>
-        </div>
-        <div class="page-footer">
-            <button class="btn-primary" id="sendProposalBtn">发送给客户</button>
+            <div class="proposal-plan" onclick="sendProposal(this)">
+                <div class="plan-badge" style="background:#60A5FA;color:#fff;">推荐</div>
+                <div class="plan-header">方案A · G3 标准版</div>
+                <div class="plan-items">G3标准版 × 1台 · 基础培训 · 标准菜谱包（60道）</div>
+                <div class="plan-roi">
+                    <span class="roi-item">总价 <strong>¥49,800</strong></span>
+                    <span class="roi-item">月省人力 <strong>¥8,000~10,000</strong></span>
+                    <span class="roi-item">回本周期 <strong>8~12个月</strong></span>
+                </div>
+                <div class="plan-action">📤 发送此方案</div>
+            </div>
+            <div class="proposal-plan" onclick="sendProposal(this)">
+                <div class="plan-badge" style="background:#34D399;color:#fff;">热销</div>
+                <div class="plan-header">方案B · G3 升级套装</div>
+                <div class="plan-items">G3升级版 × 1台 · 投菜盒子 · 调料模块 · 操作台 · 上门培训</div>
+                <div class="plan-roi">
+                    <span class="roi-item">总价 <strong>¥59,800</strong></span>
+                    <span class="roi-item">月省人力 <strong>¥8,000~10,000</strong></span>
+                    <span class="roi-item">回本周期 <strong>8~14个月</strong></span>
+                </div>
+                <div class="plan-action">📤 发送此方案</div>
+            </div>
+            <div class="proposal-plan" onclick="sendProposal(this)">
+                <div class="plan-badge" style="background:#FBBF24;color:#1a1a1a;">高产</div>
+                <div class="plan-header">方案C · 双机配置</div>
+                <div class="plan-items">G3 × 2台 · 配套设备 · 3天驻场培训 · 菜谱定制</div>
+                <div class="plan-roi">
+                    <span class="roi-item">总价 <strong>¥98,000</strong></span>
+                    <span class="roi-item">月省人力 <strong>¥15,000~18,000</strong></span>
+                    <span class="roi-item">回本周期 <strong>10~15个月</strong></span>
+                </div>
+                <div class="plan-action">📤 发送此方案</div>
+            </div>
+            <div style="color:rgba(255,255,255,.25);font-size:11px;margin-top:10px;text-align:center;">* 可根据客户需求个性化调整方案</div>
         </div>
     </div>
 
@@ -642,28 +822,48 @@
         </div>
         <div class="page-body">
             <div class="form-group">
-                <label>客户姓名</label>
-                <input type="text" value="王刚" placeholder="请输入姓名" />
+                <label>客户</label>
+                <input type="text" value="王刚" readonly style="opacity:.6;" />
             </div>
             <div class="form-group">
-                <label>联系电话</label>
-                <input type="tel" value="13812345678" placeholder="请输入电话" />
+                <label>试菜设备</label>
+                <div class="tags">
+                    <span class="tag active" style="cursor:pointer;">🍳 G3 智能炒菜机</span>
+                    <span class="tag" style="cursor:pointer;">🔥 M1 明档小炒机</span>
+                    <span class="tag" style="cursor:pointer;">♨️ 智能蒸柜</span>
+                </div>
+            </div>
+            <div class="form-group">
+                <label>菜系选择</label>
+                <div class="tags cuisine-tags">
+                    <span class="tag active cuisine-tag" data-examples="宫保鸡丁, 麻婆豆腐, 水煮鱼, 回锅肉" style="cursor:pointer;">🌶️ 川菜</span>
+                    <span class="tag cuisine-tag" data-examples="白切鸡, 清蒸鱼, 叉烧" style="cursor:pointer;">🥟 粤菜</span>
+                    <span class="tag cuisine-tag" data-examples="剁椒鱼头, 小炒肉" style="cursor:pointer;">🌶️ 湘菜</span>
+                    <span class="tag cuisine-tag" data-examples="鱼香肉丝盖饭, 红烧牛肉饭, 宫保鸡丁盖饭" style="cursor:pointer;">🍚 盖浇饭</span>
+                    <span class="tag cuisine-tag" data-examples="炒面, 烩面, 刀削面" style="cursor:pointer;">🍜 面食</span>
+                    <span class="tag cuisine-tag" data-examples="糖醋里脊, 九转大肠" style="cursor:pointer;">🥩 鲁菜</span>
+                </div>
+            </div>
+            <div class="form-group" id="cuisineExamples">
+                <label>示例菜品（已选川菜）</label>
+                <div class="tags" id="exampleTags">
+                    <span class="tag active" style="background:rgba(7,90,154,.25);color:#60A5FA;cursor:pointer;">宫保鸡丁</span>
+                    <span class="tag active" style="background:rgba(7,90,154,.25);color:#60A5FA;cursor:pointer;">麻婆豆腐</span>
+                    <span class="tag active" style="background:rgba(7,90,154,.25);color:#60A5FA;cursor:pointer;">回锅肉</span>
+                    <span class="tag" style="cursor:pointer;">+ 水煮鱼</span>
+                </div>
             </div>
             <div class="form-group">
                 <label>预约日期</label>
                 <input type="date" value="2025-05-30" />
             </div>
             <div class="form-group">
-                <label>试菜菜品</label>
-                <textarea placeholder="客户门店主推菜品">鱼香肉丝盖饭、宫保鸡丁、回锅肉</textarea>
-            </div>
-            <div class="form-group">
                 <label>备注</label>
-                <textarea placeholder="其他需求">150㎡快餐店，预计200-300单/日</textarea>
+                <textarea placeholder="其他需求">150㎡快餐店，预计200-300单/日，老板到店试菜</textarea>
             </div>
         </div>
         <div class="page-footer">
-            <button class="btn-primary" id="apptSubmitBtn">确认预约</button>
+            <button class="btn-primary" id="apptSubmitBtn">确认预约 · 发送邀约</button>
         </div>
     </div>
 
@@ -675,30 +875,44 @@
             <span class="page-spacer"></span>
         </div>
         <div class="page-body">
-            <div style="margin-bottom:16px;">
-                <div style="color:rgba(255,255,255,.35);font-size:12px;margin-bottom:8px;font-weight:500;">历史记录</div>
-                <div class="follow-item"><span class="f-time">今天</span><span class="f-content">客户详细咨询G3，提出价格异议和竞品对比，已解答并邀请试菜</span></div>
-                <div class="follow-item"><span class="f-time">昨天</span><span class="f-content">客户通过抖音添加，询问炒菜机基本情况，已发产品资料</span></div>
-                <div class="follow-item"><span class="f-time">3天前</span><span class="f-content">线索分配，来源：抖音广告落地页</span></div>
+            <div class="follow-timeline">
+                <div class="tl-item tl-current">
+                    <div class="tl-dot" style="background:#8B5CF6;"></div>
+                    <div class="tl-content">
+                        <div class="tl-stage">P5 · 异议化解 <span class="tl-time">今天 14:30</span></div>
+                        <div class="tl-text">客户详细咨询G3，提出价格异议和竞品对比，已解答并邀请周六试菜</div>
+                        <div class="tl-tags">
+                            <span class="tl-tag">价格敏感</span>
+                            <span class="tl-tag">对比竞品</span>
+                            <span class="tl-tag">邀约试菜</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot" style="background:#34D399;"></div>
+                    <div class="tl-content">
+                        <div class="tl-stage">P2 · 收集需求 <span class="tl-time">昨天 10:15</span></div>
+                        <div class="tl-text">客户通过抖音添加，询问炒菜机基本情况，已发产品资料，确认客户快餐店150㎡</div>
+                    </div>
+                </div>
+                <div class="tl-item">
+                    <div class="tl-dot" style="background:#60A5FA;"></div>
+                    <div class="tl-content">
+                        <div class="tl-stage">P1 · 了解信息 <span class="tl-time">3天前</span></div>
+                        <div class="tl-text">线索分配，来源：抖音广告落地页，首次触达成功</div>
+                        <div class="tl-tags">
+                            <span class="tl-tag">抖音线索</span>
+                            <span class="tl-tag">新客户</span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div style="border-top:0.5px solid rgba(255,255,255,.06);padding-top:14px;">
-                <div style="color:rgba(255,255,255,.35);font-size:12px;margin-bottom:10px;font-weight:500;">本次跟进</div>
-                <div class="form-group">
-                    <label>沟通摘要</label>
-                    <textarea id="followSummary" placeholder="本次沟通主要内容...">客户咨询G3详情，对价格有异议，已对比竞品差异并邀请周六试菜</textarea>
-                </div>
-                <div class="form-group">
-                    <label>客户关注点</label>
-                    <input type="text" id="followFocus" value="价格、竞品对比（美膳狮/橡鹭）、售后保障、培训" />
-                </div>
-                <div class="form-group">
-                    <label>下一步动作</label>
-                    <input type="text" id="followNext" value="周六试菜跟进，准备快餐菜品方案" />
-                </div>
+            <div class="follow-next">
+                <div class="follow-next-title">📋 建议下一步</div>
+                <div class="follow-next-item">① 周六展厅试菜，现场演示G3出餐效果</div>
+                <div class="follow-next-item">② 准备ROI测算表，用数字强化说服力</div>
+                <div class="follow-next-item">③ 带竞品对比资料，提前打消客户疑虑</div>
             </div>
-        </div>
-        <div class="page-footer">
-            <button class="btn-primary" id="saveFollowUpBtn">保存跟进记录</button>
         </div>
     </div>
 
@@ -931,6 +1145,57 @@
         });
     });
 
+    // 产品图鉴：分类筛选
+    document.querySelectorAll('.prod-filter-btn').forEach(btn => {
+        btn.addEventListener('click', function() {
+            const cat = this.dataset.cat;
+            document.querySelectorAll('.prod-filter-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+            document.querySelectorAll('.prod-card').forEach(c => {
+                c.style.display = (cat === 'all' || c.dataset.cat === cat) ? '' : 'none';
+            });
+        });
+    });
+
+    // 发送商品卡片 → 填入聊天区
+    // 发送方案 → 填入聊天区
+    window.sendProposal = function(el) {
+        const msgs = document.getElementById('messages');
+        if (!msgs) return;
+        const header = el.querySelector('.plan-header')?.textContent || '方案';
+        const items = el.querySelector('.plan-items')?.textContent || '';
+        const roiEls = el.querySelectorAll('.roi-item');
+        const price = roiEls[0]?.textContent?.trim() || '';
+        const text = header + '\n' + items + '\n' + price;
+        const d = document.createElement('div');
+        d.className = 'msg msg-sales';
+        d.style.cssText = 'align-self:flex-end;display:flex;align-items:flex-start;gap:14px;max-width:82%;animation:msgIn .35s ease-out;';
+        d.innerHTML = '<div class="msg-bubble"><div class="msg-content" style="background:#075A9A;color:#fff;padding:10px 12px;border-radius:4px;font-size:15px;word-break:break-word;line-height:1.5;white-space:pre-line;">' + text.replace(/</g,'&lt;') + '</div><div class="read-tag" style="font-size:10px;color:rgba(255,255,255,.2);text-align:right;margin-top:2px;">已读</div></div><div class="msg-avatar" style="width:40px;height:40px;border-radius:4px;background:#075A9A;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:600;flex-shrink:0;">销</div>';
+        msgs.appendChild(d);
+        d.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        document.querySelectorAll('.fullscreen-page.open').forEach(p => p.classList.remove('open'));
+    };
+
+    // 点击异议话术 → 填入输入框
+    window.copyScript = function(el) {
+        const input = document.querySelector('#input-bar input');
+        const text = el.querySelector('.obj-response')?.textContent;
+        if (input && text) { input.value = text.trim(); input.focus(); }
+    };
+
+    window.sendProduct = function(name, desc, price, color) {
+        const msgs = document.getElementById('messages');
+        if (!msgs) return;
+        const d = document.createElement('div');
+        d.className = 'msg msg-product';
+        d.style.cssText = 'align-self:flex-end;display:flex;align-items:flex-start;gap:14px;max-width:82%;animation:msgIn .35s ease-out;';
+        d.innerHTML = '<div class="prod-card" style="background:#075A9A;border-radius:4px;overflow:hidden;flex:1;min-width:0;"><div class="prod-img" style="height:70px;display:flex;align-items:center;justify-content:center;font-size:26px;background:linear-gradient(135deg,' + (color||'#1a5a3a') + ',#0d3020);">🍳</div><div class="prod-info" style="padding:8px 12px;"><div class="prod-name" style="font-size:13px;font-weight:600;color:#fff;">' + name.replace(/</g,'&lt;') + '</div><div class="prod-desc" style="font-size:11px;color:rgba(255,255,255,.55);margin-top:2px;">' + desc.replace(/</g,'&lt;') + '</div><div class="prod-price" style="font-size:14px;font-weight:700;color:#ffd60a;margin-top:3px;">' + price.replace(/</g,'&lt;') + '</div></div></div><div class="msg-avatar" style="width:40px;height:40px;border-radius:4px;background:#075A9A;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:600;flex-shrink:0;order:1;">销</div>';
+        msgs.appendChild(d);
+        d.scrollIntoView({ behavior: 'smooth', block: 'end' });
+        // 关闭全屏页
+        document.querySelectorAll('.fullscreen-page.open').forEach(p => p.classList.remove('open'));
+    };
+
     // 回车发送消息
     document.querySelector('#input-bar input')?.addEventListener('keydown', function(e) {
         if (e.key !== 'Enter' || !this.value.trim()) return;
@@ -945,6 +1210,20 @@
         div.innerHTML = '<div class="msg-bubble"><div class="msg-content" style="background:#075A9A;color:#fff;padding:10px 12px;border-radius:4px;font-size:15px;word-break:break-word;line-height:1.5;">' + text.replace(/</g,'&lt;') + '</div></div>';
         msgs.appendChild(div);
         div.scrollIntoView({ behavior: 'smooth', block: 'end' });
+    });
+
+    // 菜系选择 → 更新示例菜品
+    document.querySelectorAll('.cuisine-tag').forEach(el => {
+        el.addEventListener('click', function() {
+            document.querySelectorAll('.cuisine-tag').forEach(t => t.classList.remove('active'));
+            this.classList.add('active');
+            const examples = (this.dataset.examples || '').split(',').map(s => s.trim()).filter(Boolean);
+            const container = document.getElementById('exampleTags');
+            if (!container) return;
+            const label = document.querySelector('#cuisineExamples label');
+            if (label) label.textContent = '示例菜品（已选' + this.textContent.trim().replace(/^[^\s]+\s/,'') + '）';
+            container.innerHTML = examples.map(e => '<span class="tag active" style="background:rgba(7,90,154,.25);color:#60A5FA;cursor:pointer;">' + e + '</span>').join('');
+        });
     });
 
     // 标签添加
