@@ -4,37 +4,30 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="icon" type="image/svg+xml" href="../../shared/favicon.svg">
-  <title>场景9 · 企微小程序切换演示</title>
+  <title>场景9 · AI 销售助手</title>
+  <!-- 移除外部字体 — 使用系统字体栈，与企微场景对齐 -->
   <link rel="stylesheet" href="../../shared/css/styles.css">
   <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
   <style>
-    /* ============================================================
-       场景9 · 企微移动端 聊天↔小程序切换
-       模拟在企业微信中打开小程序的全流程
-       ============================================================ */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --wc-green: #07C160;
-      --wc-green-dark: #06AD56;
-      --wc-bg: #EDEDED;
-      --wc-chat-bg: #F5F5F5;
-      --wc-header-bg: #FFFFFF;
-      --wc-text: #1F2329;
-      --wc-text-secondary: #4E5969;
-      --wc-text-tertiary: #86909C;
-      --wc-divider: #E5E6EB;
-      --wc-bubble-self: #95EC69;
-      --wc-bubble-other: #FFFFFF;
-      --mp-green: #1AAD19;
-      --mp-green-dark: #168B16;
-      --mp-bg: #F5F7FA;
-      --mp-card: #FFFFFF;
-      --mp-text: #1A1A1A;
-      --mp-text-secondary: #888888;
-      --mp-border: #E8E8E8;
-      --mp-radius: 16px;
-      --mp-radius-sm: 8px;
+      --primary: #07C160;
+      --primary-dark: #06AD56;
+      --primary-light: #E8F8EE;
+      --bg: #F5F7FA;
+      --card: #FFFFFF;
+      --text: #1F2329;
+      --text-secondary: #4E5969;
+      --text-tertiary: #86909C;
+      --border: #E5E6EB;
+      --danger: #E86452;
+      --orange: #F6BD16;
+      --green: #07C160;
+      --radius: 10px;
+      --radius-sm: 6px;
+      --shadow-card: 0 1px 4px rgba(0,0,0,0.04);
+      --shadow-elevated: 0 4px 16px -8px rgba(0,0,0,0.08);
       --safe-bottom: env(safe-area-inset-bottom, 0px);
     }
 
@@ -48,14 +41,13 @@
       padding: 20px;
     }
 
-    /* ─── 手机框 ─── */
     .phone-frame {
       width: 375px;
       height: 740px;
-      background: var(--wc-bg);
+      background: var(--bg);
       border-radius: 32px;
       overflow: hidden;
-      box-shadow: 0 8px 40px rgba(0,0,0,0.15), 0 2px 8px rgba(0,0,0,0.08);
+      box-shadow: 0 8px 40px rgba(0,0,0,0.15);
       position: relative;
       display: flex;
       flex-direction: column;
@@ -64,358 +56,118 @@
 
     /* ─── 状态栏 ─── */
     .status-bar {
-      height: 40px;
-      background: var(--wc-header-bg);
+      height: 44px;
+      background: #fff;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0 20px;
+      padding: 0 24px 0 20px;
       font-size: 12px;
       font-weight: 600;
-      color: var(--wc-text);
+      color: #18181B;
       flex-shrink: 0;
     }
-    .status-time { font-weight: 700; font-size: 14px; }
-    .status-icons { display: flex; gap: 5px; align-items: center; }
-    .status-icons svg { width: 16px; height: 16px; color: var(--wc-text); }
+    .status-time { font-weight: 700; font-size: 15px; letter-spacing: 0.5px; }
+    .status-icons { display: flex; gap: 6px; align-items: center; }
+    .status-icons svg { display: block; }
+    .status-signal { width: 18px; height: 12px; }
+    .status-wifi { width: 16px; height: 12px; }
+    .status-battery { width: 25px; height: 12px; }
 
-    /* ─── 导航栏（动态：聊天模式 / 小程序模式） ─── */
+    /* ─── 导航栏 ─── */
     .nav-bar {
-      height: 50px;
-      background: var(--wc-header-bg);
-      border-bottom: 1px solid var(--wc-divider);
+      height: 44px;
+      background: var(--primary);
       display: flex;
       align-items: center;
-      padding: 0 12px;
+      padding: 0 10px;
       flex-shrink: 0;
-      transition: all 0.25s ease;
       position: relative;
-      z-index: 10;
+      z-index: 30;
     }
-    .nav-bar.mp-mode {
-      background: var(--mp-green);
-      border-bottom: none;
-    }
-    .nav-bar.mp-mode .nav-title { color: #fff; }
-    .nav-bar.mp-mode .nav-back { color: #fff; }
-    .nav-bar.mp-mode .nav-action { color: #fff; }
-
-    .nav-back {
-      width: 36px;
-      height: 36px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      border: none;
-      background: none;
-      color: var(--wc-text);
-      border-radius: 50%;
-      transition: background .15s;
-      flex-shrink: 0;
-    }
-    .nav-back:hover { background: rgba(0,0,0,0.05); }
-    .nav-back svg { width: 22px; height: 22px; }
-
     .nav-title {
       flex: 1;
       text-align: center;
       font-size: 16px;
       font-weight: 600;
-      color: var(--wc-text);
+      color: #fff;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
-      padding: 0 8px;
     }
-
-    .nav-actions {
-      display: flex;
-      gap: 2px;
-      flex-shrink: 0;
-    }
-    .nav-action {
-      width: 36px;
-      height: 36px;
+    .nav-back {
       display: flex;
       align-items: center;
-      justify-content: center;
+      gap: 2px;
       cursor: pointer;
       border: none;
       background: none;
-      color: var(--wc-text);
-      border-radius: 50%;
-      transition: background .15s;
+      color: #fff;
+      padding: 4px 4px 4px 0;
+      font-size: 13px;
+      font-family: inherit;
+      flex-shrink: 0;
+      text-decoration: none;
     }
-    .nav-action:hover { background: rgba(0,0,0,0.05); }
-    .nav-action svg { width: 20px; height: 20px; }
+    .nav-back svg { width: 20px; height: 20px; }
+    .nav-right {
+      display: flex;
+      gap: 2px;
+      flex-shrink: 0;
+      visibility: hidden;
+    }
+    .nav-right.show { visibility: visible; }
+    .nav-right-btn {
+      width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; border: none; background: none; color: #fff;
+      border-radius: 8px;
+    }
+    .nav-right-btn svg { width: 20px; height: 20px; }
 
-    /* ─── 视图容器 ─── */
-    .view-container {
+    /* ─── 主视图容器 ─── */
+    .view-wrap {
       flex: 1;
       position: relative;
       overflow: hidden;
     }
 
-    .chat-view,
-    .mp-view {
-      position: absolute;
-      inset: 0;
-      transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-                  opacity 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    .chat-view { z-index: 1; }
-    .mp-view { z-index: 2; }
-    .chat-view.is-hidden {
-      transform: translateX(-30%);
-      opacity: 0;
-      pointer-events: none;
-    }
-    .mp-view.is-hidden {
-      transform: translateX(30%);
-      opacity: 0;
-      pointer-events: none;
-    }
-    .mp-view.is-shown {
-      transform: translateX(0);
-      opacity: 1;
-      pointer-events: auto;
-    }
-
-    /* ============================================================
-       聊天视图
-       ============================================================ */
-    .chat-view {
-      display: flex;
-      flex-direction: column;
-      background: #F2F2F2;
-    }
-
-    .chat-header-info {
-      padding: 8px 16px;
-      background: #FFFFFF;
-      border-bottom: 1px solid var(--wc-divider);
-      text-align: center;
-    }
-    .chat-header-info .name { font-size: 15px; font-weight: 600; color: var(--wc-text); }
-    .chat-header-info .status { font-size: 11px; color: var(--wc-green); margin-top: 1px; }
-
-    .chat-msgs {
-      flex: 1;
-      overflow-y: auto;
-      padding: 12px 16px 8px;
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    /* 系统提示 / 时间分隔 */
-    .chat-sys-tip {
-      align-self: center;
-      font-size: 11px;
-      color: var(--wc-text-tertiary);
-      background: rgba(0,0,0,0.05);
-      padding: 2px 10px;
-      border-radius: 4px;
-      margin: 8px 0 4px;
-    }
-    .chat-time-div {
-      align-self: center;
-      font-size: 11px;
-      color: var(--wc-text-tertiary);
-      background: rgba(0,0,0,0.06);
-      padding: 1px 8px;
-      border-radius: 4px;
-      margin: 10px 0 6px;
-    }
-
-    /* 消息气泡 */
-    .msg-row {
-      display: flex;
-      gap: 8px;
-      align-items: flex-start;
-      max-width: 88%;
-      animation: msgIn .26s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-    .msg-row.right {
-      align-self: flex-end;
-      flex-direction: row-reverse;
-    }
-    @keyframes msgIn {
-      from { opacity: 0; transform: translateY(6px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    .msg-avatar {
-      width: 32px; height: 32px;
-      border-radius: 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 13px;
-      font-weight: 500;
-      color: #fff;
-      flex-shrink: 0;
-    }
-    .msg-avatar.c2 { background: #61DDAA; }
-    .msg-avatar.c4 { background: #E86452; }
-    .msg-avatar.sales { background: #5B8FF9; }
-
-    .msg-content { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-    .msg-name { font-size: 11px; color: var(--wc-text-tertiary); }
-    .msg-row.right .msg-name { text-align: right; }
-
-    .msg-bubble {
-      background: var(--wc-bubble-other);
-      color: var(--wc-text);
-      padding: 7px 11px;
-      border-radius: 4px;
-      border-top-left-radius: 4px;
-      border-top-right-radius: 12px;
-      font-size: 14px;
-      line-height: 1.55;
-      word-break: break-word;
-      white-space: pre-wrap;
-      box-shadow: 0 1px 0 rgba(0,0,0,0.02);
-    }
-    .msg-row.right .msg-bubble {
-      background: var(--wc-bubble-self);
-      color: var(--wc-text);
-      border-top-right-radius: 4px;
-      border-top-left-radius: 12px;
-    }
-
-    /* ─── 小程序卡片（在聊天中的展示） ─── */
-    .mp-card-bubble {
-      background: #FFFFFF;
-      border: 1px solid var(--wc-divider);
-      border-radius: 8px;
-      overflow: hidden;
-      cursor: pointer;
-      transition: box-shadow 0.2s;
-      width: 240px;
-    }
-    .mp-card-bubble:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
-    .mp-card-bubble:active { transform: scale(0.98); }
-
-    .mp-card-img {
-      height: 100px;
-      background: linear-gradient(135deg, #07C160 0%, #059669 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 14px;
-      font-weight: 600;
-    }
-    .mp-card-img svg { width: 32px; height: 32px; margin-bottom: 4px; }
-    .mp-card-img .img-content { text-align: center; }
-    .mp-card-body {
-      padding: 10px 12px;
-    }
-    .mp-card-title {
-      font-size: 13px;
-      font-weight: 600;
-      color: var(--wc-text);
-      margin-bottom: 3px;
-    }
-    .mp-card-desc {
-      font-size: 12px;
-      color: var(--wc-text-tertiary);
-      line-height: 1.4;
-    }
-    .mp-card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 12px;
-      border-top: 1px solid var(--wc-divider);
-      font-size: 11px;
-      color: var(--wc-text-tertiary);
-    }
-    .mp-card-footer .open-tag {
-      color: var(--wc-green);
-      font-weight: 500;
-      display: flex;
-      align-items: center;
-      gap: 3px;
-    }
-    .mp-card-footer .open-tag svg { width: 12px; height: 12px; }
-
-    /* ─── 输入区 ─── */
-    .chat-input-area {
-      background: #FFFFFF;
-      border-top: 1px solid var(--wc-divider);
-      padding: 8px 12px 12px;
-      display: flex;
-      align-items: flex-end;
-      gap: 8px;
-    }
-    .chat-input-area textarea {
-      flex: 1;
-      min-height: 36px;
-      max-height: 90px;
-      border: none;
-      outline: none;
-      background: var(--wc-chat-bg);
-      border-radius: 6px;
-      padding: 6px 10px;
-      font-size: 14px;
-      line-height: 1.5;
-      font-family: inherit;
-      resize: none;
-    }
-    .chat-input-area .send-btn {
-      width: 36px;
-      height: 36px;
-      border: none;
-      background: var(--wc-green);
-      border-radius: 50%;
-      color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      flex-shrink: 0;
-    }
-    .chat-input-area .send-btn svg { width: 18px; height: 18px; }
-    .chat-input-area .send-btn:active { transform: scale(0.92); }
-
-    /* ============================================================
-       小程序视图（复用场景9原有内容 + 精简样式）
-       ============================================================ */
-    .mp-view {
-      background: var(--mp-bg);
-      display: flex;
-      flex-direction: column;
-      overflow: hidden;
-    }
-    .mp-view.is-hidden { display: none; }
-    .mp-view.is-shown { display: flex; }
-
-    .mp-page {
+    /* ─── 普通页面（底部导航控制） ─── */
+    .page {
       display: none;
       flex-direction: column;
-      flex: 1;
+      height: 100%;
       overflow-y: auto;
       padding-bottom: calc(56px + var(--safe-bottom));
     }
-    .mp-page.active { display: flex; }
+    .page.active { display: flex; }
 
-    /* ─── 小程序底部导航 ─── */
-    .mp-bottom-nav {
+    /* ─── 全屏页（覆盖底部导航） ─── */
+    .fullpage {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      inset: 0;
+      z-index: 20;
+      background: var(--bg);
+    }
+    .fullpage.active { display: flex; }
+
+    /* ─── 底部导航 ─── */
+    .bottom-nav {
       position: absolute;
       bottom: 0;
       left: 0;
       right: 0;
       height: 54px;
-      background: #FFFFFF;
-      border-top: 1px solid var(--mp-border);
+      background: #fff;
+      border-top: 1px solid var(--border);
       display: flex;
-      z-index: 20;
+      z-index: 25;
       padding-bottom: var(--safe-bottom);
     }
-    .mp-nav-item {
+    .bottom-nav.hidden { display: none; }
+    .nav-item {
       flex: 1;
       display: flex;
       flex-direction: column;
@@ -423,37 +175,41 @@
       justify-content: center;
       gap: 1px;
       cursor: pointer;
-      color: var(--mp-text-secondary);
+      color: var(--text-tertiary);
       font-size: 10px;
       border: none;
       background: none;
-      transition: color 0.2s;
-      padding: 4px 0;
+      transition: color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+      padding: 3px 0;
     }
-    .mp-nav-item.active { color: var(--mp-green); }
-    .mp-nav-item svg { width: 22px; height: 22px; }
+    .nav-item.active { color: var(--primary); }
+    .nav-item.active svg { stroke-width: 2.5; }
+    .nav-item:active { transform: scale(0.94); }
+    .nav-item svg { width: 20px; height: 20px; }
+    .nav-item span { font-size: 9px; line-height: 1.2; }
 
-    /* ─── 小程序页面通用样式 ─── */
-    .mp-page-header {
-      background: var(--mp-green);
-      color: #fff;
-      padding: 16px;
-      flex-shrink: 0;
+    /* ─── 通用组件 ─── */
+    .page-margin { padding: 0 16px; }
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-card);
     }
-    .mp-page-header .title { font-size: 17px; font-weight: 600; }
-    .mp-page-header .sub { font-size: 12px; opacity: 0.85; margin-top: 2px; }
 
-    /* 首页 — 问候卡片 */
-    .greeting-card {
-      background: linear-gradient(135deg, var(--mp-green) 0%, var(--mp-green-dark) 100%);
-      color: #fff;
-      margin: 12px 16px 0;
-      border-radius: var(--mp-radius);
-      padding: 16px;
+    /* ─── 首页：统计行 ─── */
+    .greeting-section {
+      padding: 16px 16px 0;
     }
-    .greeting-name { font-size: 18px; font-weight: 700; }
-    .greeting-tip { font-size: 13px; opacity: 0.9; margin-top: 4px; }
-    .greeting-date { font-size: 12px; opacity: 0.75; margin-top: 8px; }
+    .greeting-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: var(--text);
+    }
+    .greeting-sub {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+    }
 
     .stats-row {
       display: flex;
@@ -462,102 +218,97 @@
     }
     .stat-card {
       flex: 1;
-      background: var(--mp-card);
-      border-radius: var(--mp-radius);
-      padding: 12px 10px;
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 14px 10px;
       text-align: center;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      box-shadow: var(--shadow-card);
     }
-    .stat-num { font-size: 24px; font-weight: 700; color: var(--mp-text); }
-    .stat-num.orange { color: #FF6B00; }
-    .stat-num.red { color: #E53935; }
-    .stat-num.green { color: #43A047; }
-.stat-num.blue { color: #5B8FF9; }
-    .stat-label { font-size: 11px; color: var(--mp-text-secondary); margin-top: 2px; }
+    .stat-num { font-size: 26px; font-weight: 700; color: var(--text); }
+    .stat-num.blue { color: var(--primary); }
+    .stat-num.orange { color: var(--orange); }
+    .stat-num.red { color: var(--danger); }
+    .stat-label { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
 
+    /* ─── AI 建议 ─── */
+    .ai-suggestion-card {
+      margin: 10px 16px 0;
+      background: #F8F9FA;
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .ai-suggestion-card:active { background: #F0F1F3; }
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 3px;
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .ai-badge svg { width: 11px; height: 11px; }
+    .ai-suggestion-text {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.55;
+      margin-top: 6px;
+    }
+    .ai-suggestion-more {
+      font-size: 11px;
+      color: var(--primary);
+      margin-top: 6px;
+      font-weight: 500;
+    }
+
+    /* ─── 任务筛选 ─── */
     .section-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 16px 16px 10px;
     }
-    .section-title { font-size: 15px; font-weight: 600; }
-    .section-more {
-      font-size: 12px;
-      color: var(--mp-green);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 2px;
-    }
-    .section-more svg { width: 14px; height: 14px; }
-
-    .ai-advice-card {
-      margin: 0 16px 12px;
-      background: linear-gradient(135deg, #EFFAFF 0%, #E0F3FF 100%);
-      border: 1px solid #B8E4FF;
-      border-radius: var(--mp-radius);
-      padding: 14px;
-    }
-    .ai-advice-header {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      margin-bottom: 10px;
-    }
-    .ai-badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      background: var(--mp-green);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 600;
-      padding: 2px 8px;
-      border-radius: 20px;
-    }
-    .ai-badge svg { width: 12px; height: 12px; }
-    .ai-advice-text { font-size: 13px; color: #333; line-height: 1.6; }
+    .section-title { font-size: 15px; font-weight: 600; color: var(--text); }
 
     .filter-tabs {
       display: flex;
       gap: 8px;
       padding: 0 16px 12px;
       overflow-x: auto;
-      -webkit-overflow-scrolling: touch;
     }
     .filter-tabs::-webkit-scrollbar { display: none; }
     .filter-tab {
       flex-shrink: 0;
-      padding: 5px 12px;
-      border-radius: 20px;
-      font-size: 13px;
+      padding: 3px 12px;
+      border-radius: 14px;
+      font-size: 12px;
+      line-height: 1.6;
       cursor: pointer;
-      border: 1px solid var(--mp-border);
-      background: var(--mp-card);
-      color: var(--mp-text-secondary);
-      transition: all 0.2s;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text-secondary);
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      font-family: inherit;
     }
+    .filter-tab:active { transform: scale(0.95); }
     .filter-tab.active {
-      background: #E8F5E0;
-      border-color: var(--mp-green);
-      color: var(--mp-green);
+      background: var(--primary-light);
+      border-color: var(--primary);
+      color: var(--primary);
       font-weight: 600;
     }
+    .filter-tab:active { transform: scale(0.97); }
 
-    .task-list {
-      padding: 0 16px;
-      display: flex;
-      flex-direction: column;
-      gap: 10px;
-      padding-bottom: 20px;
-    }
+    /* ─── 任务卡片 ─── */
+    .task-list { padding: 0 16px 20px; display: flex; flex-direction: column; gap: 10px; }
     .task-card {
-      background: var(--mp-card);
-      border-radius: var(--mp-radius);
+      background: var(--card);
+      border-radius: var(--radius);
       padding: 14px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
-      cursor: pointer;
+      box-shadow: var(--shadow-card);
     }
     .task-card-top {
       display: flex;
@@ -567,131 +318,468 @@
     .task-customer {
       font-size: 14px;
       font-weight: 600;
+      color: var(--text);
+    }
+    .task-stage {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: 1px;
     }
     .task-tag {
       font-size: 10px;
-      padding: 2px 6px;
+      padding: 2px 8px;
       border-radius: 4px;
       font-weight: 500;
+      white-space: nowrap;
     }
-    .task-tag.urgent { background: #FFEBEE; color: #E53935; }
-    .task-tag.today { background: #FFF3E0; color: #FF6B00; }
-    .task-tag.done { background: #E8F5E9; color: #43A047; }
-    .task-desc { font-size: 13px; color: var(--mp-text-secondary); margin-top: 4px; }
-    .task-time { font-size: 11px; color: var(--mp-text-secondary); margin-top: 6px; }
-    .task-card .task-actions {
+    .task-tag.high { background: #FFF0E8; color: var(--orange); }
+    .task-tag.risk { background: #FFEBEE; color: var(--danger); }
+    .task-tag.normal { background: #E8F0FE; color: var(--primary); }
+    .task-tag.done { background: #E8F5E9; color: var(--green); }
+
+    .task-ai-reason {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-top: 6px;
+      padding: 6px 10px;
+      background: #F8F9FA;
+      border-radius: 4px;
+      border-left: 2px solid var(--primary);
+    }
+    .task-action {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-top: 6px;
+      padding-left: 2px;
+    }
+    .task-footer {
       display: flex;
-      gap: 8px;
-      margin-top: 10px;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid #F0F0F0;
+    }
+    .task-footer-left { font-size: 11px; color: var(--text-tertiary); }
+    .task-footer-left span { display: block; }
+    .task-btns {
+      display: flex;
+      gap: 6px;
+      flex-shrink: 0;
     }
     .task-btn {
-      flex: 1;
-      padding: 6px;
+      padding: 6px 12px;
       border-radius: 6px;
       border: none;
       font-size: 12px;
       cursor: pointer;
       font-family: inherit;
-      transition: background 0.2s;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      white-space: nowrap;
     }
-    .task-btn.primary { background: var(--mp-green); color: #fff; }
-    .task-btn.primary:hover { background: var(--mp-green-dark); }
-    .task-btn.ghost { background: #F5F5F5; color: var(--mp-text); }
-    .task-btn.ghost:hover { background: #EBEBEB; }
+    .task-btn.primary {
+      background: var(--primary);
+      color: #fff;
+    }
+    .task-btn.primary:hover { background: var(--primary-dark); }
+    .task-btn.primary:active { transform: scale(0.96); }
+    .task-btn.ghost {
+      background: #F2F3F5;
+      color: var(--text);
+    }
+    .task-btn.ghost:hover { background: #E5E6EB; }
+    .task-btn.ghost:active { transform: scale(0.96); }
+    .task-btn:active { transform: scale(0.96); }
+    .task-btn.outline {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--text-secondary);
+    }
+    .task-btn.small { padding: 4px 10px; font-size: 11px; }
 
-    .month-chart {
-      margin: 0 16px 20px;
-      background: var(--mp-card);
-      border-radius: var(--mp-radius);
-      padding: 16px;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+    /* ─── 浮层 ─── */
+    .overlay {
+      display: none;
+      position: absolute;
+      inset: 0;
+      z-index: 40;
+      background: rgba(0,0,0,0.45);
+      align-items: flex-end;
+      justify-content: center;
     }
-    .chart-row {
+    .overlay.active { display: flex; }
+    .overlay-content {
+      background: #fff;
+      border-radius: var(--radius) var(--radius) 0 0;
+      width: 100%;
+      max-height: 80%;
+      overflow-y: auto;
+      padding: 20px 16px calc(20px + var(--safe-bottom));
+      animation: slideUp .3s ease;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+    .overlay-handle {
+      width: 36px; height: 4px;
+      background: #D0D0D0;
+      border-radius: 2px;
+      margin: 0 auto 16px;
+    }
+    .overlay-title {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 4px;
+    }
+    .overlay-sub {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-bottom: 16px;
+    }
+
+    /* ─── 任务详情（浮层内） ─── */
+    .detail-field { margin-bottom: 14px; }
+    .detail-label {
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+    .detail-value {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.5;
+    }
+    .detail-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+    .detail-tag {
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 4px;
+      background: #F0F0F0;
+      color: var(--text-secondary);
+    }
+    .detail-msg {
+      font-size: 13px;
+      color: var(--text);
+      line-height: 1.6;
+      padding: 8px 10px;
+      background: #F8F9FB;
+      border-radius: 6px;
+      margin-bottom: 6px;
+    }
+    .detail-msg .speaker {
+      font-weight: 600;
+      color: var(--text);
+    }
+    .detail-msg:last-child { margin-bottom: 0; }
+    .detail-full-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background .15s;
+      margin-top: 8px;
+    }
+    .detail-full-btn:hover { background: var(--primary-dark); }
+
+    /* ─── AI 建议浮层 ─── */
+    .advice-item {
+      padding: 12px 0;
+      border-bottom: 1px solid #F0F0F0;
+    }
+    .advice-item:last-child { border-bottom: none; }
+    .advice-item-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .advice-item-desc {
+      font-size: 12px;
+      color: var(--text-secondary);
+      margin-top: 4px;
+      line-height: 1.5;
+    }
+    .advice-item-tag {
+      display: inline-block;
+      font-size: 10px;
+      padding: 1px 6px;
+      border-radius: 3px;
+      background: var(--primary-light);
+      color: var(--primary);
+      margin-top: 6px;
+    }
+
+    /* ─── 聊天页 ─── */
+    .chat-page {
+      background: #EDEDED;
+    }
+    .chat-header-info {
+      padding: 7px 16px;
+      background: #F7F7F7;
+      border-bottom: 1px solid #E0E0E0;
+      text-align: center;
+      flex-shrink: 0;
+    }
+    .chat-header-info .name { font-size: 14px; font-weight: 600; color: var(--text); }
+    .chat-header-info .status { font-size: 11px; color: var(--text-tertiary); margin-top: 1px; }
+
+    .chat-msgs {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px 14px 10px;
+      display: flex;
+      flex-direction: column;
+    }
+    .chat-time-div {
+      align-self: center;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      background: rgba(0,0,0,0.05);
+      padding: 1px 8px;
+      border-radius: 4px;
+      margin: 10px 0 8px;
+    }
+    .msg-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-start;
+      max-width: 86%;
+      margin-bottom: 10px;
+    }
+    .msg-row.right {
+      align-self: flex-end;
+      flex-direction: row-reverse;
+    }
+    .msg-avatar {
+      width: 34px; height: 34px;
+      border-radius: 4px;
       display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 8px;
+      justify-content: center;
+      font-size: 13px;
+      font-weight: 500;
+      color: #fff;
+      flex-shrink: 0;
     }
-    .chart-label { font-size: 12px; color: var(--mp-text-secondary); width: 60px; flex-shrink: 0; }
-    .chart-bar {
-      flex: 1;
-      height: 20px;
-      background: #F0F0F0;
-      border-radius: 10px;
-      overflow: hidden;
+    .msg-avatar.customer { background: #61DDAA; }
+    .msg-avatar.sales { background: var(--primary); }
+    .msg-avatar.customer { background: #61DDAA; }
+    .msg-content { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+    .msg-name { font-size: 11px; color: var(--text-tertiary); padding-left: 2px; }
+    .msg-row.right .msg-name { text-align: right; padding-right: 2px; }
+    .msg-bubble {
+      background: #fff;
+      color: var(--text);
+      padding: 8px 12px;
+      border-radius: 4px 12px 12px 4px;
+      font-size: 14px;
+      line-height: 1.55;
+      word-break: break-word;
+      white-space: pre-wrap;
+      box-shadow: 0 1px 1px rgba(0,0,0,0.03);
     }
-    .chart-bar-fill {
-      height: 100%;
-      border-radius: 10px;
-      transition: width 0.6s ease;
+    .msg-row.right .msg-bubble {
+      background: #95EC69;
+      color: var(--text);
+      border-radius: 12px 4px 4px 12px;
     }
-    .chart-bar-fill.green { background: var(--mp-green); }
-    .chart-bar-fill.orange { background: #FF6B00; }
-    .chart-bar-fill.blue { background: #5B8FF9; }
-    .chart-val { font-size: 12px; font-weight: 600; width: 30px; text-align: right; }
 
-    /* 客户页 */
-    .customer-search {
+    /* ─── AI 建议区（聊天页内） ─── */
+    .chat-ai-area {
+      margin: 4px 14px 0;
+      background: #F8F9FA;
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--primary);
+      border-radius: var(--radius-sm);
+      padding: 8px 10px;
+    }
+    .chat-ai-area .ai-label {
+      font-size: 10px;
+      font-weight: 600;
+      color: var(--primary);
+    }
+    .chat-ai-area .ai-text {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin-top: 4px;
+    }
+    .chat-ai-area .ai-btn {
+      display: inline-block;
+      margin-top: 6px;
+      padding: 4px 10px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      font-size: 11px;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .chat-ai-area .ai-btn:hover { background: var(--primary-dark); }
+
+    /* ─── 跟进总结卡片 ─── */
+    .summary-card {
+      margin: 6px 14px 10px;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px;
+    }
+    .summary-card .summary-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .summary-card .summary-line {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 4px;
+    }
+    .summary-card .summary-line strong { color: var(--text); font-weight: 600; }
+    .summary-card .summary-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin: 6px 0 10px;
+    }
+    .summary-card .summary-tag {
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: #F0F0F0;
+      color: var(--text-secondary);
+    }
+    .summary-card .summary-btn {
+      width: 100%;
+      padding: 10px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      font-size: 13px;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .summary-card .summary-btn:hover { background: var(--primary-dark); }
+
+    /* ─── 聊天输入 ─── */
+    .chat-input-area {
+      background: #F7F7F7;
+      border-top: 1px solid #D9D9D9;
+      padding: 6px 8px 8px;
+      display: flex;
+      align-items: flex-end;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .chat-input-area textarea {
+      flex: 1;
+      min-height: 36px;
+      max-height: 80px;
+      border: 1px solid #D9D9D9;
+      outline: none;
+      background: #fff;
+      border-radius: 6px;
+      padding: 7px 10px;
+      font-size: 14px;
+      line-height: 1.5;
+      font-family: inherit;
+      resize: none;
+      transition: border-color .15s;
+    }
+    .chat-input-area textarea:focus { border-color: var(--primary); }
+    .chat-input-area .chat-send-btn {
+      width: 36px; height: 36px;
+      border: none;
+      background: var(--primary);
+      border-radius: 6px;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: background .15s;
+    }
+    .chat-input-area .chat-send-btn:hover { background: var(--primary-dark); }
+    .chat-input-area .chat-send-btn svg { width: 18px; height: 18px; }
+
+    /* ─── 工作台 ─── */
+    .workbench-search {
       margin: 12px 16px 0;
       position: relative;
     }
-    .customer-search input {
+    .workbench-search input {
       width: 100%;
-      height: 36px;
-      padding: 0 14px 0 36px;
-      border: 1px solid var(--mp-border);
+      height: 40px;
+      padding: 0 14px 0 38px;
+      border: 1px solid var(--border);
       border-radius: 20px;
       font-size: 13px;
       outline: none;
-      background: var(--mp-card);
+      background: var(--card);
       font-family: inherit;
     }
-    .customer-search input:focus { border-color: var(--mp-green); }
-    .customer-search svg {
+    .workbench-search input:focus { border-color: var(--primary); }
+    .workbench-search > svg {
       position: absolute;
-      left: 12px;
+      left: 14px;
       top: 50%;
       transform: translateY(-50%);
       width: 16px;
       height: 16px;
-      color: var(--mp-text-secondary);
+      color: var(--text-tertiary);
     }
-    .customer-tabs {
+
+    .wb-stats {
       display: flex;
-      gap: 0;
+      gap: 10px;
       padding: 12px 16px 0;
-      border-bottom: 1px solid var(--mp-border);
     }
-    .customer-tab {
+    .wb-stat-card {
       flex: 1;
-      padding: 8px 0;
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 12px 8px;
       text-align: center;
-      font-size: 13px;
-      color: var(--mp-text-secondary);
-      cursor: pointer;
-      border: none;
-      background: none;
-      border-bottom: 2px solid transparent;
-      transition: all 0.2s;
+      box-shadow: var(--shadow-card);
     }
-    .customer-tab.active {
-      color: var(--mp-green);
-      border-bottom-color: var(--mp-green);
-      font-weight: 600;
-    }
-    .customer-list {
-      padding: 8px 16px 20px;
-    }
+    .wb-stat-num { font-size: 22px; font-weight: 700; }
+    .wb-stat-num.blue { color: var(--primary); }
+    .wb-stat-num.orange { color: var(--orange); }
+    .wb-stat-num.green { color: var(--green); }
+    .wb-stat-label { font-size: 10px; color: var(--text-secondary); margin-top: 2px; }
+
+    .customer-list { padding: 8px 16px 20px; }
     .customer-item {
       display: flex;
       gap: 10px;
-      padding: 10px 0;
+      padding: 12px 0;
       border-bottom: 1px solid #F0F0F0;
       cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
     }
+    .customer-item:active { background: #F5F5F5; margin: 0 -16px; padding: 12px 16px; }
     .customer-item:last-child { border-bottom: none; }
-    .c-item-avatar {
-      width: 40px; height: 40px;
+    .c-avatar {
+      width: 42px; height: 42px;
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -701,31 +789,119 @@
       font-weight: 600;
       flex-shrink: 0;
     }
-    .c-item-info { flex: 1; min-width: 0; }
-    .c-item-name { font-size: 14px; font-weight: 500; }
-    .c-item-company { font-size: 12px; color: var(--mp-text-secondary); margin-top: 1px; }
-    .c-item-meta {
+    .c-info { flex: 1; min-width: 0; }
+    .c-name { font-size: 14px; font-weight: 600; color: var(--text); }
+    .c-desc { font-size: 12px; color: var(--text-secondary); margin-top: 1px; }
+    .c-meta {
       display: flex;
       gap: 6px;
       margin-top: 4px;
       align-items: center;
     }
-    .c-item-tag {
+    .c-tag {
       font-size: 10px;
       padding: 1px 6px;
       border-radius: 3px;
       background: #F0F0F0;
-      color: var(--mp-text-secondary);
+      color: var(--text-secondary);
     }
-    .c-item-tag.high { background: #FFEBEE; color: #E53935; }
-    .c-item-tag.warm { background: #FFF3E0; color: #FF6B00; }
-    .c-item-tag.low { background: #E8F5E9; color: #43A047; }
-    .c-item-time { font-size: 11px; color: var(--mp-text-secondary); text-align: right; flex-shrink: 0; }
+    .c-tag.high { background: #FFF0E8; color: var(--orange); }
+    .c-tag.risk { background: #FFEBEE; color: var(--danger); }
+    .c-tag.done { background: #E8F5E9; color: var(--green); }
+    .c-time { font-size: 11px; color: var(--text-tertiary); text-align: right; flex-shrink: 0; }
+    .empty-state {
+      text-align: center;
+      padding: 40px 0;
+      color: var(--text-tertiary);
+      font-size: 13px;
+    }
 
-    /* 我的页面 */
+    /* ─── 客户详情 ─── */
+    .cd-header {
+      background: var(--primary);
+      padding: 20px 16px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .cd-avatar {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 10px;
+    }
+    .cd-name { font-size: 18px; font-weight: 700; }
+    .cd-stage { font-size: 13px; opacity: 0.85; margin-top: 2px; }
+    .cd-tags {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      margin-top: 8px;
+    }
+    .cd-tag {
+      font-size: 11px;
+      padding: 2px 10px;
+      border-radius: 4px;
+      background: rgba(255,255,255,0.2);
+      color: #fff;
+    }
+
+    .cd-body {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+    }
+    .cd-section { margin-bottom: 16px; }
+    .cd-section-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .cd-field {
+      margin-bottom: 8px;
+    }
+    .cd-field-label {
+      font-size: 11px;
+      color: var(--text-tertiary);
+    }
+    .cd-field-value {
+      font-size: 13px;
+      color: var(--text);
+      margin-top: 1px;
+    }
+    .cd-msg-item {
+      font-size: 12px;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      padding: 6px 0;
+      border-bottom: 1px solid #F0F0F0;
+    }
+    .cd-msg-item:last-child { border-bottom: none; }
+    .cd-msg-item .s { font-weight: 600; color: var(--text); }
+    .cd-chat-btn {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      background: var(--primary);
+      color: #fff;
+      font-size: 14px;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background .15s;
+    }
+    .cd-chat-btn:hover { background: var(--primary-dark); }
+
+    /* ─── 我的页 ─── */
     .profile-header {
-      background: linear-gradient(135deg, var(--mp-green) 0%, var(--mp-green-dark) 100%);
-      padding: 30px 20px 20px;
+      background: var(--primary);
+      padding: 24px 20px 20px;
       color: #fff;
       text-align: center;
     }
@@ -742,33 +918,34 @@
     }
     .profile-name { font-size: 18px; font-weight: 700; }
     .profile-role { font-size: 13px; opacity: 0.85; margin-top: 2px; }
-    .profile-stats {
+
+    .pstats {
       display: flex;
       gap: 0;
       margin: 0 16px;
-      background: var(--mp-card);
-      border-radius: var(--mp-radius);
+      background: var(--card);
+      border-radius: var(--radius);
       overflow: hidden;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      box-shadow: var(--shadow-card);
       transform: translateY(-16px);
     }
-    .profile-stat-item {
+    .pstat-item {
       flex: 1;
       text-align: center;
       padding: 12px 0;
       border-right: 1px solid #F0F0F0;
     }
-    .profile-stat-item:last-child { border-right: none; }
-    .profile-stat-num { font-size: 20px; font-weight: 700; }
-    .profile-stat-label { font-size: 11px; color: var(--mp-text-secondary); margin-top: 2px; }
+    .pstat-item:last-child { border-right: none; }
+    .pstat-num { font-size: 20px; font-weight: 700; }
+    .pstat-label { font-size: 11px; color: var(--text-secondary); margin-top: 2px; }
 
-    .profile-menu {
+    .pmenu {
       margin: 8px 16px 20px;
-      background: var(--mp-card);
-      border-radius: var(--mp-radius);
-      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-card);
     }
-    .profile-menu-item {
+    .pmenu-item {
       display: flex;
       align-items: center;
       gap: 12px;
@@ -776,13 +953,31 @@
       border-bottom: 1px solid #F0F0F0;
       cursor: pointer;
     }
-    .profile-menu-item:last-child { border-bottom: none; }
-    .profile-menu-item svg { width: 20px; height: 20px; color: var(--mp-text-secondary); }
-    .profile-menu-item span { flex: 1; font-size: 14px; }
-    .profile-menu-item .arrow { color: #CCC; width: 16px; height: 16px; }
+    .pmenu-item:last-child { border-bottom: none; }
+    .pmenu-item svg:first-child { width: 20px; height: 20px; color: var(--text-secondary); }
+    .pmenu-item span { flex: 1; font-size: 14px; color: var(--text); }
+    .pmenu-item .arrow { color: #CCC; width: 16px; height: 16px; }
 
-    /* 隐藏翻页指示 */
-    .page-hint { display: none; }
+    /* ─── Toast ─── */
+    .toast {
+      position: absolute;
+      bottom: 80px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(0,0,0,0.78);
+      color: #fff;
+      padding: 10px 18px;
+      border-radius: 8px;
+      font-size: 13px;
+      z-index: 99;
+      animation: toastIn .26s ease;
+      pointer-events: none;
+      white-space: nowrap;
+    }
+    @keyframes toastIn {
+      from { opacity: 0; transform: translateX(-50%) translateY(10px); }
+      to { opacity: 1; transform: translateX(-50%) translateY(0); }
+    }
   </style>
 </head>
 <body>
@@ -792,262 +987,244 @@
   <div class="status-bar">
     <span class="status-time" id="statusTime">14:38</span>
     <span class="status-icons">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 9l4 4-4 4"/><path d="M7 17h10l4-4-4-4H7"/></svg>
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="7" width="20" height="10" rx="2"/><path d="M7 7V5a2 2 0 012-2h6a2 2 0 012 2v2"/></svg>
+      <svg class="status-signal" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="0.5" y="8" width="3" height="3.5" rx="0.5"/><rect x="4.5" y="5.5" width="3" height="6" rx="0.5"/><rect x="8.5" y="3" width="3" height="8.5" rx="0.5"/><rect x="12.5" y="0.5" width="3" height="11" rx="0.5"/></svg>
+      <svg class="status-wifi" viewBox="0 0 18 12" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M1.5 6.5a12 12 0 0 1 15 0"/><path d="M4.5 9a7.5 7.5 0 0 1 9 0"/><path d="M8 11.5A1 1 0 0 1 10 11.5"/></svg>
+      <svg class="status-battery" viewBox="0 0 25 12" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"><rect x="0.5" y="0.5" width="20" height="11" rx="2"/><rect x="4" y="4" width="8" height="4" rx="0.5" fill="currentColor"/><path d="M22.5 4.5v3a1.5 1.5 0 0 0 0-3z"/></svg>
     </span>
   </div>
 
   <!-- 导航栏 -->
   <div class="nav-bar" id="navBar">
-    <button class="nav-back" id="navBack" style="visibility:hidden">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
-    </button>
-    <span class="nav-title" id="navTitle">王建国</span>
-    <div class="nav-actions" id="navActions">
-      <span class="nav-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72a2 2 0 0 1 1.72 2z"/></svg></span>
-      <span class="nav-action"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="5" cy="12" r="1"/><circle cx="19" cy="12" r="1"/></svg></span>
+    <a class="nav-back" id="navBack" href="../scene-10-wecom-chat/index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+      <span id="navBackLabel">返回企微</span>
+    </a>
+    <span class="nav-title" id="navTitle">AI 销售助手</span>
+    <div class="nav-right show" id="navRight">
+      <button class="nav-right-btn">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1" fill="currentColor"/><circle cx="5" cy="12" r="1" fill="currentColor"/><circle cx="19" cy="12" r="1" fill="currentColor"/></svg>
+      </button>
     </div>
   </div>
 
   <!-- 视图容器 -->
-  <div class="view-container">
-    <!-- ======== 聊天视图 ======== -->
-    <div class="chat-view" id="chatView">
+  <div class="view-wrap" id="viewWrap">
+
+    <!-- ===== 首页 ===== -->
+    <div class="page active" id="pageHome">
+      <div class="greeting-section">
+        <div class="greeting-text">王强</div>
+        <div class="greeting-sub">今天优先处理高意向与风险客户</div>
+      </div>
+      <div class="stats-row" id="statsRow">
+        <div class="stat-card">
+          <div class="stat-num blue" id="statTotal">12</div>
+          <div class="stat-label">今日任务</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num orange" id="statHigh">3</div>
+          <div class="stat-label">高优先级</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num red" id="statToday">5</div>
+          <div class="stat-label">需今天处理</div>
+        </div>
+      </div>
+
+      <div class="ai-suggestion-card" id="aiSuggestionCard">
+        <span class="ai-badge">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          今日建议
+        </span>
+        <div class="ai-suggestion-text">李波波（续费评估）超过5天未跟进，客户今日重新查看报价方案，建议今天优先联系确认价格顾虑。</div>
+        <div class="ai-suggestion-more">查看全部 →</div>
+      </div>
+
+      <div class="section-header">
+        <span class="section-title">今日任务</span>
+      </div>
+      <div class="filter-tabs" id="filterTabs">
+        <button class="filter-tab active" data-filter="all">全部</button>
+        <button class="filter-tab" data-filter="high">高优先级</button>
+        <button class="filter-tab" data-filter="risk">风险客户</button>
+        <button class="filter-tab" data-filter="review">待复盘</button>
+      </div>
+      <div class="task-list" id="taskList"></div>
+    </div>
+
+    <!-- ===== 客户管理 ===== -->
+    <div class="page" id="pageCustomers">
+      <div class="workbench-search">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input placeholder="搜索客户..." id="wbSearch" />
+      </div>
+      <div class="wb-stats">
+        <div class="wb-stat-card"><div class="wb-stat-num blue">28</div><div class="wb-stat-label">全部客户</div></div>
+        <div class="wb-stat-card"><div class="wb-stat-num orange">5</div><div class="wb-stat-label">跟进中</div></div>
+        <div class="wb-stat-card"><div class="wb-stat-num green">8</div><div class="wb-stat-label">已成交</div></div>
+      </div>
+      <div class="customer-list" id="wbCustomerList"></div>
+    </div>
+
+    <!-- ===== 我的 ===== -->
+    <div class="page" id="pageProfile">
+      <div class="profile-header">
+        <div class="profile-avatar">王</div>
+        <div class="profile-name">王强</div>
+        <div class="profile-role">高级销售顾问</div>
+      </div>
+      <div class="pstats">
+        <div class="pstat-item"><div class="pstat-num" style="color:var(--primary)">12</div><div class="pstat-label">本月成交</div></div>
+        <div class="pstat-item"><div class="pstat-num" style="color:var(--orange)">28</div><div class="pstat-label">跟进中</div></div>
+        <div class="pstat-item"><div class="pstat-num" style="color:var(--green)">86%</div><div class="pstat-label">转化率</div></div>
+      </div>
+      <div class="pmenu">
+        <div class="pmenu-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>个人信息</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+        <div class="pmenu-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg><span>我的客户</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+        <div class="pmenu-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16.4" r=".9" fill="currentColor"/></svg><span>使用帮助</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
+      </div>
+    </div>
+
+    <!-- ===== 订单管理 ===== -->
+    <div class="page" id="pageOrders">
+      <div style="padding:16px 16px 0">
+        <div style="font-size:18px;font-weight:700;color:var(--text)">订单管理</div>
+        <div style="font-size:13px;color:var(--text-secondary);margin-top:4px">查看和管理所有订单</div>
+      </div>
+      <div class="stats-row">
+        <div class="stat-card"><div class="stat-num blue">24</div><div class="stat-label">本月订单</div></div>
+        <div class="stat-card"><div class="stat-num green">18</div><div class="stat-label">已完成</div></div>
+        <div class="stat-card"><div class="stat-num orange">6</div><div class="stat-label">进行中</div></div>
+      </div>
+      <div style="padding:12px 16px 20px;display:flex;flex-direction:column;gap:10px">
+        <div class="task-card">
+          <div class="task-card-top">
+            <div><div class="task-customer">G3智能炒菜机 x2</div><div class="task-stage">李波波 · 2025-06-20</div></div>
+            <span class="task-tag" style="background:#E8F5E9;color:#16A34A">已交付</span>
+          </div>
+          <div class="task-action" style="margin-top:4px">金额：¥45,800 · 付款：已结清</div>
+        </div>
+        <div class="task-card">
+          <div class="task-card-top">
+            <div><div class="task-customer">G2炒菜机 + 排烟系统</div><div class="task-stage">陈晓峰 · 2025-06-18</div></div>
+            <span class="task-tag" style="background:#FFF0E8;color:#EA580C">生产中</span>
+          </div>
+          <div class="task-action" style="margin-top:4px">金额：¥32,500 · 付款：已付定金 50%</div>
+        </div>
+        <div class="task-card">
+          <div class="task-card-top">
+            <div><div class="task-customer">YC-2000 标准款</div><div class="task-stage">赵明 · 2025-06-15</div></div>
+            <span class="task-tag" style="background:#FFF0E8;color:#EA580C">待发货</span>
+          </div>
+          <div class="task-action" style="margin-top:4px">金额：¥42,800 · 付款：已付全款</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== 内容管理 ===== -->
+    <div class="page" id="pageContent">
+      <div style="padding:16px 16px 0">
+        <div style="font-size:18px;font-weight:700;color:var(--text)">内容管理</div>
+        <div style="font-size:13px;color:var(--text-secondary);margin-top:4px">管理产品资料与营销内容</div>
+      </div>
+      <div style="padding:12px 16px 20px;display:flex;flex-direction:column;gap:10px">
+        <div class="task-card">
+          <div class="task-card-top">
+            <div><div class="task-customer">G3智能炒菜机 · 产品手册</div><div class="task-stage">最近更新 2天前</div></div>
+            <span class="task-tag" style="background:#E8F5E9;color:#16A34A">已发布</span>
+          </div>
+          <div class="task-action" style="margin-top:4px">浏览 328 次 · 下载 47 次</div>
+        </div>
+        <div class="task-card">
+          <div class="task-card-top">
+            <div><div class="task-customer">竞品对比表 · 2025 Q2</div><div class="task-stage">最近更新 5天前</div></div>
+            <span class="task-tag" style="background:#E8F5E9;color:#16A34A">已发布</span>
+          </div>
+          <div class="task-action" style="margin-top:4px">浏览 156 次 · 下载 23 次</div>
+        </div>
+        <div class="task-card">
+          <div class="task-card-top">
+            <div><div class="task-customer">小江溪案例 · 视频素材</div><div class="task-stage">最近更新 1周前</div></div>
+            <span class="task-tag" style="background:#FFF0E8;color:#EA580C">编辑中</span>
+          </div>
+          <div class="task-action" style="margin-top:4px">预计 下周三 完成剪辑</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===== AI 建议浮层 ===== -->
+    <div class="overlay" id="overlayAiAdvice">
+      <div class="overlay-content">
+        <div class="overlay-handle"></div>
+        <div class="overlay-title">AI 今日建议</div>
+        <div class="overlay-sub">基于客户行为与任务状态分析</div>
+        <div id="aiAdviceList"></div>
+      </div>
+    </div>
+
+    <!-- ===== 任务详情浮层 ===== -->
+    <div class="overlay" id="overlayTaskDetail">
+      <div class="overlay-content" id="taskDetailContent">
+        <div class="overlay-handle"></div>
+        <div class="overlay-title" id="tdTitle">任务详情</div>
+        <div id="tdBody"></div>
+      </div>
+    </div>
+
+    <!-- ===== 聊天页（全屏） ===== -->
+    <div class="fullpage" id="pageChat">
       <div class="chat-header-info">
-        <div class="name">王建国</div>
-        <div class="status">● 在线 · 陈香贵连锁（上海总部）</div>
+        <div class="name" id="chatCustomerName">李波波</div>
+        <div class="status" id="chatCustomerStatus">续费评估中</div>
       </div>
-
-      <div class="chat-msgs" id="chatMsgs">
-        <div class="chat-sys-tip">14:08 · 通过「企微外部联系人」添加</div>
-        <div class="chat-time-div">今天 14:12</div>
-
-        <!-- 客户消息 -->
-        <div class="msg-row">
-          <div class="msg-avatar c2">王</div>
-          <div class="msg-content">
-            <div class="msg-name">王建国</div>
-            <div class="msg-bubble">你好，我是陈香贵的，想了解一下你们的炒菜机</div>
-          </div>
-        </div>
-
-        <!-- 客户消息 -->
-        <div class="msg-row">
-          <div class="msg-avatar c2">王</div>
-          <div class="msg-content">
-            <div class="msg-name">王建国</div>
-            <div class="msg-bubble">我们现在全国几百家门店，主要是浇头标准化需求，看看自动化能不能帮上忙。</div>
-          </div>
-        </div>
-
-        <!-- 我方消息 -->
-        <div class="msg-row right">
-          <div class="msg-avatar sales">李</div>
-          <div class="msg-content">
-            <div class="msg-name">我 · 销售</div>
-            <div class="msg-bubble">王总您好！浇头标准化我们最熟，我帮你匹配 G2+G3 组合，日产 400 份没问题。我把我们的小程序发您，里面有详细案例和数据！</div>
-          </div>
-        </div>
-
-        <!-- 小程序卡片（关键交互点） -->
-        <div class="chat-time-div">14:15</div>
-        <div class="msg-row">
-          <div class="msg-avatar c2">王</div>
-          <div class="msg-content">
-            <div class="msg-name">王建国</div>
-            <div class="msg-bubble" style="padding:0;background:transparent;box-shadow:none">
-              <div class="mp-card-bubble" id="mpCardTrigger">
-                <div class="mp-card-img">
-                  <div class="img-content">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
-                    <div>AI-Sale 销售助手</div>
-                  </div>
-                </div>
-                <div class="mp-card-body">
-                  <div class="mp-card-title">G3智能炒菜机 · 特价款详情</div>
-                  <div class="mp-card-desc">小江溪案例数据：人力成本降40%，日均出品200份</div>
-                </div>
-                <div class="mp-card-footer">
-                  <span>王建国 · 刚刚</span>
-                  <span class="open-tag">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
-                    打开小程序
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+      <div class="chat-msgs" id="chatMsgs"></div>
+      <!-- AI 建议区 -->
+      <div class="chat-ai-area" id="chatAiArea">
+        <div class="ai-label">AI 建议</div>
+        <div class="ai-text" id="chatAiText">客户主要顾虑是价格，不建议直接推长期课包。建议先给短周期方案，降低决策压力。</div>
+        <button class="ai-btn" id="insertScriptBtn">插入推荐话术</button>
       </div>
-
       <!-- 输入区 -->
       <div class="chat-input-area">
-        <textarea placeholder="输入回复..." rows="1"></textarea>
-        <button class="send-btn">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+        <textarea placeholder="输入消息..." rows="1" id="chatInput"></textarea>
+        <button class="chat-send-btn" id="chatSendBtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
         </button>
       </div>
     </div>
 
-    <!-- ======== 小程序视图 ======== -->
-    <div class="mp-view is-hidden" id="mpView">
-
-      <!-- 首页 -->
-      <div class="mp-page active" id="pageHome">
-        <div class="mp-page-header">
-          <div class="title">AI 销售助手</div>
-          <div class="sub">今日概览 · 销售好帮手</div>
-        </div>
-        <div class="greeting-card">
-          <div class="greeting-name">王经理，你好 👋</div>
-          <div class="greeting-tip">今天有 3 个待办任务，2 个客户待跟进</div>
-          <div class="greeting-date" id="todayDate"></div>
-        </div>
-
-        <div class="stats-row">
-          <div class="stat-card"><div class="stat-num orange">3</div><div class="stat-label">待跟进</div></div>
-          <div class="stat-card"><div class="stat-num green">2</div><div class="stat-label">今日新增</div></div>
-          <div class="stat-card"><div class="stat-num red">1</div><div class="stat-label">即将到期</div></div>
-        </div>
-
-        <div class="ai-advice-card">
-          <div class="ai-advice-header">
-            <span class="ai-badge">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/></svg>
-              AI 推荐
-            </span>
-          </div>
-          <div class="ai-advice-text">王总（陈香贵）对价格敏感，建议今天内发送竞品对比表+小江溪案例数据，优先推 G2+G3 组合方案。</div>
-        </div>
-
-        <div class="section-header">
-          <span class="section-title">今日待办</span>
-          <span class="section-more">查看全部 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></span>
-        </div>
-
-        <div class="filter-tabs" id="filterTabs">
-          <span class="filter-tab active" data-filter="all">全部</span>
-          <span class="filter-tab" data-filter="today">今日到期</span>
-          <span class="filter-tab" data-filter="reply">待回复</span>
-          <span class="filter-tab" data-filter="done">已完成</span>
-        </div>
-
-        <div class="task-list" id="taskList"></div>
-
-        <div class="section-header">
-          <span class="section-title">本月趋势</span>
-        </div>
-        <div class="month-chart">
-          <div class="chart-row">
-            <span class="chart-label">已成交</span>
-            <div class="chart-bar"><div class="chart-bar-fill green" style="width:65%"></div></div>
-            <span class="chart-val">6</span>
-          </div>
-          <div class="chart-row">
-            <span class="chart-label">跟进中</span>
-            <div class="chart-bar"><div class="chart-bar-fill orange" style="width:45%"></div></div>
-            <span class="chart-val">12</span>
-          </div>
-          <div class="chart-row">
-            <span class="chart-label">新线索</span>
-            <div class="chart-bar"><div class="chart-bar-fill blue" style="width:55%"></div></div>
-            <span class="chart-val">8</span>
-          </div>
-        </div>
+    <!-- ===== 客户详情（全屏） ===== -->
+    <div class="fullpage" id="pageCustomerDetail">
+      <div class="cd-header">
+        <div class="cd-avatar" id="cdAvatar">李</div>
+        <div class="cd-name" id="cdName">李波波</div>
+        <div class="cd-stage" id="cdStage">续费评估</div>
+        <div class="cd-tags" id="cdTags"></div>
       </div>
-
-      <!-- 客户页 -->
-      <div class="mp-page" id="pageCustomers">
-        <div class="mp-page-header">
-          <div class="title">客户</div>
-          <div class="sub">管理你的客户与线索</div>
-        </div>
-        <div class="customer-search">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
-          <input placeholder="搜索客户..." />
-        </div>
-        <div class="customer-tabs" id="customerTabs">
-          <button class="customer-tab active" data-ctab="all">全部</button>
-          <button class="customer-tab" data-ctab="high">高意向</button>
-          <button class="customer-tab" data-ctab="warm">跟进中</button>
-        </div>
-        <div class="customer-list" id="customerList"></div>
-      </div>
-
-      <!-- 工作台 -->
-      <div class="mp-page" id="pageWorkbench">
-        <div class="mp-page-header">
-          <div class="title">工作台</div>
-          <div class="sub">客户阶段分布</div>
-        </div>
-        <div class="stats-row">
-          <div class="stat-card"><div class="stat-num green">8</div><div class="stat-label">认知期</div></div>
-          <div class="stat-card"><div class="stat-num orange">5</div><div class="stat-label">兴趣期</div></div>
-          <div class="stat-card"><div class="stat-num red">3</div><div class="stat-label">评估期</div></div>
-        </div>
-        <div class="stats-row" style="padding-top:0">
-          <div class="stat-card"><div class="stat-num green">2</div><div class="stat-label">已成交</div></div>
-          <div class="stat-card"><div class="stat-num blue">4</div><div class="stat-label">沉睡客户</div></div>
-        </div>
-        <div class="section-header"><span class="section-title">快速入口</span></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:0 16px 20px">
-          <div style="background:var(--mp-card);border-radius:var(--mp-radius);padding:16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.04);cursor:pointer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:28px;height:28px;margin-bottom:6px;color:var(--mp-green)"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
-            <div style="font-size:13px">方案生成</div>
-          </div>
-          <div style="background:var(--mp-card);border-radius:var(--mp-radius);padding:16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.04);cursor:pointer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:28px;height:28px;margin-bottom:6px;color:var(--mp-green)"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16.4" r=".9" fill="currentColor"/></svg>
-            <div style="font-size:13px">知识库</div>
-          </div>
-          <div style="background:var(--mp-card);border-radius:var(--mp-radius);padding:16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.04);cursor:pointer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:28px;height:28px;margin-bottom:6px;color:var(--mp-green)"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
-            <div style="font-size:13px">话术推荐</div>
-          </div>
-          <div style="background:var(--mp-card);border-radius:var(--mp-radius);padding:16px;text-align:center;box-shadow:0 1px 4px rgba(0,0,0,0.04);cursor:pointer">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="width:28px;height:28px;margin-bottom:6px;color:var(--mp-green)"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-            <div style="font-size:13px">竞品对比</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- 我的 -->
-      <div class="mp-page" id="pageProfile">
-        <div class="profile-header">
-          <div class="profile-avatar">李</div>
-          <div class="profile-name">李明</div>
-          <div class="profile-role">高级销售顾问 · 优特科技</div>
-        </div>
-        <div class="profile-stats">
-          <div class="profile-stat-item"><div class="profile-stat-num">6</div><div class="profile-stat-label">本月成交</div></div>
-          <div class="profile-stat-item"><div class="profile-stat-num">28</div><div class="profile-stat-label">跟进中</div></div>
-          <div class="profile-stat-item"><div class="profile-stat-num">86%</div><div class="profile-stat-label">转化率</div></div>
-        </div>
-        <div class="profile-menu">
-          <div class="profile-menu-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg><span>个人信息</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
-          <div class="profile-menu-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg><span>我的客户</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
-          <div class="profile-menu-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 8v5"/><circle cx="12" cy="16.4" r=".9" fill="currentColor"/></svg><span>使用帮助</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
-          <div class="profile-menu-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>隐私与安全</span><svg class="arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></div>
-        </div>
-      </div>
+      <div class="cd-body" id="cdBody"></div>
     </div>
 
-    <!-- 小程序底部导航（仅小程序模式下可见） -->
-    <div class="mp-bottom-nav" id="mpBottomNav">
-      <button class="mp-nav-item active" data-page="pageHome">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-        首页
+    <!-- ===== 底部导航 ===== -->
+    <div class="bottom-nav" id="bottomNav">
+      <button class="nav-item active" data-page="pageHome">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        <span>首页</span>
       </button>
-      <button class="mp-nav-item" data-page="pageCustomers">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-        客户
+      <button class="nav-item" data-page="pageCustomers">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        <span>客户管理</span>
       </button>
-      <button class="mp-nav-item" data-page="pageWorkbench">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-        工作台
+      <button class="nav-item" data-page="pageOrders">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        <span>订单管理</span>
       </button>
-      <button class="mp-nav-item" data-page="pageProfile">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-        我的
+      <button class="nav-item" data-page="pageContent">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+        <span>内容管理</span>
+      </button>
+      <button class="nav-item" data-page="pageProfile">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        <span>我的</span>
       </button>
     </div>
   </div>
@@ -1055,128 +1232,157 @@
 
 <script src="../../shared/js/app.js"></script>
 <script>
-// ─── 场景9 · 企微移动端 聊天↔小程序切换 ───
 document.addEventListener('DOMContentLoaded', () => {
   lucide.createIcons();
-  initNav('企微小程序切换', '功能演示', 'tag-green');
+  initNav('AI 销售助手', '销售赋能', 'tag-blue');
 
-  const chatView = document.getElementById('chatView');
-  const mpView = document.getElementById('mpView');
-  const navBar = document.getElementById('navBar');
-  const navBack = document.getElementById('navBack');
-  const navTitle = document.getElementById('navTitle');
-  const mpBottomNav = document.getElementById('mpBottomNav');
-  const mpCardTrigger = document.getElementById('mpCardTrigger');
+  // ─── 数据 ───
+  const ALL_TASKS = [
+    {
+      id:'t1', customer:'李波波', stage:'续费评估', priority:'high', priorityLabel:'高优先级',
+      ai:'最近24小时查看报价方案3次，已5天未跟进，存在竞品流失风险。',
+      action:'今天先确认价格顾虑，再推荐续费优惠方案。',
+      last:'5天前', trigger:'客户重新查看报价方案',
+      tags:['老客户','价格敏感','续费意向','住在附近'],
+      status:'pending',
+      history:[
+        {who:'销售', text:'李先生，之前这10节课上下来，您感觉整体提升怎么样？'},
+        {who:'客户', text:'整体还可以，就是最近时间不太固定，也想看看后面怎么安排。'},
+        {who:'销售', text:'明白，那您更关注的是训练效果，还是时间和价格更好协调？'},
+        {who:'客户', text:'主要还是价格吧，如果长期报，压力有点大。'}
+      ],
+      script:'李先生，我理解长期课包一次性决策压力会比较大。我们可以先按一个月目标来安排短周期训练，先解决您现在最想提升的稳定性问题，后面再根据效果决定是否继续。',
+      summary:'销售针对客户价格顾虑，推荐了短周期训练方案，降低客户一次性续费压力。',
+      newTags:['价格敏感','适合短周期方案','续费可推进'],
+      nextStep:'明天上午10点前确认客户是否接受一个月短周期方案。'
+    },
+    {
+      id:'t2', customer:'陈晓峰', stage:'报价阶段', priority:'normal', priorityLabel:'需推进',
+      ai:'客户已收到报价3天，尚未回复，建议主动跟进确认是否有疑问。',
+      action:'今天发送产品对比表，询问客户顾虑点。',
+      last:'3天前', trigger:'报价发送后待回复',
+      tags:['新客户','询价','高意向'],
+      status:'pending'
+    },
+    {
+      id:'t3', customer:'王莉莉', stage:'试听后跟进', priority:'normal', priorityLabel:'待转化',
+      ai:'客户试听完成已2天，体验反馈良好，建议趁热打铁推动签约。',
+      action:'致电确认试听体验，推送限时签约优惠。',
+      last:'2天前', trigger:'试听课程完成',
+      tags:['试听客户','高意向','决策中'],
+      status:'pending'
+    },
+    {
+      id:'t4', customer:'赵明', stage:'续费到期', priority:'risk', priorityLabel:'风险客户',
+      ai:'会员到期已3天尚未续费，服务即将中断，需紧急联系处理。',
+      action:'立即联系客户说明到期影响，推荐续费方案。',
+      last:'7天前', trigger:'会员到期未续费',
+      tags:['老客户','到期风险','需紧急处理'],
+      status:'pending'
+    }
+  ];
 
-  let isMpMode = false;
+  let tasks = JSON.parse(JSON.stringify(ALL_TASKS));
 
-  // ─── 聊天 → 小程序 ───
-  function openMp() {
-    isMpMode = true;
-    chatView.classList.add('is-hidden');
-    mpView.classList.remove('is-hidden');
-    mpView.classList.add('is-shown');
-    navBar.classList.add('mp-mode');
-    navBack.style.visibility = 'visible';
-    navTitle.textContent = 'AI 销售助手';
-    // 隐藏聊天导航操作按钮
-    document.getElementById('navActions').style.display = 'none';
-  }
+  // 工作台客户数据
+  const ALL_CUSTOMERS = [
+    { name:'李波波', company:'个人会员', stage:'续费评估', tag:'高优先级', tagClass:'high', time:'5分钟前', color:'#5B8FF9' },
+    { name:'陈晓峰', company:'个人会员', stage:'报价阶段', tag:'跟进中', tagClass:'normal', time:'1小时前', color:'#61DDAA' },
+    { name:'王莉莉', company:'个人会员', stage:'试听跟进', tag:'跟进中', tagClass:'normal', time:'3小时前', color:'#F6BD16' },
+    { name:'赵明', company:'个人会员', stage:'续费到期', tag:'风险客户', tagClass:'risk', time:'昨天', color:'#E86452' },
+    { name:'张华', company:'企业会员', stage:'已成交', tag:'已成交', tagClass:'done', time:'周一', color:'#6DC8EC' },
+    { name:'刘洋', company:'个人会员', stage:'新线索', tag:'新客户', tagClass:'normal', time:'周一', color:'#9270CA' },
+  ];
 
-  // ─── 小程序 → 聊天 ───
-  function closeMp() {
-    isMpMode = false;
-    mpView.classList.remove('is-shown');
-    mpView.classList.add('is-hidden');
-    chatView.classList.remove('is-hidden');
-    navBar.classList.remove('mp-mode');
-    navBack.style.visibility = 'hidden';
-    navTitle.textContent = '王建国';
-    document.getElementById('navActions').style.display = '';
-  }
+  // ─── 状态变量 ───
+  let currentFilter = 'all';
+  let currentTaskId = null; // 当前查看/沟通的任务
 
-  // 点击小程序卡片
-  if (mpCardTrigger) {
-    mpCardTrigger.addEventListener('click', openMp);
-  }
+  // ─── DOM 引用 ───
+  const $ = id => document.getElementById(id);
+  const pageHome = $('pageHome');
+  const pageCustomers = $('pageCustomers');
+  const pageOrders = $('pageOrders');
+  const pageContent = $('pageContent');
+  const pageProfile = $('pageProfile');
+  const pageChat = $('pageChat');
+  const pageCustDetail = $('pageCustomerDetail');
+  const bottomNav = $('bottomNav');
+  const navBack = $('navBack');
+  const navBackLabel = $('navBackLabel');
+  const navTitle = $('navTitle');
+  const navRight = $('navRight');
+  const overlayAi = $('overlayAiAdvice');
+  const overlayTd = $('overlayTaskDetail');
 
-  // 点击返回
-  navBack.addEventListener('click', closeMp);
-
-  // ─── 小程序底部导航切换 ───
-  mpBottomNav.addEventListener('click', (e) => {
-    const item = e.target.closest('.mp-nav-item');
-    if (!item) return;
-    const pageId = item.dataset.page;
-    // 切换 tab 高亮
-    mpBottomNav.querySelectorAll('.mp-nav-item').forEach(x => x.classList.remove('active'));
-    item.classList.add('active');
-    // 切换页面
-    document.querySelectorAll('.mp-page').forEach(p => p.classList.remove('active'));
-    document.getElementById(pageId).classList.add('active');
-  });
-
-  // ─── 今日日期 ───
-  const now = new Date();
-  const dateStr = now.getFullYear() + '年' + (now.getMonth()+1) + '月' + now.getDate() + '日';
-  const dateEl = document.getElementById('todayDate');
-  if (dateEl) dateEl.textContent = dateStr;
-
-  // ─── 状态栏时间 ───
+  // ─── 时间 ───
   function updateTime() {
     const d = new Date();
-    const h = String(d.getHours()).padStart(2, '0');
-    const m = String(d.getMinutes()).padStart(2, '0');
-    document.getElementById('statusTime').textContent = h + ':' + m;
+    $('statusTime').textContent = String(d.getHours()).padStart(2,'0') + ':' + String(d.getMinutes()).padStart(2,'0');
   }
   updateTime();
   setInterval(updateTime, 10000);
 
-  // ─── 任务数据 ───
-  const TASKS = [
-    { customer:'陈香贵 · 王建国', tag:'跟进', tagClass:'urgent', desc:'发送竞品对比表 + 小江溪案例数据，邀约本周试菜', time:'今天 14:30 前' },
-    { customer:'中品一禾 · 赵总', tag:'跟进中', tagClass:'today', desc:'确认能耗数据，安排下周展厅参观', time:'今天 17:00 前' },
-    { customer:'君濠书院 · 刘经理', tag:'跟进', tagClass:'today', desc:'回复 G5 运行稳定性问题，发送维护记录', time:'明天 10:00' },
-    { customer:'乡村基 · 陈总', tag:'待回复', tagClass:'urgent', desc:'等待批量采购方案反馈，跟进决策进度', time:'明天 15:00' },
-    { customer:'比格 · 张总', tag:'已完成', tagClass:'done', desc:'发送 G3 产品资料 + 报价单', time:'昨天' },
-    { customer:'小江溪 · 李总', tag:'已完成', tagClass:'done', desc:'成交确认：G2+G3 各一台，安排发货', time:'昨天' },
-  ];
-
-  const taskList = document.getElementById('taskList');
-
+  // ─── 首页：任务渲染 ───
   function renderTasks(filter) {
-    taskList.innerHTML = '';
-    const filtered = filter && filter !== 'all'
-      ? TASKS.filter(t => {
-          if (filter === 'today') return t.tagClass === 'today' || t.tagClass === 'urgent';
-          if (filter === 'reply') return t.tagClass === 'urgent';
-          if (filter === 'done') return t.tagClass === 'done';
-          return true;
-        })
-      : TASKS;
+    currentFilter = filter;
+    const list = $('taskList');
+    list.innerHTML = '';
+    let filtered = tasks;
+    if (filter === 'high') filtered = tasks.filter(t => t.priority === 'high');
+    else if (filter === 'risk') filtered = tasks.filter(t => t.priority === 'risk');
+    else if (filter === 'review') filtered = tasks.filter(t => t.status === 'done');
+
     filtered.forEach(t => {
+      const tagClass = t.priority === 'risk' ? 'risk' : (t.priority === 'high' ? 'high' : (t.status === 'done' ? 'done' : 'normal'));
+      const tagLabel = t.status === 'done' ? '已跟进' : t.priorityLabel;
+      const isDone = t.status === 'done';
       const card = document.createElement('div');
       card.className = 'task-card';
+      card.dataset.taskId = t.id;
       card.innerHTML = `
         <div class="task-card-top">
-          <span class="task-customer">${t.customer}</span>
-          <span class="task-tag ${t.tagClass}">${t.tag}</span>
+          <div>
+            <div class="task-customer">${t.customer}</div>
+            <div class="task-stage">${t.stage}</div>
+          </div>
+          <span class="task-tag ${tagClass}">${tagLabel}</span>
         </div>
-        <div class="task-desc">${t.desc}</div>
-        <div class="task-time">${t.time}</div>
-        ${t.tagClass !== 'done' ? `
-        <div class="task-actions">
-          <button class="task-btn primary">完成</button>
-          <button class="task-btn ghost">稍后</button>
-        </div>` : ''}
+        <div class="task-ai-reason">${t.ai}</div>
+        <div class="task-action">建议：${t.action}</div>
+        <div class="task-footer">
+          <div class="task-footer-left">
+            <span>上次沟通：${t.last}</span>
+            <span>触发：${t.trigger}</span>
+          </div>
+          <div class="task-btns">
+            <button class="task-btn ghost small" data-action="detail">查看详情</button>
+            ${isDone
+              ? '<button class="task-btn outline small" disabled>查看记录</button>'
+              : '<button class="task-btn primary small" data-action="chat">立即沟通</button>'
+            }
+          </div>
+        </div>
       `;
-      taskList.appendChild(card);
+      list.appendChild(card);
     });
   }
 
-  renderTasks('all');
+  // ─── 首页：统计更新 ───
+  function updateStats() {
+    const total = tasks.length;
+    const high = tasks.filter(t => t.priority === 'high' && t.status !== 'done').length;
+    const today = tasks.filter(t => t.status !== 'done').length;
+    $('statTotal').textContent = total;
+    $('statHigh').textContent = high;
+    $('statToday').textContent = today;
+  }
 
-  document.getElementById('filterTabs').addEventListener('click', (e) => {
+  renderTasks('all');
+  updateStats();
+
+  // ─── 首页：筛选切换 ───
+  $('filterTabs').addEventListener('click', (e) => {
     const tab = e.target.closest('.filter-tab');
     if (!tab) return;
     document.querySelectorAll('.filter-tab').forEach(x => x.classList.remove('active'));
@@ -1184,50 +1390,394 @@ document.addEventListener('DOMContentLoaded', () => {
     renderTasks(tab.dataset.filter);
   });
 
-  // ─── 客户数据 ───
-  const CUSTOMERS = [
-    { name:'王建国', company:'陈香贵连锁', tag:'高意向', tagClass:'high', time:'5分钟前', avatar:'王', color:'#5B8FF9' },
-    { name:'赵总', company:'中品一禾餐饮', tag:'跟进中', tagClass:'warm', time:'1小时前', avatar:'赵', color:'#61DDAA' },
-    { name:'刘经理', company:'君濠书院', tag:'跟进中', tagClass:'warm', time:'3小时前', avatar:'刘', color:'#F6BD16' },
-    { name:'陈总', company:'乡村基', tag:'跟进中', tagClass:'warm', time:'昨天', avatar:'陈', color:'#E86452' },
-    { name:'张总', company:'比格自助', tag:'低意向', tagClass:'low', time:'昨天', avatar:'张', color:'#6DC8EC' },
-    { name:'李总', company:'小江溪餐饮', tag:'已成交', tagClass:'low', time:'周一', avatar:'李', color:'#9270CA' },
-    { name:'王哥', company:'川味轩', tag:'低意向', tagClass:'low', time:'周一', avatar:'王', color:'#FF9D4D' },
-  ];
+  // ─── 首页：AI 建议卡片 → 打开浮层 ───
+  $('aiSuggestionCard').addEventListener('click', (e) => {
+    if (e.target.closest('.ai-suggestion-more')) {
+      openAiAdvice();
+    }
+  });
 
-  function renderCustomers(filter) {
-    const list = document.getElementById('customerList');
-    list.innerHTML = '';
-    const filtered = filter === 'all' ? CUSTOMERS
-      : filter === 'high' ? CUSTOMERS.filter(c => c.tagClass === 'high')
-      : CUSTOMERS.filter(c => c.tagClass === 'warm');
-    filtered.forEach(c => {
-      list.innerHTML += `
-        <div class="customer-item">
-          <div class="c-item-avatar" style="background:${c.color}">${c.avatar}</div>
-          <div class="c-item-info">
-            <div class="c-item-name">${c.name}</div>
-            <div class="c-item-company">${c.company}</div>
-            <div class="c-item-meta">
-              <span class="c-item-tag ${c.tagClass}">${c.tag}</span>
-            </div>
-          </div>
-          <div class="c-item-time">${c.time}</div>
+  // ─── 首页：任务卡片交互（委托） ───
+  $('taskList').addEventListener('click', (e) => {
+    const btn = e.target.closest('.task-btn');
+    if (!btn) return;
+    const card = btn.closest('.task-card');
+    const taskId = card.dataset.taskId;
+    const task = tasks.find(t => t.id === taskId);
+    if (!task) return;
+
+    if (btn.dataset.action === 'detail') {
+      openTaskDetail(task);
+    } else if (btn.dataset.action === 'chat') {
+      currentTaskId = taskId;
+      openChat(task);
+    }
+  });
+
+  // ─── 底部导航切换 ───
+  bottomNav.addEventListener('click', (e) => {
+    const item = e.target.closest('.nav-item');
+    if (!item) return;
+    const pageId = item.dataset.page;
+    bottomNav.querySelectorAll('.nav-item').forEach(x => x.classList.remove('active'));
+    item.classList.add('active');
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    $(pageId).classList.add('active');
+    const titles = { pageHome:'AI 销售助手', pageCustomers:'客户管理', pageOrders:'订单管理', pageContent:'内容管理', pageProfile:'我的' };
+    navTitle.textContent = titles[pageId] || 'AI 销售助手';
+    navRight.classList.add('show');
+  });
+
+  // ─── 全屏页导航（返回） ───
+  function showFullPage(el) {
+    document.querySelectorAll('.fullpage').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+    bottomNav.classList.add('hidden');
+    navBackLabel.textContent = '关闭';
+    navRight.classList.remove('show');
+  }
+  function hideFullPage() {
+    document.querySelectorAll('.fullpage').forEach(p => p.classList.remove('active'));
+    bottomNav.classList.remove('hidden');
+    navBackLabel.textContent = '返回企微';
+    navRight.classList.add('show');
+    // 恢复当前页面标题
+    const activePage = document.querySelector('.page.active');
+    const titles = { pageHome:'AI 销售助手', pageCustomers:'客户管理', pageOrders:'订单管理', pageContent:'内容管理', pageProfile:'我的' };
+    navTitle.textContent = activePage ? (titles[activePage.id] || 'AI 销售助手') : 'AI 销售助手';
+  }
+
+  navBack.addEventListener('click', (e) => {
+    const inFullpage = pageChat.classList.contains('active') || pageCustDetail.classList.contains('active');
+    if (inFullpage) {
+      e.preventDefault();
+      hideFullPage();
+    }
+  });
+
+  // ─── AI 建议浮层 ───
+  function openAiAdvice() {
+    $('aiAdviceList').innerHTML = '';
+    const advices = [
+      { title:'李波波 - 续费评估', desc:'客户今日重新查看报价方案，已5天未跟进，建议今天优先联系确认价格顾虑，推荐短周期方案。', tag:'高优先级' },
+      { title:'赵明 - 续费到期', desc:'会员到期已3天未续费，服务即将中断，需紧急联系。', tag:'风险客户' },
+      { title:'王莉莉 - 试听跟进', desc:'试听完2天反馈良好，建议限时优惠推动签约。', tag:'需推进' },
+    ];
+    advices.forEach(a => {
+      $('aiAdviceList').innerHTML +=
+        `<div class="advice-item">
+          <div class="advice-item-title">${a.title}</div>
+          <div class="advice-item-desc">${a.desc}</div>
+          <span class="advice-item-tag">${a.tag}</span>
+        </div>`;
+    });
+    overlayAi.classList.add('active');
+  }
+
+  overlayAi.addEventListener('click', (e) => {
+    if (e.target === overlayAi) overlayAi.classList.remove('active');
+  });
+
+  // ─── 任务详情浮层 ───
+  function openTaskDetail(task) {
+    const tags = (task.tags || []).map(t => `<span class="detail-tag">${t}</span>`).join('');
+    let historyHtml = '';
+    if (task.history) {
+      historyHtml = task.history.map(h =>
+        `<div class="detail-msg"><span class="speaker">${h.who}：</span>${h.text}</div>`
+      ).join('');
+    } else {
+      historyHtml = '<div class="detail-msg" style="color:var(--text-tertiary)">暂无历史沟通记录</div>';
+    }
+
+    $('tdBody').innerHTML = `
+      <div class="detail-field">
+        <div class="detail-label">客户信息</div>
+        <div class="detail-value" style="font-weight:600">${task.customer} · ${task.stage}</div>
+      </div>
+      <div class="detail-field">
+        <div class="detail-label">当前状态</div>
+        <div class="detail-value">
+          <span class="task-tag ${task.priority === 'risk' ? 'risk' : (task.priority === 'high' ? 'high' : 'normal')}">${task.priorityLabel}</span>
+          ${task.status === 'done' ? '<span class="task-tag done" style="margin-left:6px">已跟进</span>' : ''}
         </div>
+      </div>
+      <div class="detail-field">
+        <div class="detail-label">AI 判断</div>
+        <div class="detail-value">${task.ai}</div>
+      </div>
+      <div class="detail-field">
+        <div class="detail-label">客户标签</div>
+        <div class="detail-tags">${tags}</div>
+      </div>
+      <div class="detail-field">
+        <div class="detail-label">历史沟通摘要</div>
+        ${historyHtml}
+      </div>
+      ${task.script ? `
+      <div class="detail-field">
+        <div class="detail-label">推荐话术</div>
+        <div class="detail-value" style="background:#F8F9FB;padding:8px 10px;border-radius:6px;border-left:3px solid var(--primary)">${task.script}</div>
+      </div>` : ''}
+      <div class="detail-field">
+        <div class="detail-label">下一步动作</div>
+        <div class="detail-value">${task.action}</div>
+      </div>
+      ${task.status !== 'done' ? `<button class="detail-full-btn" data-chat-id="${task.id}">立即沟通</button>` : ''}
+    `;
+
+    $('tdTitle').textContent = task.customer + ' · 任务详情';
+    overlayTd.classList.add('active');
+
+    // 浮层内的立即沟通
+    const chatBtn = overlayTd.querySelector('.detail-full-btn');
+    if (chatBtn) {
+      chatBtn.addEventListener('click', () => {
+        overlayTd.classList.remove('active');
+        currentTaskId = chatBtn.dataset.chatId;
+        openChat(task);
+      });
+    }
+  }
+
+  overlayTd.addEventListener('click', (e) => {
+    if (e.target === overlayTd) overlayTd.classList.remove('active');
+  });
+
+  // ─── 聊天页 ───
+  let chatTaskData = null;
+
+  function openChat(task) {
+    chatTaskData = task;
+    $('chatCustomerName').textContent = task.customer;
+    $('chatCustomerStatus').textContent = task.stage + '中';
+
+    // 渲染历史消息
+    const msgs = $('chatMsgs');
+    msgs.innerHTML = '';
+    if (task.history) {
+      task.history.forEach(h => {
+        const isSelf = h.who === '销售';
+        const row = document.createElement('div');
+        row.className = 'msg-row' + (isSelf ? ' right' : '');
+        row.innerHTML = isSelf
+          ? `<div class="msg-avatar sales">销</div><div class="msg-content"><div class="msg-name">我</div><div class="msg-bubble">${h.text}</div></div>`
+          : `<div class="msg-avatar customer">${task.customer[0]}</div><div class="msg-content"><div class="msg-name">${task.customer}</div><div class="msg-bubble">${h.text}</div></div>`;
+        msgs.appendChild(row);
+      });
+    }
+    msgs.scrollTop = msgs.scrollHeight;
+
+    // AI 建议更新
+    if (task.script) {
+      $('chatAiText').textContent = '客户主要顾虑是价格，不建议直接推长期课包。建议先给短周期方案，降低决策压力。';
+    }
+
+    // 移除旧的总结卡片
+    const oldSummary = msgs.querySelector('.summary-card');
+    if (oldSummary) oldSummary.remove();
+
+    showFullPage(pageChat);
+    $('navTitle').textContent = task.customer;
+    $('chatInput').value = '';
+  }
+
+  // ─── 聊天：插入话术 ───
+  $('insertScriptBtn').addEventListener('click', () => {
+    if (!chatTaskData) return;
+    $('chatInput').value = chatTaskData.script || '';
+    $('chatInput').focus();
+  });
+
+  // ─── 聊天：发送 ───
+  let summaryInserted = false;
+
+  $('chatSendBtn').addEventListener('click', sendChatMessage);
+  $('chatInput').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendChatMessage();
+    }
+  });
+
+  function sendChatMessage() {
+    const input = $('chatInput');
+    const text = input.value.trim();
+    if (!text) return;
+    input.value = '';
+
+    const msgs = $('chatMsgs');
+    // 添加销售消息
+    const row = document.createElement('div');
+    row.className = 'msg-row right';
+    row.innerHTML = `<div class="msg-avatar sales">销</div><div class="msg-content"><div class="msg-name">我</div><div class="msg-bubble">${text}</div></div>`;
+    msgs.appendChild(row);
+    msgs.scrollTop = msgs.scrollHeight;
+
+    // 移除旧的总结卡片
+    const oldSummary = msgs.querySelector('.summary-card');
+    if (oldSummary) oldSummary.remove();
+    summaryInserted = false;
+
+    // 模拟客户回复
+    setTimeout(() => {
+      const replies = [
+        '嗯，这个方案听起来不错，一个月的话压力小很多。',
+        '我先考虑一下，明天给你答复。',
+        '好的，那就先按一个月试试看。'
+      ];
+      const reply = replies[Math.floor(Math.random() * replies.length)];
+      const rRow = document.createElement('div');
+      rRow.className = 'msg-row';
+      const cn = chatTaskData ? chatTaskData.customer : '客户';
+      rRow.innerHTML = `<div class="msg-avatar customer">${cn[0]}</div><div class="msg-content"><div class="msg-name">${cn}</div><div class="msg-bubble">${reply}</div></div>`;
+      msgs.appendChild(rRow);
+      msgs.scrollTop = msgs.scrollHeight;
+
+      // 显示 AI 跟进总结卡片
+      const summaryCard = document.createElement('div');
+      summaryCard.className = 'summary-card';
+      summaryCard.id = 'summaryCard';
+      const task = chatTaskData;
+      const newTags = (task && task.newTags) ? task.newTags.map(t => `<span class="summary-tag">${t}</span>`).join('') : '';
+      const nextStep = (task && task.nextStep) ? task.nextStep : '明天跟进确认客户意向。';
+      summaryCard.innerHTML = `
+        <div class="summary-title">AI 跟进总结</div>
+        <div class="summary-line"><strong>沟通摘要：</strong>${task ? task.summary : '销售与客户沟通了续费方案。'}</div>
+        <div class="summary-line"><strong>客户新标签：</strong></div>
+        <div class="summary-tags">${newTags || '<span class="summary-tag">待跟进</span>'}</div>
+        <div class="summary-line"><strong>下一步建议：</strong>${nextStep}</div>
+        <button class="summary-btn" id="saveFollowupBtn">保存并更新任务</button>
       `;
+      msgs.appendChild(summaryCard);
+      msgs.scrollTop = msgs.scrollHeight;
+      summaryInserted = true;
+
+      // 保存按钮
+      $('saveFollowupBtn').addEventListener('click', saveFollowup);
+    }, 800 + Math.random() * 600);
+  }
+
+  function saveFollowup() {
+    if (!currentTaskId) return;
+    const task = tasks.find(t => t.id === currentTaskId);
+    if (!task) return;
+    task.status = 'done';
+
+    // 更新首页
+    renderTasks(currentFilter);
+    updateStats();
+
+    // 显示 Toast
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = '已保存跟进记录';
+    $('viewWrap').appendChild(toast);
+    setTimeout(() => toast.remove(), 2000);
+
+    // 关闭聊天
+    hideFullPage();
+    // 回到首页 tab
+    const homeTab = bottomNav.querySelector('[data-page="pageHome"]');
+    if (homeTab) homeTab.click();
+  }
+
+  // ─── 工作台 ───
+  let wbSearchQuery = '';
+
+  function renderWorkbench(query) {
+    const list = $('wbCustomerList');
+    list.innerHTML = '';
+    let filtered = ALL_CUSTOMERS;
+    if (query) {
+      const q = query.trim().toLowerCase();
+      filtered = ALL_CUSTOMERS.filter(c => c.name.includes(q) || c.company.includes(q));
+    }
+    if (filtered.length === 0) {
+      list.innerHTML = '<div class="empty-state">无匹配客户</div>';
+      return;
+    }
+    filtered.forEach(c => {
+      const item = document.createElement('div');
+      item.className = 'customer-item';
+      item.dataset.cname = c.name;
+      item.innerHTML = `
+        <div class="c-avatar" style="background:${c.color}">${c.name[0]}</div>
+        <div class="c-info">
+          <div class="c-name">${c.name}</div>
+          <div class="c-desc">${c.company} · ${c.stage}</div>
+          <div class="c-meta">
+            <span class="c-tag ${c.tagClass}">${c.tag}</span>
+          </div>
+        </div>
+        <div class="c-time">${c.time}</div>
+      `;
+      item.addEventListener('click', () => openCustomerDetail(c));
+      list.appendChild(item);
     });
   }
 
-  renderCustomers('all');
+  renderWorkbench('');
 
-  document.getElementById('customerTabs').addEventListener('click', (e) => {
-    const tab = e.target.closest('.customer-tab');
-    if (!tab) return;
-    document.querySelectorAll('.customer-tab').forEach(x => x.classList.remove('active'));
-    tab.classList.add('active');
-    renderCustomers(tab.dataset.ctab);
+  $('wbSearch').addEventListener('input', (e) => {
+    wbSearchQuery = e.target.value;
+    renderWorkbench(wbSearchQuery);
   });
 
+  // ─── 客户详情 ───
+  function openCustomerDetail(c) {
+    $('cdAvatar').textContent = c.name[0];
+    $('cdName').textContent = c.name;
+    $('cdStage').textContent = c.stage;
+    $('cdTags').innerHTML = `<span class="cd-tag">${c.tag}</span><span class="cd-tag">${c.company}</span>`;
+
+    // 找对应的任务
+    const task = tasks.find(t => t.customer === c.name);
+
+    $('cdBody').innerHTML = `
+      <div class="cd-section">
+        <div class="cd-section-title">基本信息</div>
+        <div class="cd-field"><div class="cd-field-label">姓名</div><div class="cd-field-value">${c.name}</div></div>
+        <div class="cd-field"><div class="cd-field-label">类型</div><div class="cd-field-value">${c.company}</div></div>
+        <div class="cd-field"><div class="cd-field-label">当前阶段</div><div class="cd-field-value">${c.stage}</div></div>
+        <div class="cd-field"><div class="cd-field-label">上次联系</div><div class="cd-field-value">${c.time}</div></div>
+      </div>
+      <div class="cd-section">
+        <div class="cd-section-title">沟通记录</div>
+        ${task && task.history
+          ? task.history.map(h => `<div class="cd-msg-item"><span class="s">${h.who}：</span>${h.text}</div>`).join('')
+          : '<div class="cd-msg-item" style="color:var(--text-tertiary)">暂无沟通记录</div>'
+        }
+      </div>
+      <button class="cd-chat-btn" id="cdChatBtn">发起沟通</button>
+    `;
+
+    showFullPage(pageCustDetail);
+    $('navTitle').textContent = c.name;
+
+    // 发起沟通
+    $('cdChatBtn').addEventListener('click', () => {
+      if (task) {
+        currentTaskId = task.id;
+        openChat(task);
+      } else {
+        // 无任务时创建临时聊天
+        const tempTask = {
+          customer: c.name, stage: c.stage, history: [],
+          script: '', summary: '', newTags: [], nextStep: ''
+        };
+        currentTaskId = null;
+        openChat(tempTask);
+      }
+    });
+  }
+
+  // ─── 键盘支持：聊天输入撑高 ───
+  $('chatInput').addEventListener('input', () => {
+    const el = $('chatInput');
+    el.style.height = 'auto';
+    el.style.height = Math.min(el.scrollHeight, 80) + 'px';
+  });
 });
 </script>
 </body>
