@@ -66,9 +66,9 @@
     async function loadDB() {
       try {
         const [prods, cases, dict] = await Promise.all([
-          fetch('/data/products.json').then(r => r.json()),
-          fetch('/data/cases.json').then(r => r.json()),
-          fetch('/data/dict.json').then(r => r.json()),
+          fetch('../../data/products.json').then(r => r.json()),
+          fetch('../../data/cases.json').then(r => r.json()),
+          fetch('../../data/dict.json').then(r => r.json()),
         ]);
         DB.products = prods.products || [];
         DB.cases = cases.cases || [];
