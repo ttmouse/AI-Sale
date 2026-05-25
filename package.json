@@ -7,7 +7,7 @@
     "qunit": "^2.20.0"
   },
   "scripts": {
-    "test": "qunit scenes/scene-3-crm/tests/node-sop-engine.test.js",
+    "test": "node scenes/scene-3-crm/tests/all.test.js",
     "start": "python3 -m http.server 45219"
   }
 }

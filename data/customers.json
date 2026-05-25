@@ -629,6 +629,374 @@
       ],
       "decisionMaker": "OWNER",
       "decisionMakerLabel": "创始人"
+    },
+    {
+      "customerId": "CUS-2026-0016",
+      "name": "张老板",
+      "company": "辣有道",
+      "contact": "本人",
+      "type": "火锅店",
+      "typeCode": "HOTPOT",
+      "region": "第三大区",
+      "city": "重庆",
+      "storeCount": 1,
+      "budget": "¥5~8万",
+      "stage": "P1",
+      "stageLabel": "了解信息",
+      "lastContact": "2026-05-25",
+      "status": "active",
+      "source": "AD",
+      "tags": [
+        "新客户",
+        "火锅"
+      ],
+      "healthScore": 50,
+      "history": [
+        {
+          "date": "2026-05-22",
+          "action": "百度了解",
+          "detail": "搜索智能炒菜机"
+        }
+      ],
+      "decisionMaker": "OWNER",
+      "decisionMakerLabel": "老板"
+    },
+    {
+      "customerId": "CUS-2026-0017",
+      "name": "李老板",
+      "company": "味美快餐",
+      "contact": "本人",
+      "type": "快餐店",
+      "typeCode": "FAST_FOOD",
+      "region": "第一区",
+      "city": "广州",
+      "storeCount": 1,
+      "budget": "¥3~5万",
+      "stage": "P1",
+      "stageLabel": "了解信息",
+      "lastContact": "2026-05-20",
+      "status": "active",
+      "source": "SELF",
+      "tags": [
+        "新客户",
+        "快餐"
+      ],
+      "healthScore": 42,
+      "history": [
+        {
+          "date": "2026-05-20",
+          "action": "朋友介绍",
+          "detail": "同行推荐了解"
+        }
+      ],
+      "decisionMaker": "OWNER",
+      "decisionMakerLabel": "老板"
+    },
+    {
+      "customerId": "CUS-2026-0018",
+      "name": "王总",
+      "company": "鲜到家轻食",
+      "contact": "运营总监",
+      "type": "轻食连锁",
+      "typeCode": "CHAIN",
+      "region": "第五大区",
+      "city": "上海",
+      "storeCount": 5,
+      "budget": "¥10~15万",
+      "stage": "P1",
+      "stageLabel": "了解信息",
+      "lastContact": "2026-05-19",
+      "status": "active",
+      "source": "EXHIBITION",
+      "tags": [
+        "连锁",
+        "新客户"
+      ],
+      "healthScore": 44,
+      "history": [
+        {
+          "date": "2026-05-19",
+          "action": "展会接触",
+          "detail": "上海餐饮展"
+        }
+      ],
+      "decisionMaker": "CORPORATE",
+      "decisionMakerLabel": "运营总监"
+    },
+    {
+      "customerId": "CUS-2026-0019",
+      "name": "刘总",
+      "company": "鼎盛和牛",
+      "contact": "财务",
+      "type": "日料连锁",
+      "typeCode": "CHAIN",
+      "region": "第一大区",
+      "city": "深圳",
+      "storeCount": 3,
+      "budget": "¥20~30万",
+      "stage": "P6",
+      "stageLabel": "已回款",
+      "lastContact": "2026-05-18",
+      "status": "closed",
+      "source": "REFERRAL",
+      "tags": [
+        "已回款",
+        "日料",
+        "M系列"
+      ],
+      "healthScore": 90,
+      "history": [
+        {
+          "date": "2026-03",
+          "action": "需求沟通",
+          "detail": "日料标准化需求"
+        },
+        {
+          "date": "2026-04",
+          "action": "签约",
+          "detail": "M1×3台"
+        },
+        {
+          "date": "2026-05-18",
+          "action": "回款确认",
+          "detail": "尾款到账"
+        }
+      ],
+      "order": {
+        "id": "ORD-2026-003",
+        "product": "M1×3台",
+        "amount": 260000,
+        "status": "已回款"
+      },
+      "decisionMaker": "OWNER",
+      "decisionMakerLabel": "创始人"
+    },
+    {
+      "customerId": "CUS-2026-0020",
+      "name": "陈经理",
+      "company": "喜悦团餐",
+      "contact": "采购经理",
+      "type": "团餐公司",
+      "typeCode": "CATERING",
+      "region": "第二大区",
+      "city": "北京",
+      "storeCount": 2,
+      "budget": "¥30~50万",
+      "stage": "P6",
+      "stageLabel": "已回款",
+      "lastContact": "2026-05-15",
+      "status": "closed",
+      "source": "EXHIBITION",
+      "tags": [
+        "已回款",
+        "团餐",
+        "G系列"
+      ],
+      "healthScore": 88,
+      "history": [
+        {
+          "date": "2026-01",
+          "action": "展会",
+          "detail": "北京餐饮展"
+        },
+        {
+          "date": "2026-03",
+          "action": "试菜",
+          "detail": "G5×2测试"
+        },
+        {
+          "date": "2026-05-15",
+          "action": "回款",
+          "detail": "全款到账"
+        }
+      ],
+      "order": {
+        "id": "ORD-2026-004",
+        "product": "G5×2台",
+        "amount": 420000,
+        "status": "已回款"
+      },
+      "decisionMaker": "CORPORATE",
+      "decisionMakerLabel": "采购经理"
+    },
+    {
+      "customerId": "CUS-2026-0021",
+      "name": "周老板",
+      "company": "串串香火锅",
+      "contact": "本人",
+      "type": "火锅串串",
+      "typeCode": "HOTPOT",
+      "region": "第三大区",
+      "city": "成都",
+      "storeCount": 1,
+      "budget": "¥5~8万",
+      "stage": "P0",
+      "stageLabel": "沉睡",
+      "lastContact": "2026-04-20",
+      "status": "sleeping",
+      "source": "AD",
+      "tags": [
+        "沉睡",
+        "火锅"
+      ],
+      "healthScore": 10,
+      "history": [
+        {
+          "date": "2026-03",
+          "action": "百度咨询",
+          "detail": "留下联系方式"
+        },
+        {
+          "date": "2026-04-15",
+          "action": "最后联系",
+          "detail": "说再考虑"
+        }
+      ],
+      "decisionMaker": "OWNER",
+      "decisionMakerLabel": "老板"
+    },
+    {
+      "customerId": "CUS-2026-0022",
+      "name": "吴经理",
+      "company": "好味来食堂",
+      "contact": "后勤",
+      "type": "企业食堂",
+      "typeCode": "CANTEEN",
+      "region": "第六大区",
+      "city": "武汉",
+      "storeCount": 1,
+      "budget": "¥10~15万",
+      "stage": "P0",
+      "stageLabel": "沉睡",
+      "lastContact": "2026-04-20",
+      "status": "sleeping",
+      "source": "EXHIBITION",
+      "tags": [
+        "沉睡",
+        "食堂"
+      ],
+      "healthScore": 8,
+      "history": [
+        {
+          "date": "2026-02",
+          "action": "展会",
+          "detail": "拿了资料"
+        },
+        {
+          "date": "2026-04-10",
+          "action": "最后联系",
+          "detail": "说预算还没批"
+        }
+      ],
+      "decisionMaker": "CORPORATE",
+      "decisionMakerLabel": "后勤经理"
+    },
+    {
+      "customerId": "CUS-2026-0023",
+      "name": "小杨",
+      "company": "深夜烧烤",
+      "contact": "本人",
+      "type": "烧烤店",
+      "typeCode": "INDIVIDUAL",
+      "region": "第四大区",
+      "city": "长沙",
+      "storeCount": 1,
+      "budget": "¥2~3万",
+      "stage": "P0",
+      "stageLabel": "沉睡",
+      "lastContact": "2026-04-20",
+      "status": "sleeping",
+      "source": "SELF",
+      "tags": [
+        "沉睡",
+        "个体"
+      ],
+      "healthScore": 5,
+      "history": [
+        {
+          "date": "2026-03-20",
+          "action": "微信咨询",
+          "detail": "问价格后没回复"
+        }
+      ],
+      "decisionMaker": "OWNER",
+      "decisionMakerLabel": "老板"
+    },
+    {
+      "customerId": "CUS-2026-0024",
+      "name": "何老板",
+      "company": "七欣天",
+      "contact": "采购",
+      "type": "螃蟹料理连锁",
+      "typeCode": "CHAIN",
+      "region": "第三大区",
+      "city": "厦门",
+      "storeCount": 8,
+      "budget": "¥15~20万",
+      "stage": "P2",
+      "stageLabel": "收集需求",
+      "lastContact": "2026-05-18",
+      "nextAction": "2026-05-25",
+      "nextActionLabel": "发送方案",
+      "status": "active",
+      "source": "REFERRAL",
+      "tags": [
+        "连锁",
+        "海鲜"
+      ],
+      "healthScore": 60,
+      "history": [
+        {
+          "date": "2026-05-10",
+          "action": "同行推荐",
+          "detail": "朋友介绍"
+        },
+        {
+          "date": "2026-05-18",
+          "action": "需求沟通",
+          "detail": "8家门店标准化需求"
+        }
+      ],
+      "decisionMaker": "OWNER",
+      "decisionMakerLabel": "创始人"
+    },
+    {
+      "customerId": "CUS-2026-0025",
+      "name": "魏总",
+      "company": "御膳坊",
+      "contact": "总经理",
+      "type": "中式正餐连锁",
+      "typeCode": "CHAIN",
+      "region": "第一大区",
+      "city": "杭州",
+      "storeCount": 3,
+      "budget": "¥12~18万",
+      "stage": "P2",
+      "stageLabel": "收集需求",
+      "lastContact": "2026-05-20",
+      "nextAction": "2026-05-27",
+      "nextActionLabel": "上门勘察",
+      "status": "active",
+      "source": "AD",
+      "tags": [
+        "连锁",
+        "正餐"
+      ],
+      "healthScore": 58,
+      "history": [
+        {
+          "date": "2026-05-15",
+          "action": "百度咨询",
+          "detail": "搜索智能炒菜机"
+        },
+        {
+          "date": "2026-05-20",
+          "action": "电话沟通",
+          "detail": "确认需求"
+        }
+      ],
+      "decisionMaker": "OWNER",
+      "decisionMakerLabel": "总经理"
     }
   ]
 }
