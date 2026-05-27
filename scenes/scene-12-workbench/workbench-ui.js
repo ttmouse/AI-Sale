@@ -121,7 +121,6 @@
     _pendingConfirmState = {};
 
     stopAutoPlay();
-    setTimeout(function() { stepForward(); }, 400);
   }
 
   // ===== 渲染消息（通过 WecomChat 组件）=====
@@ -141,12 +140,7 @@
     if (annContent !== _lastAnnContent) {
       _lastAnnContent = annContent;
       _lastTimelineIdx = msgIdx;
-      // 延迟显示 Agent 日志卡片，模拟 AI 思考过程
-      var _ann = ann;
-      var _idx = msgIdx;
-      setTimeout(function() {
-        appendTimelineCard(_ann, _idx);
-      }, 600);
+      appendTimelineCard(ann, msgIdx);
     }
 
     // --- 右侧面板：始终显示当前最新状态 ---
@@ -282,23 +276,16 @@
   function stepForward() {
     if (!WorkbenchEngine.getCurrentScenario()) return;
     if (WorkbenchEngine.hasNextMessage()) {
+      // 如果是AI/系统消息，自动跳过
+      var safety = 0;
       var msg = WorkbenchEngine.advanceMessage();
+      while ((msg.type === 'system' || msg.type === 'ai-hint' || msg.type === 'ai-recommend') && WorkbenchEngine.hasNextMessage() && safety < 10) {
+        safety++;
+        msg = WorkbenchEngine.advanceMessage();
+      }
       renderMessage(msg);
       updateAnnotations();
       updateProgress();
-      // 如果当前消息不是客户/销售，继续推进（自动跳过AI提示/系统消息）
-      if (msg.type !== 'customer' && msg.type !== 'sales') {
-        // 递归步进，但限制最多10步防止死循环
-        var safety = 0;
-        while (WorkbenchEngine.hasNextMessage() && safety < 10) {
-          var next = WorkbenchEngine.advanceMessage();
-          renderMessage(next);
-          updateAnnotations();
-          updateProgress();
-          safety++;
-          if (next.type === 'customer' || next.type === 'sales') break;
-        }
-      }
     } else {
       window.showToast('场景对话已播放完毕');
       stopAutoPlay();
