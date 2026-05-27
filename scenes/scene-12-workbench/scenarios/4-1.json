@@ -89,16 +89,16 @@
           "status": "current"
         },
         "沉默时长": {
-          "value": null,
-          "status": "empty"
+          "value": "3天",
+          "status": "updated"
         },
         "初始意向": {
-          "value": null,
-          "status": "empty"
+          "value": "了解设备",
+          "status": "updated"
         },
         "客户大类": {
-          "value": null,
-          "status": "empty"
+          "value": "社餐",
+          "status": "updated"
         },
         "细分类别": {
           "value": "快餐",
@@ -113,16 +113,16 @@
           "status": "current"
         },
         "后厨人员": {
-          "value": null,
-          "status": "empty"
+          "value": "3人",
+          "status": "updated"
         },
         "痛点": {
-          "value": null,
-          "status": "empty"
+          "value": "预算有限",
+          "status": "updated"
         },
         "菜品结构": {
-          "value": null,
-          "status": "empty"
+          "value": "快餐简餐",
+          "status": "updated"
         },
         "推荐产品": {
           "value": "G3标准版",
@@ -137,12 +137,12 @@
           "status": "current"
         },
         "客户意向": {
-          "value": null,
-          "status": "empty"
+          "value": "意向明确",
+          "status": "updated"
         },
         "方案状态": {
-          "value": null,
-          "status": "empty"
+          "value": "已报价",
+          "status": "updated"
         },
         "画像完整度": {
           "value": "70%",
@@ -210,16 +210,16 @@
           "status": "current"
         },
         "沉默时长": {
-          "value": null,
-          "status": "empty"
+          "value": "3天",
+          "status": "updated"
         },
         "初始意向": {
-          "value": null,
-          "status": "empty"
+          "value": "了解设备",
+          "status": "updated"
         },
         "客户大类": {
-          "value": null,
-          "status": "empty"
+          "value": "社餐",
+          "status": "updated"
         },
         "细分类别": {
           "value": "快餐",
@@ -234,16 +234,16 @@
           "status": "current"
         },
         "后厨人员": {
-          "value": null,
-          "status": "empty"
+          "value": "3人",
+          "status": "updated"
         },
         "痛点": {
-          "value": null,
-          "status": "empty"
+          "value": "预算有限",
+          "status": "updated"
         },
         "菜品结构": {
-          "value": null,
-          "status": "empty"
+          "value": "快餐简餐",
+          "status": "updated"
         },
         "推荐产品": {
           "value": "G3标准版",
@@ -258,12 +258,12 @@
           "status": "current"
         },
         "客户意向": {
-          "value": null,
-          "status": "empty"
+          "value": "意向明确",
+          "status": "updated"
         },
         "方案状态": {
-          "value": null,
-          "status": "empty"
+          "value": "已报价",
+          "status": "updated"
         },
         "画像完整度": {
           "value": "72%",
@@ -318,16 +318,16 @@
           "status": "current"
         },
         "沉默时长": {
-          "value": null,
-          "status": "empty"
+          "value": "3天",
+          "status": "updated"
         },
         "初始意向": {
-          "value": null,
-          "status": "empty"
+          "value": "了解设备",
+          "status": "updated"
         },
         "客户大类": {
-          "value": null,
-          "status": "empty"
+          "value": "社餐",
+          "status": "updated"
         },
         "细分类别": {
           "value": "快餐",
@@ -342,16 +342,16 @@
           "status": "current"
         },
         "后厨人员": {
-          "value": null,
-          "status": "empty"
+          "value": "3人",
+          "status": "updated"
         },
         "痛点": {
           "value": "人工成本9000元/月",
           "status": "current"
         },
         "菜品结构": {
-          "value": null,
-          "status": "empty"
+          "value": "快餐简餐",
+          "status": "updated"
         },
         "推荐产品": {
           "value": "G3标准版",
@@ -366,12 +366,12 @@
           "status": "current"
         },
         "客户意向": {
-          "value": null,
-          "status": "empty"
+          "value": "意向明确",
+          "status": "updated"
         },
         "方案状态": {
-          "value": null,
-          "status": "empty"
+          "value": "已报价",
+          "status": "updated"
         },
         "画像完整度": {
           "value": "80%",
@@ -428,16 +428,16 @@
           "status": "current"
         },
         "沉默时长": {
-          "value": null,
-          "status": "empty"
+          "value": "3天",
+          "status": "updated"
         },
         "初始意向": {
-          "value": null,
-          "status": "empty"
+          "value": "了解设备",
+          "status": "updated"
         },
         "客户大类": {
-          "value": null,
-          "status": "empty"
+          "value": "社餐",
+          "status": "updated"
         },
         "细分类别": {
           "value": "快餐",
@@ -452,16 +452,16 @@
           "status": "current"
         },
         "后厨人员": {
-          "value": null,
-          "status": "empty"
+          "value": "3人",
+          "status": "updated"
         },
         "痛点": {
           "value": "人工成本9000元/月",
           "status": "current"
         },
         "菜品结构": {
-          "value": null,
-          "status": "empty"
+          "value": "快餐简餐",
+          "status": "updated"
         },
         "推荐产品": {
           "value": "G3标准版",
@@ -476,12 +476,12 @@
           "status": "current"
         },
         "客户意向": {
-          "value": null,
-          "status": "empty"
+          "value": "意向明确",
+          "status": "updated"
         },
         "方案状态": {
-          "value": null,
-          "status": "empty"
+          "value": "已报价",
+          "status": "updated"
         },
         "画像完整度": {
           "value": "80%",
@@ -536,16 +536,16 @@
           "status": "current"
         },
         "沉默时长": {
-          "value": null,
-          "status": "empty"
+          "value": "3天",
+          "status": "updated"
         },
         "初始意向": {
-          "value": null,
-          "status": "empty"
+          "value": "了解设备",
+          "status": "updated"
         },
         "客户大类": {
-          "value": null,
-          "status": "empty"
+          "value": "社餐",
+          "status": "updated"
         },
         "细分类别": {
           "value": "快餐",
@@ -560,16 +560,16 @@
           "status": "current"
         },
         "后厨人员": {
-          "value": null,
-          "status": "empty"
+          "value": "3人",
+          "status": "updated"
         },
         "痛点": {
           "value": "人工成本9000元/月",
           "status": "current"
         },
         "菜品结构": {
-          "value": null,
-          "status": "empty"
+          "value": "快餐简餐",
+          "status": "updated"
         },
         "推荐产品": {
           "value": "G3标准版",
@@ -588,8 +588,8 @@
           "status": "current"
         },
         "方案状态": {
-          "value": null,
-          "status": "empty"
+          "value": "已报价",
+          "status": "updated"
         },
         "画像完整度": {
           "value": "85%",
@@ -644,16 +644,16 @@
           "status": "current"
         },
         "沉默时长": {
-          "value": null,
-          "status": "empty"
+          "value": "3天",
+          "status": "updated"
         },
         "初始意向": {
-          "value": null,
-          "status": "empty"
+          "value": "了解设备",
+          "status": "updated"
         },
         "客户大类": {
-          "value": null,
-          "status": "empty"
+          "value": "社餐",
+          "status": "updated"
         },
         "细分类别": {
           "value": "快餐",
@@ -668,16 +668,16 @@
           "status": "current"
         },
         "后厨人员": {
-          "value": null,
-          "status": "empty"
+          "value": "3人",
+          "status": "updated"
         },
         "痛点": {
           "value": "人工成本9000元/月",
           "status": "current"
         },
         "菜品结构": {
-          "value": null,
-          "status": "empty"
+          "value": "快餐简餐",
+          "status": "updated"
         },
         "推荐产品": {
           "value": "G3标准版",

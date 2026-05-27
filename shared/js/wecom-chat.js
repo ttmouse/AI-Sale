@@ -100,7 +100,28 @@ const WecomChat = (() => {
       + '.sb-stage-change { display:inline-block; padding:1px 6px; background:#FEF3C7; color:#92400E; border-radius:3px; font-size:10px; font-weight:600; margin-left:4px; }'
       + '.sb-copy-btn { margin-top:6px; padding:6px 14px; border:0.5px solid rgba(7,90,154,.4); background:rgba(7,90,154,.2); color:#60A5FA; border-radius:6px; font-size:12px; cursor:pointer; font-family:inherit; transition:all .15s; }'
       + '.sb-copy-btn:hover { background:rgba(7,90,154,.3); }'
-      + '.sb-copy-btn:active { transform:scale(.96); }';
+      + '.sb-copy-btn:active { transform:scale(.96); }'
+      + '.ht-entry { padding:10px 0; border-bottom:0.5px solid rgba(255,255,255,.05); }'
+      + '.ht-entry:last-child { border-bottom:none; }'
+      + '.ht-time { font-size:10px; color:rgba(255,255,255,.3); font-family:"Geist Mono",monospace; margin-bottom:4px; }'
+      + '.ht-item { display:flex; align-items:flex-start; gap:6px; padding:3px 0; font-size:12px; line-height:1.5; }'
+      + '.ht-badge { display:inline-block; padding:1px 6px; border-radius:3px; font-size:9px; font-weight:600; color:#fff; flex-shrink:0; margin-top:1px; }'
+      + '.ht-badge-stage { background:#8B5CF6; }'
+      + '.ht-badge-field { background:#3B82F6; }'
+      + '.ht-badge-done { background:#10B981; }'
+      + '.ht-badge-init { background:#6B7280; }'
+      + '.ht-text { color:rgba(255,255,255,.65); }'
+      + '.ht-empty { font-size:12px; color:rgba(255,255,255,.25); text-align:center; padding:30px 0; }'
+      + '.sb-tabs { display:flex; border-bottom:0.5px solid rgba(255,255,255,.06); margin-bottom:12px; }'
+      + '.sb-tab { flex:1; padding:8px 0; font-size:12px; color:rgba(255,255,255,.4); text-align:center; cursor:pointer; border:none; background:none; font-family:inherit; transition:all .15s; border-bottom:2px solid transparent; }'
+      + '.sb-tab.active { color:#60A5FA; border-bottom-color:#60A5FA; }'
+      + '.sb-tab:active { opacity:.7; }'
+      + '.sb-tab.disabled { color:rgba(255,255,255,.15); cursor:default; }'
+      + '.sb-order-empty { font-size:12px; color:rgba(255,255,255,.3); text-align:center; padding:20px 16px; line-height:1.6; }'
+      + '.sb-order-item { padding:8px 0; border-bottom:0.5px solid rgba(255,255,255,.05); }'
+      + '.sb-order-item:last-child { border-bottom:none; }'
+      + '.sb-order-label { font-size:10px; color:rgba(255,255,255,.35); text-transform:uppercase; letter-spacing:.04em; margin-bottom:2px; }'
+      + '.sb-order-value { font-size:13px; color:rgba(255,255,255,.8); font-weight:500; }';
     var style = document.createElement('style');
     style.textContent = css;
     document.head.appendChild(style);
@@ -165,10 +186,18 @@ const WecomChat = (() => {
       + '    </div>'
       + '    <div class="fp-body" id="profile-body"></div>'
       + '  </div>'
+      + '  <div class="fp-page" id="history-page">'
+      + '    <div class="fp-header">'
+      + '      <button class="fp-close" id="history-back">&larr;</button>'
+      + '      <span class="fp-title">跟进记录</span>'
+      + '      <span class="fp-spacer"></span>'
+      + '    </div>'
+      + '    <div class="fp-body" id="history-body"></div>'
+      + '  </div>'
       + '</div>';
   }
 
-  // ===== 工具栏按钮 HTML（场景9原始7个按钮）=====
+  // ===== 工具栏按钮 HTML =====
   var TOOLBAR_BTNS = ''
     + '<button class="tool-btn" id="btn-customer-profile">'
     + '  <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
@@ -206,6 +235,10 @@ const WecomChat = (() => {
   var _title = '企业微信';
   var _customerName = '';
   var _salesName = '';
+  var _history = [];
+  var _prevAnnKey = '';
+  var _currentAnn = null;
+  var _activeTab = 'profile';
 
   // ===== 设置标题 =====
   function setTitle(title) {
@@ -229,110 +262,275 @@ const WecomChat = (() => {
   function closeProfile() {
     var page = document.getElementById('profile-page');
     var overlay = document.getElementById('profile-overlay');
+    var historyPage = document.getElementById('history-page');
+    if (historyPage) historyPage.classList.remove('open');
     if (page && overlay) { page.classList.remove('open'); overlay.classList.remove('open'); }
   }
 
-  // ===== 全屏页面：更新内容 =====
+  // ===== 历史记录页面：打开/关闭 =====
+  function openHistory() {
+    var historyPage = document.getElementById('history-page');
+    var overlay = document.getElementById('profile-overlay');
+    if (!historyPage) return;
+    if (overlay) overlay.classList.add('open');
+
+    var body = document.getElementById('history-body');
+    if (body) {
+      var html = '';
+      if (_history.length === 0) {
+        html = '<div class="ht-empty">暂无跟进记录</div>';
+      } else {
+        for (var i = _history.length - 1; i >= 0; i--) {
+          var entry = _history[i];
+          html += '<div class="ht-entry">';
+          html += '<div class="ht-time">' + entry.time + '</div>';
+          entry.items.forEach(function(item) {
+            var badgeCls = 'ht-badge';
+            if (item.t === '\u9636\u6BB5\u63A8\u8FDB') badgeCls += ' ht-badge-stage';
+            else if (item.t === '\u5B57\u6BB5\u66F4\u65B0') badgeCls += ' ht-badge-field';
+            else if (item.t === '\u5B8C\u6210') badgeCls += ' ht-badge-done';
+            html += '<div class="ht-item"><span class="' + badgeCls + '">' + item.t + '</span><span class="ht-text">' + item.d + '</span></div>';
+          });
+          html += '</div>';
+        }
+      }
+      body.innerHTML = html;
+    }
+    historyPage.classList.add('open');
+  }
+  function closeHistory() {
+    var historyPage = document.getElementById('history-page');
+    if (historyPage) historyPage.classList.remove('open');
+  }
+
+  // ===== 更新侧边栏内容（含标签页）=====
   function updateSidebar(ann) {
     if (!ann) return;
+
+    // --- 变更检测：追加历史记录 ---
+    var currKey = JSON.stringify({
+      stage: ann.progress ? ann.progress.currentStage : null,
+      stageChange: ann.progress ? ann.progress.stageChange : null,
+      fields: ann.fields ? Object.keys(ann.fields).reduce(function(o,k){
+        o[k] = (ann.fields[k]||{}).value; return o;
+      }, {}) : null,
+      completed: ann.progress ? (ann.progress.completed||[]) : [],
+    });
+    if (_prevAnnKey && currKey !== _prevAnnKey) {
+      var prev = JSON.parse(_prevAnnKey);
+      var entries = [];
+      if (ann.progress && ann.progress.stageChange) {
+        entries.push({ t: '\u9636\u6BB5\u63A8\u8FDB', d: ann.progress.currentStage + ' \u00B7 ' + ann.progress.stageChange });
+      }
+      if (ann.fields && prev.fields) {
+        Object.keys(ann.fields).forEach(function(k) {
+          var cv = (ann.fields[k]||{}).value;
+          var pv = prev.fields[k];
+          if (cv && cv !== pv) {
+            entries.push({ t: '\u5B57\u6BB5\u66F4\u65B0', d: k + '\uFF1A' + (pv || '\u7A7A') + ' \u2192 ' + cv });
+          }
+        });
+      }
+      if (ann.progress && ann.progress.completed) {
+        var newDone = ann.progress.completed.filter(function(item) {
+          return prev.completed.indexOf(item) === -1;
+        });
+        newDone.forEach(function(item) { entries.push({ t: '\u5B8C\u6210', d: item }); });
+      }
+      if (entries.length > 0) {
+        var time = new Date();
+        var ts = time.getHours().toString().padStart(2,'0') + ':' + time.getMinutes().toString().padStart(2,'0');
+        _history.push({ time: ts, items: entries });
+      }
+    }
+    _prevAnnKey = currKey;
+    _currentAnn = ann;
+
+    // 初始记录：客户来源+渠道
+    if (_history.length === 0) {
+      var source = '';
+      if (ann.fields && ann.fields['\u5BA2\u6237\u6765\u6E90']) source = ann.fields['\u5BA2\u6237\u6765\u6E90'].value;
+      var intent = '';
+      if (ann.fields && ann.fields['\u521D\u59CB\u610F\u5411']) intent = ann.fields['\u521D\u59CB\u610F\u5411'].value;
+      var initItems = [{ t: '\u5BA2\u6237\u6DFB\u52A0', d: '\u6765\u6E90\uFF1A' + (source || '\u672A\u77E5') }];
+      if (intent) initItems.push({ t: '\u521D\u59CB\u610F\u5411', d: intent });
+      var now = new Date();
+      _history.push({
+        time: now.getHours().toString().padStart(2,'0') + ':' + now.getMinutes().toString().padStart(2,'0'),
+        items: initItems
+      });
+    }
+
+    _renderBody();
+  }
+
+  // ===== 渲染主体内容 =====
+  function _renderBody() {
     var body = document.getElementById('profile-body');
-    if (!body) return;
+    if (!body || !_currentAnn) return;
+    var ann = _currentAnn;
 
     var html = '';
 
-    // 0. 联系信息栏
+    // 联系信息栏
     html += '<div style="display:flex;align-items:center;gap:10px;padding:0 0 12px 0;border-bottom:0.5px solid rgba(255,255,255,.06);margin-bottom:12px;">';
-    html += '<div style="width:36px;height:36px;border-radius:50%;background:#075A9A;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:600;flex-shrink:0;">销</div>';
-    html += '<div style="flex:1;">';
-    html += '<div style="font-size:14px;font-weight:600;color:rgba(255,255,255,.9);">' + (_customerName || '客户') + '</div>';
-    html += '<div style="font-size:11px;color:rgba(255,255,255,.4);">销售：' + (_salesName || '未知') + '</div>';
+    html += '<div style="width:36px;height:36px;border-radius:50%;background:#075A9A;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:600;flex-shrink:0;">\u9500</div>';
+    var sourceVal = '';
+    if (ann.fields && ann.fields['\u5BA2\u6237\u6765\u6E90']) sourceVal = ann.fields['\u5BA2\u6237\u6765\u6E90'].value;
+    html += '<div style="flex:1;min-width:0;">';
+    html += '<div style="font-size:14px;font-weight:600;color:rgba(255,255,255,.9);">' + (_customerName || '\u5BA2\u6237') + '</div>';
+    html += '<div style="font-size:11px;color:rgba(255,255,255,.4);">\u9500\u552E\uFF1A' + (_salesName || '\u672A\u77E5') + (sourceVal ? ' | \u6765\u6E90\uFF1A' + sourceVal : '') + '</div>';
     html += '</div>';
     html += '</div>';
 
-    // 1. 下一步建议（置顶+可复制话术）
+    // Tab 切换栏
+    var allStages = ['P1','P2','P3','P4','P5','P6','P7'];
+    var curStage = ann.progress ? ann.progress.currentStage : 'P1';
+    var stageIdx = allStages.indexOf(curStage);
+    var hasOrder = stageIdx >= 4;
+
+    html += '<div class="sb-tabs">';
+    html += '<button class="sb-tab' + (_activeTab === 'profile' ? ' active' : '') + '" data-tab="profile">\u753B\u50CF</button>';
+    html += '<button class="sb-tab' + (_activeTab === 'history' ? ' active' : '') + '" data-tab="history">\u8BB0\u5F55</button>';
+    html += '<button class="sb-tab' + (hasOrder ? '' : ' disabled') + (_activeTab === 'order' ? ' active' : '') + '" data-tab="order">\u8BA2\u5355</button>';
+    html += '</div>';
+
+    // 标签页内容
+    if (_activeTab === 'profile') {
+      html += _renderProfileTab(ann);
+    } else if (_activeTab === 'history') {
+      html += _renderHistoryTab();
+    } else if (_activeTab === 'order') {
+      html += _renderOrderTab(ann, hasOrder);
+    }
+
+    body.innerHTML = html;
+  }
+
+  function _renderProfileTab(ann) {
+    var h = '';
+
+    // 下一步建议
     if (ann.nextAction) {
       var na = ann.nextAction;
-      html += '<div class="sb-section">';
-      html += '<div class="sb-section-title">下一步建议</div>';
-      html += '<div class="sb-next-sug">' + na.suggestion + '</div>';
-      if (na.reason) html += '<div class="sb-next-reason">' + na.reason + '</div>';
+      h += '<div class="sb-section">';
+      h += '<div class="sb-section-title">\u4E0B\u4E00\u6B65\u5EFA\u8BAE</div>';
+      h += '<div class="sb-next-sug">' + na.suggestion + '</div>';
+      if (na.reason) h += '<div class="sb-next-reason">' + na.reason + '</div>';
       if (na.recommendedScript) {
         var scriptId = 'script-' + Date.now() + '-' + Math.random().toString(36).substr(2,4);
-        html += '<div style="position:relative;">';
-        html += '<div class="sb-next-script" id="' + scriptId + '">' + na.recommendedScript + '</div>';
-        html += '<button onclick="var t=document.getElementById(\'' + scriptId + '\').textContent;navigator.clipboard.writeText(t).then(function(){this.textContent=\'\u2713 \u5DF2\u590D\u5236\';var _this=this;setTimeout(function(){_this.textContent=\'\u590D\u5236\u8BDD\u672F\';},1500);}.bind(this)).catch(function(){})" class="sb-copy-btn">复制话术</button>';
-        html += '</div>';
+        h += '<div style="position:relative;">';
+        h += '<div class="sb-next-script" id="' + scriptId + '">' + na.recommendedScript + '</div>';
+        h += '<button onclick="var t=document.getElementById(\'' + scriptId + '\').textContent;navigator.clipboard.writeText(t).then(function(){this.textContent=\'\u2713 \u5DF2\u590D\u5236\';var _this=this;setTimeout(function(){_this.textContent=\'\u590D\u5236\u8BDD\u672F\';},1500);}.bind(this)).catch(function(){})" class="sb-copy-btn">\u590D\u5236\u8BDD\u672F</button>';
+        h += '</div>';
       }
-      html += '</div>';
+      h += '</div>';
     }
 
-    // 2. 流程动作（紧跟建议）
+    // 流程动作
     if (ann.flows && ann.flows.length > 0) {
-      html += '<div class="sb-section">';
-      html += '<div class="sb-section-title">流程动作</div>';
+      h += '<div class="sb-section">';
+      h += '<div class="sb-section-title">\u6D41\u7A0B\u52A8\u4F5C</div>';
       ann.flows.forEach(function(f) {
-        var iconSvg = _iconHtmlSidebar(f.icon || 'circle');
-        html += '<button class="sb-flow-btn" onclick="window.showToast(\'' + f.label.replace(/'/g, "\\'") + ' 已创建\')">'
-          + iconSvg + '<span>' + f.label + '</span></button>';
+        h += '<button class="sb-flow-btn" onclick="window.showToast(\'' + f.label.replace(/'/g, "\\'") + ' \u5DF2\u521B\u5EFA\')">'
+          + _iconHtmlSidebar(f.icon || 'circle') + '<span>' + f.label + '</span></button>';
       });
-      html += '</div>';
+      h += '</div>';
     }
 
-    // 3. 项目推进状态（核心销售阶段）
+    // 项目推进状态
     if (ann.progress) {
       var p = ann.progress;
-      html += '<div class="sb-section">';
-      html += '<div class="sb-section-title">项目推进状态</div>';
+      h += '<div class="sb-section">';
+      h += '<div class="sb-section-title">\u9879\u76EE\u63A8\u8FDB\u72B6\u6001</div>';
 
       var allStages = ['P1','P2','P3','P4','P5','P6','P7'];
       var curIdx = allStages.indexOf(p.currentStage);
       if (curIdx < 0) curIdx = 0;
-      html += '<div class="sb-progress-dots">';
+      h += '<div class="sb-progress-dots">';
       allStages.forEach(function(s, i) {
         var cls = 'sb-pdot';
         if (i < curIdx) cls += ' done';
         else if (i === curIdx) cls += ' cur';
-        html += '<div class="' + cls + '" title="' + s + '"></div>';
+        h += '<div class="' + cls + '" title="' + s + '"></div>';
         if (i < allStages.length - 1) {
-          var barCls = i < curIdx ? 'sb-pbar filled' : 'sb-pbar';
-          html += '<div class="' + barCls + '"></div>';
+          h += '<div class="' + (i < curIdx ? 'sb-pbar filled' : 'sb-pbar') + '"></div>';
         }
       });
-      html += '</div>';
+      h += '</div>';
 
-      html += '<div class="sb-stage-info">当前阶段：<strong>' + p.currentStage + '</strong>';
-      if (p.stageChange) html += ' <span class="sb-stage-change">' + p.stageChange + '</span>';
-      html += '</div>';
+      h += '<div class="sb-stage-info">\u5F53\u524D\u9636\u6BB5\uFF1A<strong>' + p.currentStage + '</strong>';
+      if (p.stageChange) h += ' <span class="sb-stage-change">' + p.stageChange + '</span>';
+      h += '</div>';
 
       if (p.completed && p.completed.length > 0) {
-        p.completed.forEach(function(item) { html += '<div class="sb-check">' + item + '</div>'; });
+        p.completed.forEach(function(item) { h += '<div class="sb-check">' + item + '</div>'; });
       }
       if (p.pending && p.pending.length > 0) {
-        p.pending.forEach(function(item) { html += '<div class="sb-pending">' + item + '</div>'; });
+        p.pending.forEach(function(item) { h += '<div class="sb-pending">' + item + '</div>'; });
       }
-      html += '</div>';
+      h += '</div>';
     }
 
-    // 4. 字段面板
+    // 字段面板
     if (ann.fields) {
-      html += '<div class="sb-section">';
-      html += '<div class="sb-section-title">客户画像</div>';
+      h += '<div class="sb-section">';
+      h += '<div class="sb-section-title">\u5BA2\u6237\u753B\u50CF</div>';
       var order = ann._fieldOrder || Object.keys(ann.fields);
       order.forEach(function(key) {
         var f = ann.fields[key];
         if (!f) return;
         var isEmpty = !f.value || f.status === 'empty';
-        var val = isEmpty ? '—' : f.value;
-        var valCls = isEmpty ? 'sb-val sb-val-empty' : 'sb-val';
-        html += '<div class="sb-row"><span class="sb-key">' + key + '</span><span class="' + valCls + '">' + val + '</span></div>';
+        h += '<div class="sb-row"><span class="sb-key">' + key + '</span><span class="' + (isEmpty ? 'sb-val sb-val-empty' : 'sb-val') + '">' + (isEmpty ? '\u2014' : f.value) + '</span></div>';
       });
-      html += '</div>';
+      h += '</div>';
     }
 
-    body.innerHTML = html || '<div style="font-size:12px;color:rgba(255,255,255,.3);text-align:center;padding:20px 0;">暂无数据</div>';
+    return h;
   }
 
-  // ===== 侧边栏小图标 =====
+  function _renderHistoryTab() {
+    var h = '';
+    if (_history.length === 0) {
+      h = '<div class="ht-empty">\u6682\u65E0\u8DDF\u8FDB\u8BB0\u5F55</div>';
+    } else {
+      for (var i = _history.length - 1; i >= 0; i--) {
+        var entry = _history[i];
+        h += '<div class="ht-entry">';
+        h += '<div class="ht-time">' + entry.time + '</div>';
+        entry.items.forEach(function(item) {
+          var badgeCls = 'ht-badge';
+          if (item.t === '\u9636\u6BB5\u63A8\u8FDB') badgeCls += ' ht-badge-stage';
+          else if (item.t === '\u5B57\u6BB5\u66F4\u65B0') badgeCls += ' ht-badge-field';
+          else if (item.t === '\u5B8C\u6210') badgeCls += ' ht-badge-done';
+          h += '<div class="ht-item"><span class="' + badgeCls + '">' + item.t + '</span><span class="ht-text">' + item.d + '</span></div>';
+        });
+        h += '</div>';
+      }
+    }
+    return h;
+  }
+
+  function _renderOrderTab(ann, hasOrder) {
+    if (!hasOrder) {
+      return '<div class="sb-order-empty">\u5BA2\u6237\u5C1A\u672A\u8FBE\u5230\u8BA2\u5355/\u5408\u540C\u9636\u6BB5<br>\u5F53\u524D\u9636\u6BB5\uFF1A' + (ann.progress ? ann.progress.currentStage : '-') + '</div>';
+    }
+    var orderFields = ['\u63A8\u8350\u4EA7\u54C1', '\u65B9\u6848\u72B6\u6001', '\u5BA2\u6237\u610F\u5411'];
+    var h = '<div class="sb-section">';
+    h += '<div class="sb-section-title">\u8BA2\u5355/\u5408\u540C\u4FE1\u606F</div>';
+    if (ann.fields) {
+      orderFields.forEach(function(key) {
+        var f = ann.fields[key];
+        if (f && f.value) {
+          h += '<div class="sb-order-item"><div class="sb-order-label">' + key + '</div><div class="sb-order-value">' + f.value + '</div></div>';
+        }
+      });
+    }
+    h += '</div>';
+    return h;
+  }
+
+  // ===== 小图标 =====
   function _iconHtmlSidebar(name) {
     var icons = {
       'user-plus': '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>',
@@ -352,13 +550,38 @@ const WecomChat = (() => {
     if (!container) return false;
     container.innerHTML = phoneHTML();
 
-    // 绑定客户画像全屏页面事件
+    // 绑定客户画像事件
     var profileBtn = document.getElementById('btn-customer-profile');
     var closeBtn = document.getElementById('profile-close');
     var overlay = document.getElementById('profile-overlay');
     if (profileBtn) profileBtn.addEventListener('click', function() { openProfile(); });
     if (closeBtn) closeBtn.addEventListener('click', function() { closeProfile(); });
     if (overlay) overlay.addEventListener('click', function() { closeProfile(); });
+
+    // 绑定 Tab 切换（profile-body 内动态生成，使用事件委托）
+    var profileBody = document.getElementById('profile-body');
+    if (profileBody) profileBody.addEventListener('click', function(e) {
+      var tab = e.target.getAttribute('data-tab');
+      if (tab && tab !== '' && _activeTab !== tab) {
+        if (tab === 'order' && (!_currentAnn || !_currentAnn.progress || ['P1','P2','P3','P4'].indexOf(_currentAnn.progress.currentStage) >= 0)) return;
+        _activeTab = tab;
+        _renderProfile();
+      }
+    });
+
+    // 绑定历史记录返回
+    var historyBack = document.getElementById('history-back');
+    if (historyBack) historyBack.addEventListener('click', function() { closeHistory(); });
+
+    // Tab 切换（事件委托）
+    var profileBody = document.getElementById('profile-body');
+    if (profileBody) profileBody.addEventListener('click', function(e) {
+      var tab = e.target.getAttribute('data-tab');
+      if (tab && !e.target.classList.contains('disabled')) {
+        _activeTab = tab;
+        _renderBody();
+      }
+    });
 
     return true;
   }
@@ -372,16 +595,15 @@ const WecomChat = (() => {
     div.className = 'msg msg-' + type;
 
     if (type === 'customer') {
-      div.innerHTML = '<div class="msg-avatar">客</div>'
+      div.innerHTML = '<div class="msg-avatar">\u5BA2</div>'
         + '<div class="msg-bubble"><div class="msg-content">' + _escape(content) + '</div></div>';
     } else if (type === 'sales') {
       div.innerHTML = '<div class="msg-bubble"><div class="msg-content">' + _escape(content)
-        + '<div class="read-tag">已读</div></div></div>'
-        + '<div class="msg-avatar">销</div>';
+        + '<div class="read-tag">\u5DF2\u8BFB</div></div></div>'
+        + '<div class="msg-avatar">\u9500</div>';
     }
 
     msgsEl.appendChild(div);
-    // 滚动到底部
     var chatArea = document.getElementById('chat-area');
     if (chatArea) chatArea.scrollTop = chatArea.scrollHeight;
   }
@@ -392,7 +614,6 @@ const WecomChat = (() => {
     if (msgsEl) msgsEl.innerHTML = '';
   }
 
-  // ===== 工具 =====
   function _escape(text) {
     return (text || '').replace(/\n/g, '<br>');
   }
@@ -404,6 +625,8 @@ const WecomChat = (() => {
     setTitle: setTitle,
     openProfile: openProfile,
     closeProfile: closeProfile,
+    openHistory: openHistory,
+    closeHistory: closeHistory,
     updateSidebar: updateSidebar,
     setSalesInfo: setSalesInfo,
   };

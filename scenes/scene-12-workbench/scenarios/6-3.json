@@ -50,6 +50,72 @@
       "nextAction": {
         "suggestion": "继续推进",
         "reason": "按流程"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "1天",
+          "status": "current"
+        },
+        "初始意向": {
+          "value": "付款推进",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "付款流程",
+          "status": "current"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "current"
+        },
+        "后厨人员": {
+          "value": "3人",
+          "status": "current"
+        },
+        "痛点": {
+          "value": "需安排付款",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": "快餐简餐",
+          "status": "current"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "current"
+        },
+        "当前阶段": {
+          "value": "P6",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": "待付款",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": "正向",
+          "status": "current"
+        },
+        "方案状态": {
+          "value": "合同已签",
+          "status": "current"
+        },
+        "画像完整度": {
+          "value": "94%",
+          "status": "current"
+        }
       }
     },
     {
@@ -69,6 +135,72 @@
       "nextAction": {
         "suggestion": "继续推进",
         "reason": "按流程"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "1天",
+          "status": "current"
+        },
+        "初始意向": {
+          "value": "付款推进",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "付款流程",
+          "status": "current"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "current"
+        },
+        "后厨人员": {
+          "value": "3人",
+          "status": "current"
+        },
+        "痛点": {
+          "value": "需安排付款",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": "快餐简餐",
+          "status": "current"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "current"
+        },
+        "当前阶段": {
+          "value": "P6",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": "待付款",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": "正向",
+          "status": "current"
+        },
+        "方案状态": {
+          "value": "合同已签",
+          "status": "current"
+        },
+        "画像完整度": {
+          "value": "94%",
+          "status": "current"
+        }
       }
     },
     {
@@ -84,6 +216,72 @@
       "nextAction": {
         "suggestion": "继续推进",
         "reason": "按流程"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "1天",
+          "status": "current"
+        },
+        "初始意向": {
+          "value": "付款推进",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "付款流程",
+          "status": "current"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "current"
+        },
+        "后厨人员": {
+          "value": "3人",
+          "status": "current"
+        },
+        "痛点": {
+          "value": "需安排付款",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": "快餐简餐",
+          "status": "current"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "current"
+        },
+        "当前阶段": {
+          "value": "P6",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": "待付款",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": "正向",
+          "status": "current"
+        },
+        "方案状态": {
+          "value": "合同已签",
+          "status": "current"
+        },
+        "画像完整度": {
+          "value": "94%",
+          "status": "current"
+        }
       }
     },
     {
@@ -99,6 +297,72 @@
       "nextAction": {
         "suggestion": "继续推进",
         "reason": "按流程"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "1天",
+          "status": "current"
+        },
+        "初始意向": {
+          "value": "付款推进",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "付款流程",
+          "status": "current"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "current"
+        },
+        "后厨人员": {
+          "value": "3人",
+          "status": "current"
+        },
+        "痛点": {
+          "value": "需安排付款",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": "快餐简餐",
+          "status": "current"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "current"
+        },
+        "当前阶段": {
+          "value": "P6",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": "待付款",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": "正向",
+          "status": "current"
+        },
+        "方案状态": {
+          "value": "合同已签",
+          "status": "current"
+        },
+        "画像完整度": {
+          "value": "94%",
+          "status": "current"
+        }
       }
     },
     {
@@ -114,6 +378,72 @@
       "nextAction": {
         "suggestion": "继续推进",
         "reason": "按流程"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "1天",
+          "status": "current"
+        },
+        "初始意向": {
+          "value": "付款推进",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "付款流程",
+          "status": "current"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "current"
+        },
+        "后厨人员": {
+          "value": "3人",
+          "status": "current"
+        },
+        "痛点": {
+          "value": "需安排付款",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": "快餐简餐",
+          "status": "current"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "current"
+        },
+        "当前阶段": {
+          "value": "P6",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": "待付款",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": "正向",
+          "status": "current"
+        },
+        "方案状态": {
+          "value": "合同已签",
+          "status": "current"
+        },
+        "画像完整度": {
+          "value": "94%",
+          "status": "current"
+        }
       }
     }
   ]

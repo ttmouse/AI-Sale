@@ -55,6 +55,72 @@
       "nextAction": {
         "suggestion": "继续推进",
         "reason": "按流程"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "抖音私信",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "3天",
+          "status": "updated"
+        },
+        "初始意向": {
+          "value": "设备咨询",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "菜品品质",
+          "status": "current"
+        },
+        "日单量": {
+          "value": null,
+          "status": "empty"
+        },
+        "后厨人员": {
+          "value": null,
+          "status": "empty"
+        },
+        "痛点": {
+          "value": "口味一致性",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": null,
+          "status": "empty"
+        },
+        "当前阶段": {
+          "value": "P3",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "客户意向": {
+          "value": "意向明确",
+          "status": "updated"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "38%",
+          "status": "current"
+        }
       }
     },
     {
@@ -70,6 +136,72 @@
       "nextAction": {
         "suggestion": "继续推进",
         "reason": "按流程"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "抖音私信",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "3天",
+          "status": "updated"
+        },
+        "初始意向": {
+          "value": "设备咨询",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "菜品品质",
+          "status": "current"
+        },
+        "日单量": {
+          "value": null,
+          "status": "empty"
+        },
+        "后厨人员": {
+          "value": null,
+          "status": "empty"
+        },
+        "痛点": {
+          "value": "口味一致性",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": null,
+          "status": "empty"
+        },
+        "当前阶段": {
+          "value": "P3",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "客户意向": {
+          "value": "意向明确",
+          "status": "updated"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "38%",
+          "status": "current"
+        }
       }
     },
     {
@@ -85,6 +217,72 @@
       "nextAction": {
         "suggestion": "继续推进",
         "reason": "按流程"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "抖音私信",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "3天",
+          "status": "updated"
+        },
+        "初始意向": {
+          "value": "设备咨询",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "菜品品质",
+          "status": "current"
+        },
+        "日单量": {
+          "value": null,
+          "status": "empty"
+        },
+        "后厨人员": {
+          "value": null,
+          "status": "empty"
+        },
+        "痛点": {
+          "value": "口味一致性",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": null,
+          "status": "empty"
+        },
+        "当前阶段": {
+          "value": "P3",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "客户意向": {
+          "value": "意向明确",
+          "status": "updated"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "38%",
+          "status": "current"
+        }
       }
     },
     {
@@ -100,6 +298,72 @@
       "nextAction": {
         "suggestion": "继续推进",
         "reason": "按流程"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "抖音私信",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "3天",
+          "status": "updated"
+        },
+        "初始意向": {
+          "value": "设备咨询",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "菜品品质",
+          "status": "current"
+        },
+        "日单量": {
+          "value": null,
+          "status": "empty"
+        },
+        "后厨人员": {
+          "value": null,
+          "status": "empty"
+        },
+        "痛点": {
+          "value": "口味一致性",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": null,
+          "status": "empty"
+        },
+        "当前阶段": {
+          "value": "P3",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "客户意向": {
+          "value": "意向明确",
+          "status": "updated"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "38%",
+          "status": "current"
+        }
       }
     },
     {
@@ -115,6 +379,72 @@
       "nextAction": {
         "suggestion": "继续推进",
         "reason": "按流程"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "抖音私信",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "3天",
+          "status": "updated"
+        },
+        "初始意向": {
+          "value": "设备咨询",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "菜品品质",
+          "status": "current"
+        },
+        "日单量": {
+          "value": null,
+          "status": "empty"
+        },
+        "后厨人员": {
+          "value": null,
+          "status": "empty"
+        },
+        "痛点": {
+          "value": "口味一致性",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": null,
+          "status": "empty"
+        },
+        "当前阶段": {
+          "value": "P3",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "客户意向": {
+          "value": "意向明确",
+          "status": "updated"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "38%",
+          "status": "current"
+        }
       }
     }
   ]

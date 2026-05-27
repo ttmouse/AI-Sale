@@ -56,6 +56,72 @@
       "nextAction": {
         "suggestion": "继续推进",
         "reason": "按流程"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "老客户转介绍",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "新线索",
+          "status": "current"
+        },
+        "初始意向": {
+          "value": "设备咨询",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": null,
+          "status": "empty"
+        },
+        "细分类别": {
+          "value": null,
+          "status": "empty"
+        },
+        "核心关注点": {
+          "value": null,
+          "status": "empty"
+        },
+        "日单量": {
+          "value": null,
+          "status": "empty"
+        },
+        "后厨人员": {
+          "value": null,
+          "status": "empty"
+        },
+        "痛点": {
+          "value": null,
+          "status": "empty"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": null,
+          "status": "empty"
+        },
+        "当前阶段": {
+          "value": "P1",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "客户意向": {
+          "value": null,
+          "status": "empty"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "25%",
+          "status": "current"
+        }
       }
     },
     {
@@ -77,6 +143,72 @@
       "nextAction": {
         "suggestion": "继续推进",
         "reason": "按流程"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "老客户转介绍",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "新线索",
+          "status": "current"
+        },
+        "初始意向": {
+          "value": "设备咨询",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": null,
+          "status": "empty"
+        },
+        "细分类别": {
+          "value": null,
+          "status": "empty"
+        },
+        "核心关注点": {
+          "value": null,
+          "status": "empty"
+        },
+        "日单量": {
+          "value": null,
+          "status": "empty"
+        },
+        "后厨人员": {
+          "value": null,
+          "status": "empty"
+        },
+        "痛点": {
+          "value": null,
+          "status": "empty"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": null,
+          "status": "empty"
+        },
+        "当前阶段": {
+          "value": "P1",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "客户意向": {
+          "value": null,
+          "status": "empty"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "25%",
+          "status": "current"
+        }
       }
     },
     {
@@ -92,6 +224,72 @@
       "nextAction": {
         "suggestion": "继续推进",
         "reason": "按流程"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "老客户转介绍",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "新线索",
+          "status": "current"
+        },
+        "初始意向": {
+          "value": "设备咨询",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": null,
+          "status": "empty"
+        },
+        "细分类别": {
+          "value": null,
+          "status": "empty"
+        },
+        "核心关注点": {
+          "value": null,
+          "status": "empty"
+        },
+        "日单量": {
+          "value": null,
+          "status": "empty"
+        },
+        "后厨人员": {
+          "value": null,
+          "status": "empty"
+        },
+        "痛点": {
+          "value": null,
+          "status": "empty"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": null,
+          "status": "empty"
+        },
+        "当前阶段": {
+          "value": "P1",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "客户意向": {
+          "value": null,
+          "status": "empty"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "25%",
+          "status": "current"
+        }
       }
     },
     {
@@ -107,6 +305,72 @@
       "nextAction": {
         "suggestion": "继续推进",
         "reason": "按流程"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "老客户转介绍",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "新线索",
+          "status": "current"
+        },
+        "初始意向": {
+          "value": "设备咨询",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": null,
+          "status": "empty"
+        },
+        "细分类别": {
+          "value": null,
+          "status": "empty"
+        },
+        "核心关注点": {
+          "value": null,
+          "status": "empty"
+        },
+        "日单量": {
+          "value": null,
+          "status": "empty"
+        },
+        "后厨人员": {
+          "value": null,
+          "status": "empty"
+        },
+        "痛点": {
+          "value": null,
+          "status": "empty"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": null,
+          "status": "empty"
+        },
+        "当前阶段": {
+          "value": "P1",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "客户意向": {
+          "value": null,
+          "status": "empty"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "25%",
+          "status": "current"
+        }
       }
     },
     {
@@ -122,6 +386,72 @@
       "nextAction": {
         "suggestion": "继续推进",
         "reason": "按流程"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "老客户转介绍",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "新线索",
+          "status": "current"
+        },
+        "初始意向": {
+          "value": "设备咨询",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": null,
+          "status": "empty"
+        },
+        "细分类别": {
+          "value": null,
+          "status": "empty"
+        },
+        "核心关注点": {
+          "value": null,
+          "status": "empty"
+        },
+        "日单量": {
+          "value": null,
+          "status": "empty"
+        },
+        "后厨人员": {
+          "value": null,
+          "status": "empty"
+        },
+        "痛点": {
+          "value": null,
+          "status": "empty"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": null,
+          "status": "empty"
+        },
+        "当前阶段": {
+          "value": "P1",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "客户意向": {
+          "value": null,
+          "status": "empty"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "25%",
+          "status": "current"
+        }
       }
     }
   ]
