@@ -20,7 +20,7 @@
     'bar-chart': '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>',
   };
 
-  // ===== 核心：根据状态变化生成工具调用链 =====
+  // ===== 核心：Observe → Reason → Execute =====
   function buildToolChain(prevAnn, currAnn, context) {
     var tools = [];
     if (!currAnn) return tools;
@@ -30,69 +30,56 @@
     var suggestion = context.suggestion || '';
     var fieldChanges = getFieldChanges(prevAnn, currAnn);
     var hasStageChange = currAnn.progress && currAnn.progress.stageChange;
-    var newFields = getNewFields(prevAnn, currAnn);
 
-    // --- READ 阶段 ---
-    tools.push({ phase:'read', icon:'message-square', tool:'getMessageHistory', action:'拉取会话消息', output: triggerMsg });
+    // --- OBSERVE: 收集所有上下文输入给 LLM ---
+    tools.push({ phase:'observe', icon:'message-square', tool:'collectContext', action:'收集当前上下文', output: '新消息: ' + triggerMsg, duration: 180 });
     var fieldSummary = getFieldSummary(currAnn);
-    tools.push({ phase:'read', icon:'database', tool:'getSystemFields', action:'读取系统字段', output: fieldSummary });
-
-    // --- THINK 阶段：多步推理 ---
-    // 第一步：分析消息
-    tools.push({ phase:'think', icon:'code', tool:'analyzeMessage', action:'分析消息内容', output: '消息长度 ' + triggerMsg.length + ' 字, 角色: ' + (triggerMsg.indexOf('销售') === 0 ? '销售' : '客户') });
-
-    // 第二步：提取实体（有字段变化时才真正提取到新信息）
-    if (newFields.length > 0) {
-      // 新增字段 → 从消息中提取到了新实体
-      var entityOutput = newFields.map(function(k) { return k + '=' + getFieldValue(currAnn, k); }).join(', ');
-      tools.push({ phase:'think', icon:'search', tool:'extractEntities', action:'提取关键实体', output: entityOutput });
-    } else if (fieldChanges.length > 0) {
-      // 字段更新 → 实体值发生了变化
-      var changeOutput = fieldChanges.join(', ');
-      tools.push({ phase:'think', icon:'search', tool:'extractEntities', action:'提取关键实体', output: changeOutput });
-    } else {
-      // 无变化 → 仅确认上下文
-      tools.push({ phase:'think', icon:'activity', tool:'evaluateContext', action:'评估当前上下文', output: '对话正常推进，无需更新字段' });
+    if (fieldSummary) {
+      tools.push({ phase:'observe', icon:'database', tool:'readSystemFields', action:'读取客户系统字段', output: fieldSummary, duration: 240 });
     }
 
-    // 第三步：对比已有画像
-    if (newFields.length > 0) {
-      tools.push({ phase:'think', icon:'bar-chart', tool:'compareProfile', action:'对比已有画像', output: '检测到 ' + newFields.length + ' 个新字段, ' + fieldChanges.length + ' 个变更' });
-    } else if (fieldChanges.length > 0) {
-      tools.push({ phase:'think', icon:'bar-chart', tool:'compareProfile', action:'对比已有画像', output: fieldChanges.length + ' 个字段值发生变化' });
-    }
+    // --- REASON: 单次 LLM 推理 ---
+    // 构造结构化的 prompt/result 展示
+    var promptParts = [];
+    if (fieldSummary) promptParts.push('系统字段(' + fieldSummary.split(';').length + '项)');
+    promptParts.push('新消息(=' + triggerMsg.length + '字)');
+    var promptStr = promptParts.join(' + ');
 
-    // 总结
-    if (newFields.length > 0 || fieldChanges.length > 0 || analysis) {
-      tools.push({ phase:'think', icon:'check-circle', tool:'conclude', action:'总结分析结论', output: analysis || '完成本轮分析' });
-    }
-
-    // --- EXEC 阶段 ---
-    // 字段更新
+    var resultObj = { understanding: '', decisions: [], plan: '' };
     if (fieldChanges.length > 0) {
-      tools.push({ phase:'exec', icon:'edit', tool:'updateCustomerField', action:'更新画像字段', output: fieldChanges.join('; ') });
+      resultObj.understanding = analysis || '分析完成';
+      resultObj.decisions = fieldChanges.map(function(c) { return c; });
+      resultObj.plan = '更新 ' + fieldChanges.length + ' 个字段' + (suggestion ? ' + ' + suggestion : '');
+    } else if (analysis) {
+      resultObj.understanding = analysis;
+      resultObj.plan = suggestion || '无需操作';
+    } else {
+      resultObj.plan = '对话正常推进，无需变更';
     }
 
-    // 阶段评估与更新
+    var resultStr = resultObj.understanding;
+    if (resultObj.decisions.length > 0) resultStr += ' | 决策更新: ' + resultObj.decisions.join(', ');
+    resultStr += ' | 计划: ' + resultObj.plan;
+
+    tools.push({
+      phase:'reason', icon:'search', tool:'llmReason', action:'LLM 综合分析',
+      prompt: promptStr,
+      output: resultStr,
+      duration: 1800 + Math.floor(Math.random() * 800), // 1.8~2.6s
+    });
+
+    // --- EXECUTE: 按推理结果执行工具调用 ---
+    if (fieldChanges.length > 0) {
+      tools.push({ phase:'execute', icon:'edit', tool:'updateCustomerField', action:'更新客户画像', output: fieldChanges.join('; '), duration: 350 });
+    }
+
     if (hasStageChange) {
-      // 先评估阶段推进条件
-      var stageGoal = currAnn.progress.currentStage || '';
-      var completedItems = (currAnn.progress.completed || []).join(', ');
-      tools.push({ phase:'exec', icon:'bar-chart', tool:'evaluateStageProgress', action:'评估阶段推进条件', output: '已完成: ' + (completedItems || '—') + ' → 满足 ' + stageGoal + ' 条件' });
-      tools.push({ phase:'exec', icon:'file-text', tool:'updateStage', action:'更新销售阶段', output: currAnn.progress.stageChange });
+      tools.push({ phase:'execute', icon:'bar-chart', tool:'evaluateStage', action:'评估阶段变更条件', output: '满足 ' + (currAnn.progress.currentStage || '') + ' 条件', duration: 200 });
+      tools.push({ phase:'execute', icon:'file-text', tool:'updateStage', action:'推进销售阶段', output: currAnn.progress.stageChange, duration: 280 });
     }
 
-    // 阶段变化提示（即使没有 stageChange，如果 completed 增加了也记录进度）
-    if (!hasStageChange && currAnn.progress && currAnn.progress.completed && currAnn.progress.completed.length > 0) {
-      var prevCompleted = prevAnn && prevAnn.progress ? (prevAnn.progress.completed || []).length : 0;
-      if (currAnn.progress.completed.length > prevCompleted) {
-        tools.push({ phase:'exec', icon:'check-circle', tool:'updateProgress', action:'更新任务进度', output: '已完成 ' + currAnn.progress.completed.length + '/' + (currAnn.progress.completed.length + (currAnn.progress.pending || []).length) + ' 项' });
-      }
-    }
-
-    // --- OUT 阶段 ---
     if (suggestion) {
-      tools.push({ phase:'out', icon:'arrow-right', tool:'generateSuggestion', action:'生成下一步建议', output: suggestion });
+      tools.push({ phase:'execute', icon:'arrow-right', tool:'generateSuggestion', action:'输出下一步建议', output: suggestion, duration: 450 });
     }
 
     return tools;
@@ -115,29 +102,6 @@
     });
 
     return changes;
-  }
-
-  // ===== 获取新增字段 =====
-  function getNewFields(prev, curr) {
-    if (!curr || !curr.fields) return [];
-    var currFields = typeof curr.fields === 'string' ? safeParse(curr.fields) : curr.fields;
-    if (!prev || !prev.fields) return Object.keys(currFields).filter(function(k) { return currFields[k] && currFields[k].status !== 'empty'; });
-    var prevFields = typeof prev.fields === 'string' ? safeParse(prev.fields) : prev.fields;
-    var result = [];
-    Object.keys(currFields).forEach(function(key) {
-      var cv = currFields[key];
-      if (!cv || cv.status === 'empty') return;
-      var pv = prevFields[key];
-      if (!pv || pv.status === 'empty') result.push(key);
-    });
-    return result;
-  }
-
-  // ===== 获取字段值 =====
-  function getFieldValue(ann, key) {
-    if (!ann || !ann.fields) return '';
-    var f = typeof ann.fields === 'string' ? safeParse(ann.fields) : ann.fields;
-    return (f[key] && f[key].value) || '';
   }
 
   // ===== 生成字段摘要 =====
