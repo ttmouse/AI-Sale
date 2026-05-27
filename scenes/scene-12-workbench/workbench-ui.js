@@ -136,12 +136,17 @@
     var msgIdx = WorkbenchEngine.getCurrentMessageIndex();
     if (!ann) return;
 
-    // --- 时间轴：检测注解内容变化后才追加卡片 ---
+    // --- 时间轴：延迟追加卡片，模拟AI实时分析 ---
     var annContent = JSON.stringify(ann.profile || '') + '|' + (ann.progress ? ann.progress.currentStage : '') + '|' + JSON.stringify((ann.progress||{}).completed||[]);
     if (annContent !== _lastAnnContent) {
       _lastAnnContent = annContent;
       _lastTimelineIdx = msgIdx;
-      appendTimelineCard(ann, msgIdx);
+      // 延迟显示 Agent 日志卡片，模拟 AI 思考过程
+      var _ann = ann;
+      var _idx = msgIdx;
+      setTimeout(function() {
+        appendTimelineCard(_ann, _idx);
+      }, 600);
     }
 
     // --- 右侧面板：始终显示当前最新状态 ---
@@ -208,24 +213,25 @@
         if (ann.progress.stageChange) html += ' <span class="ann-badge ann-badge-change" style="font-size:0.5625rem;">' + ann.progress.stageChange + '</span>';
       }
 
+      // Agent 工作流：通过延时逐条展示，模拟实时处理
       if (log.received) {
-        html += '<div class="tl-agent-line tl-agent-received"><span class="tl-agent-icon">📩</span><span class="tl-agent-label">收到消息</span><div class="tl-agent-text">' + (log.received) + '</div></div>';
+        html += '<div class="tl-agent-line tl-agent-received" id="al-recv-' + msgIdx + '"><span class="tl-agent-icon">📩</span><span class="tl-agent-label">收到消息</span><div class="tl-agent-text">' + (log.received) + '</div></div>';
       }
       if (log.analysis) {
-        html += '<div class="tl-agent-line tl-agent-analysis"><span class="tl-agent-icon">🧠</span><span class="tl-agent-label">AI 分析</span><div class="tl-agent-text">' + (log.analysis) + '</div></div>';
+        html += '<div class="tl-agent-line tl-agent-analysis" id="al-anl-' + msgIdx + '" style="display:none"><span class="tl-agent-icon">🧠</span><span class="tl-agent-label">AI 分析</span><div class="tl-agent-text">' + (log.analysis) + '</div></div>';
       }
       if (log.updates && log.updates.length > 0) {
-        html += '<div class="tl-agent-line"><span class="tl-agent-icon">📋</span><span class="tl-agent-label">更新字段</span>';
+        html += '<div class="tl-agent-line" id="al-upd-' + msgIdx + '" style="display:none"><span class="tl-agent-icon">📋</span><span class="tl-agent-label">更新字段</span>';
         log.updates.forEach(function(u) {
           html += '<div class="tl-agent-tag">' + u + '</div>';
         });
         html += '</div>';
       }
       if (log.recommendedAction) {
-        html += '<div class="tl-agent-line tl-agent-action"><span class="tl-agent-icon">🎯</span><span class="tl-agent-label">推荐动作</span><div class="tl-agent-text">' + (log.recommendedAction) + '</div></div>';
+        html += '<div class="tl-agent-line tl-agent-action" id="al-act-' + msgIdx + '" style="display:none"><span class="tl-agent-icon">🎯</span><span class="tl-agent-label">推荐动作</span><div class="tl-agent-text">' + (log.recommendedAction) + '</div></div>';
       }
       if (ann.pendingConfirm && ann.pendingConfirm.length > 0) {
-        html += '<div class="tl-agent-line"><span class="tl-agent-icon">❓</span><span class="tl-agent-label">待确认</span>';
+        html += '<div class="tl-agent-line" id="al-pc-' + msgIdx + '" style="display:none"><span class="tl-agent-icon">❓</span><span class="tl-agent-label">待确认</span>';
         ann.pendingConfirm.forEach(function(pc) {
           html += '<div class="tl-agent-tag tl-agent-confirm">' + pc.label + ': ' + pc.value + '</div>';
         });
@@ -255,6 +261,20 @@
 
     els.timelineBody.insertAdjacentHTML('beforeend', html);
     els.timelineBody.scrollTop = els.timelineBody.scrollHeight;
+
+    // Agent 日志逐行展示：先显示收到消息，然后逐步亮出分析/更新/动作
+    if (ann.agentLog) {
+      var delay = 400;
+      var anl = document.getElementById('al-anl-' + msgIdx);
+      var upd = document.getElementById('al-upd-' + msgIdx);
+      var act = document.getElementById('al-act-' + msgIdx);
+      var pc = document.getElementById('al-pc-' + msgIdx);
+      if (anl) { setTimeout(function() { anl.style.display = ''; }, delay * 1); }
+      if (upd) { setTimeout(function() { upd.style.display = ''; }, delay * 2); }
+      if (act) { setTimeout(function() { act.style.display = ''; }, delay * 3); }
+      if (pc) { setTimeout(function() { pc.style.display = ''; }, delay * 4); }
+    }
+
   }
 
   // ===== 步进 =====
