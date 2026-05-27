@@ -10,6 +10,19 @@ import { fileURLToPath } from 'url';
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const base = __dirname;
 
+// 全局定义 helper 函数（供场景数据文件使用）
+globalThis.sys = function(c){return{type:'system',content:c}};
+globalThis.customer = function(c){return{type:'customer',content:c,sender:'王总'}};
+globalThis.sales = function(c){return{type:'sales',content:c,sender:'小陈'}};
+globalThis.aiHint = function(c){return{type:'ai-hint',content:c}};
+globalThis.aiRecommend = function(c,o,s){return{type:'ai-recommend',content:c,options:o||[],selected:s||0}};
+globalThis.annot = function(p,pr,f,ca,n,pc){return{profile:p,progress:pr,flows:f||[],cards:ca||[],nextAction:n,pendingConfirm:pc||[]}};
+
+// 加载各阶段场景数据
+['p1','p2','p3','p4','p5','p6','p7'].forEach(function(stage) {
+  const file = join(base, 'scenarios-' + stage + '.js');
+  try { eval(readFileSync(file, 'utf-8')); } catch(e) {}
+});
 // 加载 scenario-data.js (全局挂载 SCENARIOS)
 eval(readFileSync(join(base, 'scenario-data.js'), 'utf-8'));
 

@@ -253,6 +253,22 @@
   </div>
 
   <script src="../../shared/js/wecom-chat.js"></script>
+  <script>
+    // 全局 helper 函数，供各阶段场景数据文件使用
+    window.sys = function(c){return{type:'system',content:c}};
+    window.customer = function(c){return{type:'customer',content:c,sender:'王总'}};
+    window.sales = function(c){return{type:'sales',content:c,sender:'小陈'}};
+    window.aiHint = function(c){return{type:'ai-hint',content:c}};
+    window.aiRecommend = function(c,o,s){return{type:'ai-recommend',content:c,options:o||[],selected:s||0}};
+    window.annot = function(p,pr,f,ca,n,pc){return{profile:p,progress:pr,flows:f||[],cards:ca||[],nextAction:n,pendingConfirm:pc||[]}};
+  </script>
+  <script src="scenarios-p1.js"></script>
+  <script src="scenarios-p2.js"></script>
+  <script src="scenarios-p3.js"></script>
+  <script src="scenarios-p4.js"></script>
+  <script src="scenarios-p5.js"></script>
+  <script src="scenarios-p6.js"></script>
+  <script src="scenarios-p7.js"></script>
   <script src="scenario-data.js"></script>
   <script src="workbench-engine.js"></script>
   <script src="workbench-ui.js"></script>
