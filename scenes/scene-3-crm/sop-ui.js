@@ -107,39 +107,32 @@ const SopUI = (() => {
       </div>`;
   }
 
-  // ===== 客户看板 =====
+  // ===== 客户阶段分布（点击横条展示客户列表）=====
   function renderKanban(container, customers) {
-    const grouped = {};
-    STAGE_ORDER.forEach(s => grouped[s] = []);
-    (customers||[]).forEach(c => { if (grouped[c.stage]) grouped[c.stage].push(c); });
+    const total = customers.length;
+    const stageOrder = STAGE_ORDER;
+    const maxCount = Math.max(...stageOrder.map(s => (customers||[]).filter(c=>c.stage===s).length), 1);
+    const counts = {};
+    stageOrder.forEach(s => counts[s] = (customers||[]).filter(c=>c.stage===s).length);
 
     container.innerHTML = `
-      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1.25rem">
         <span class="section-title">客户阶段分布</span>
-        <span class="section-meta">${customers.length} 个客户</span>
+        <span class="section-meta">${total} 个客户</span>
       </div>
-      ${customers.length === 0
+      ${total === 0
         ? '<div class="empty-state"><i class="fas fa-users"></i><p>暂无客户数据</p></div>'
-        : `<div class="kanban-grid">
-            ${STAGE_ORDER.map(stage => {
-              const list = grouped[stage]||[];
-              return `<div class="kanban-col">
-                <div class="kanban-col-header" style="border-bottom-color:${STAGE_COLORS[stage]}">
-                  <span>${STAGE_LABELS[stage]||stage}</span>
-                  <span class="count">${list.length} 人</span>
-                </div>
-                <div class="kanban-col-body" style="flex:1;overflow-y:auto;min-height:3rem">
-                  ${list.length === 0
-                    ? '<div style="font-size:0.75rem;color:var(--gray-300);text-align:center;padding:1.5rem 0">—</div>'
-                    : list.map(c => {
-                        const pending = StageTodoEngine.getPendingItems(c);
-                        return `<div class="card-item">
-                          <div style="font-size:0.8125rem;font-weight:500;color:var(--text-primary)">${esc(c.name)}</div>
-                          <div style="font-size:0.6875rem;color:${pending.length===0?'var(--success)':'var(--warning)'};margin-top:0.125rem">
-                            ${pending.length===0 ? '∑ 全部完成' : pending.length+'项待办'}
-                          </div>
-                        </div>`;
-                      }).join('')}
+        : `<div style="background:white;border-radius:var(--radius-lg);border:1px solid var(--gray-200);padding:1.25rem">
+            ${stageOrder.map(stage => {
+              const cnt = counts[stage] || 0;
+              const pct = Math.round((cnt / maxCount) * 100);
+              return `<div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:0.5rem">
+                <div style="width:7rem;font-size:0.8125rem;color:var(--gray-500);text-align:right;flex-shrink:0">${STAGE_LABELS[stage]||stage}</div>
+                <div style="flex:1;height:1.5rem;background:var(--gray-100);border-radius:0.25rem;position:relative;overflow:hidden;cursor:pointer" onclick="SOPApp.showCustomerList('${stage}')" title="点击查看客户列表">
+                  <div style="position:absolute;top:0;left:0;height:100%;width:${pct}%;background:${STAGE_COLORS[stage]};border-radius:0.25rem;transition:width 0.3s;opacity:0.7"></div>
+                  <div style="position:absolute;top:0;left:0;height:100%;display:flex;align-items:center;padding:0 0.5rem">
+                    <span style="font-size:0.75rem;font-weight:600;color:${pct>30?'white':'var(--text-primary)'}">${cnt} 个 →</span>
+                  </div>
                 </div>
               </div>`;
             }).join('')}
@@ -166,5 +159,118 @@ const SopUI = (() => {
       }`;
   }
 
-  return { renderAudiences, renderTodoConfig, renderKanban, renderMonitor };
+  function renderCustomerList(container, customers, stage) {
+    const stageLabel = STAGE_LABELS[stage] || stage;
+    const list = (customers||[]).filter(c => c.stage === stage);
+    container.innerHTML = `
+      <div style="margin-bottom:1rem">
+        <button class="btn btn-sm" style="background:var(--gray-100);margin-bottom:0.75rem" onclick="SOPApp.backToOverview()"><i class="fas fa-arrow-left"></i> 返回概览</button>
+        <div style="display:flex;align-items:center;gap:0.75rem">
+          <span class="section-title">${stageLabel}</span>
+          <span class="section-meta">${list.length} 个客户</span>
+        </div>
+      </div>
+      <div style="background:white;border-radius:var(--radius-lg);border:1px solid var(--gray-200);overflow:hidden">
+        <table style="width:100%;border-collapse:collapse;font-size:0.8125rem">
+          <thead>
+            <tr style="background:var(--gray-50);text-align:left">
+              <th style="padding:0.625rem 0.75rem;font-weight:500;color:var(--gray-500)">客户名称</th>
+              <th style="padding:0.625rem 0.75rem;font-weight:500;color:var(--gray-500)">公司</th>
+              <th style="padding:0.625rem 0.75rem;font-weight:500;color:var(--gray-500)">行业</th>
+              <th style="padding:0.625rem 0.75rem;font-weight:500;color:var(--gray-500)">预算</th>
+              <th style="padding:0.625rem 0.75rem;font-weight:500;color:var(--gray-500)">最近联系</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${list.length === 0
+              ? '<tr><td colspan="5" style="padding:2rem;text-align:center;color:var(--gray-400)">暂无客户</td></tr>'
+              : list.map(c => `<tr style="border-top:1px solid var(--gray-100)">
+                  <td style="padding:0.5rem 0.75rem;font-weight:500">${esc(c.name)}</td>
+                  <td style="padding:0.5rem 0.75rem;color:var(--gray-600)">${esc(c.company||'-')}</td>
+                  <td style="padding:0.5rem 0.75rem;color:var(--gray-600)">${esc(c.type||'-')}</td>
+                  <td style="padding:0.5rem 0.75rem;color:var(--gray-600)">${esc(c.budget||'-')}</td>
+                  <td style="padding:0.5rem 0.75rem;color:var(--gray-500);font-size:0.75rem">${c.lastContact||'-'}</td>
+                </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  // ===== 全量客户列表（带筛选）=====
+  function renderCustomerTable(container, customers, filters) {
+    const f = filters || {};
+    const searchKw = (f.search||'').toLowerCase();
+    let filtered = (customers||[]).filter(c => {
+      if (f.stage && f.stage !== 'all' && c.stage !== f.stage) return false;
+      if (f.status && f.status !== 'all' && c.status !== f.status) return false;
+      if (f.type && f.type !== 'all' && c.typeCode !== f.type) return false;
+      if (searchKw && !(c.name||'').toLowerCase().includes(searchKw) && !(c.company||'').toLowerCase().includes(searchKw)) return false;
+      return true;
+    });
+    const TYPE_LABELS = { STARTUP:'创业小店', FAST_CASUAL:'快餐简餐', CHAIN:'连锁品牌', CANTEEN:'食堂团餐', HOTEL:'酒店餐饮', HOTPOT:'火锅串串', CAFE_BAKERY:'咖啡茶饮', FOREIGN_CUISINE:'异国料理', CATERING:'外包团餐', CENTRAL_KITCHEN:'中央厨房', CLOUD_KITCHEN:'云厨房', INDIVIDUAL:'个体经营' };
+    const types = [...new Set((customers||[]).map(c=>c.typeCode).filter(Boolean))];
+    container.innerHTML = `
+      <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:1rem">
+        <span class="section-title">客户列表</span>
+        <span class="section-meta">${filtered.length} 个客户</span>
+      </div>
+      <div style="margin-bottom:0.75rem">
+        <div style="display:flex;gap:0.5rem;align-items:center;flex-wrap:wrap;margin-bottom:0.5rem">
+          <input id="cust-search" class="sop-input" style="width:12rem;font-size:0.8125rem" placeholder="搜索名称/公司" value="${esc(f.search||'')}" onchange="SOPApp.filterCustomers()" onkeydown="if(event.key==='Enter')SOPApp.filterCustomers()">
+          <select class="sop-select" style="font-size:0.8125rem" onchange="SOPApp.setFilter('status',this.value)">
+            <option value="all" ${(!f.status||f.status==='all')?'selected':''}>全部状态</option>
+            <option value="active" ${f.status==='active'?'selected':''}>跟进中</option>
+            <option value="sleeping" ${f.status==='sleeping'?'selected':''}>沉睡</option>
+            <option value="closed" ${f.status==='closed'?'selected':''}>已闭环</option>
+          </select>
+          <select id="cust-type" class="sop-select" style="font-size:0.8125rem" onchange="SOPApp.filterCustomers()">
+            <option value="all">全部行业</option>
+            ${types.map(t => `<option value="${t}" ${f.type===t?'selected':''}>${TYPE_LABELS[t]||t}</option>`).join('')}
+          </select>
+        </div>
+        <div style="display:flex;gap:0;flex-wrap:wrap;border-bottom:1px solid var(--gray-200)">
+          <span style="font-size:0.75rem;color:var(--gray-400);padding:0.375rem 0.5rem 0.375rem 0;flex-shrink:0">阶段</span>
+          <button class="btn btn-sm" style="font-size:0.75rem;padding:0.375rem 0.625rem;border:none;background:none;cursor:pointer;color:${!f.stage||f.stage==='all'?'var(--brand)':'var(--gray-500)'};border-bottom:2px solid ${!f.stage||f.stage==='all'?'var(--gray-400)':'transparent'};border-radius:0;margin-bottom:-1px" onclick="SOPApp.setFilter('stage','all')">全部</button>
+          ${STAGE_ORDER.map(s => {
+            const active = f.stage === s;
+            const cnt = (customers||[]).filter(c => c.stage === s).length;
+            return `<button class="btn btn-sm" style="font-size:0.75rem;padding:0.375rem 0.625rem;border:none;background:none;cursor:pointer;color:${active?'var(--brand)':'var(--gray-500)'};border-bottom:2px solid ${active?STAGE_COLORS[s]:'transparent'};border-radius:0;margin-bottom:-1px" onclick="SOPApp.setFilter('stage','${s}')">${STAGE_LABELS[s]||s} <span style="font-size:0.625rem;color:${active?'var(--brand)':'var(--gray-400)'};opacity:0.7">${cnt}</span></button>`;
+          }).join('')}
+        </div>
+      </div>
+      <div style="background:white;border-radius:var(--radius-lg);border:1px solid var(--gray-200);overflow-x:auto">
+        <table style="width:100%;border-collapse:collapse;font-size:0.8125rem">
+          <thead><tr style="background:var(--gray-50);text-align:left">
+            <th style="padding:0.5rem 0.75rem;font-weight:500;color:var(--gray-500)">客户</th>
+            <th style="padding:0.5rem 0.75rem;font-weight:500;color:var(--gray-500)">公司</th>
+            <th style="padding:0.5rem 0.75rem;font-weight:500;color:var(--gray-500)">行业</th>
+            <th style="padding:0.5rem 0.75rem;font-weight:500;color:var(--gray-500)">阶段</th>
+            <th style="padding:0.5rem 0.75rem;font-weight:500;color:var(--gray-500)">预算</th>
+            <th style="padding:0.5rem 0.75rem;font-weight:500;color:var(--gray-500)">最近联系</th>
+          </tr></thead>
+          <tbody>${filtered.length===0?'<tr><td colspan="6" style="padding:2rem;text-align:center;color:var(--gray-400)">无匹配客户</td></tr>'
+            : filtered.map(c => `<tr style="border-top:1px solid var(--gray-100)">
+                <td style="padding:0.5rem 0.75rem;font-weight:500">${esc(c.name)}</td>
+                <td style="padding:0.5rem 0.75rem;color:var(--gray-600)">${esc(c.company||'-')}</td>
+                <td style="padding:0.5rem 0.75rem;color:var(--gray-600)">${esc(c.type||c.typeCode||'-')}</td>
+                <td style="padding:0.5rem 0.75rem"><span class="tag" style="font-size:0.6875rem;padding:0.125rem 0.375rem;background:var(--gray-100)">${esc(c.stage||'-')}</span></td>
+                <td style="padding:0.5rem 0.75rem;color:var(--gray-600)">${esc(c.budget||'-')}</td>
+                <td style="padding:0.5rem 0.75rem;color:var(--gray-500);font-size:0.75rem">${c.lastContact||'-'}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  }
+
+  // getFilters reads from DOM for search/type, uses provided filters for stage/status
+  function getFilters(existing) {
+    return {
+      search: (document.getElementById('cust-search')||{}).value || '',
+      stage: (existing && existing.stage) || 'all',
+      status: (existing && existing.status) || 'all',
+      type: (document.getElementById('cust-type')||{}).value || 'all',
+    };
+  }
+
+  return { renderAudiences, renderTodoConfig, renderKanban, renderMonitor, renderCustomerList, renderCustomerTable, getFilters };
 })();

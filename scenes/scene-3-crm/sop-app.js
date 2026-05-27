@@ -22,6 +22,9 @@ const SOPApp = (() => {
         const all = StageTodoEngine.getAudiences();
         SopUI.renderTodoConfig(c, state._sopAudienceId || (all.length?all[0].audienceId:null));
         break;
+      case 'customers':
+        SopUI.renderCustomerTable(c, state.customers, state._customerFilter || {});
+        break;
       case 'monitor':
         const r = StageTodoEngine.scanAll(state.customers);
         SopUI.renderMonitor(c, r.logs);
@@ -29,7 +32,27 @@ const SOPApp = (() => {
     }
   }
 
-  function switchTab(tab) { state.activeTab = tab; renderAll(); }
+  function switchTab(tab) { state.activeTab = tab; state._listStage = null; renderAll(); }
+
+  function showCustomerList(stage) {
+    state._customerFilter = { stage };
+    state.activeTab = 'customers';
+    SopUI.renderCustomerTable(document.getElementById('main-content'), state.customers, state._customerFilter);
+    document.querySelectorAll('.sop-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === 'customers'));
+  }
+
+  function filterCustomers() {
+    state._customerFilter = SopUI.getFilters(state._customerFilter);
+    SopUI.renderCustomerTable(document.getElementById('main-content'), state.customers, state._customerFilter);
+  }
+
+  function setFilter(key, val) {
+    if (!state._customerFilter) state._customerFilter = {};
+    state._customerFilter[key] = val;
+    SopUI.renderCustomerTable(document.getElementById('main-content'), state.customers, state._customerFilter);
+  }
+
+  function backToOverview() { switchTab('kanban'); }
 
   function editTodos(audienceId) { SopUI.renderTodoConfig(document.getElementById('main-content'), audienceId); }
 
@@ -84,6 +107,6 @@ const SOPApp = (() => {
     SOPApp.editTodos(ctx.audienceId);
   }
 
-  window.SOPApp = { init, switchTab, editTodos, openNewItem, openEditItem, closeModal, saveModal, deleteAudience, createAudience, goToSOPConfig };
+  window.SOPApp = { init, switchTab, editTodos, openNewItem, openEditItem, closeModal, saveModal, deleteAudience, createAudience, goToSOPConfig, showCustomerList, filterCustomers, setFilter, backToOverview };
   return window.SOPApp;
 })();

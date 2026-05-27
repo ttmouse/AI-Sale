@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" type="image/svg+xml" href="../../shared/favicon.svg">
+  <title>场景12 · 销售对话智能工作台</title>
+  <link rel="stylesheet" href="../../shared/css/styles.css">
+  <style>
+    /* ===== 页面布局 ===== */
+    .wb-page { display: flex; flex-direction: column; min-height: 100vh; background: var(--bg-base); }
+    .wb-nav { background: var(--bg-surface); border-bottom: 1px solid var(--border); padding: 0.75rem 1.5rem; display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+    .wb-nav-back { color: var(--text-secondary); text-decoration: none; font-size: 0.8125rem; display: flex; align-items: center; gap: 0.375rem; }
+    .wb-nav-back:hover { color: var(--brand); }
+    .wb-nav-back svg { width: 16px; height: 16px; }
+    .wb-nav-title { font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); }
+    .wb-stage-bar { display: flex; gap: 0.25rem; padding: 0.625rem 1.5rem; background: var(--bg-surface); border-bottom: 1px solid var(--border); overflow-x: auto; flex-shrink: 0; }
+    .stage-tab { display: flex; align-items: center; gap: 0.5rem; padding: 0.4375rem 0.75rem; border: 1px solid var(--border); background: var(--bg-subtle); border-radius: var(--radius-md); cursor: pointer; font-size: 0.75rem; font-family: inherit; color: var(--text-secondary); transition: all 0.2s ease; white-space: nowrap; flex-shrink: 0; border-left: 3px solid var(--tab-color, #999); }
+    .stage-tab:hover { background: var(--bg-hover); border-color: var(--border-strong); }
+    .stage-tab.active { background: var(--bg-surface); border-color: var(--tab-color, #999); color: var(--text-primary); font-weight: 600; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
+    .stage-tab-num { font-family: 'Geist Mono', monospace; font-size: 0.6875rem; font-weight: 700; color: var(--tab-color, #999); }
+    .stage-tab.active .stage-tab-num { color: var(--tab-color); }
+
+    .wb-main { display: grid; grid-template-columns: 260px 1fr 240px 280px; gap: 0.75rem; padding: 1rem 1.5rem; flex: 1; min-height: 0; }
+
+    /* 左侧面板 */
+    .wb-left { display: flex; flex-direction: column; gap: 0.75rem; overflow-y: auto; }
+    .wb-left .panel { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem; }
+    .wb-left .panel-title { font-size: 0.6875rem; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
+    #stage-badge { display: inline-block; padding: 0.1875rem 0.5rem; border-radius: 0.25rem; font-size: 0.6875rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
+    #scenario-title { font-size: 1rem; font-weight: 600; color: var(--text-primary); line-height: 1.3; margin-bottom: 0.75rem; }
+    #scenario-pain { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.75rem; }
+    #scenario-highlights { list-style: none; padding: 0; margin: 0 0 0.75rem 0; }
+    #scenario-highlights li { font-size: 0.75rem; color: var(--text-secondary); padding: 0.25rem 0; padding-left: 1rem; position: relative; line-height: 1.5; }
+    #scenario-highlights li::before { content: ''; position: absolute; left: 0.1875rem; top: 0.625rem; width: 5px; height: 5px; background: var(--brand); border-radius: 50%; }
+    #scenario-goal { font-size: 0.75rem; color: var(--text-muted); line-height: 1.6; font-style: italic; }
+    .scenario-list-wrap { max-height: 180px; overflow-y: auto; }
+    .scenario-list-wrap::-webkit-scrollbar { width: 3px; }
+    .scenario-list-wrap::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .scenario-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.4375rem 0.5rem; border-radius: var(--radius-sm); cursor: pointer; transition: background 0.15s; font-size: 0.8125rem; }
+    .scenario-item:hover { background: var(--bg-hover); }
+    .scenario-item.active { background: var(--brand-muted); color: var(--brand); font-weight: 500; }
+    .scenario-item-id { font-family: 'Geist Mono', monospace; font-size: 0.6875rem; color: var(--text-muted); min-width: 2rem; }
+
+    /* 中间 — 由 wecom-chat.js 组件渲染，此处只保留播放控制 */
+    .wb-center { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; overflow: hidden; }
+    #phone-container { width: 100%; max-width: 390px; flex-shrink: 0; }
+
+
+
+    /* 播放控制 */
+    .playback-controls { display: flex; gap: 0.375rem; padding: 0.5rem; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); flex-shrink: 0; align-items: center; width: 100%; max-width: 390px; }
+    .ctrl-btn { padding: 0.375rem 0.625rem; border: 1px solid var(--border); background: var(--bg-surface); border-radius: var(--radius-sm); font-size: 0.6875rem; cursor: pointer; color: var(--text-secondary); transition: all 0.15s; font-family: inherit; display: flex; align-items: center; gap: 0.25rem; }
+    .ctrl-btn:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-muted); }
+    .ctrl-btn:active { transform: scale(0.96); }
+    .ctrl-btn.playing { background: var(--brand); color: #fff; border-color: var(--brand); }
+    .ctrl-btn svg { width: 13px; height: 13px; stroke: currentColor; stroke-width: 2; fill: none; }
+    .msg-progress { flex: 1; display: flex; align-items: center; gap: 0.5rem; font-size: 0.6875rem; color: var(--text-muted); }
+    .msg-progress-bar { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .msg-progress-fill { height: 100%; background: var(--brand); border-radius: 2px; transition: width 0.3s ease; width: 0%; }
+
+    /* AI 时间轴 */
+    .wb-timeline {
+      display: flex; flex-direction: column; gap: 0; overflow-y: auto;
+      background: var(--bg-surface); border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+    }
+    .wb-timeline .tl-header {
+      font-size: 0.625rem; font-weight: 600; color: var(--text-muted);
+      text-transform: uppercase; letter-spacing: 0.06em;
+      padding: 0.625rem 0.75rem; border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; gap: 0.375rem; flex-shrink: 0;
+      background: var(--bg-subtle); position: sticky; top: 0; z-index: 1;
+    }
+    .tl-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+    .tl-body::-webkit-scrollbar { width: 3px; }
+    .tl-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .tl-empty { font-size: 0.6875rem; color: var(--text-muted); padding: 1.5rem 0.75rem; text-align: center; }
+
+    .tl-card {
+      padding: 0.625rem 0.75rem;
+      border-bottom: 1px solid var(--border);
+      animation: tlSlideIn 0.3s ease-out;
+    }
+    .tl-card:last-child { border-bottom: none; }
+    @keyframes tlSlideIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
+
+    .tl-card .tl-step {
+      font-size: 0.5625rem; font-weight: 700; color: var(--brand);
+      text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.25rem;
+    }
+    .tl-card .tl-stage {
+      display: inline-block; font-size: 0.5625rem; font-weight: 600;
+      padding: 0.0625rem 0.3125rem; border-radius: 0.1875rem;
+      color: #fff; margin-bottom: 0.25rem;
+    }
+    .tl-card .tl-line {
+      font-size: 0.625rem; color: var(--text-secondary);
+      line-height: 1.5; padding: 0.0625rem 0;
+      padding-left: 0.625rem; position: relative;
+    }
+    .tl-card .tl-line::before {
+      content: ''; position: absolute; left: 0.125rem; top: 0.4375rem;
+      width: 3px; height: 3px; border-radius: 50%; background: var(--text-muted);
+    }
+    .tl-card .tl-line.hl { color: var(--text-primary); font-weight: 500; }
+    .tl-card .tl-line.hl::before { background: var(--brand); width: 5px; height: 5px; top: 0.375rem; }
+    .tl-card .tl-line.green { color: #10B981; }
+    .tl-card .tl-line.green::before { background: #10B981; }
+
+    /* 右侧面板 */
+    .wb-right { display: flex; flex-direction: column; gap: 0.625rem; overflow-y: auto; }
+    .wb-right .ann-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 0.75rem; }
+    .wb-right .ann-card-title { font-size: 0.6875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.375rem; }
+    .ann-card-title .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .dot-blue { background: #3B82F6; } .dot-green { background: #10B981; } .dot-purple { background: #8B5CF6; }
+    .dot-orange { background: #F59E0B; } .dot-rose { background: #F43F5E; }
+
+    #profile-card { font-size: 0.75rem; line-height: 1.6; color: var(--text-secondary); }
+    #profile-card strong { color: var(--text-primary); }
+    #profile-card ul { list-style: none; padding: 0; margin: 0.25rem 0; }
+    #profile-card ul li { padding: 0.125rem 0; padding-left: 0.75rem; position: relative; }
+    #profile-card ul li::before { content: '-'; position: absolute; left: 0.125rem; color: var(--text-muted); }
+
+    .ann-stage { font-size: 0.75rem; color: var(--text-secondary); margin-bottom: 0.375rem; }
+    .ann-badge { display: inline-block; padding: 0.125rem 0.375rem; border-radius: 0.25rem; font-size: 0.625rem; font-weight: 600; margin-bottom: 0.375rem; }
+    .ann-badge-change { background: #FEF3C7; color: #92400E; }
+    .ann-section { font-size: 0.625rem; font-weight: 600; color: #10B981; text-transform: uppercase; letter-spacing: 0.05em; margin: 0.375rem 0 0.25rem; }
+    .ann-pending { color: #F59E0B; }
+    .ann-check-item { font-size: 0.6875rem; color: var(--text-secondary); padding: 0.125rem 0; padding-left: 1rem; position: relative; }
+    .ann-check-item::before { content: '✓'; position: absolute; left: 0.125rem; color: #10B981; font-weight: 700; }
+    .ann-pending-item { font-size: 0.6875rem; color: var(--text-muted); padding: 0.125rem 0; padding-left: 1rem; position: relative; }
+    .ann-pending-item::before { content: '□'; position: absolute; left: 0.125rem; color: var(--text-muted); }
+
+    .flow-btn { display: inline-flex; align-items: center; gap: 0.375rem; padding: 0.3125rem 0.5rem; border: 1px solid var(--border); background: var(--bg-subtle); border-radius: var(--radius-sm); font-size: 0.6875rem; cursor: pointer; color: var(--text-secondary); transition: all 0.15s; font-family: inherit; margin: 0.1875rem; }
+    .flow-btn:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-muted); }
+    .flow-btn:active { transform: scale(0.96); }
+    .flow-btn svg { width: 14px; height: 14px; }
+    .knowledge-item { display: inline-block; padding: 0.1875rem 0.5rem; background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 0.25rem; font-size: 0.6875rem; color: var(--text-secondary); margin: 0.1875rem; }
+    .next-suggestion { font-size: 0.8125rem; font-weight: 600; color: var(--text-primary); margin-bottom: 0.375rem; }
+    .next-reason { font-size: 0.6875rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+    .next-script { background: var(--bg-subtle); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 0.5rem; }
+    .next-script-label { font-size: 0.625rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
+    .next-script-text { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; }
+
+    .wb-toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px); padding: 0.5rem 1rem; background: var(--text-primary); color: #fff; border-radius: var(--radius-md); font-size: 0.8125rem; opacity: 0; transition: all 0.3s ease; z-index: 999; }
+    .wb-toast-show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body class="wb-page">
+
+  <!-- 导航 -->
+  <nav class="wb-nav">
+    <a href="../../index.html" class="wb-nav-back">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+      返回主页
+    </a>
+    <span class="wb-nav-title">销售对话智能工作台 · 场景演示</span>
+  </nav>
+
+  <!-- 阶段 Tab -->
+  <div class="wb-stage-bar" id="stage-tabs"></div>
+
+  <!-- 三栏主区域 -->
+  <div class="wb-main">
+
+    <!-- 左侧：场景说明 -->
+    <div class="wb-left">
+      <div class="panel">
+        <div class="panel-title">当前阶段</div>
+        <span id="stage-badge">P1</span>
+        <h2 id="scenario-title">加载中...</h2>
+        <p id="scenario-pain"></p>
+      </div>
+      <div class="panel">
+        <div class="panel-title">AI 功能亮点</div>
+        <ul id="scenario-highlights"></ul>
+      </div>
+      <div class="panel">
+        <div class="panel-title">演示目标</div>
+        <p id="scenario-goal"></p>
+      </div>
+      <div class="panel">
+        <div class="panel-title">子场景 <span id="scenario-count"></span></div>
+        <div class="scenario-list-wrap" id="scenario-list"></div>
+      </div>
+    </div>
+
+    <!-- 中间：企微聊天（由 wecom-chat.js 组件渲染）-->
+    <div class="wb-center">
+      <div id="phone-container"></div>
+      <div class="playback-controls">
+        <button class="ctrl-btn" id="btn-prev" title="上一个场景"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+        <button class="ctrl-btn" id="btn-step" title="下一条消息"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg> 步进</button>
+        <button class="ctrl-btn" id="btn-autoplay" title="自动播放"><svg viewBox="0 0 24 24"><polygon points="5 3 19 12 5 21 5 3"/></svg> 播放</button>
+        <button class="ctrl-btn" id="btn-reset" title="从头开始"><svg viewBox="0 0 24 24"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 2.13-9.36L1 10"/></svg></button>
+        <button class="ctrl-btn" id="btn-next" title="下一个场景"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+        <div class="msg-progress"><div class="msg-progress-bar"><div class="msg-progress-fill" id="msg-progress-fill"></div></div><span id="msg-progress-text">0 / 0</span></div>
+      </div>
+    </div>
+
+    <!-- AI 时间轴：随对话推进累加，展示每一步AI的分析更新 -->
+    <div class="wb-timeline">
+      <div class="tl-header"><span class="dot dot-blue"></span>AI 实时分析记录</div>
+      <div class="tl-body" id="timeline-body">
+        <div class="tl-empty">等待对话开始...</div>
+      </div>
+    </div>
+
+    <!-- 右侧：AI 注解（当前最新状态）-->
+    <div class="wb-right">
+      <div class="ann-card"><div class="ann-card-title"><span class="dot dot-blue"></span>客户画像更新</div><div id="profile-card">等待对话开始...</div></div>
+      <div class="ann-card"><div class="ann-card-title"><span class="dot dot-green"></span>项目推进状态</div><div id="progress-card">等待对话开始...</div></div>
+      <div class="ann-card"><div class="ann-card-title"><span class="dot dot-purple"></span>流程动作</div><div id="flow-card">等待对话开始...</div></div>
+      <div class="ann-card"><div class="ann-card-title"><span class="dot dot-orange"></span>知识卡推荐</div><div id="knowledge-card">等待对话开始...</div></div>
+      <div class="ann-card"><div class="ann-card-title"><span class="dot dot-rose"></span>下一步建议</div><div id="next-action-card">等待对话开始...</div></div>
+    </div>
+
+  </div>
+
+  <script src="../../shared/js/wecom-chat.js"></script>
+  <script src="scenario-data.js"></script>
+  <script src="workbench-engine.js"></script>
+  <script src="workbench-ui.js"></script>
+</body>
+</html>
