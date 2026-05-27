@@ -133,6 +133,24 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：客户画像完整度 70%，可进入产品匹配。 推荐主方案：G3 标准版。 备选方案：",
+        "analysis": "待确认：客户类型：快餐简餐、门店面积：120 平等5项。",
+        "updates": [
+          "客户来源→抖音私信",
+          "初始意向→设备咨询",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→适用性",
+          "日单量→200-300单",
+          "后厨人员→3人",
+          "痛点→产能不足",
+          "当前阶段→P3",
+          "客户意向→意向明确"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -214,6 +232,13 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总，按您目前的情况，我建议优先看 G3 标准版。您是 120 平快餐店，一天两",
+        "analysis": "已处理：客户类型：快餐简餐、门店面积：120 平、日单量：200–300 单、主营菜品：盖饭 + 小炒、核心痛点：厨师不好招、高峰期出餐压力。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -299,6 +324,13 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：它主要能解决什么？",
+        "analysis": "已完成：需求确认、产品推荐、推荐理由生成。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -380,6 +412,13 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 生成建议：客户询问价值，建议围绕高峰期出餐、减少炒锅依赖、口味稳定回答。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -461,6 +500,13 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：对您这种门店，核心不是“买一台机器”，而是解决三个问题：第一，高峰期出餐更稳定；",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

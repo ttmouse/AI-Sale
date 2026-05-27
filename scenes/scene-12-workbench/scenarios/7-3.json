@@ -120,6 +120,27 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总，设备安装已经一周了，我来回访一下。现在门店使用情况怎么样？员工操作是否顺手",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [
+          "客户来源→官网留资",
+          "初始意向→售后回访",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→满意度",
+          "日单量→200-300单",
+          "后厨人员→3人",
+          "痛点→需调菜品",
+          "推荐产品→G3标准版",
+          "当前阶段→P7",
+          "响应状态→回访中",
+          "客户意向→满意",
+          "方案状态→已交付"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -201,6 +222,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：整体还可以，员工基本会用了，就是有两道菜还想再调一下。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -282,6 +310,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：客户整体满意，但存在菜谱优化需求。建议创建菜谱优化任务。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -368,6 +403,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：好的，那我记录一下。您把这两道菜发我，我让技术同事帮您再优化一版参数。整体使用如",
+        "analysis": "待确认：已成交客户、初期使用顺利等4项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -449,6 +491,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "已处理：已成交客户、初期使用顺利、有案例沉淀潜力、有菜谱优化需求。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

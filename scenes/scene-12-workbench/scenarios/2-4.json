@@ -131,6 +131,19 @@
           "value": "31%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：检测到价格询问。 当前客户画像不完整，不建议直接报价。 建议先确认使用场景。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [
+          "客户来源→抖音私信",
+          "初始意向→询价",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "当前阶段→P2"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -217,6 +230,13 @@
           "value": "31%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 生成建议：A\\. 需求澄清型 B\\. 价格区间型 C\\. 价值引导型",
+        "analysis": "待确认：日单量、当前人工成本等4项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -298,6 +318,13 @@
           "value": "31%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总，价格和型号、配置、使用场景关系比较大。我先简单了解一下您的门店情况，避免给",
+        "analysis": "已处理：日单量、当前人工成本、可接受预算、是否已有采购时间表。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -379,6 +406,13 @@
           "value": "31%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：我是开快餐店的，想看看能不能替一个炒锅师傅。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -460,6 +494,13 @@
           "value": "31%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：已识别核心需求：替代炒锅师傅 / 降低人工依赖。 建议继续追问人工成本和出餐量。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     null

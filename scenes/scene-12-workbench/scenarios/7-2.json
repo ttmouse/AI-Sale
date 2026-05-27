@@ -131,6 +131,27 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：检测到使用问题。 初步分类：菜谱参数 / 食材处理 / 火力时间设置。 不建议直",
+        "analysis": "待确认：菜谱参数问题、食材处理问题等5项。",
+        "updates": [
+          "客户来源→官网留资",
+          "初始意向→售后反馈",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→使用问题",
+          "日单量→200-300单",
+          "后厨人员→3人",
+          "痛点→青椒肉丝出水",
+          "推荐产品→G3标准版",
+          "当前阶段→P7",
+          "响应状态→售后咨询",
+          "客户意向→正向",
+          "方案状态→已交付"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -212,6 +233,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总，这个可能和食材含水量、火力参数、炒制时间都有关系。我先帮您确认一下：今天青",
+        "analysis": "已处理：菜谱参数问题、食材处理问题、非明显设备故障、确认食材预处理、确认菜谱参数。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -293,6 +321,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：青椒可能没怎么沥水，参数应该是默认的。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -378,6 +413,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：问题倾向：食材处理 \\+ 参数未使用试菜版本。 建议发送菜谱参数调整建议，并创建",
+        "analysis": "待确认：青椒肉丝出水多、参数使用不规范等3项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -459,6 +501,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：那大概率不是设备故障，可能是食材处理和参数问题。我让技术同事帮您把这道菜的参数再",
+        "analysis": "已处理：青椒肉丝出水多、参数使用不规范、需要菜谱调优支持。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

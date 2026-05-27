@@ -132,6 +132,21 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：检测到客户画像信息：业态、面积、日单量、后厨人员、痛点。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [
+          "客户来源→抖音私信",
+          "初始意向→了解设备",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "日单量→200-300单",
+          "后厨人员→3-4人",
+          "当前阶段→P2"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -224,6 +239,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 生成建议：客户画像已较清晰，建议继续确认主力菜品和采购计划。",
+        "analysis": "已完成：客户业态识别、门店规模确认、日单量确认、后厨人员确认、初步痛点确认。待确认：预算区间、采购周期等4项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -305,6 +327,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总，您这个情况比较典型。120 平快餐店、一天两三百单，确实比较容易在午高峰卡",
+        "analysis": "已处理：预算区间、采购周期、决策人、是否看过竞品。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -386,6 +415,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：盖饭套餐比较多，小炒也有一些。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -467,6 +503,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：明白，那您现在更想解决的是减少炒锅师傅，还是提高高峰期出餐速度？",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     null

@@ -125,6 +125,27 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：检测到复购信号。 复购类型：多门店复制 / 新门店适配。 建议创建复购商机。",
+        "analysis": "待确认：多门店复制、小面积门店适配等4项。",
+        "updates": [
+          "客户来源→官网留资",
+          "初始意向→复购咨询",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→复购",
+          "日单量→200-300单",
+          "后厨人员→3人",
+          "痛点→另外门店需求",
+          "推荐产品→G3标准版",
+          "当前阶段→P7",
+          "响应状态→复购意向",
+          "客户意向→正向",
+          "方案状态→已交付"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -211,6 +232,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总，那挺好。如果另一家店面积小一点，配置可以不用完全照搬现在这台，我们可以按那",
+        "analysis": "已处理：多门店复制、小面积门店适配、当前门店使用较好、客户认可度较高。待确认：门店面积：约 80 平、单量：低于当前门店等4项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -292,6 +320,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：那家店 80 平左右，单量没这边大。",
+        "analysis": "已处理：门店面积：约 80 平、单量：低于当前门店、业态：待确认，可能仍为快餐、设备需求：待评估。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -373,6 +408,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：新复购门店画像已开始创建。 ---",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -454,6 +496,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

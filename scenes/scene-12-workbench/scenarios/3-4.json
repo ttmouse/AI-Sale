@@ -121,6 +121,22 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：角色：厨师长。 顾虑：口味一致但缺少灵活性。 建议强调：参数可调、厨师参与调试、",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [
+          "客户来源→抖音私信",
+          "初始意向→设备咨询",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→菜品品质",
+          "痛点→口味一致性",
+          "当前阶段→P3",
+          "客户意向→意向明确"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -202,6 +218,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：您说得对，菜品口味一定要有师傅参与把控。我们的设备不是把厨师经验完全拿掉，而是把",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -283,6 +306,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：那如果我们口味偏重一点，也能调？",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -364,6 +394,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：可以调。比如火力、时间、投料顺序、酱料比例，都可以根据您门店口味做调整。建议您带",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -445,6 +482,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

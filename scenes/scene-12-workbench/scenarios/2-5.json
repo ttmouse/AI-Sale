@@ -127,6 +127,20 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：已识别沟通角色：厨师长 / 使用影响人。 建议避免强调替代厨师，应强调辅助、稳定",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [
+          "客户来源→抖音私信",
+          "初始意向→技术咨询",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "后厨人员→3人",
+          "当前阶段→P2"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -212,6 +226,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：您这个问题很关键。我们不建议只看参数，炒菜设备最终一定要看实际出品。它的价值不是",
+        "analysis": "待确认：老板是否参与决策、是否可安排试菜等3项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -293,6 +314,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：那能不能调火候和时间？不同菜不一样。",
+        "analysis": "已处理：老板是否参与决策、是否可安排试菜、门店主力菜品。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -374,6 +402,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 生成建议：客户关注操作可控性，推荐说明菜谱参数和人工调整空间。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -455,6 +490,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：可以的。不同菜品会有对应的菜谱参数，比如火力、时间、转速、投料节点都可以设置。前",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

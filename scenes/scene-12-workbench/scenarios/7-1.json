@@ -122,6 +122,27 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：检测到安装培训需求。 时间线索：本周三厨师长在店。 建议创建安装培训任务。",
+        "analysis": "待确认：设备状态：已到货、安装地点：客户门店等5项。",
+        "updates": [
+          "客户来源→官网留资",
+          "初始意向→安装安排",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→安装培训",
+          "日单量→200-300单",
+          "后厨人员→3人",
+          "痛点→需要安装培训",
+          "推荐产品→G3标准版",
+          "当前阶段→P7",
+          "响应状态→安装待安排",
+          "客户意向→正向",
+          "方案状态→已签约"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -203,6 +224,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总，收到。您这边设备已经到货，厨师长周三在店，那我协调交付同事优先看周三是否可",
+        "analysis": "已处理：设备状态：已到货、安装地点：客户门店、客户参与人：厨师长、可安排时间：本周三、交付人员时间。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -284,6 +312,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：好的，你发我。 ---",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -365,6 +400,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -446,6 +488,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

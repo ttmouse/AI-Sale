@@ -122,6 +122,27 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：检测到合同阶段。 已抽取合同主体：杭州某某餐饮管理有限公司。 缺失：税号、注册地",
+        "analysis": "待确认：合同主体：杭州某某餐饮管理有限公司、税号等5项。",
+        "updates": [
+          "客户来源→官网留资",
+          "初始意向→合同推进",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→合同条款",
+          "日单量→200-300单",
+          "后厨人员→3人",
+          "痛点→需确认信息",
+          "推荐产品→G3标准版",
+          "当前阶段→P6",
+          "响应状态→合同收集",
+          "客户意向→正向",
+          "方案状态→已确认"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -203,6 +224,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：好的王总，我这边准备合同。还需要您补充一下税号、注册地址、收货地址、联系人和电话",
+        "analysis": "已处理：合同主体：杭州某某餐饮管理有限公司、税号、注册地址、开票信息、收货地址。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -284,6 +312,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：可以，模板发我。 ---",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -365,6 +400,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -446,6 +488,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

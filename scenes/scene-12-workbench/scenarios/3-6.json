@@ -116,6 +116,22 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：检测到决策链信号：当前沟通人可能不是最终决策人。 建议生成“老板汇报版方案”。 ",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [
+          "客户来源→主动咨询",
+          "初始意向→设备咨询",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→老板汇报",
+          "推荐产品→G3标准版",
+          "当前阶段→P3",
+          "客户意向→意向明确"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -203,6 +219,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：我给您发一个老板汇报版，里面不放太多参数，主要讲投入、回本、解决什么问题，以及下",
+        "analysis": "待确认：投入产出、人工节省等5项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -284,6 +307,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：可以，发我吧。 ---",
+        "analysis": "已处理：投入产出、人工节省、出餐稳定、类似案例、试菜验证。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -365,6 +395,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -446,6 +483,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -527,6 +571,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

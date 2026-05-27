@@ -122,6 +122,22 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：客户请求方案。 当前画像完整度 78%，可生成轻方案。 建议生成“快餐门店 G3",
+        "analysis": "已完成：客户现状、核心痛点、推荐产品、推荐理由、下一步建议。待确认：预算、人工成本等4项。",
+        "updates": [
+          "客户来源→抖音私信",
+          "初始意向→设备咨询",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "日单量→200-300单",
+          "推荐产品→G3标准版",
+          "当前阶段→P3",
+          "客户意向→意向明确"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -209,6 +225,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总，我先给您整理了一个简版建议，主要按您刚才说的门店情况来配。您可以先看整体思",
+        "analysis": "已处理：预算、人工成本、采购周期、试菜时间。待确认：客户类型：快餐简餐、门店面积：120 平等5项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -290,6 +313,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "已处理：客户类型：快餐简餐、门店面积：120 平、日单量：200–300 单、后厨人员：2 名炒锅师傅、主营菜品：盖饭 + 小炒。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -371,6 +401,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -452,6 +489,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

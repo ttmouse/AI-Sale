@@ -125,6 +125,22 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：角色识别：老板 / 决策人。 建议表达重点：省人、提效、稳定、回本。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [
+          "客户来源→抖音私信",
+          "初始意向→设备咨询",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→投资回报",
+          "痛点→不懂参数",
+          "当前阶段→P3",
+          "客户意向→意向明确"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -212,6 +228,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总，简单说，G3 对您这种快餐门店的价值主要是三点： 第一，减少对炒锅师傅的依",
+        "analysis": "待确认：少请人、出餐稳等5项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -293,6 +316,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：那大概多久回本？",
+        "analysis": "已处理：少请人、出餐稳、口味稳、可复制、能算账。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -374,6 +404,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：客户进入价值测算意图。建议进入 ROI 测算。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -455,6 +492,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：这个要结合您现在人工成本算。比如一个炒锅师傅月薪 8000 到 10000，如果",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

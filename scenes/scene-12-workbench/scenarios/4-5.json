@@ -129,6 +129,27 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：异议类型：售后保障。 建议具体说明响应机制、培训机制、质保和服务流程。",
+        "analysis": "待确认：设备坏了没人管、员工不会用等3项。",
+        "updates": [
+          "客户来源→官网留资",
+          "初始意向→了解设备",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→售后服务",
+          "日单量→200-300单",
+          "后厨人员→3人",
+          "痛点→担心售后",
+          "推荐产品→G3标准版",
+          "当前阶段→P4",
+          "响应状态→跟进中",
+          "客户意向→信任疑虑",
+          "方案状态→已报价"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -210,6 +231,13 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总，这个顾虑很正常。设备类产品不能只看买的时候，后续服务很关键。我们一般会包含",
+        "analysis": "已处理：设备坏了没人管、员工不会用、后续维护麻烦。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -295,6 +323,13 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：我们店里人不一定会用，这个培训麻烦吗？",
+        "analysis": "待确认：发送售后流程卡、发送培训流程卡等3项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -376,6 +411,13 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：客户顾虑转向操作培训。推荐培训流程卡。",
+        "analysis": "已处理：发送售后流程卡、发送培训流程卡、邀请客户试菜时体验操作流程。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -457,6 +499,13 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：培训不会太复杂，主要是设备操作、菜谱调用、日常清洁和简单故障处理。前期会有人带着",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

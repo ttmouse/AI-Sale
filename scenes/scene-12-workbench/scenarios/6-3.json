@@ -116,6 +116,27 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：检测到付款承诺。 时间：本周五。 建议创建付款跟进任务。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [
+          "客户来源→官网留资",
+          "初始意向→付款推进",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→付款流程",
+          "日单量→200-300单",
+          "后厨人员→3人",
+          "痛点→需安排付款",
+          "推荐产品→G3标准版",
+          "当前阶段→P6",
+          "响应状态→待付款",
+          "客户意向→正向",
+          "方案状态→合同已签"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -201,6 +222,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：好的王总，那我这边先记录本周五安排付款。款项确认后，我们就可以同步推进发货和安装",
+        "analysis": "待确认：付款到账确认、发货条件确认等3项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -282,6 +310,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：嗯，到时候我让财务处理。 ---",
+        "analysis": "已处理：付款到账确认、发货条件确认、安装时间预排。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -363,6 +398,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -444,6 +486,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

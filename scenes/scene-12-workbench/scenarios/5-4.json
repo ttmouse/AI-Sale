@@ -125,6 +125,27 @@
           "value": "75%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：检测试菜反馈。 正向反馈：整体认可、鱼香肉丝满意、操作可接受。 待优化：青椒肉丝",
+        "analysis": "待确认：鱼香肉丝味道认可、操作方式基本接受等4项。",
+        "updates": [
+          "客户来源→抖音私信",
+          "初始意向→采购意向",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→试菜反馈",
+          "日单量→200-300单",
+          "后厨人员→3人",
+          "痛点→味道需调整",
+          "推荐产品→G3标准版",
+          "当前阶段→P5",
+          "响应状态→试菜完成",
+          "客户意向→正向",
+          "方案状态→方案已确认"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -206,6 +227,13 @@
           "value": "75%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总，今天反馈我记录一下：鱼香肉丝整体比较满意，青椒肉丝火候可以再按您门店口味调",
+        "analysis": "已处理：鱼香肉丝味道认可、操作方式基本接受、厨师长无明显抵触、青椒肉丝火候需加强。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -287,6 +315,13 @@
           "value": "75%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：可以，你先出一版报价吧。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -368,6 +403,13 @@
           "value": "75%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：客户请求报价。建议进入 P6 报价合同阶段。 ---",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -449,6 +491,13 @@
           "value": "75%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

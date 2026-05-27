@@ -128,6 +128,27 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：检测到竞品对比：橡鹭 \\+ 低价竞品。 建议先确认客户关注维度，不要直接否定竞品",
+        "analysis": "待确认：橡鹭、低价竞品，名称待确认。",
+        "updates": [
+          "客户来源→主动咨询",
+          "初始意向→了解设备",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→竞品对比",
+          "日单量→200-300单",
+          "后厨人员→3人",
+          "痛点→选择困难",
+          "推荐产品→G3标准版",
+          "当前阶段→P4",
+          "响应状态→跟进中",
+          "客户意向→竞品考量",
+          "方案状态→已报价"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -214,6 +235,13 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总，您多比较几家是对的。不同品牌侧重点不一样，关键还是看您最关注什么：是价格、",
+        "analysis": "已处理：橡鹭、低价竞品，名称待确认。待确认：竞品对比中、关注稳定性等4项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -299,6 +327,13 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：我主要担心买回来不好用，还有售后跟不上。",
+        "analysis": "已处理：竞品对比中、关注稳定性、关注售后服务、价格敏感但非唯一因素。待确认：发送案例、发送售后保障说明等3项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -380,6 +415,13 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：客户实际顾虑：稳定性 \\+ 售后，而非单纯价格。 推荐发送稳定性案例和售后保障卡",
+        "analysis": "已处理：发送案例、发送售后保障说明、引导试菜验证。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -461,6 +503,13 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：明白，那您关注的不是单纯价格，而是买回去能不能稳定用、出了问题有没有人管。这个点",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

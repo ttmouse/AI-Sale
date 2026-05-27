@@ -135,6 +135,27 @@
           "value": "75%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：检测到试菜意向。 需要确认：具体时间、地点、参与人、试菜菜品。",
+        "analysis": "待确认：试菜时间：下周三 14:00、参与人：王总、厨师长等4项。",
+        "updates": [
+          "客户来源→抖音私信",
+          "初始意向→采购意向",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→实地验证",
+          "日单量→200-300单",
+          "后厨人员→3人",
+          "痛点→需实际体验",
+          "推荐产品→G3标准版",
+          "当前阶段→P5",
+          "响应状态→试菜邀约",
+          "客户意向→正向",
+          "方案状态→方案已确认"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -216,6 +237,13 @@
           "value": "75%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：可以的王总。您这边下周哪天方便？建议您带一两道门店常做的菜，我们现场用设备做给您",
+        "analysis": "已处理：试菜时间：下周三 14:00、参与人：王总、厨师长、地点：优特智厨展厅，待确认具体地址、试菜菜品：待客户提供。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -297,6 +325,13 @@
           "value": "75%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：下周三下午吧，我和厨师长一起过去。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -383,6 +418,13 @@
           "value": "75%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：已抽取：下周三下午；参与人：客户 \\+ 厨师长；地点：展厅待确认。 建议确认具体",
+        "analysis": "待确认：厨师长参与试菜、客户愿意现场验证等4项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -464,6 +506,13 @@
           "value": "75%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：好的，那我先帮您预留下周三下午。您看下午 2 点方便吗？另外您可以提前把想试的菜",
+        "analysis": "已处理：厨师长参与试菜、客户愿意现场验证、意向等级提升：中高 → 高、关键验证点：出品效果、操作体验。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     null

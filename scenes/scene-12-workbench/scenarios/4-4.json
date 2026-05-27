@@ -125,6 +125,27 @@
           "value": "56%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：检测到模糊异议：再考虑。 可能原因：预算、效果不确定、竞品对比、决策人未参与、采",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [
+          "客户来源→抖音私信",
+          "初始意向→了解设备",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→决策犹豫",
+          "日单量→200-300单",
+          "后厨人员→3人",
+          "痛点→顾虑多",
+          "推荐产品→G3标准版",
+          "当前阶段→P4",
+          "响应状态→跟进中",
+          "客户意向→犹豫",
+          "方案状态→已报价"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -210,6 +231,13 @@
           "value": "56%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总，没问题，设备采购确实需要慎重考虑。方便问一下，您现在主要顾虑是预算投入、设",
+        "analysis": "待确认：对出品效果有顾虑、需要试菜验证等3项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -291,6 +319,13 @@
           "value": "56%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：主要是还没确定这个东西实际做出来怎么样。",
+        "analysis": "已处理：对出品效果有顾虑、需要试菜验证、当前处于观望状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -372,6 +407,13 @@
           "value": "56%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：真实顾虑：出品效果不确定。 推荐动作：试菜邀约。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -453,6 +495,13 @@
           "value": "56%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：明白，那您主要还是想确认实际出品效果。这个靠资料确实不如现场看，建议您带一道门店",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

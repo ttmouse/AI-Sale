@@ -132,6 +132,24 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：团餐客户，不建议承诺单机解决。 建议转向组合方案和现场测算。",
+        "analysis": "待确认：智能炒菜设备：解决热菜炒制、智能蒸柜：解决蒸菜/主食/批量蒸制等4项。",
+        "updates": [
+          "客户来源→主动咨询",
+          "初始意向→设备咨询",
+          "客户大类→团餐",
+          "细分类别→食堂",
+          "核心关注点→出餐速度",
+          "日单量→1500人/餐",
+          "后厨人员→6人",
+          "痛点→高峰出餐慢",
+          "当前阶段→P3",
+          "客户意向→意向明确"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -213,6 +231,13 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：您这个规模不建议只看一台设备能不能解决。1500 人一餐、一个小时集中出餐，需要",
+        "analysis": "已处理：智能炒菜设备：解决热菜炒制、智能蒸柜：解决蒸菜/主食/批量蒸制、智能汤锅：解决汤品/炖煮、保温出餐设备：解决集中出餐稳定性。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -300,6 +325,13 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：那大概会包括哪些设备？",
+        "analysis": "待确认：后厨平面布局、热菜结构等5项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -381,6 +413,13 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 生成建议：可说明初步组合，不给最终配置，强调需现场确认。",
+        "analysis": "已处理：后厨平面布局、热菜结构、当前设备配置、采购流程、预算范围。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -462,6 +501,13 @@
           "value": "50%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：初步看，可能会涉及炒菜设备、智能蒸柜、汤锅，以及出餐保温环节。具体数量要看您热菜",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

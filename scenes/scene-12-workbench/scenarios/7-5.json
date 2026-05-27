@@ -123,6 +123,27 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：检测到正向使用反馈。 客户满意度较高。 可尝试低压转介绍或案例采集。",
+        "analysis": "待确认：客户正向反馈、客户表示可推荐朋友。",
+        "updates": [
+          "客户来源→官网留资",
+          "初始意向→转介绍",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→转介绍",
+          "日单量→200-300单",
+          "后厨人员→3人",
+          "痛点→愿意推荐",
+          "推荐产品→G3标准版",
+          "当前阶段→P7",
+          "响应状态→转介绍",
+          "客户意向→正向",
+          "方案状态→已交付"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -204,6 +225,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总，听到您这边用得顺利我们也很高兴。后面如果您身边有做快餐、团餐或者准备开店的",
+        "analysis": "已处理：客户正向反馈、客户表示可推荐朋友。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -290,6 +318,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：可以，我有个朋友也在看后厨设备，回头我推你。",
+        "analysis": "待确认：满意客户、可转介绍客户等4项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -371,6 +406,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：检测到转介绍线索。建议创建新线索，并关联介绍人。 ---",
+        "analysis": "已处理：满意客户、可转介绍客户、案例潜力客户、老客户经营对象。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -452,6 +494,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -533,6 +582,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

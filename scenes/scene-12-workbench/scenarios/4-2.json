@@ -131,6 +131,27 @@
           "value": "63%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：当前已有参数： 炒锅师傅月薪：9000 元 当前人员：2 名炒锅师傅 设备投入：",
+        "analysis": "待确认：炒锅师傅月薪：9000 元、当前炒锅人数：2 人等5项。",
+        "updates": [
+          "客户来源→官网留资",
+          "初始意向→了解设备",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→回本周期",
+          "日单量→200-300单",
+          "后厨人员→3人",
+          "痛点→担心投入产出",
+          "推荐产品→G3标准版",
+          "当前阶段→P4",
+          "响应状态→跟进中",
+          "客户意向→正向",
+          "方案状态→已报价"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -219,6 +240,13 @@
           "value": "63%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总，我先按一个保守算法给您算。您现在两个炒锅师傅，如果设备能减少一个岗位依赖，",
+        "analysis": "已处理：炒锅师傅月薪：9000 元、当前炒锅人数：2 人、设备投入假设：60000 元、替代目标：0.5–1 人、保守：提升效率，不直接减人，回本需结合增收测算。已完成：人工成本已确认、客户接受回本逻辑。待确认：设备配置价格待确认、是否实际减员待确认等3项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -300,6 +328,13 @@
           "value": "63%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：那如果不能完全少一个人呢？",
+        "analysis": "已处理：设备配置价格待确认、是否实际减员待确认、是否需要正式测算表待确认。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -381,6 +416,13 @@
           "value": "63%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：客户关注测算可信度。建议给保守、中性、理想三档测算。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -462,6 +504,13 @@
           "value": "63%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：这个问题很实际。我们可以分三档算： 保守情况：不减人，只提升高峰效率； 中性情况",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

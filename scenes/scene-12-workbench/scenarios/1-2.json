@@ -133,6 +133,17 @@
           "value": "25%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 生成建议：A\\. 展会记忆唤醒型 B\\. 直接需求确认型 C\\. 资料跟进型",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [
+          "客户来源→展会",
+          "初始意向→回访跟进",
+          "当前阶段→P1"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -219,6 +230,13 @@
           "value": "25%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：李总您好，我是优特智厨的小陈。昨天在上海餐饮设备展上我们聊过 G3 炒菜机，您当",
+        "analysis": "待确认：日单量、后厨人员数量等4项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -300,6 +318,13 @@
           "value": "25%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：哦，有印象。你们那个设备能做哪些菜？",
+        "analysis": "已处理：日单量、后厨人员数量、是否有扩店计划、决策人是否本人。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -381,6 +406,13 @@
           "value": "25%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 生成建议：客户开始关注产品适配性，可先回答菜品范围，再反问客户门店主力菜品。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -462,6 +494,13 @@
           "value": "25%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：我们这类设备更适合标准化程度比较高的快餐、小炒、盖饭类菜品。比如宫保鸡丁、鱼香肉",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     null

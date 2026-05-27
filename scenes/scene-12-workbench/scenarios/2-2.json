@@ -132,6 +132,21 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：已识别客户类型：团餐 / 园区食堂。 建议切换团餐需求挖掘逻辑。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [
+          "客户来源→主动咨询",
+          "初始意向→了解设备",
+          "客户大类→团餐",
+          "细分类别→食堂",
+          "日单量→1500人/餐",
+          "后厨人员→6-8人",
+          "当前阶段→P2"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -225,6 +240,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 生成建议：团餐客户建议优先确认：单餐人数、出餐时间窗口、菜品数量、当前设备配置。",
+        "analysis": "已完成：团餐类型确认、单餐人数确认、出餐时间确认、菜品数量确认、初步痛点确认。待确认：现有设备配置、后厨人员数量等5项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -306,6 +328,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：明白，您这个是典型团餐场景，重点不是单店翻台，而是集中时间内稳定批量出餐。我先了",
+        "analysis": "已处理：现有设备配置、后厨人员数量、是否有中央厨房、是否需要多设备组合、是否涉及招投标/采购流程。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -387,6 +416,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：大概一个小时内出完，热菜一般 8 到 10 个。",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -468,6 +504,13 @@
           "value": "38%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：那现在主要卡在炒菜环节，还是蒸煮、分餐这些环节？",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     null

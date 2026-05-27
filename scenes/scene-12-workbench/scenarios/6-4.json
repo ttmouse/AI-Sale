@@ -117,6 +117,27 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：检测到发货请求。 已抽取收货地址、联系人、电话。 建议创建发货流程。",
+        "analysis": "待确认：收货地址：杭州西湖区某某路 88 号、联系人：李经理等5项。",
+        "updates": [
+          "客户来源→官网留资",
+          "初始意向→发货",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→发货安排",
+          "日单量→200-300单",
+          "后厨人员→3人",
+          "痛点→需尽快到货",
+          "推荐产品→G3标准版",
+          "当前阶段→P6",
+          "响应状态→已付款待发货",
+          "客户意向→正向",
+          "方案状态→已签约"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -198,6 +219,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：收到王总，我这边记录一下：杭州西湖区某某路 88 号，李经理，138xxxx88",
+        "analysis": "已处理：收货地址：杭州西湖区某某路 88 号、联系人：李经理、联系电话：138xxxx8888、付款状态：客户表示已付款，待财务确认、发货产品：G3 标准版，1 台。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -279,6 +307,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -360,6 +395,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -441,6 +483,13 @@
           "value": "94%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

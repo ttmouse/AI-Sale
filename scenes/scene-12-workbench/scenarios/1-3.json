@@ -122,6 +122,17 @@
           "value": "25%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总您好，我是优特智厨的小陈，是张总推荐我联系您的。张总说您这边准备做一个社区快",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [
+          "客户来源→老客户转介绍",
+          "初始意向→设备咨询",
+          "当前阶段→P1"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -209,6 +220,13 @@
           "value": "25%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：对，我还在筹备，主要是想看看这种设备能不能少请一个厨师。",
+        "analysis": "待确认：门店面积、主营品类等5项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -290,6 +308,13 @@
           "value": "25%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 生成建议：客户已表达核心痛点：减少厨师。建议进入筹备店需求确认。",
+        "analysis": "已处理：门店面积、主营品类、预计日单量、预算区间、开业时间。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -371,6 +396,13 @@
           "value": "25%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：明白，您这个关注点很关键。筹备期提前规划后厨设备是比较合适的。我先了解一下，您预",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -452,6 +484,13 @@
           "value": "25%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "AI 持续分析对话状态。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]

@@ -121,6 +121,27 @@
           "value": "75%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "销售发送消息：王总，明天下午 2 点试菜我这边已经安排好了。为了现场效果更准确，麻烦您今天把准",
+        "analysis": "待确认：鱼香肉丝、青椒肉丝等5项。",
+        "updates": [
+          "客户来源→抖音私信",
+          "初始意向→采购意向",
+          "客户大类→社餐",
+          "细分类别→快餐",
+          "核心关注点→试菜准备",
+          "日单量→200-300单",
+          "后厨人员→3人",
+          "痛点→需定制菜品",
+          "推荐产品→G3标准版",
+          "当前阶段→P5",
+          "响应状态→试菜准备",
+          "客户意向→正向",
+          "方案状态→方案已确认"
+        ],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -202,6 +223,13 @@
           "value": "75%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "客户回复：试鱼香肉丝和青椒肉丝，口味偏重一点。厨师长也会去。",
+        "analysis": "已处理：鱼香肉丝、青椒肉丝、口味还原、出餐速度、操作难度。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -286,6 +314,13 @@
           "value": "75%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 提取关键信息：已补全试菜菜品和口味要求。建议生成内部准备清单。 ---",
+        "analysis": "待确认：展厅具体地址是否已发送、到访人数是否最终确认。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -371,6 +406,13 @@
           "value": "75%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "已处理：展厅具体地址是否已发送、到访人数是否最终确认。待确认：代表菜品：鱼香肉丝、青椒肉丝、口味偏好：偏重等3项。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     },
     {
@@ -452,6 +494,13 @@
           "value": "75%",
           "status": "current"
         }
+      },
+      "agentLog": {
+        "received": "AI 持续分析对话状态",
+        "analysis": "已处理：代表菜品：鱼香肉丝、青椒肉丝、口味偏好：偏重、厨师长参与验证。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "继续推进"
       }
     }
   ]
