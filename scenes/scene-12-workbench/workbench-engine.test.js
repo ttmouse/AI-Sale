@@ -166,7 +166,7 @@ Engine.selectScenario('1-1');
 const ann = Engine.getAnnotationAtIndex(0);
 a(ann !== null, 'getAnnotationAtIndex(0) 返回非空');
 if (ann) {
-  a(typeof ann.profile === 'string' && ann.profile.length > 0, '注解包含 profile');
+  a(typeof ann.fields === 'object' && ann.fields !== null, '注解包含 fields');
   a(ann.progress && typeof ann.progress.currentStage === 'string', '注解包含 progress.currentStage');
 }
 

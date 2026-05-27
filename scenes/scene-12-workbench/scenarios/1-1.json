@@ -2,30 +2,27 @@
   "id": "1-1",
   "stageId": "P1",
   "name": "抖音线索智能开场",
-  "painPoint": "抖音线索往往兴趣来得快、流失也快。客户可能只是刷到视频点了咨询，并不一定有明确采购计划。销售如果一上来发产品册或报价，很容易把客户聊死。 ",
+  "painPoint": "抖音线索往往兴趣来得快、流失也快。客户可能只是刷到视频点了咨询，并不一定有明确采购计划。销售如果一上来就发产品册或报价，很容易把客户吓跑。",
   "highlights": [
-    "自动识别线索来源：抖音；",
-    "判断客户属于“轻兴趣线索”；",
-    "推荐轻量、不压迫的开场话术；",
-    "引导客户先说门店状态；",
-    "自动创建客户初始档案；",
-    "标记客户来源为“短视频线索”。"
+    "自动识别线索来源和兴趣点；",
+    "匹配最合适的开场破冰话术；",
+    "根据客户回复实时更新画像；",
+    "在了解需求后才进行产品推荐；",
+    "全程记录跟进节奏和状态。"
   ],
-  "demoGoal": "让客户看到：销售刚拿到一个抖音线索，AI 能帮助销售用更自然的方式开场，而不是直接推销。 ",
+  "demoGoal": "展示 AI 如何帮助销售用正确的节奏跟进抖音线索，从破冰到方案推荐的完整链路。",
   "messages": [
     {
       "type": "system",
-      "content": "新线索：抖音私信留资 客户备注：想了解智能炒菜机 客户手机号：已留资 当前状态：未建立有效沟通"
+      "content": "新线索：抖音私信留资\n客户备注：想了解智能炒菜机\n客户手机号：已留资\n当前状态：未建立有效沟通"
     },
     {
       "type": "ai-recommend",
-      "content": "A\\. 轻量破冰型 B\\. 需求确认型 C\\. 视频承接型",
-      "options": [],
-      "selected": 0
+      "content": "A. 轻量破冰型 B. 需求确认型 C. 视频承接型"
     },
     {
       "type": "sales",
-      "content": "王总您好，我是优特智厨的小陈，看到您刚才在抖音上关注了智能炒菜设备。我先不打扰您太久，想简单了解一下，您现在是已经有门店想升级后厨，还是正在筹备新店？",
+      "content": "王总您好，我是优特智厨的小陈，看到您刚才在抖音上关注了智能炒菜设备。我先不打扰您太久，简单了解一下：您现在是已经有门店想升级后厨，还是正在筹备开店？",
       "sender": "小陈"
     },
     {
@@ -34,103 +31,901 @@
       "sender": "王总"
     },
     {
-      "type": "ai-recommend",
-      "content": "可以继续追问门店类型、日单量、后厨人员，不建议马上报价。 销售点击推荐话术。",
-      "options": [],
-      "selected": 0
+      "type": "ai-hint",
+      "content": "确认客户已有门店 业态为快餐 关注设备适用性"
     },
     {
       "type": "sales",
-      "content": "明白，快餐店是比较适合这类设备的。我先了解两个信息，方便判断是否适合您：您现在一天大概多少单？后厨有几个炒锅师傅？ ---",
+      "content": "明白，快餐店是比较适合的。我先了解两个信息：您现在一天大概多少单？后厨有几个炒锅师傅？",
       "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "一天200多单，两个炒锅师傅，有时候出不来。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "日单量200+ 2名师傅 痛点：出餐瓶颈 画像完整度提升"
+    },
+    {
+      "type": "sales",
+      "content": "好的。200多单两位师傅确实比较紧张。这个场景用我们的G3标准版会比较适合。要不要我给您发一份快餐门店的配置说明看看？",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "行，你先发来看看。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-recommend",
+      "content": "客户意向正向。建议发送资料后48小时跟进反馈。"
+    },
+    {
+      "type": "sales",
+      "content": "好的，我马上把资料发您。您看完如果有兴趣，我们可以约个时间电话聊几分钟。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "好的，我先看看。",
+      "sender": "王总"
     }
   ],
   "annotations": [
     null,
     {
-      "profile": "客户画像已创建\n\n客户来源：抖音线索\n客户大类：餐饮客户\n细分类别：社餐 / 快餐简餐\n门店状态：已有门店\n关注产品：智能炒菜设备\n当前意向：初步了解\n画像完整度：10% → 30%",
-      "progress": {
-        "currentStage": "P1",
-        "completed": [],
-        "pending": [],
-        "stageChange": null
+      "fields": {
+        "客户来源": {
+          "value": "抖音私信",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": null,
+          "status": "empty"
+        },
+        "初始意向": {
+          "value": "了解炒菜机",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": null,
+          "status": "empty"
+        },
+        "细分类别": {
+          "value": null,
+          "status": "empty"
+        },
+        "核心关注点": {
+          "value": null,
+          "status": "empty"
+        },
+        "日单量": {
+          "value": null,
+          "status": "empty"
+        },
+        "后厨人员": {
+          "value": null,
+          "status": "empty"
+        },
+        "痛点": {
+          "value": null,
+          "status": "empty"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": null,
+          "status": "empty"
+        },
+        "当前阶段": {
+          "value": null,
+          "status": "empty"
+        },
+        "响应状态": {
+          "value": "新线索",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": null,
+          "status": "empty"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "10%",
+          "status": "current"
+        }
       },
-      "flows": [],
-      "cards": [],
-      "nextAction": {
-        "suggestion": "继续推进",
-        "reason": "按流程"
-      }
-    },
-    {
-      "profile": "当前销售阶段：P1 线索接入\n\n已完成：\n√ 识别客户来源\n√ 完成初次破冰\n√ 初步确认客户为快餐门店\n\n待确认：\n□ 日单量\n□ 后厨人员\n□ 预算区间\n□ 决策角色\n□ 采购周期\n\n建议阶段：\n继续停留在 P1/P2 之间，先完成需求确认。",
       "progress": {
         "currentStage": "P1",
         "completed": [
-          "识别客户来源",
-          "完成初次破冰",
-          "初步确认客户为快餐门店"
+          "线索接收",
+          "来源识别",
+          "意向识别"
+        ],
+        "pending": [
+          "客户唤醒",
+          "业态确认",
+          "需求挖掘"
+        ],
+        "stageChange": null
+      },
+      "flows": [
+        {
+          "label": "创建跟进任务",
+          "icon": "calendar-plus"
+        },
+        {
+          "label": "标记来源：抖音",
+          "icon": "tag"
+        }
+      ],
+      "cards": [
+        "抖音线索开场话术模板",
+        "轻量破冰策略卡"
+      ],
+      "nextAction": {
+        "suggestion": "发送轻量破冰话术",
+        "reason": "抖音线索兴趣快流失也快"
+      },
+      "agentLog": {
+        "received": "新线索从抖音API接入",
+        "analysis": "新线索来源为抖音私信留资，意向为了解炒菜机。推荐轻量破冰。",
+        "updates": [
+          "来源→抖音",
+          "意向→了解炒菜机"
+        ],
+        "stageChange": null,
+        "recommendedAction": "发送破冰话术"
+      }
+    },
+    {
+      "fields": {
+        "客户来源": {
+          "value": "抖音私信",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": null,
+          "status": "empty"
+        },
+        "初始意向": {
+          "value": "了解炒菜机",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": null,
+          "status": "empty"
+        },
+        "细分类别": {
+          "value": null,
+          "status": "empty"
+        },
+        "核心关注点": {
+          "value": null,
+          "status": "empty"
+        },
+        "日单量": {
+          "value": null,
+          "status": "empty"
+        },
+        "后厨人员": {
+          "value": null,
+          "status": "empty"
+        },
+        "痛点": {
+          "value": null,
+          "status": "empty"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": null,
+          "status": "empty"
+        },
+        "当前阶段": {
+          "value": null,
+          "status": "empty"
+        },
+        "响应状态": {
+          "value": "破冰话术已发送",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": null,
+          "status": "empty"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "15%",
+          "status": "current"
+        }
+      },
+      "progress": {
+        "currentStage": "P1",
+        "completed": [
+          "线索接收",
+          "来源识别",
+          "话术发送"
+        ],
+        "pending": [
+          "客户回复",
+          "业态确认",
+          "需求挖掘"
+        ],
+        "stageChange": null
+      },
+      "flows": [
+        {
+          "label": "等待客户回复",
+          "icon": "bell"
+        }
+      ],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "等待客户回复后分析",
+        "reason": "话术已发送"
+      },
+      "agentLog": {
+        "received": "销售发出破冰话术",
+        "analysis": "销售已发送轻量破冰话术。",
+        "updates": [
+          "话术已发送"
+        ],
+        "stageChange": null,
+        "recommendedAction": "等待客户回复"
+      }
+    },
+    {
+      "fields": {
+        "客户来源": {
+          "value": "抖音私信",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": null,
+          "status": "empty"
+        },
+        "初始意向": {
+          "value": "了解炒菜机",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "设备适用性",
+          "status": "current"
+        },
+        "日单量": {
+          "value": null,
+          "status": "empty"
+        },
+        "后厨人员": {
+          "value": null,
+          "status": "empty"
+        },
+        "痛点": {
+          "value": null,
+          "status": "empty"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": null,
+          "status": "empty"
+        },
+        "当前阶段": {
+          "value": null,
+          "status": "empty"
+        },
+        "响应状态": {
+          "value": "已回复",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": null,
+          "status": "empty"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "35%",
+          "status": "current"
+        }
+      },
+      "progress": {
+        "currentStage": "P1",
+        "completed": [
+          "客户唤醒",
+          "业态识别",
+          "关注点识别"
+        ],
+        "pending": [
+          "日单量确认",
+          "人员确认"
+        ],
+        "stageChange": null
+      },
+      "flows": [
+        {
+          "label": "更新画像",
+          "icon": "edit"
+        },
+        {
+          "label": "创建跟进",
+          "icon": "bell"
+        }
+      ],
+      "cards": [
+        "快餐门店适配说明卡"
+      ],
+      "nextAction": {
+        "suggestion": "追问日单量和后厨人员",
+        "reason": "需确认门店规模"
+      },
+      "agentLog": {
+        "received": "客户回复：已有快餐店，想知道设备是否适合",
+        "analysis": "客户被成功触达。提取：已有门店，业态快餐，关注适用性。",
+        "updates": [
+          "大类→社餐",
+          "业态→快餐",
+          "关注→设备适用性"
+        ],
+        "stageChange": null,
+        "recommendedAction": "追问日单量和人员"
+      }
+    },
+    {
+      "fields": {
+        "客户来源": {
+          "value": "抖音私信",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": null,
+          "status": "empty"
+        },
+        "初始意向": {
+          "value": "了解炒菜机",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "设备适用性",
+          "status": "current"
+        },
+        "日单量": {
+          "value": null,
+          "status": "empty"
+        },
+        "后厨人员": {
+          "value": null,
+          "status": "empty"
+        },
+        "痛点": {
+          "value": null,
+          "status": "empty"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": null,
+          "status": "empty"
+        },
+        "当前阶段": {
+          "value": null,
+          "status": "empty"
+        },
+        "响应状态": {
+          "value": "需求确认中",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": null,
+          "status": "empty"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "35%",
+          "status": "current"
+        }
+      },
+      "progress": {
+        "currentStage": "P1",
+        "completed": [
+          "客户唤醒",
+          "业态识别"
         ],
         "pending": [
           "日单量",
-          "后厨人员",
-          "预算区间",
-          "决策角色",
-          "采购周期"
+          "人员",
+          "需求匹配"
         ],
         "stageChange": null
       },
-      "flows": [],
+      "flows": [
+        {
+          "label": "等待客户回复",
+          "icon": "bell"
+        }
+      ],
       "cards": [],
       "nextAction": {
-        "suggestion": "继续推进",
-        "reason": "按流程"
+        "suggestion": "等待客户提供数据",
+        "reason": "已追问信息"
+      },
+      "agentLog": {
+        "received": "销售追问门店运营数据",
+        "analysis": "销售按AI建议追问。等待客户反馈。",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "等待客户回复"
       }
     },
     {
-      "profile": "可创建动作：\n[创建客户档案]\n[创建首次跟进任务]\n[标记线索来源：抖音]",
+      "fields": {
+        "客户来源": {
+          "value": "抖音私信",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": null,
+          "status": "empty"
+        },
+        "初始意向": {
+          "value": "了解炒菜机",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "出餐效率",
+          "status": "current"
+        },
+        "日单量": {
+          "value": "200+单",
+          "status": "current"
+        },
+        "后厨人员": {
+          "value": "2名炒锅师傅",
+          "status": "current"
+        },
+        "痛点": {
+          "value": "午高峰出餐瓶颈",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": null,
+          "status": "empty"
+        },
+        "当前阶段": {
+          "value": null,
+          "status": "empty"
+        },
+        "响应状态": {
+          "value": "需求确认中",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": null,
+          "status": "empty"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "60%",
+          "status": "current"
+        }
+      },
       "progress": {
         "currentStage": "P1",
-        "completed": [],
-        "pending": [],
+        "completed": [
+          "日单量确认",
+          "人员确认",
+          "痛点识别"
+        ],
+        "pending": [
+          "产品推荐",
+          "方案发送"
+        ],
         "stageChange": null
       },
-      "flows": [],
-      "cards": [],
+      "flows": [
+        {
+          "label": "推荐产品",
+          "icon": "file-text"
+        },
+        {
+          "label": "更新画像",
+          "icon": "edit"
+        }
+      ],
+      "cards": [
+        "G3标准版产品卡",
+        "快餐门店配置方案"
+      ],
       "nextAction": {
-        "suggestion": "继续推进",
-        "reason": "按流程"
+        "suggestion": "推荐G3标准版，发配置说明",
+        "reason": "200单+2名师傅场景适合G3"
+      },
+      "agentLog": {
+        "received": "客户回复：200多单，2个师傅，出不来",
+        "analysis": "客户提供运营数据。AI匹配G3标准版。",
+        "updates": [
+          "日单量→200+",
+          "人员→2名",
+          "痛点→出餐瓶颈",
+          "完整度60%"
+        ],
+        "stageChange": null,
+        "recommendedAction": "推荐G3并发送方案"
       }
     },
     {
-      "profile": "推荐资料：\n1. 快餐门店智能炒菜机应用案例\n2. G3 产品简版介绍\n3. 快餐店后厨降本场景卡",
+      "fields": {
+        "客户来源": {
+          "value": "抖音私信",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": null,
+          "status": "empty"
+        },
+        "初始意向": {
+          "value": "了解炒菜机",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "出餐效率",
+          "status": "current"
+        },
+        "日单量": {
+          "value": "200+单",
+          "status": "current"
+        },
+        "后厨人员": {
+          "value": "2名炒锅师傅",
+          "status": "current"
+        },
+        "痛点": {
+          "value": "午高峰出餐瓶颈",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "current"
+        },
+        "当前阶段": {
+          "value": null,
+          "status": "empty"
+        },
+        "响应状态": {
+          "value": "方案已推荐",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": null,
+          "status": "empty"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "65%",
+          "status": "current"
+        }
+      },
       "progress": {
         "currentStage": "P1",
-        "completed": [],
-        "pending": [],
+        "completed": [
+          "画像建设",
+          "产品匹配",
+          "方案推荐"
+        ],
+        "pending": [
+          "方案发送",
+          "客户反馈"
+        ],
         "stageChange": null
       },
-      "flows": [],
-      "cards": [],
+      "flows": [
+        {
+          "label": "发送方案",
+          "icon": "send"
+        }
+      ],
+      "cards": [
+        "G3标准版产品卡"
+      ],
       "nextAction": {
-        "suggestion": "继续推进",
-        "reason": "按流程"
+        "suggestion": "客户同意后发送配置方案",
+        "reason": "客户意向正向"
+      },
+      "agentLog": {
+        "received": "销售推荐G3标准版",
+        "analysis": "AI匹配G3标准版。销售按建议推荐。",
+        "updates": [
+          "推荐→G3标准版"
+        ],
+        "stageChange": null,
+        "recommendedAction": "客户同意后发送方案"
       }
     },
     {
-      "profile": "建议下一步：\n继续追问日单量和后厨人员。\n\n推荐原因：\n目前客户只是表达“想看看是否适合”，还不能直接进入报价或方案阶段。",
+      "fields": {
+        "客户来源": {
+          "value": "抖音私信",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": null,
+          "status": "empty"
+        },
+        "初始意向": {
+          "value": "了解炒菜机",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "出餐效率",
+          "status": "current"
+        },
+        "日单量": {
+          "value": "200+单",
+          "status": "current"
+        },
+        "后厨人员": {
+          "value": "2名炒锅师傅",
+          "status": "current"
+        },
+        "痛点": {
+          "value": "午高峰出餐瓶颈",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "current"
+        },
+        "当前阶段": {
+          "value": null,
+          "status": "empty"
+        },
+        "响应状态": {
+          "value": "方案已推荐",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": "正向",
+          "status": "current"
+        },
+        "方案状态": {
+          "value": null,
+          "status": "empty"
+        },
+        "画像完整度": {
+          "value": "70%",
+          "status": "current"
+        }
+      },
       "progress": {
         "currentStage": "P1",
-        "completed": [],
-        "pending": [],
+        "completed": [
+          "画像建设",
+          "产品匹配",
+          "方案推荐"
+        ],
+        "pending": [
+          "方案发送",
+          "跟进反馈"
+        ],
         "stageChange": null
       },
-      "flows": [],
-      "cards": [],
+      "flows": [
+        {
+          "label": "发送方案",
+          "icon": "send"
+        },
+        {
+          "label": "设置跟进",
+          "icon": "calendar-plus"
+        }
+      ],
+      "cards": [
+        "G3配置清单",
+        "快餐门店ROI测算"
+      ],
       "nextAction": {
-        "suggestion": "继续推进",
-        "reason": "按流程"
+        "suggestion": "发送方案并设置48小时跟进",
+        "reason": "客户同意看方案"
+      },
+      "agentLog": {
+        "received": "客户同意看方案",
+        "analysis": "客户意向正向。从抖音线索到方案推送完成。",
+        "updates": [
+          "意向→正向"
+        ],
+        "stageChange": null,
+        "recommendedAction": "发送方案，48h后跟进"
       }
-    }
+    },
+    {
+      "fields": {
+        "客户来源": {
+          "value": "抖音私信",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": null,
+          "status": "empty"
+        },
+        "初始意向": {
+          "value": "了解炒菜机",
+          "status": "current"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "出餐效率",
+          "status": "current"
+        },
+        "日单量": {
+          "value": "200+单",
+          "status": "current"
+        },
+        "后厨人员": {
+          "value": "2名炒锅师傅",
+          "status": "current"
+        },
+        "痛点": {
+          "value": "午高峰出餐瓶颈",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": null,
+          "status": "empty"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "current"
+        },
+        "当前阶段": {
+          "value": null,
+          "status": "empty"
+        },
+        "响应状态": {
+          "value": "方案已推荐",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": "正向",
+          "status": "current"
+        },
+        "方案状态": {
+          "value": "已发送",
+          "status": "current"
+        },
+        "画像完整度": {
+          "value": "75%",
+          "status": "current"
+        }
+      },
+      "progress": {
+        "currentStage": "P1",
+        "completed": [
+          "线索接入",
+          "客户唤醒",
+          "画像建设",
+          "产品推荐",
+          "方案发送"
+        ],
+        "pending": [
+          "方案反馈",
+          "深入沟通"
+        ],
+        "stageChange": null
+      },
+      "flows": [
+        {
+          "label": "跟进方案反馈",
+          "icon": "message-square"
+        }
+      ],
+      "cards": [
+        "G3配置清单",
+        "ROI回本测算"
+      ],
+      "nextAction": {
+        "suggestion": "48小时后跟进方案反馈",
+        "reason": "给客户时间阅读方案"
+      },
+      "agentLog": {
+        "received": "销售发送方案",
+        "analysis": "从抖音线索到方案推送完成。AI完成线索识别→话术生成→画像建设→产品匹配→方案推荐完整链路。",
+        "updates": [
+          "方案→已发送"
+        ],
+        "stageChange": null,
+        "recommendedAction": "48h后跟进反馈"
+      }
+    },
+    null,
+    null,
+    null,
+    null
   ]
 }
