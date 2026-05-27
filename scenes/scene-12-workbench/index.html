@@ -86,7 +86,12 @@
     .tl-card:last-child { border-bottom: none; }
     @keyframes tlSlideIn { from { opacity: 0; transform: translateX(-8px); } to { opacity: 1; transform: translateX(0); } }
 
-    .tl-card .tl-step {
+    
+    .tl-role-badge { display: inline-block; padding: 0.0625rem 0.3125rem; border-radius: 0.1875rem; font-size: 0.5rem; font-weight: 700; letter-spacing: 0.03em; margin-left: 0.375rem; vertical-align: middle; }
+    .tl-role-sales { background: #DBEAFE; color: #1D4ED8; }
+    .tl-role-customer { background: #FEF3C7; color: #92400E; }
+
+.tl-card .tl-step {
       font-size: 0.5625rem; font-weight: 700; color: var(--brand);
       text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.25rem;
     }
@@ -193,8 +198,16 @@
 
 
     /* 结构化字段面板 */
-    .sf-row { display: flex; align-items: center; gap: 0.375rem; padding: 0.1875rem 0; border-bottom: 1px solid var(--border); font-size: 0.6875rem; }
-    .sf-row:last-child { border-bottom: none; }
+    
+    .sf-empty .sf-val { color: var(--text-muted); font-weight: 300; }
+    .sf-empty { opacity: 0.5; }
+
+.sf-row { display: flex; align-items: center; gap: 0.375rem; padding: 0.1875rem 0; border-bottom: 1px solid var(--border); font-size: 0.6875rem; }
+    
+    .sf-empty .sf-val { color: var(--text-muted); font-weight: 300; }
+    .sf-empty { opacity: 0.5; }
+
+.sf-row:last-child { border-bottom: none; }
     .sf-key { color: var(--text-muted); min-width: 4.5rem; flex-shrink: 0; font-size: 0.625rem; }
     .sf-val { color: var(--text-primary); font-weight: 500; flex: 1; }
     .sf-badge { width: 1rem; height: 1rem; display: flex; align-items: center; justify-content: center; border-radius: 50%; font-size: 0.5625rem; flex-shrink: 0; }
