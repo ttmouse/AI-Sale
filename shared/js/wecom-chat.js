@@ -57,7 +57,47 @@ const WecomChat = (() => {
       + '#input-bar input::placeholder { color:rgba(255,255,255,.3); }'
       + '#input-bar .right-btn { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:none; background:transparent; cursor:pointer; flex-shrink:0; transition:all .15s; }'
       + '#input-bar .right-btn:active { background:rgba(255,255,255,.1); }'
-      + '#input-bar .right-btn svg { width:24px; height:24px; fill:rgba(255,255,255,.9); }';
+      + '#input-bar .right-btn svg { width:24px; height:24px; fill:rgba(255,255,255,.9); }'
+      + '.fp-overlay { position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.5); z-index:200; opacity:0; pointer-events:none; transition:opacity .3s ease; }'
+      + '.fp-overlay.open { opacity:1; pointer-events:auto; }'
+      + '.fp-page { position:absolute; top:0; left:0; width:100%; height:100%; background:#111214; z-index:210; transform:translateY(100%); transition:transform .35s cubic-bezier(.22,1,.36,1); display:flex; flex-direction:column; overflow:hidden; will-change:transform; }'
+      + '.fp-page.open { transform:translateY(0); }'
+      + '.fp-header { display:flex; align-items:center; height:52px; padding:0 12px; background:#111214; border-bottom:0.5px solid rgba(255,255,255,.06); flex-shrink:0; }'
+      + '.fp-close { width:44px; height:44px; display:flex; align-items:center; justify-content:center; border:none; background:transparent; color:rgba(255,255,255,.9); font-size:26px; cursor:pointer; flex-shrink:0; }'
+      + '.fp-close:active { opacity:.6; }'
+      + '.fp-title { flex:1; text-align:center; font-size:17px; font-weight:500; color:rgba(255,255,255,.9); }'
+      + '.fp-spacer { width:44px; flex-shrink:0; }'
+      + '.fp-body { flex:1; overflow-y:auto; padding:16px; background:#111214; }'
+      + '.fp-body::-webkit-scrollbar { width:3px; }'
+      + '.fp-body::-webkit-scrollbar-thumb { background:rgba(255,255,255,.12); border-radius:2px; }'
+      + '.sb-section { margin-bottom:16px; }'
+      + '.sb-section-title { font-size:11px; font-weight:600; color:rgba(255,255,255,.35); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }'
+      + '.sb-row { display:flex; align-items:center; gap:8px; padding:6px 0; border-bottom:0.5px solid rgba(255,255,255,.05); font-size:13px; }'
+      + '.sb-row:last-child { border-bottom:none; }'
+      + '.sb-key { color:rgba(255,255,255,.4); min-width:72px; flex-shrink:0; font-size:12px; }'
+      + '.sb-val { color:rgba(255,255,255,.85); font-weight:500; }'
+      + '.sb-val-empty { color:rgba(255,255,255,.25); font-weight:300; font-style:italic; }'
+      + '.sb-section-divider { height:0.5px; background:rgba(255,255,255,.06); margin:4px 0 12px; }'
+      + '.sb-progress-dots { display:flex; align-items:center; gap:2px; padding:6px 0; }'
+      + '.sb-pdot { width:10px; height:10px; border-radius:50%; background:rgba(255,255,255,.12); flex-shrink:0; }'
+      + '.sb-pdot.done { background:#10B981; }'
+      + '.sb-pdot.cur { background:#3B82F6; box-shadow:0 0 0 3px rgba(59,130,246,.2); }'
+      + '.sb-pbar { flex:1; height:3px; background:rgba(255,255,255,.08); border-radius:2px; }'
+      + '.sb-pbar.filled { background:#10B981; }'
+      + '.sb-check { font-size:12px; color:rgba(255,255,255,.55); padding:4px 0; padding-left:14px; position:relative; line-height:1.5; }'
+      + '.sb-check::before { content:"\u2713"; position:absolute; left:0; color:#10B981; font-weight:700; }'
+      + '.sb-pending { font-size:12px; color:rgba(255,255,255,.3); padding:4px 0; padding-left:14px; position:relative; line-height:1.5; }'
+      + '.sb-pending::before { content:"\u25A1"; position:absolute; left:0; color:rgba(255,255,255,.2); }'
+      + '.sb-flow-btn { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border:0.5px solid rgba(255,255,255,.1); background:rgba(255,255,255,.04); border-radius:6px; font-size:12px; cursor:pointer; color:rgba(255,255,255,.7); margin:3px; transition:all .15s; font-family:inherit; }'
+      + '.sb-flow-btn:active { background:rgba(255,255,255,.1); transform:scale(.96); }'
+      + '.sb-flow-btn svg { width:14px; height:14px; }'
+      + '.sb-tag { display:inline-block; padding:3px 10px; background:rgba(255,255,255,.05); border:0.5px solid rgba(255,255,255,.08); border-radius:14px; font-size:12px; color:rgba(255,255,255,.5); margin:3px; }'
+      + '.sb-next-sug { font-size:14px; font-weight:600; color:rgba(255,255,255,.85); margin-bottom:6px; line-height:1.4; }'
+      + '.sb-next-reason { font-size:12px; color:rgba(255,255,255,.35); margin-bottom:8px; line-height:1.5; }'
+      + '.sb-next-script { background:rgba(255,255,255,.03); border:0.5px solid rgba(255,255,255,.08); border-radius:8px; padding:10px 12px; font-size:12px; color:rgba(255,255,255,.5); line-height:1.6; }'
+      + '.sb-stage-info { font-size:12px; color:rgba(255,255,255,.45); padding:4px 0 6px; }'
+      + '.sb-stage-info strong { color:rgba(255,255,255,.8); }'
+      + '.sb-stage-change { display:inline-block; padding:1px 6px; background:#FEF3C7; color:#92400E; border-radius:3px; font-size:10px; font-weight:600; margin-left:4px; }';
     var style = document.createElement('style');
     style.textContent = css;
     document.head.appendChild(style);
@@ -113,6 +153,15 @@ const WecomChat = (() => {
       + '      </svg>'
       + '    </button>'
       + '  </div>'
+      + '  <div class="fp-overlay" id="profile-overlay"></div>'
+      + '  <div class="fp-page" id="profile-page">'
+      + '    <div class="fp-header">'
+      + '      <button class="fp-close" id="profile-close">&times;</button>'
+      + '      <span class="fp-title">客户画像</span>'
+      + '      <span class="fp-spacer"></span>'
+      + '    </div>'
+      + '    <div class="fp-body" id="profile-body"></div>'
+      + '  </div>'
       + '</div>';
   }
 
@@ -145,6 +194,10 @@ const WecomChat = (() => {
     + '<button class="tool-btn">'
     + '  <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'
     + '  <span class="tool-label">预约试菜</span>'
+    + '</button>'
+    + '<button class="tool-btn" id="btn-customer-profile">'
+    + '  <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
+    + '  <span class="tool-label">客户画像</span>'
     + '</button>';
 
   var _title = '企业微信';
@@ -156,6 +209,126 @@ const WecomChat = (() => {
     if (el) el.textContent = _title;
   }
 
+  // ===== 全屏页面：打开/关闭 =====
+  function openProfile() {
+    var page = document.getElementById('profile-page');
+    var overlay = document.getElementById('profile-overlay');
+    if (page && overlay) { page.classList.add('open'); overlay.classList.add('open'); }
+  }
+  function closeProfile() {
+    var page = document.getElementById('profile-page');
+    var overlay = document.getElementById('profile-overlay');
+    if (page && overlay) { page.classList.remove('open'); overlay.classList.remove('open'); }
+  }
+
+  // ===== 全屏页面：更新内容 =====
+  function updateSidebar(ann) {
+    if (!ann) return;
+    var body = document.getElementById('profile-body');
+    if (!body) return;
+
+    var html = '';
+
+    // 1. 字段面板
+    if (ann.fields) {
+      html += '<div class="sb-section">';
+      html += '<div class="sb-section-title">客户画像</div>';
+      var order = ann._fieldOrder || Object.keys(ann.fields);
+      order.forEach(function(key) {
+        var f = ann.fields[key];
+        if (!f) return;
+        var isEmpty = !f.value || f.status === 'empty';
+        var val = isEmpty ? '—' : f.value;
+        var valCls = isEmpty ? 'sb-val sb-val-empty' : 'sb-val';
+        html += '<div class="sb-row"><span class="sb-key">' + key + '</span><span class="' + valCls + '">' + val + '</span></div>';
+      });
+      html += '</div>';
+    }
+
+    // 2. 项目推进状态
+    if (ann.progress) {
+      var p = ann.progress;
+      html += '<div class="sb-section">';
+      html += '<div class="sb-section-title">项目推进状态</div>';
+
+      // 阶段进度条
+      var allStages = ['P1','P2','P3','P4','P5','P6','P7'];
+      var curIdx = allStages.indexOf(p.currentStage);
+      if (curIdx < 0) curIdx = 0;
+      html += '<div class="sb-progress-dots">';
+      allStages.forEach(function(s, i) {
+        var cls = 'sb-pdot';
+        if (i < curIdx) cls += ' done';
+        else if (i === curIdx) cls += ' cur';
+        html += '<div class="' + cls + '" title="' + s + '"></div>';
+        if (i < allStages.length - 1) {
+          var barCls = i < curIdx ? 'sb-pbar filled' : 'sb-pbar';
+          html += '<div class="' + barCls + '"></div>';
+        }
+      });
+      html += '</div>';
+
+      html += '<div class="sb-stage-info">当前阶段：<strong>' + p.currentStage + '</strong>';
+      if (p.stageChange) html += ' <span class="sb-stage-change">' + p.stageChange + '</span>';
+      html += '</div>';
+
+      if (p.completed && p.completed.length > 0) {
+        p.completed.forEach(function(item) { html += '<div class="sb-check">' + item + '</div>'; });
+      }
+      if (p.pending && p.pending.length > 0) {
+        p.pending.forEach(function(item) { html += '<div class="sb-pending">' + item + '</div>'; });
+      }
+      html += '</div>';
+    }
+
+    // 3. 流程动作
+    if (ann.flows && ann.flows.length > 0) {
+      html += '<div class="sb-section">';
+      html += '<div class="sb-section-title">流程动作</div>';
+      ann.flows.forEach(function(f) {
+        var iconSvg = _iconHtmlSidebar(f.icon || 'circle');
+        html += '<button class="sb-flow-btn" onclick="window.showToast(\'' + f.label.replace(/'/g, "\\'") + ' 已创建\')">'
+          + iconSvg + '<span>' + f.label + '</span></button>';
+      });
+      html += '</div>';
+    }
+
+    // 4. 知识卡推荐
+    if (ann.cards && ann.cards.length > 0) {
+      html += '<div class="sb-section">';
+      html += '<div class="sb-section-title">知识卡推荐</div>';
+      ann.cards.forEach(function(c) { html += '<span class="sb-tag">' + c + '</span>'; });
+      html += '</div>';
+    }
+
+    // 5. 下一步建议
+    if (ann.nextAction) {
+      var na = ann.nextAction;
+      html += '<div class="sb-section">';
+      html += '<div class="sb-section-title">下一步建议</div>';
+      html += '<div class="sb-next-sug">' + na.suggestion + '</div>';
+      if (na.reason) html += '<div class="sb-next-reason">' + na.reason + '</div>';
+      if (na.recommendedScript) {
+        html += '<div class="sb-next-script">' + na.recommendedScript + '</div>';
+      }
+      html += '</div>';
+    }
+
+    body.innerHTML = html || '<div style="font-size:12px;color:rgba(255,255,255,.3);text-align:center;padding:20px 0;">暂无数据</div>';
+  }
+
+  // ===== 侧边栏小图标 =====
+  function _iconHtmlSidebar(name) {
+    var icons = {
+      'user-plus': '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="8.5" cy="7" r="4"/><line x1="20" y1="8" x2="20" y2="14"/><line x1="23" y1="11" x2="17" y2="11"/></svg>',
+      'calendar-plus': '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><line x1="12" y1="14" x2="12" y2="18"/><line x1="10" y1="16" x2="14" y2="16"/></svg>',
+      'send': '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>',
+      'tag': '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>',
+      'circle': '<svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/></svg>',
+    };
+    return icons[name] || icons['circle'];
+  }
+
   // ===== 渲染 =====
   function render(containerId, title) {
     if (title) _title = title;
@@ -163,6 +336,15 @@ const WecomChat = (() => {
     var container = document.getElementById(containerId);
     if (!container) return false;
     container.innerHTML = phoneHTML();
+
+    // 绑定客户画像全屏页面事件
+    var profileBtn = document.getElementById('btn-customer-profile');
+    var closeBtn = document.getElementById('profile-close');
+    var overlay = document.getElementById('profile-overlay');
+    if (profileBtn) profileBtn.addEventListener('click', function() { openProfile(); });
+    if (closeBtn) closeBtn.addEventListener('click', function() { closeProfile(); });
+    if (overlay) overlay.addEventListener('click', function() { closeProfile(); });
+
     return true;
   }
 
@@ -205,6 +387,9 @@ const WecomChat = (() => {
     addMessage: addMessage,
     clearMessages: clearMessages,
     setTitle: setTitle,
+    openProfile: openProfile,
+    closeProfile: closeProfile,
+    updateSidebar: updateSidebar,
   };
 })();
 
