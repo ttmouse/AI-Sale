@@ -143,6 +143,39 @@
     .next-script-label { font-size: 0.625rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.25rem; }
     .next-script-text { font-size: 0.75rem; color: var(--text-secondary); line-height: 1.5; }
 
+    /* 待确认卡片 */
+    #confirm-count { display: inline-flex; align-items: center; justify-content: center; min-width: 18px; height: 18px; padding: 0 5px; background: #F43F5E; color: #fff; border-radius: 9px; font-size: 0.625rem; font-weight: 700; margin-left: 0.375rem; }
+    .confirm-empty { font-size: 0.75rem; color: var(--text-muted); text-align: center; padding: 0.75rem 0; }
+    .pc-item { border: 1px solid var(--border); border-radius: var(--radius-md); padding: 0.625rem; margin-bottom: 0.5rem; background: var(--bg-subtle); animation: pcSlideIn 0.3s ease-out; }
+    @keyframes pcSlideIn { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
+    .pc-item:last-child { margin-bottom: 0; }
+    .pc-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.25rem; }
+    .pc-label { font-size: 0.6875rem; font-weight: 600; color: var(--text-secondary); }
+    .pc-type { font-size: 0.5625rem; padding: 0.0625rem 0.3125rem; border-radius: 0.1875rem; background: var(--brand-muted); color: var(--brand); font-weight: 600; text-transform: uppercase; }
+    .pc-type.tag { background: #FEF3C7; color: #92400E; }
+    .pc-type.conflict { background: #FEE2E2; color: #991B1B; }
+    .pc-type.field { background: #DBEAFE; color: #1E40AF; }
+    .pc-value { font-size: 0.8125rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.25rem; }
+    .pc-conflict-values { display: flex; gap: 0.5rem; margin-bottom: 0.25rem; font-size: 0.6875rem; }
+    .pc-old-val { color: var(--text-muted); text-decoration: line-through; }
+    .pc-new-val { color: #10B981; font-weight: 600; }
+    .pc-arrow { color: var(--text-muted); }
+    .pc-desc { font-size: 0.6875rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 0.5rem; }
+    .pc-actions { display: flex; gap: 0.375rem; }
+    .pc-btn { flex: 1; padding: 0.3125rem 0.5rem; border-radius: var(--radius-sm); font-size: 0.6875rem; font-weight: 600; cursor: pointer; transition: all 0.15s; font-family: inherit; border: 1px solid var(--border); background: var(--bg-surface); color: var(--text-secondary); }
+    .pc-btn:hover { border-color: var(--brand); color: var(--brand); }
+    .pc-btn.confirm { background: var(--brand); color: #fff; border-color: var(--brand); }
+    .pc-btn.confirm:hover { background: #2563EB; }
+    .pc-btn.dismiss { background: var(--bg-subtle); color: var(--text-muted); }
+    .pc-btn.dismiss:hover { border-color: #F43F5E; color: #F43F5E; }
+    .pc-confirmed { font-size: 0.6875rem; color: #10B981; display: flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0; }
+    .pc-confirmed::before { content: '✓'; font-weight: 700; }
+    .pc-dismissed { font-size: 0.6875rem; color: var(--text-muted); text-decoration: line-through; padding: 0.25rem 0; }
+    .pc-flying { position: fixed; z-index: 1000; pointer-events: none; font-size: 0.6875rem; font-weight: 600; padding: 0.25rem 0.5rem; background: var(--brand); color: #fff; border-radius: var(--radius-sm); animation: pcFlyTag 0.8s ease-in-out forwards; }
+    @keyframes pcFlyTag { 0% { opacity: 1; } 80% { opacity: 1; } 100% { opacity: 0; transform: translateY(-40px) scale(0.8); } }
+    .pc-resolved { opacity: 0.5; pointer-events: none; }
+    .pc-resolved .pc-value { text-decoration: line-through; color: var(--text-muted); }
+
     .wb-toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px); padding: 0.5rem 1rem; background: var(--text-primary); color: #fff; border-radius: var(--radius-md); font-size: 0.8125rem; opacity: 0; transition: all 0.3s ease; z-index: 999; }
     .wb-toast-show { opacity: 1; transform: translateX(-50%) translateY(0); }
   </style>
@@ -209,6 +242,7 @@
 
     <!-- 右侧：AI 注解（当前最新状态）-->
     <div class="wb-right">
+      <div class="ann-card"><div class="ann-card-title"><span class="dot dot-rose"></span>待确认事项 <span id="confirm-count" style="display:none"></span></div><div id="confirm-card">暂无待确认</div></div>
       <div class="ann-card"><div class="ann-card-title"><span class="dot dot-blue"></span>客户画像更新</div><div id="profile-card">等待对话开始...</div></div>
       <div class="ann-card"><div class="ann-card-title"><span class="dot dot-green"></span>项目推进状态</div><div id="progress-card">等待对话开始...</div></div>
       <div class="ann-card"><div class="ann-card-title"><span class="dot dot-purple"></span>流程动作</div><div id="flow-card">等待对话开始...</div></div>

@@ -13,6 +13,7 @@
   var _isPlaying = false;
   var _lastTimelineIdx = -1;  // 最后渲染的时间轴步数
   var _lastAnnContent = '';     // 上次渲染的注解内容，用来检测变化
+  var _pendingConfirmState = {}; // { itemId: 'confirmed' | 'dismissed' | null }
 
   var els = {};
   function _cache() {
@@ -29,6 +30,8 @@
       flowCard: document.getElementById('flow-card'),
       knowledgeCard: document.getElementById('knowledge-card'),
       nextActionCard: document.getElementById('next-action-card'),
+      confirmCard: document.getElementById('confirm-card'),
+      confirmCount: document.getElementById('confirm-count'),
       timelineBody: document.getElementById('timeline-body'),
       prevBtn: document.getElementById('btn-prev'),
       nextBtn: document.getElementById('btn-next'),
@@ -113,6 +116,9 @@
     els.flowCard.innerHTML = '等待对话开始...';
     els.knowledgeCard.innerHTML = '等待对话开始...';
     els.nextActionCard.innerHTML = '等待对话开始...';
+    els.confirmCard.innerHTML = '暂无待确认';
+    if (els.confirmCount) els.confirmCount.style.display = 'none';
+    _pendingConfirmState = {};
 
     stopAutoPlay();
     setTimeout(function() { stepForward(); }, 400);
@@ -176,6 +182,11 @@
           + '<div class="next-script-text">' + na.recommendedScript + '</div></div>';
       }
       els.nextActionCard.innerHTML = html;
+    }
+
+    // 待确认事项渲染
+    if (ann.pendingConfirm && ann.pendingConfirm.length > 0) {
+      renderPendingConfirm(ann.pendingConfirm);
     }
   }
 
@@ -294,7 +305,7 @@
   // ===== 导航 =====
   function goPrev() { var id = WorkbenchEngine.getPrevScenarioId(); if (id) loadScenario(id); }
   function goNext() { var id = WorkbenchEngine.getNextScenarioId(); if (id) loadScenario(id); }
-  function goReset() { _lastTimelineIdx = -1; _lastAnnContent = ''; var c = WorkbenchEngine.getCurrentScenario(); if (c) loadScenario(c.id); }
+  function goReset() { _lastTimelineIdx = -1; _lastAnnContent = ''; _pendingConfirmState = {}; var c = WorkbenchEngine.getCurrentScenario(); if (c) loadScenario(c.id); }
 
   // ===== Toast =====
   window.showToast = function(msg) {
@@ -310,6 +321,100 @@
       setTimeout(function() { toast.remove(); }, 300);
     }, 2000);
   };
+
+  // ===== 待确认渲染 =====
+  function renderPendingConfirm(items) {
+    if (!els.confirmCard) return;
+    var html = '';
+    var activeCount = 0;
+    items.forEach(function(item) {
+      var state = _pendingConfirmState[item.id];
+      var typeClass = item.type === 'newTag' ? 'tag' : (item.type === 'fieldUpdate' ? 'conflict' : 'field');
+      var typeLabel = item.type === 'newTag' ? '打标' : (item.type === 'fieldUpdate' ? '冲突' : '字段');
+      var isResolved = state === 'confirmed' || state === 'dismissed';
+
+      if (!isResolved) activeCount++;
+
+      html += '<div class="pc-item' + (isResolved ? ' pc-resolved' : '') + '" id="pc-' + item.id + '">';
+      html += '<div class="pc-header">';
+      html += '<span class="pc-label">' + _escapeHtml(item.label) + '</span>';
+      html += '<span class="pc-type ' + typeClass + '">' + typeLabel + '</span>';
+      html += '</div>';
+
+      if (item.type === 'fieldUpdate' && item.oldValue) {
+        html += '<div class="pc-conflict-values">';
+        html += '<span class="pc-old-val">' + _escapeHtml(item.oldValue) + '</span>';
+        html += '<span class="pc-arrow">→</span>';
+        html += '<span class="pc-new-val">' + _escapeHtml(item.newValue) + '</span>';
+        html += '</div>';
+      } else {
+        html += '<div class="pc-value">' + _escapeHtml(item.value) + '</div>';
+      }
+
+      if (item.desc) {
+        html += '<div class="pc-desc">' + _escapeHtml(item.desc) + '</div>';
+      }
+
+      if (isResolved) {
+        html += state === 'confirmed'
+          ? '<div class="pc-confirmed">' + (item.action === '标记' ? '已标记' : '已采纳') + '</div>'
+          : '<div class="pc-dismissed">已忽略</div>';
+      } else {
+        html += '<div class="pc-actions">';
+        html += '<button class="pc-btn confirm" onclick="handleConfirmAction(\'' + item.id + '\',\'confirm\',\'' + item.action + '\')">' + item.action + '</button>';
+        html += '<button class="pc-btn dismiss" onclick="handleConfirmAction(\'' + item.id + '\',\'dismiss\',\'' + item.action + '\')">忽略</button>';
+        html += '</div>';
+      }
+      html += '</div>';
+    });
+
+    els.confirmCard.innerHTML = html || '<div class="confirm-empty">暂无待确认</div>';
+    if (els.confirmCount) {
+      if (activeCount > 0) {
+        els.confirmCount.textContent = activeCount;
+        els.confirmCount.style.display = 'inline-flex';
+      } else {
+        els.confirmCount.style.display = 'none';
+      }
+    }
+  }
+
+  window.handleConfirmAction = function(itemId, action, actionLabel) {
+    _pendingConfirmState[itemId] = action === 'confirm' ? 'confirmed' : 'dismissed';
+    var item = null;
+    var ann = WorkbenchEngine.getCurrentAnnotations();
+    if (ann && ann.pendingConfirm) {
+      ann.pendingConfirm.forEach(function(pc) { if (pc.id === itemId) item = pc; });
+    }
+    if (!item) return;
+
+    if (action === 'confirm') {
+      // 飞签动画
+      var el = document.getElementById('pc-' + itemId);
+      if (el) {
+        var rect = el.getBoundingClientRect();
+        var flyingTag = document.createElement('div');
+        flyingTag.className = 'pc-flying';
+        flyingTag.textContent = (item.type === 'newTag' ? '🏷️ ' : '') + item.value;
+        flyingTag.style.left = rect.left + 'px';
+        flyingTag.style.top = rect.top + 'px';
+        document.body.appendChild(flyingTag);
+        setTimeout(function() { flyingTag.remove(); }, 850);
+      }
+      window.showToast((item.action === '标记' ? '已标记：' : '已采纳：') + item.value);
+    } else {
+      window.showToast('已忽略');
+    }
+
+    // 重新渲染
+    if (ann && ann.pendingConfirm) {
+      renderPendingConfirm(ann.pendingConfirm);
+    }
+  };
+
+  function _escapeHtml(str) {
+    return (str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  }
 
   // ===== 工具 =====
   function _mdToHtml(text) {

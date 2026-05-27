@@ -7,7 +7,7 @@ const SCENARIO_DATA = (() => {
   function aiHint(c){return msg('ai-hint',c)}
   function aiRecommend(c,o,s){return msg('ai-recommend',c,{options:o,selected:s})}
   function sys(c){return msg('system',c)}
-  function annot(p,pr,f,ca,n){return{profile:p,progress:pr,flows:f,cards:ca,nextAction:n}}
+  function annot(p,pr,f,ca,n,pc){return{profile:p,progress:pr,flows:f,cards:ca,nextAction:n,pendingConfirm:pc||[]}}
 
   const SCENARIOS = [
     {
@@ -100,11 +100,19 @@ const SCENARIO_DATA = (() => {
       ],
       annotations: [
         null,
-        annot('客户状态：已唤醒\n客户来源：官网留资\n客户大类：社餐\n细分类别：快餐\n关注点：价格\n响应状态：48小时沉默后重新互动\n画像完整度：10% → 30%',{currentStage:'P1',completed:[],pending:[],stageChange:null},[],[],{suggestion:'继续推进',reason:'按流程'}),
-        annot('当前阶段：P1 线索接入\n状态变化：沉默客户 → 有效对话恢复\n\n待确认：\n□ 日单量\n□ 后厨人员\n□ 预算\n□ 是否已有门店',{currentStage:'P1',completed:[],pending:["\u65e5\u5355\u91cf", "\u540e\u53a8\u4eba\u5458", "\u9884\u7b97", "\u662f\u5426\u5df2\u6709\u95e8\u5e97"],stageChange:null},[],[],{suggestion:'继续推进',reason:'按流程'}),
-        annot('可创建动作：\n[更新客户响应状态]\n[创建下一次跟进提醒]\n[标记客户关注点：价格]',{currentStage:'P1',completed:[],pending:[],stageChange:null},[],[],{suggestion:'继续推进',reason:'按流程'}),
-        annot('推荐资料：\n1. 快餐门店基础配置价格说明\n2. 价格与配置关系说明卡\n3. ROI 回本测算卡',{currentStage:'P1',completed:[],pending:[],stageChange:null},[],[],{suggestion:'继续推进',reason:'按流程'}),
-        annot('建议：\n不要直接给最低价或笼统报价。\n先确认门店规模和需求，再给价格区间，避免客户只按价格做判断。',{currentStage:'P1',completed:[],pending:[],stageChange:null},[],[],{suggestion:'继续推进',reason:'按流程'}),
+        annot('客户状态：已唤醒\n客户来源：官网留资\n客户大类：社餐\n细分类别：快餐\n关注点：价格\n响应状态：48小时沉默后重新互动\n画像完整度：10% → 30%',{currentStage:'P1',completed:[],pending:[],stageChange:null},[],[],{suggestion:'继续推进',reason:'按流程'},[
+          {id:'tag_silent',type:'newTag',label:'打标建议',value:'沉默客户',desc:'系统识别：客户已48小时未回复，建议标记为「沉默客户」',action:'标记'}
+        ]),
+        annot('当前阶段：P1 线索接入\n状态变化：沉默客户 → 有效对话恢复\n\n待确认：\n□ 日单量\n□ 后厨人员\n□ 预算\n□ 是否已有门店',{currentStage:'P1',completed:[],pending:["\u65e5\u5355\u91cf","\u540e\u53a8\u4eba\u5458","\u9884\u7b97","\u662f\u5426\u5df2\u6709\u95e8\u5e97"],stageChange:null},[],[],{suggestion:'继续推进',reason:'按流程'},[
+          {id:'source_confirm',type:'fieldUpdate',label:'来源确认',oldValue:'官网留资',newValue:'官网留资·价格敏感型',desc:'根据客户首句「想知道多少钱」，AI推断客户属于价格敏感型，建议合并标注',action:'采纳'}
+        ]),
+        annot('可创建动作：\n[更新客户响应状态]\n[创建下一次跟进提醒]\n[标记客户关注点：价格]',{currentStage:'P1',completed:[],pending:[],stageChange:null},[],[],{suggestion:'继续推进',reason:'按流程'},[
+          {id:'field_daily',type:'newField',label:'预估日单量',value:'待询问',desc:'客户未直接回答日单量，AI根据「快餐+价格敏感」特征预估为150-300单/天，待销售确认',action:'确认'}
+        ]),
+        annot('推荐资料：\n1. 快餐门店基础配置价格说明\n2. 价格与配置关系说明卡\n3. ROI 回本测算卡',{currentStage:'P1',completed:[],pending:[],stageChange:null},[],[],{suggestion:'继续推进',reason:'按流程'},[]),
+        annot('建议：\n不要直接给最低价或笼统报价。\n先确认门店规模和需求，再给价格区间，避免客户只按价格做判断。',{currentStage:'P1',completed:[],pending:[],stageChange:null},[],[],{suggestion:'继续推进',reason:'按流程'},[
+          {id:'tag_price_sensitive',type:'newTag',label:'打标建议',value:'价格敏感型',desc:'客户首句即问价格，建议标记为「价格敏感型」以便后续差异化跟进',action:'标记'}
+        ]),
       ],
     },
     {
