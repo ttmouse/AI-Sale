@@ -12,7 +12,8 @@
   var _autoPlayTimer = null;
   var _isPlaying = false;
   var _lastTimelineIdx = -1;  // 最后渲染的时间轴步数
-  var _lastAnnContent = '';     // 上次渲染的注解内容，用来检测变化
+  var _stepCounter = 0;
+var _lastAnnContent = '';     // 上次渲染的注解内容，用来检测变化
   var _pendingConfirmState = {}; // { itemId: 'confirmed' | 'dismissed' | null }
 
   var els = {};
@@ -140,7 +141,8 @@
     if (annContent !== _lastAnnContent) {
       _lastAnnContent = annContent;
       _lastTimelineIdx = msgIdx;
-      appendTimelineCard(ann, msgIdx);
+      _stepCounter++;
+      appendTimelineCard(ann, _stepCounter);
     }
 
     // --- 右侧面板：始终显示当前最新状态 ---
@@ -198,7 +200,7 @@
     // Agent 日志模式（优先）
     if (ann.agentLog) {
       var log = ann.agentLog;
-      html += '<div class="tl-step">Step ' + msgIdx + '</div>';
+      html += '<div class="tl-step">\u6b65\u9aa4 ' + msgIdx + '</div>';
 
       if (ann.progress) {
         var stageObj = WorkbenchEngine.getStageById(ann.progress.currentStage);

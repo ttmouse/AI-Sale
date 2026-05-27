@@ -121,7 +121,9 @@
 
   // ===== 注解 =====
   function getCurrentAnnotations() {
-    return getAnnotationAtIndex(_messageIndex);
+    // 使用 _messageIndex - 1 获取当前已显示消息的注解，而非下一条消息
+    var idx = _messageIndex > 0 ? _messageIndex - 1 : 0;
+    return getAnnotationAtIndex(idx);
   }
 
   function getAnnotationAtIndex(index) {
