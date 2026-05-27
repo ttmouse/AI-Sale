@@ -1,0 +1,128 @@
+{
+  "id": "7-4",
+  "stageId": "P7",
+  "name": "复购机会识别",
+  "painPoint": "很多复购机会来自客户使用后的自然反馈，比如“另一家店也想用”“这台不够用了”“后面新店也要配”。如果销售没有及时识别，就会错过增购机会。 ",
+  "highlights": [
+    "识别复购/增购信号；",
+    "判断复购类型：同店增购、多店复制、新店配置；",
+    "自动创建复购商机；",
+    "推荐复购话术；",
+    "关联原客户案例；",
+    "生成多店复制方案。"
+  ],
+  "demoGoal": "展示 AI 如何从普通聊天中识别二次销售机会。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "这台用下来还可以。我们另外一家店后面也可能要上一台，不过那边面积小一点。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "检测到复购信号。 复购类型：多门店复制 / 新门店适配。 建议创建复购商机。"
+    },
+    {
+      "type": "sales",
+      "content": "王总，那挺好。如果另一家店面积小一点，配置可以不用完全照搬现在这台，我们可以按那家店的面积、日单量和菜品结构重新配。 您方便把那家店的大概情况发我吗？我先帮您判断适合哪种配置。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "那家店 80 平左右，单量没这边大。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "新复购门店画像已开始创建。 ---"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "检测到复购机会\n\n复购类型：\n- 多门店复制\n- 小面积门店适配\n\n原客户状态：\n- 当前门店使用较好\n- 客户认可度较高\n\n建议动作：\n创建新商机：王总第二门店设备配置",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [
+          "多门店复制",
+          "小面积门店适配",
+          "当前门店使用较好",
+          "客户认可度较高"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "新门店画像初始信息：\n- 门店面积：约 80 平\n- 单量：低于当前门店\n- 业态：待确认，可能仍为快餐\n- 设备需求：待评估\n\n画像完整度：15%",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [
+          "门店面积：约 80 平",
+          "单量：低于当前门店",
+          "业态：待确认，可能仍为快餐",
+          "设备需求：待评估"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[创建复购商机]\n[创建第二门店客户画像]\n[生成小店配置建议]\n[创建复购跟进任务]",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "原项目：P7 稳定使用\n新项目：P1 复购线索接入",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 小面积快餐门店配置方案\n2. 多门店复制案例\n3. 老客户复购话术\n4. 第二门店 ROI 测算卡",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

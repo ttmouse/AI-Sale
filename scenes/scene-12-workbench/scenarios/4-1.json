@@ -1,0 +1,137 @@
+{
+  "id": "4-1",
+  "stageId": "P4",
+  "name": "价格异议化解",
+  "painPoint": "客户说“太贵了”时，新销售容易直接解释成本、强调质量，甚至提前降价。优秀销售会先识别客户说贵的真实原因，再把价格问题转化为价值和回本问题。 ",
+  "highlights": [
+    "自动识别价格异议；",
+    "判断客户是真预算不足，还是价值未建立；",
+    "推荐三段式应答话术；",
+    "推荐 ROI 测算卡；",
+    "推荐相似客户案例；",
+    "标记客户为价格敏感；",
+    "推动进入回本测算或试菜验证。"
+  ],
+  "demoGoal": "展示 AI 如何帮助销售从“报价防守”转向“价值证明”。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "你们这个价格有点贵啊，我看别家好像便宜不少。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "检测到异议类型：价格异议 \\+ 竞品价格比较。 不建议直接降价。 建议策略：认可顾虑 → 转向长期成本 → 引导 ROI 测算。"
+    },
+    {
+      "type": "ai-recommend",
+      "content": "A\\. ROI 算账型 B\\. 竞品差异型 C\\. 试菜验证型",
+      "options": [],
+      "selected": 0
+    },
+    {
+      "type": "sales",
+      "content": "王总，您觉得贵是正常的，设备采购确实不能只看一次性价格。更关键的是它能不能帮您减少人工、稳定出餐、提升效率。 我们可以按您现在的人工成本算一下，如果能少依赖一个炒锅师傅，大概多久能回本，这样会更客观。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "那你怎么算？我们一个炒锅师傅差不多 9000 一个月。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "已获得人工成本参数：9000 元/月。 建议进入 ROI 测算。"
+    },
+    {
+      "type": "sales",
+      "content": "如果按一个炒锅师傅 9000 元/月算，一年就是 10\\.8 万人工成本。如果设备能帮您减少一个岗位依赖，回本周期就可以按这个基础来算。您现在是两个炒锅师傅，对吗？ ---",
+      "sender": "小陈"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "异议类型：价格异议\n伴随信号：竞品价格比较\n客户情绪：犹豫 / 价格敏感\n推荐策略：价值证明 + ROI测算\n不建议动作：直接降价、直接反驳竞品",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "已抽取参数：\n- 炒锅师傅月薪：9000 元/月\n- 年人工成本：约 10.8 万元/人\n- 当前炒锅人数：待确认\n- 设备投入：待确认\n- 可替代岗位：待确认\n\nROI 测算完整度：35%",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [
+          "炒锅师傅月薪：9000 元/月",
+          "年人工成本：约 10.8 万元/人",
+          "当前炒锅人数：待确认",
+          "设备投入：待确认",
+          "可替代岗位：待确认"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "客户关注点：价格、回本周期\n价格敏感度：中高\n价值认知状态：需要进一步建立\n画像完整度：78% → 82%",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[生成 ROI 测算]\n[标记客户异议：价格]\n[发送人工节省案例]\n[创建价值证明跟进任务]",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 快餐门店 ROI 回本测算卡\n2. 人工节省案例卡\n3. 价格与配置差异说明卡\n4. 同类客户回本周期案例",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    null
+  ]
+}

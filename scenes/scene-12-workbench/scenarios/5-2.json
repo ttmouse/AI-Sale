@@ -1,0 +1,133 @@
+{
+  "id": "5-2",
+  "stageId": "P5",
+  "name": "客户门店拜访预约",
+  "painPoint": "很多项目需要到客户现场看动线、后厨空间、设备摆放和实际出餐情况。如果销售只是线上沟通，方案容易不准。 ",
+  "highlights": [
+    "识别客户拜访邀请；",
+    "抽取拜访时间和地点；",
+    "创建拜访日程；",
+    "生成拜访准备清单；",
+    "提醒销售收集现场信息；",
+    "拜访后生成现场调研记录。"
+  ],
+  "demoGoal": "展示 AI 如何把“来我们店看看”转化为标准化拜访流程。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "你们要不来我们店里看看吧，我们后厨空间不大，不知道能不能放。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "检测到客户拜访意向。 重点关注：后厨空间、设备摆放、动线、上下水电。"
+    },
+    {
+      "type": "sales",
+      "content": "可以的王总，现场看会更准确。我们可以重点看一下后厨空间、设备摆放位置、出餐动线和水电条件。您这周哪天方便？",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "周五上午吧，地址我发你。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "已识别拜访时间：周五上午。 地点：待客户发送。 建议创建拜访任务，并生成现场勘察清单。"
+    },
+    {
+      "type": "sales",
+      "content": "好的，您把地址发我。我这边先约周五上午过去，现场看完后可以给您出一个更准确的配置建议。 ---",
+      "sender": "小陈"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "检测到可创建流程：客户拜访\n\n已识别信息：\n- 拜访时间：周五上午\n- 拜访地点：客户门店，地址待补充\n- 拜访目的：后厨空间与设备适配确认\n- 关注重点：空间、动线、水电、出餐节奏\n\n流程完整度：60%",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [
+          "拜访时间：周五上午",
+          "拜访地点：客户门店，地址待补充",
+          "拜访目的：后厨空间与设备适配确认",
+          "关注重点：空间、动线、水电、出餐节奏"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐动作：\n[创建客户拜访日程]\n[生成现场勘察清单]\n[提醒客户发送地址]\n[创建拜访后方案任务]",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P5 现场拜访\n\n阶段判断：\n客户已进入实质评估阶段。",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "新增关注点：后厨空间有限\n新增风险：设备摆放适配不确定\n下一步需要补全：\n- 后厨面积\n- 现有设备\n- 水电条件\n- 动线布局",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [
+          "后厨面积",
+          "现有设备",
+          "水电条件",
+          "动线布局"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 现场勘察清单\n2. 后厨空间适配说明\n3. 设备安装条件卡\n4. 门店动线评估模板",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

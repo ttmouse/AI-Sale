@@ -450,8 +450,17 @@
   function init() {
     _cache();
     WecomChat.render('phone-container');
-    renderStageTabs();
-    selectStage('P1');
+
+    // 先初始化引擎（异步加载 JSON），再渲染界面
+    if (typeof WorkbenchEngine.init === 'function') {
+      WorkbenchEngine.init().then(function() {
+        renderStageTabs();
+        selectStage('P1');
+      });
+    } else {
+      renderStageTabs();
+      selectStage('P1');
+    }
 
     if (els.prevBtn) els.prevBtn.addEventListener('click', goPrev);
     if (els.nextBtn) els.nextBtn.addEventListener('click', goNext);
@@ -465,10 +474,29 @@
     });
   }
 
+  // 确保引擎就绪后再初始化
+  var ready = function() {
+    if (typeof WorkbenchEngine.init === 'function') {
+      // 如果引擎有 init 方法，先确保引擎脚本已加载
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    } else {
+      // 回退：引擎可能已同步加载
+      if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+      } else {
+        init();
+      }
+    }
+  };
+
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', init);
+    document.addEventListener('DOMContentLoaded', ready);
   } else {
-    init();
+    ready();
   }
 
 })();

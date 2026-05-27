@@ -1,0 +1,135 @@
+{
+  "id": "2-4",
+  "stageId": "P2",
+  "name": "客户一上来问价格时的隐性需求追问",
+  "painPoint": "客户一上来问“多少钱”，新销售很容易直接报价，导致客户只按价格判断，后续价值很难展开。优秀销售会先判断客户真实场景，再给配置区间。 ",
+  "highlights": [
+    "识别客户价格意图；",
+    "判断是否适合直接报价；",
+    "推荐需求澄清话术；",
+    "引导客户补充门店信息；",
+    "标记客户关注点为“价格敏感”；",
+    "推荐 ROI 测算准备字段。"
+  ],
+  "demoGoal": "展示 AI 能帮助销售把价格问题转化为需求沟通。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "你们炒菜机多少钱一台？",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "检测到价格询问。 当前客户画像不完整，不建议直接报价。 建议先确认使用场景。"
+    },
+    {
+      "type": "ai-recommend",
+      "content": "A\\. 需求澄清型 B\\. 价格区间型 C\\. 价值引导型",
+      "options": [],
+      "selected": 0
+    },
+    {
+      "type": "sales",
+      "content": "王总，价格和型号、配置、使用场景关系比较大。我先简单了解一下您的门店情况，避免给您报一个不适合的价格。您现在是快餐、小炒，还是食堂团餐场景？",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "我是开快餐店的，想看看能不能替一个炒锅师傅。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "已识别核心需求：替代炒锅师傅 / 降低人工依赖。 建议继续追问人工成本和出餐量。"
+    },
+    {
+      "type": "sales",
+      "content": "明白，如果您主要想减少炒锅师傅，那就需要看您现在一天单量和师傅工资。您现在一天大概多少单？炒锅师傅一个月大概多少钱？ ---",
+      "sender": "小陈"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "客户关注点：价格\n客户大类：社餐\n细分类别：快餐\n核心诉求：替代炒锅师傅\n潜在痛点：人工成本\n价格敏感度：中高\n\n画像完整度：10% → 40%",
+      "progress": {
+        "currentStage": "P2",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P2 需求确认\n\n阶段判断：\n客户仍处于需求确认，不应直接进入报价。\n\n待确认：\n□ 日单量\n□ 当前人工成本\n□ 可接受预算\n□ 是否已有采购时间表",
+      "progress": {
+        "currentStage": "P2",
+        "completed": [],
+        "pending": [
+          "日单量",
+          "当前人工成本",
+          "可接受预算",
+          "是否已有采购时间表"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[标记客户关注点：价格]\n[创建 ROI 测算准备任务]\n[更新客户画像]",
+      "progress": {
+        "currentStage": "P2",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 价格与配置说明卡\n2. 人工节省测算卡\n3. 快餐客户 ROI 案例",
+      "progress": {
+        "currentStage": "P2",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "建议下一步：\n不要立即给固定报价。\n先收集日单量、人工成本、设备使用场景，再进入 ROI 回本测算。",
+      "progress": {
+        "currentStage": "P2",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    null
+  ]
+}

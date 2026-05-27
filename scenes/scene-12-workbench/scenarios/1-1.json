@@ -1,0 +1,136 @@
+{
+  "id": "1-1",
+  "stageId": "P1",
+  "name": "抖音线索智能开场",
+  "painPoint": "抖音线索往往兴趣来得快、流失也快。客户可能只是刷到视频点了咨询，并不一定有明确采购计划。销售如果一上来发产品册或报价，很容易把客户聊死。 ",
+  "highlights": [
+    "自动识别线索来源：抖音；",
+    "判断客户属于“轻兴趣线索”；",
+    "推荐轻量、不压迫的开场话术；",
+    "引导客户先说门店状态；",
+    "自动创建客户初始档案；",
+    "标记客户来源为“短视频线索”。"
+  ],
+  "demoGoal": "让客户看到：销售刚拿到一个抖音线索，AI 能帮助销售用更自然的方式开场，而不是直接推销。 ",
+  "messages": [
+    {
+      "type": "system",
+      "content": "新线索：抖音私信留资 客户备注：想了解智能炒菜机 客户手机号：已留资 当前状态：未建立有效沟通"
+    },
+    {
+      "type": "ai-recommend",
+      "content": "A\\. 轻量破冰型 B\\. 需求确认型 C\\. 视频承接型",
+      "options": [],
+      "selected": 0
+    },
+    {
+      "type": "sales",
+      "content": "王总您好，我是优特智厨的小陈，看到您刚才在抖音上关注了智能炒菜设备。我先不打扰您太久，想简单了解一下，您现在是已经有门店想升级后厨，还是正在筹备新店？",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "我们现在有个快餐店，想看看这种设备到底适不适合。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-recommend",
+      "content": "可以继续追问门店类型、日单量、后厨人员，不建议马上报价。 销售点击推荐话术。",
+      "options": [],
+      "selected": 0
+    },
+    {
+      "type": "sales",
+      "content": "明白，快餐店是比较适合这类设备的。我先了解两个信息，方便判断是否适合您：您现在一天大概多少单？后厨有几个炒锅师傅？ ---",
+      "sender": "小陈"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "客户画像已创建\n\n客户来源：抖音线索\n客户大类：餐饮客户\n细分类别：社餐 / 快餐简餐\n门店状态：已有门店\n关注产品：智能炒菜设备\n当前意向：初步了解\n画像完整度：10% → 30%",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前销售阶段：P1 线索接入\n\n已完成：\n√ 识别客户来源\n√ 完成初次破冰\n√ 初步确认客户为快餐门店\n\n待确认：\n□ 日单量\n□ 后厨人员\n□ 预算区间\n□ 决策角色\n□ 采购周期\n\n建议阶段：\n继续停留在 P1/P2 之间，先完成需求确认。",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [
+          "识别客户来源",
+          "完成初次破冰",
+          "初步确认客户为快餐门店"
+        ],
+        "pending": [
+          "日单量",
+          "后厨人员",
+          "预算区间",
+          "决策角色",
+          "采购周期"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[创建客户档案]\n[创建首次跟进任务]\n[标记线索来源：抖音]",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐资料：\n1. 快餐门店智能炒菜机应用案例\n2. G3 产品简版介绍\n3. 快餐店后厨降本场景卡",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "建议下一步：\n继续追问日单量和后厨人员。\n\n推荐原因：\n目前客户只是表达“想看看是否适合”，还不能直接进入报价或方案阶段。",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

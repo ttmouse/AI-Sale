@@ -1,0 +1,139 @@
+{
+  "id": "5-1",
+  "stageId": "P5",
+  "name": "试菜邀约与日程创建",
+  "painPoint": "客户对设备效果有兴趣，但如果没有明确试菜时间，很容易停留在“有空再看”。销售需要把模糊兴趣转化为明确日程。 ",
+  "highlights": [
+    "识别客户试菜意向；",
+    "生成试菜邀约话术；",
+    "抽取时间、地点、参与人；",
+    "一键创建试菜日程；",
+    "生成试菜确认消息；",
+    "创建试菜前准备清单。"
+  ],
+  "demoGoal": "展示 AI 如何把“想看看效果”转化为正式试菜预约。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "那要不我们下周去你们那边试一下菜吧。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "检测到试菜意向。 需要确认：具体时间、地点、参与人、试菜菜品。"
+    },
+    {
+      "type": "sales",
+      "content": "可以的王总。您这边下周哪天方便？建议您带一两道门店常做的菜，我们现场用设备做给您看，这样最直观。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "下周三下午吧，我和厨师长一起过去。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "已抽取：下周三下午；参与人：客户 \\+ 厨师长；地点：展厅待确认。 建议确认具体时间和菜品。"
+    },
+    {
+      "type": "sales",
+      "content": "好的，那我先帮您预留下周三下午。您看下午 2 点方便吗？另外您可以提前把想试的菜品发我，我们好提前准备食材和调试方案。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "可以，下午两点。菜品我晚点发你。 ---",
+      "sender": "王总"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "检测到可创建流程：试菜预约\n\n已识别信息：\n- 试菜时间：下周三 14:00\n- 参与人：王总、厨师长\n- 地点：优特智厨展厅，待确认具体地址\n- 试菜菜品：待客户提供\n\n流程完整度：70%",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [
+          "试菜时间：下周三 14:00",
+          "参与人：王总、厨师长",
+          "地点：优特智厨展厅，待确认具体地址",
+          "试菜菜品：待客户提供"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐动作：\n[创建试菜日程]\n[生成试菜确认消息]\n[创建试菜前准备清单]\n[提醒客户提供菜品]",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P5 试菜拜访\n阶段变化：\nP4 异议化解 → P5 试菜验证\n\n原因：\n客户已确认现场试菜时间。",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "新增信息：\n- 厨师长参与试菜\n- 客户愿意现场验证\n- 意向等级提升：中高 → 高\n- 关键验证点：出品效果、操作体验",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [
+          "厨师长参与试菜",
+          "客户愿意现场验证",
+          "意向等级提升：中高 → 高",
+          "关键验证点：出品效果、操作体验"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 试菜流程说明卡\n2. 试菜前准备清单\n3. 厨师长关注问题清单\n4. 试菜后反馈记录模板",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    null
+  ]
+}

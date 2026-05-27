@@ -1,0 +1,115 @@
+{
+  "id": "6-4",
+  "stageId": "P6",
+  "name": "发货流程创建",
+  "painPoint": "合同和付款确认后，销售经常需要协调发货、收货地址、联系人、安装时间等。如果流程没有从聊天中自动创建，容易出现信息遗漏和交付延误。 ",
+  "highlights": [
+    "识别发货请求；",
+    "检查发货所需字段；",
+    "抽取收货地址、联系人、电话；",
+    "创建发货流程；",
+    "通知交付团队；",
+    "生成发货确认话术。"
+  ],
+  "demoGoal": "展示 AI 如何把聊天中的“安排发货”转化为内部发货流程。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "款已经打了，你们安排发货吧。地址是杭州西湖区某某路 88 号，联系人李经理，电话 138xxxx8888。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "检测到发货请求。 已抽取收货地址、联系人、电话。 建议创建发货流程。"
+    },
+    {
+      "type": "sales",
+      "content": "收到王总，我这边记录一下：杭州西湖区某某路 88 号，李经理，138xxxx8888。 我会同步交付团队安排发货，发货信息出来后第一时间发您。 创建发货流程并通知交付团队。 ---",
+      "sender": "小陈"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "发货流程识别\n\n已确认：\n- 收货地址：杭州西湖区某某路 88 号\n- 联系人：李经理\n- 联系电话：138xxxx8888\n- 付款状态：客户表示已付款，待财务确认\n- 发货产品：G3 标准版，1 台\n\n待确认：\n□ 财务到账\n□ 发货时间\n□ 物流方式\n□ 安装时间",
+      "progress": {
+        "currentStage": "P6",
+        "completed": [],
+        "pending": [
+          "收货地址：杭州西湖区某某路 88 号",
+          "联系人：李经理",
+          "联系电话：138xxxx8888",
+          "付款状态：客户表示已付款，待财务确认",
+          "发货产品：G3 标准版，1 台"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P6 发货准备\n\n阶段判断：\n客户已进入交付前准备。",
+      "progress": {
+        "currentStage": "P6",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[创建发货流程]\n[通知交付团队]\n[通知财务确认到账]\n[创建安装预排任务]\n[生成发货确认消息]",
+      "progress": {
+        "currentStage": "P6",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "客户状态：已成交，待发货\n交付联系人：李经理\n交付地址：已确认",
+      "progress": {
+        "currentStage": "P6",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 发货确认模板\n2. 安装前准备说明\n3. 客户收货注意事项\n4. 交付团队通知模板",
+      "progress": {
+        "currentStage": "P6",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

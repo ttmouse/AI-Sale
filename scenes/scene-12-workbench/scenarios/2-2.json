@@ -1,0 +1,143 @@
+{
+  "id": "2-2",
+  "stageId": "P2",
+  "name": "团餐客户画像识别",
+  "painPoint": "团餐客户和社餐客户的关注点完全不同。社餐关注翻台、外卖、人工；团餐更关注批量出餐、稳定性、食品安全、标准化、后厨管理。销售如果用社餐话术去聊团餐客户，会失焦。 ",
+  "highlights": [
+    "自动识别团餐客户类型；",
+    "区分学校、企业、园区、医院等团餐场景；",
+    "抽取单餐人数、出餐批次、菜品数量；",
+    "提醒销售关注食品安全、标准化、批量出餐；",
+    "推荐团餐专用需求问题；",
+    "推荐团餐解决方案知识卡。"
+  ],
+  "demoGoal": "展示 AI 能识别不同客户类型，并切换不同销售逻辑。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "我们是给园区食堂做供餐的，一餐大概 1500 人左右，现在后厨压力比较大，尤其是中午集中出餐。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "已识别客户类型：团餐 / 园区食堂。 建议切换团餐需求挖掘逻辑。"
+    },
+    {
+      "type": "ai-recommend",
+      "content": "团餐客户建议优先确认：单餐人数、出餐时间窗口、菜品数量、当前设备配置。",
+      "options": [],
+      "selected": 0
+    },
+    {
+      "type": "sales",
+      "content": "明白，您这个是典型团餐场景，重点不是单店翻台，而是集中时间内稳定批量出餐。我先了解一下，您中午出餐时间窗口大概多长？一餐通常几个热菜？",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "大概一个小时内出完，热菜一般 8 到 10 个。",
+      "sender": "王总"
+    },
+    {
+      "type": "sales",
+      "content": "那现在主要卡在炒菜环节，还是蒸煮、分餐这些环节？",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "炒菜和分批出餐比较卡，人工也不太稳定。 ---",
+      "sender": "王总"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "客户大类：团餐\n细分类别：园区食堂 / 团餐供餐\n单餐人数：约 1500 人\n出餐时间：约 1 小时\n菜品数量：8–10 个热菜\n当前痛点：集中出餐压力、炒菜环节卡点、人工不稳定\n关注方向：批量出餐、标准化、稳定性\n\n画像完整度：20% → 65%",
+      "progress": {
+        "currentStage": "P2",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P2 需求确认\n\n已完成：\n√ 团餐类型确认\n√ 单餐人数确认\n√ 出餐时间确认\n√ 菜品数量确认\n√ 初步痛点确认\n\n待确认：\n□ 现有设备配置\n□ 后厨人员数量\n□ 是否有中央厨房\n□ 是否需要多设备组合\n□ 是否涉及招投标/采购流程",
+      "progress": {
+        "currentStage": "P2",
+        "completed": [
+          "团餐类型确认",
+          "单餐人数确认",
+          "出餐时间确认",
+          "菜品数量确认",
+          "初步痛点确认"
+        ],
+        "pending": [
+          "现有设备配置",
+          "后厨人员数量",
+          "是否有中央厨房",
+          "是否需要多设备组合",
+          "是否涉及招投标/采购流程"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[生成团餐需求摘要]\n[创建现场调研任务]\n[创建团餐方案待办]",
+      "progress": {
+        "currentStage": "P2",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 团餐批量出餐解决方案\n2. 园区食堂智能后厨案例\n3. 炒菜机 + 蒸柜 + 汤锅组合方案\n4. 食品安全与标准化说明卡",
+      "progress": {
+        "currentStage": "P2",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "建议下一步：\n不要单独推荐某一台设备，应进入“组合方案推荐”逻辑。\n\n推荐话术：\n您这个体量建议不能只看单台炒菜机，需要结合炒菜、蒸煮、保温、出餐节奏整体看。我建议先按您一餐1500人的规模，帮您做一个基础设备组合测算。",
+      "progress": {
+        "currentStage": "P2",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    null
+  ]
+}

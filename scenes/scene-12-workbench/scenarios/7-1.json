@@ -1,0 +1,120 @@
+{
+  "id": "7-1",
+  "stageId": "P7",
+  "name": "安装培训安排",
+  "painPoint": "设备到货后，如果安装和培训安排不清楚，客户体验会受到影响。销售需要及时协调交付团队、客户门店负责人和厨师长。 ",
+  "highlights": [
+    "识别安装培训需求；",
+    "抽取到货时间、安装地址、参与人；",
+    "创建安装任务；",
+    "创建培训任务；",
+    "生成客户准备清单；",
+    "通知交付团队。"
+  ],
+  "demoGoal": "展示 AI 如何把设备交付后的安装培训变成可跟踪流程。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "设备到了，什么时候能来安装？我们厨师长这周三在店里。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "检测到安装培训需求。 时间线索：本周三厨师长在店。 建议创建安装培训任务。"
+    },
+    {
+      "type": "sales",
+      "content": "王总，收到。您这边设备已经到货，厨师长周三在店，那我协调交付同事优先看周三是否可以上门安装和培训。 安装前需要确认一下现场水电和摆放位置，我发您一个准备清单。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "好的，你发我。 ---",
+      "sender": "王总"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "检测到交付动作：安装培训\n\n已确认：\n- 设备状态：已到货\n- 安装地点：客户门店\n- 客户参与人：厨师长\n- 可安排时间：本周三\n\n待确认：\n□ 交付人员时间\n□ 现场水电条件\n□ 设备摆放位置\n□ 培训参与人员",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [
+          "设备状态：已到货",
+          "安装地点：客户门店",
+          "客户参与人：厨师长",
+          "可安排时间：本周三",
+          "交付人员时间"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P7 安装培训\n\n阶段变化：\n发货完成 → 安装培训",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[创建安装任务]\n[创建培训任务]\n[通知交付团队]\n[发送安装前准备清单]",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "客户状态：已成交 / 已到货\n关键联系人：厨师长\n当前关注：安装时间、培训上手",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 安装前准备清单\n2. 操作培训流程卡\n3. 设备日常清洁说明\n4. 常见问题处理卡",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

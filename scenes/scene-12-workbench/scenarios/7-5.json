@@ -1,0 +1,141 @@
+{
+  "id": "7-5",
+  "stageId": "P7",
+  "name": "老客户转介绍引导",
+  "painPoint": "满意客户是非常重要的线索来源，但销售往往不好意思主动让客户介绍，或者不知道什么时候提、怎么提。AI 可以根据客户满意度和使用状态，推荐合适的转介绍时机和话术。 ",
+  "highlights": [
+    "判断客户是否适合转介绍；",
+    "识别满意度和使用稳定性；",
+    "推荐低压转介绍话术；",
+    "创建转介绍线索；",
+    "关联介绍人关系；",
+    "推荐客户案例沉淀。"
+  ],
+  "demoGoal": "展示 AI 如何把老客户经营转化为新线索增长。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "现在用得还可以，后厨确实轻松一些了。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "检测到正向使用反馈。 客户满意度较高。 可尝试低压转介绍或案例采集。"
+    },
+    {
+      "type": "sales",
+      "content": "王总，听到您这边用得顺利我们也很高兴。后面如果您身边有做快餐、团餐或者准备开店的朋友，也可以推荐给我。我这边会先帮他们判断适不适合，不会一上来硬推产品。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "可以，我有个朋友也在看后厨设备，回头我推你。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "检测到转介绍线索。建议创建新线索，并关联介绍人。 ---"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "检测到转介绍机会\n\n触发原因：\n- 客户正向反馈\n- 客户表示可推荐朋友\n\n介绍人：王总\n新线索：朋友，信息待补充\n线索来源：老客户转介绍",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [
+          "客户正向反馈",
+          "客户表示可推荐朋友"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[创建转介绍线索]\n[关联介绍人：王总]\n[生成转介绍开场话术]\n[创建新客户跟进任务]",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "客户标签：\n- 满意客户\n- 可转介绍客户\n- 案例潜力客户\n- 老客户经营对象",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [
+          "满意客户",
+          "可转介绍客户",
+          "案例潜力客户",
+          "老客户经营对象"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "原客户阶段：P7 老客户经营\n新线索阶段：P1 线索接入",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 老客户转介绍话术\n2. 转介绍客户开场模板\n3. 客户案例采集模板\n4. 老客户经营计划",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "客户产生顾虑\n↓\nAI 识别异议类型\n↓\n推荐 ROI / 案例 / 竞品 / 售后话术\n↓\n推动试菜或拜访验证\n↓\n从对话中创建试菜、拜访、报价、合同、发货流程\n↓\n成交后进入安装培训、售后回访\n↓\n识别复购和转介绍机会",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

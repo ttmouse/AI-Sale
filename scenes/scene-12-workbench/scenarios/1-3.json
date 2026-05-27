@@ -1,0 +1,126 @@
+{
+  "id": "1-3",
+  "stageId": "P1",
+  "name": "老客户转介绍开场",
+  "painPoint": "转介绍客户有一定信任基础，但销售如果处理不好，容易浪费熟人背书。开场既要承接介绍人信任，又不能显得过度销售。 ",
+  "highlights": [
+    "识别客户来源：老客户转介绍；",
+    "自动引用介绍人关系；",
+    "生成信任型开场话术；",
+    "提醒销售不要马上报价；",
+    "自动建立客户关联关系；",
+    "推荐发送相似客户案例。"
+  ],
+  "demoGoal": "展示 AI 如何帮助销售利用老客户背书，提高新客户破冰成功率。 ",
+  "messages": [
+    {
+      "type": "system",
+      "content": "新客户来源：老客户张总推荐 张总备注：客户王总准备开一家社区快餐店，想了解炒菜机。 推荐策略：信任承接 \\+ 轻需求确认。"
+    },
+    {
+      "type": "sales",
+      "content": "王总您好，我是优特智厨的小陈，是张总推荐我联系您的。张总说您这边准备做一个社区快餐店，想提前了解一下智能炒菜设备。我先简单跟您对接一下，看看您这个店型适不适合。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "对，我还在筹备，主要是想看看这种设备能不能少请一个厨师。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-recommend",
+      "content": "客户已表达核心痛点：减少厨师。建议进入筹备店需求确认。",
+      "options": [],
+      "selected": 0
+    },
+    {
+      "type": "sales",
+      "content": "明白，您这个关注点很关键。筹备期提前规划后厨设备是比较合适的。我先了解一下，您预计门店面积多大？主要卖快餐套餐，还是小炒现炒？ ---",
+      "sender": "小陈"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "客户来源：老客户转介绍\n介绍人：张总\n客户大类：社餐\n细分类别：社区快餐 / 新店筹备\n门店状态：筹备中\n核心关注：减少厨师配置\n当前信任基础：较高\n画像完整度：15% → 40%",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P1 线索接入 → P2 需求确认\n\n阶段判断：\n客户已明确筹备状态和初步痛点，可进入需求确认。\n\n待确认：\n□ 门店面积\n□ 主营品类\n□ 预计日单量\n□ 预算区间\n□ 开业时间",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [
+          "门店面积",
+          "主营品类",
+          "预计日单量",
+          "预算区间",
+          "开业时间"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[创建客户档案]\n[关联介绍人]\n[创建筹备期客户跟进任务]",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 新店筹备后厨设备规划卡\n2. 社区快餐门店案例\n3. 单店少人化配置方案",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "建议下一步：\n确认门店面积、主营品类、预计开业时间。\n\n推荐原因：\n筹备期客户还未形成明确采购方案，需要先帮助其建立后厨配置思路。",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

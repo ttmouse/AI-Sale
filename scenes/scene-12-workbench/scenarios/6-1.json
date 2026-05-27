@@ -1,0 +1,124 @@
+{
+  "id": "6-1",
+  "stageId": "P6",
+  "name": "报价条件确认",
+  "painPoint": "客户说“给我报个价”，但如果型号、配置、数量、收货地、服务范围不清楚，报价容易反复修改，影响专业度和推进效率。 ",
+  "highlights": [
+    "识别报价请求；",
+    "检查报价所需字段；",
+    "自动提示缺失信息；",
+    "生成报价前确认话术；",
+    "创建报价申请任务；",
+    "关联方案版本。"
+  ],
+  "demoGoal": "展示 AI 如何让报价从随意口头动作变成标准流程。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "那你给我报个正式价格吧。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "检测到报价请求。 报价前缺失字段：配置版本、数量、收货城市、是否含安装培训、是否需要发票。"
+    },
+    {
+      "type": "sales",
+      "content": "可以的王总。我给您出正式报价前，先确认几个信息，避免报价后反复调整： 第一，您目前先按一台 G3 标准版考虑对吗？ 第二，收货地址是在杭州这家门店？ 第三，报价需要包含安装培训和发票吗？",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "对，先按一台。地址杭州，安装培训要包含，发票也要。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "报价字段已补全，可创建报价申请。 ---"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "报价请求已识别\n\n已确认：\n- 产品：G3 标准版\n- 数量：1 台\n- 收货城市：杭州\n- 安装培训：包含\n- 发票：需要\n\n待确认：\n□ 是否含运费\n□ 报价有效期\n□ 是否有特殊配置",
+      "progress": {
+        "currentStage": "P6",
+        "completed": [],
+        "pending": [
+          "产品：G3 标准版",
+          "数量：1 台",
+          "收货城市：杭州",
+          "安装培训：包含",
+          "发票：需要"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P6 报价推进\n\n阶段判断：\n客户已从试菜/方案阶段进入正式商务评估。",
+      "progress": {
+        "currentStage": "P6",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[创建报价申请]\n[生成报价前确认单]\n[通知销售内勤]\n[关联客户方案版本]",
+      "progress": {
+        "currentStage": "P6",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "采购意向：高\n报价产品：G3 标准版\n数量：1 台\n服务要求：安装培训 + 发票",
+      "progress": {
+        "currentStage": "P6",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 报价说明模板\n2. G3 标准配置清单\n3. 安装培训服务说明\n4. 报价有效期说明",
+      "progress": {
+        "currentStage": "P6",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

@@ -1,0 +1,135 @@
+{
+  "id": "3-6",
+  "stageId": "P3",
+  "name": "老板汇报版方案生成",
+  "painPoint": "很多时候当前沟通人不是老板，需要“拿回去汇报”。如果销售只发产品资料，内部转述效果很差。AI 需要帮销售生成适合老板看的版本。 ",
+  "highlights": [
+    "识别“需要向老板汇报”的信号；",
+    "自动生成老板版材料；",
+    "聚焦投入、收益、风险、案例、下一步验证；",
+    "避免参数堆叠；",
+    "帮助非决策沟通人更好转述；",
+    "推动老板参与下一步沟通。"
+  ],
+  "demoGoal": "展示 AI 能帮助销售间接影响决策人。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "这个我得跟老板汇报一下，你发点东西给我吧。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "检测到决策链信号：当前沟通人可能不是最终决策人。 建议生成“老板汇报版方案”。 老板汇报版重点： 1. 当前门店问题：厨师不好招，高峰期出餐不稳定； 2. 推荐方案：G3 标准版智能炒菜设备； 3. 经营价值：减少炒锅依赖，提升出餐稳定性； 4. 投入回报：可按人工成本测算回本周期； 5. 风险验证：建议先试菜，看实际出品和操作； 6. 下一步：约老板一起看试菜或视频演示。"
+    },
+    {
+      "type": "sales",
+      "content": "我给您发一个老板汇报版，里面不放太多参数，主要讲投入、回本、解决什么问题，以及下一步怎么验证。您转给老板会更方便。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "可以，发我吧。 ---",
+      "sender": "王总"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "当前沟通人：可能为信息收集人 / 使用部门\n最终决策人：老板，待确认\n决策状态：需要内部汇报\n推荐动作：生成老板汇报版材料",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "已生成：\n《老板汇报版：快餐门店智能炒菜设备建议》\n\n内容重点：\n- 投入产出\n- 人工节省\n- 出餐稳定\n- 类似案例\n- 试菜验证",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [
+          "投入产出",
+          "人工节省",
+          "出餐稳定",
+          "类似案例",
+          "试菜验证"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P3 产品匹配\n潜在风险：决策人未直接参与\n下一步建议：\n争取老板参与试菜或线上方案沟通。",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[发送老板汇报版]\n[创建老板跟进任务]\n[预约三方沟通]\n[生成老板关心问题清单]",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 老板版 ROI 说明卡\n2. 快餐客户案例\n3. 试菜邀约话术\n4. 决策人沟通问题清单",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "线索进入\n↓\n智能破冰\n↓\n客户开始表达需求\n↓\nAI 自动补全客户画像\n↓\n识别客户类型、角色、痛点\n↓\n推荐产品或组合方案\n↓\n生成轻方案 / 老板汇报版\n↓\n推动进入价值证明或试菜拜访",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

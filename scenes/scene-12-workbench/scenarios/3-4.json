@@ -1,0 +1,119 @@
+{
+  "id": "3-4",
+  "stageId": "P3",
+  "name": "厨师长版一句话讲产品",
+  "painPoint": "厨师长可能担心机器影响口味、削弱厨师价值、增加操作负担。销售必须避免“替代厨师”的表达，而要强调辅助和稳定。 ",
+  "highlights": [
+    "识别厨师长角色；",
+    "自动生成使用者视角话术；",
+    "强调操作、口味、可调参数；",
+    "推荐试菜体验；",
+    "记录使用顾虑；",
+    "生成试菜动作。"
+  ],
+  "demoGoal": "展示 AI 能对不同角色采用不同沟通策略。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "你们这个设备会不会做出来都一个味？我们菜还是要有师傅把控。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "角色：厨师长。 顾虑：口味一致但缺少灵活性。 建议强调：参数可调、厨师参与调试、设备负责稳定执行。"
+    },
+    {
+      "type": "sales",
+      "content": "您说得对，菜品口味一定要有师傅参与把控。我们的设备不是把厨师经验完全拿掉，而是把师傅调好的火候、时间、投料节点沉淀成菜谱参数，让门店后续能稳定复制。前期调试时，厨师长的经验反而很关键。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "那如果我们口味偏重一点，也能调？",
+      "sender": "王总"
+    },
+    {
+      "type": "sales",
+      "content": "可以调。比如火力、时间、投料顺序、酱料比例，都可以根据您门店口味做调整。建议您带一道代表菜来试，我们现场调给您看。 ---",
+      "sender": "小陈"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "当前角色：厨师长 / 使用影响人\n关注重点：口味、操作、参数可调\n潜在抗拒：担心被设备替代\n推荐策略：强调辅助厨师、沉淀经验、稳定复制",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "新增顾虑：口味灵活性\n新增关注：菜谱参数可调\n推荐动作：试菜体验\n画像完整度：55% → 65%",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P3 产品匹配\n建议下一阶段：P5 试菜体验\n\n原因：\n厨师长角色对线上解释信任有限，适合通过现场试菜推动。",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[创建试菜意向]\n[记录代表菜品待确认]\n[生成试菜邀约话术]",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 菜谱参数可调说明卡\n2. 厨师参与调试流程卡\n3. 试菜体验说明卡",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "id": "4-5",
+  "stageId": "P4",
+  "name": "售后与稳定性信任应答",
+  "painPoint": "设备类产品客户非常关注售后。如果销售回答不具体，只说“我们有售后”，客户很难建立信任。AI 需要帮助销售把售后服务讲成机制、流程和保障。 ",
+  "highlights": [
+    "识别售后顾虑；",
+    "区分稳定性、维修、培训、响应速度等具体问题；",
+    "推荐售后保障话术；",
+    "推荐服务流程卡；",
+    "创建售后说明资料；",
+    "推动客户建立安全感。"
+  ],
+  "demoGoal": "展示 AI 如何把“售后担心”转化为标准化服务承诺说明。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "设备坏了怎么办？我们最怕买回来没人管。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "异议类型：售后保障。 建议具体说明响应机制、培训机制、质保和服务流程。"
+    },
+    {
+      "type": "sales",
+      "content": "王总，这个顾虑很正常。设备类产品不能只看买的时候，后续服务很关键。我们一般会包含安装调试、操作培训、售后响应和定期回访。 您如果愿意，我可以把售后服务流程发您，里面包括安装、培训、故障响应和日常维护说明。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "我们店里人不一定会用，这个培训麻烦吗？",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "客户顾虑转向操作培训。推荐培训流程卡。"
+    },
+    {
+      "type": "sales",
+      "content": "培训不会太复杂，主要是设备操作、菜谱调用、日常清洁和简单故障处理。前期会有人带着操作，常用菜品跑顺后，员工上手会比较快。 ---",
+      "sender": "小陈"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "异议类型：售后与培训\n具体顾虑：\n- 设备坏了没人管\n- 员工不会用\n- 后续维护麻烦\n\n推荐策略：\n服务流程可视化 + 培训机制说明 + 案例背书",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [
+          "设备坏了没人管",
+          "员工不会用",
+          "后续维护麻烦"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "新增关注点：售后服务、培训上手\n风险标签：服务信任不足\n推荐资料：售后保障卡、培训流程卡",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P4 异议化解\n\n待完成：\n□ 发送售后流程卡\n□ 发送培训流程卡\n□ 邀请客户试菜时体验操作流程",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [
+          "发送售后流程卡",
+          "发送培训流程卡",
+          "邀请客户试菜时体验操作流程"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[发送售后保障卡]\n[发送培训流程卡]\n[创建服务说明跟进任务]",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 售后服务流程卡\n2. 安装培训说明卡\n3. 常见故障处理说明\n4. 老客户稳定运行案例",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

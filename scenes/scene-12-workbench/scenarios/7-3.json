@@ -1,0 +1,123 @@
+{
+  "id": "7-3",
+  "stageId": "P7",
+  "name": "售后回访与满意度记录",
+  "painPoint": "设备交付后，如果没有持续回访，客户问题可能积累，满意度下降。优秀销售会通过回访发现问题、巩固关系，并寻找复购和案例机会。 ",
+  "highlights": [
+    "自动提醒售后回访；",
+    "生成不同时间节点回访话术；",
+    "收集客户满意度；",
+    "记录使用问题和改进点；",
+    "判断是否适合案例沉淀；",
+    "创建后续跟进任务。"
+  ],
+  "demoGoal": "展示 AI 如何让售后回访变成客户经营动作。 ",
+  "messages": [
+    {
+      "type": "system",
+      "content": "客户设备已安装 7 天，建议进行首次使用回访。"
+    },
+    {
+      "type": "sales",
+      "content": "王总，设备安装已经一周了，我来回访一下。现在门店使用情况怎么样？员工操作是否顺手？有没有哪些菜品需要我们再帮您调一下参数？",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "整体还可以，员工基本会用了，就是有两道菜还想再调一下。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "客户整体满意，但存在菜谱优化需求。建议创建菜谱优化任务。"
+    },
+    {
+      "type": "sales",
+      "content": "好的，那我记录一下。您把这两道菜发我，我让技术同事帮您再优化一版参数。整体使用如果稳定的话，后面也可以帮您整理成一个门店使用案例。 ---",
+      "sender": "小陈"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "回访节点：安装后 7 天\n客户反馈：整体使用正常\n员工上手：基本顺利\n待优化：2 道菜参数\n客户满意度：较好",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[创建菜谱优化任务]\n[创建二次回访提醒]\n[记录满意度]\n[标记案例潜力客户]",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P7 售后回访\n\n客户状态：\n已完成初期安装培训，进入稳定使用观察期。",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "新增标签：\n- 已成交客户\n- 初期使用顺利\n- 有案例沉淀潜力\n- 有菜谱优化需求",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [
+          "已成交客户",
+          "初期使用顺利",
+          "有案例沉淀潜力",
+          "有菜谱优化需求"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 安装后 7 天回访模板\n2. 菜谱优化记录表\n3. 客户案例采集模板\n4. 二次回访问题清单",
+      "progress": {
+        "currentStage": "P7",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

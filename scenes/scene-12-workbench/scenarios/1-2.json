@@ -1,0 +1,137 @@
+{
+  "id": "1-2",
+  "stageId": "P1",
+  "name": "展会客户回访破冰",
+  "painPoint": "展会客户通常一天接触很多供应商，回访时客户可能已经记不清具体沟通内容。销售需要快速唤醒客户记忆，并把展会上的短暂沟通转化为后续销售机会。 ",
+  "highlights": [
+    "识别线索来源：展会；",
+    "关联展会沟通备注；",
+    "自动生成回访话术；",
+    "提醒销售承接现场交流内容；",
+    "推荐发送现场演示视频或产品资料；",
+    "创建展会客户跟进任务。"
+  ],
+  "demoGoal": "展示 AI 能帮助销售把“展会名片”转化为有效客户跟进。 ",
+  "messages": [
+    {
+      "type": "system",
+      "content": "线索来源：上海餐饮设备展 展会备注：客户现场关注 G3 炒菜机，提到自己有 3 家快餐门店。 建议今天完成首次回访。"
+    },
+    {
+      "type": "ai-recommend",
+      "content": "A\\. 展会记忆唤醒型 B\\. 直接需求确认型 C\\. 资料跟进型",
+      "options": [],
+      "selected": 0
+    },
+    {
+      "type": "sales",
+      "content": "李总您好，我是优特智厨的小陈。昨天在上海餐饮设备展上我们聊过 G3 炒菜机，您当时提到现在有 3 家快餐门店，想看看能不能降低后厨对炒锅师傅的依赖。我今天跟您简单回访一下，看是否方便继续了解？",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "哦，有印象。你们那个设备能做哪些菜？",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-recommend",
+      "content": "客户开始关注产品适配性，可先回答菜品范围，再反问客户门店主力菜品。",
+      "options": [],
+      "selected": 0
+    },
+    {
+      "type": "sales",
+      "content": "我们这类设备更适合标准化程度比较高的快餐、小炒、盖饭类菜品。比如宫保鸡丁、鱼香肉丝、青椒肉丝、番茄炒蛋这类都比较常见。您现在门店主力菜品大概是哪几类？",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "主要是盖饭和小炒，出餐要快。 ---",
+      "sender": "王总"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "客户来源：餐饮设备展\n客户大类：社餐\n细分类别：快餐 / 盖饭 / 小炒\n门店数量：3 家\n关注点：菜品适配、出餐速度、降低厨师依赖\n当前意向：较高\n画像完整度：20% → 45%",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P1 线索接入 → P2 需求确认\n\n阶段变化原因：\n客户已确认门店数量、业态、主力菜品和初步关注点。\n\n待确认：\n□ 日单量\n□ 后厨人员数量\n□ 是否有扩店计划\n□ 决策人是否本人",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [
+          "日单量",
+          "后厨人员数量",
+          "是否有扩店计划",
+          "决策人是否本人"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[创建展会客户跟进任务]\n[关联展会备注]\n[生成客户需求摘要]",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. G3 适配菜品清单\n2. 快餐盖饭客户案例\n3. 标准菜谱库介绍\n4. 高峰期出餐效率说明卡",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "建议动作：\n继续追问日单量、门店出餐高峰、现有炒锅师傅数量。\n\n推荐话术：\n李总，您这类盖饭和小炒门店，关键要看高峰期出餐压力。我想了解一下，您单店一天大概多少单？午晚高峰一般会不会压单？",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    null
+  ]
+}

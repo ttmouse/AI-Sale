@@ -1,0 +1,123 @@
+{
+  "id": "5-4",
+  "stageId": "P5",
+  "name": "试菜后反馈总结",
+  "painPoint": "试菜结束后，如果销售不及时总结客户反馈、顾虑和下一步，很容易错过推进窗口。AI 应帮助销售把试菜结果变成项目推进记录。 ",
+  "highlights": [
+    "总结客户试菜反馈；",
+    "区分老板反馈和厨师长反馈；",
+    "记录满意点和待改进点；",
+    "判断是否可进入报价；",
+    "自动生成试菜后跟进话术；",
+    "创建报价或二次试菜任务。"
+  ],
+  "demoGoal": "展示 AI 如何把线下试菜结果沉淀成销售项目状态。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "今天试下来整体还可以，鱼香肉丝味道可以，青椒肉丝感觉火候还可以再重一点。厨师长觉得操作还行。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "检测试菜反馈。 正向反馈：整体认可、鱼香肉丝满意、操作可接受。 待优化：青椒肉丝火候。 建议进入报价前确认。"
+    },
+    {
+      "type": "sales",
+      "content": "王总，今天反馈我记录一下：鱼香肉丝整体比较满意，青椒肉丝火候可以再按您门店口味调重一点，厨师长对操作也基本认可。 那下一步我这边可以按您门店情况给您出一个正式配置和报价，您看可以吗？",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "可以，你先出一版报价吧。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "客户请求报价。建议进入 P6 报价合同阶段。 ---"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "试菜反馈总结\n\n整体评价：正向\n满意点：\n- 鱼香肉丝味道认可\n- 操作方式基本接受\n- 厨师长无明显抵触\n\n待优化：\n- 青椒肉丝火候需加强\n\n客户下一步意向：\n要求正式报价",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [
+          "鱼香肉丝味道认可",
+          "操作方式基本接受",
+          "厨师长无明显抵触",
+          "青椒肉丝火候需加强"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P5 试菜验证 → P6 报价推进\n\n阶段变化原因：\n客户试菜反馈正向，并明确要求报价。",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[生成试菜总结]\n[创建报价申请]\n[创建报价前信息确认任务]\n[生成试菜后跟进话术]",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "客户意向等级：高\n产品认可度：较高\n关键影响人：厨师长基本认可\n待解决问题：个别菜品参数优化",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 报价前确认清单\n2. 试菜总结模板\n3. 菜品参数优化记录\n4. 正式方案报价模板",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

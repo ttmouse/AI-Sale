@@ -1,0 +1,129 @@
+{
+  "id": "3-3",
+  "stageId": "P3",
+  "name": "老板版一句话讲产品",
+  "painPoint": "老板不一定关心设备细节，更关心投入、回本、少人化、能否提升门店经营效率。销售如果对老板讲太多技术参数，容易失焦。 ",
+  "highlights": [
+    "识别客户角色为老板；",
+    "自动切换老板视角；",
+    "聚焦经营收益；",
+    "推荐 ROI 和案例；",
+    "避免过度技术化表达；",
+    "推荐下一步试菜或测算。"
+  ],
+  "demoGoal": "展示 AI 能根据不同沟通角色生成不同产品表达。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "我是老板，我不太懂这些参数。你简单说，这东西对我有什么用？",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "角色识别：老板 / 决策人。 建议表达重点：省人、提效、稳定、回本。"
+    },
+    {
+      "type": "sales",
+      "content": "王总，简单说，G3 对您这种快餐门店的价值主要是三点： 第一，减少对炒锅师傅的依赖； 第二，高峰期出餐更稳定； 第三，标准菜品口味更容易统一。 最后要看的是一笔账：设备投入能不能通过节省人工和提升效率回收回来。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "那大概多久回本？",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "客户进入价值测算意图。建议进入 ROI 测算。"
+    },
+    {
+      "type": "sales",
+      "content": "这个要结合您现在人工成本算。比如一个炒锅师傅月薪 8000 到 10000，如果设备能减少一个岗位，回本周期就比较清晰了。我可以按您的实际人工成本帮您算一下。 ---",
+      "sender": "小陈"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "当前沟通角色：老板 / 决策人\n关注重点：投入产出、人工节省、经营效率\n不建议重点：复杂参数、技术细节\n推荐表达：经营价值 + 回本周期",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "老板版产品表达：\n- 少请人\n- 出餐稳\n- 口味稳\n- 可复制\n- 能算账\n\n推荐下一步：\n进入 ROI 回本测算。",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [
+          "少请人",
+          "出餐稳",
+          "口味稳",
+          "可复制",
+          "能算账"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P3 产品匹配\n客户状态：已理解基础价值\n下一阶段建议：P4 价值证明 / ROI 测算",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[创建 ROI 测算]\n[记录决策人关注点]\n[生成老板版方案]",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 老板版 G3 价值卡\n2. 人工节省测算卡\n3. 快餐门店回本案例",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

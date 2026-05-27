@@ -1,0 +1,135 @@
+{
+  "id": "3-1",
+  "stageId": "P3",
+  "name": "快餐门店智能选型",
+  "painPoint": "不同客户适合的设备不同。销售如果只凭经验推荐，容易推荐过轻或过重，导致客户觉得不匹配、价格不合适，或者后续使用效果不好。 ",
+  "highlights": [
+    "根据客户画像自动推荐产品；",
+    "给出推荐理由；",
+    "展示产品匹配度；",
+    "提醒不适合的产品；",
+    "推荐产品卡和案例卡；",
+    "推动进入轻方案生成。"
+  ],
+  "demoGoal": "展示 AI 如何基于客户情况推荐 G3 标准版或升级方案。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "按我这个情况，你觉得哪款比较适合？我们快餐店，120 平，一天两三百单，主要盖饭和小炒。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "客户画像完整度 70%，可进入产品匹配。 推荐主方案：G3 标准版。 备选方案：G3 升级套装。 不建议：大型团餐组合方案。"
+    },
+    {
+      "type": "sales",
+      "content": "王总，按您目前的情况，我建议优先看 G3 标准版。您是 120 平快餐店，一天两三百单，主要是盖饭和小炒，这类菜品比较适合用标准炒菜设备来做高峰期分担。 如果您后续单量继续增长，也可以考虑 G3 升级套装。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "它主要能解决什么？",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-recommend",
+      "content": "客户询问价值，建议围绕高峰期出餐、减少炒锅依赖、口味稳定回答。",
+      "options": [],
+      "selected": 0
+    },
+    {
+      "type": "sales",
+      "content": "对您这种门店，核心不是“买一台机器”，而是解决三个问题：第一，高峰期出餐更稳定；第二，减少对炒锅师傅的依赖；第三，标准菜品口味更稳定。 ---",
+      "sender": "小陈"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "推荐产品：G3 标准版\n匹配度：86%\n\n推荐依据：\n- 客户类型：快餐简餐\n- 门店面积：120 平\n- 日单量：200–300 单\n- 主营菜品：盖饭 + 小炒\n- 核心痛点：厨师不好招、高峰期出餐压力\n\n备选方案：\n- G3 升级套装\n- 双机组合方案，适合单量继续增长后考虑\n\n不推荐：\n- 大型团餐组合方案",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [
+          "客户类型：快餐简餐",
+          "门店面积：120 平",
+          "日单量：200–300 单",
+          "主营菜品：盖饭 + 小炒",
+          "核心痛点：厨师不好招、高峰期出餐压力"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "客户阶段：需求明确\n产品意向：G3 标准版\n关注价值：出餐效率、人工节省、口味稳定\n画像完整度：70% → 78%",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P2 需求确认 → P3 产品匹配\n\n已完成：\n√ 需求确认\n√ 产品推荐\n√ 推荐理由生成\n\n下一步：\n生成一键轻方案或发送产品卡。",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [
+          "需求确认",
+          "产品推荐",
+          "推荐理由生成"
+        ],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[生成 G3 轻方案]\n[发送产品卡]\n[创建方案跟进任务]",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. G3 标准版产品卡\n2. 快餐门店 G3 应用案例\n3. G3 适配菜品清单\n4. 人工节省测算卡",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

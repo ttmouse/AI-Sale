@@ -1,0 +1,136 @@
+{
+  "id": "3-2",
+  "stageId": "P3",
+  "name": "团餐客户组合方案推荐",
+  "painPoint": "团餐客户通常不是单点需求，而是系统性后厨效率问题。销售如果只推荐单台炒菜机，容易显得方案能力不足。 ",
+  "highlights": [
+    "识别团餐客户规模；",
+    "推荐组合方案而非单机；",
+    "按出餐环节拆解设备配置；",
+    "生成方案逻辑；",
+    "推荐现场调研或方案会；",
+    "提醒可能涉及招采流程。"
+  ],
+  "demoGoal": "展示 AI 能根据团餐客户的业务复杂度，推荐整体解决方案。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "我们一餐 1500 人，一个小时内要出完。你们一台炒菜机能解决吗？",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "团餐客户，不建议承诺单机解决。 建议转向组合方案和现场测算。"
+    },
+    {
+      "type": "sales",
+      "content": "您这个规模不建议只看一台设备能不能解决。1500 人一餐、一个小时集中出餐，需要按炒菜、蒸煮、保温、分餐几个环节整体测算。 我建议先给您做一个基础组合方案，再结合现场动线确认设备配置。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "那大概会包括哪些设备？",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-recommend",
+      "content": "可说明初步组合，不给最终配置，强调需现场确认。",
+      "options": [],
+      "selected": 0
+    },
+    {
+      "type": "sales",
+      "content": "初步看，可能会涉及炒菜设备、智能蒸柜、汤锅，以及出餐保温环节。具体数量要看您热菜结构、每批出餐量和后厨空间。我可以先给您出一个初版配置思路。 ---",
+      "sender": "小陈"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "推荐方案类型：团餐组合方案\n匹配度：82%\n\n初步组合：\n- 智能炒菜设备：解决热菜炒制\n- 智能蒸柜：解决蒸菜/主食/批量蒸制\n- 智能汤锅：解决汤品/炖煮\n- 保温出餐设备：解决集中出餐稳定性\n\n推荐方式：\n先做初步方案，再安排现场调研。",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [
+          "智能炒菜设备：解决热菜炒制",
+          "智能蒸柜：解决蒸菜/主食/批量蒸制",
+          "智能汤锅：解决汤品/炖煮",
+          "保温出餐设备：解决集中出餐稳定性"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "客户大类：团餐\n单餐人数：1500 人\n出餐窗口：1 小时\n需求类型：系统性后厨效率提升\n方案方向：多设备组合\n画像完整度：65% → 78%",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P3 产品匹配\n\n阶段判断：\n客户不适合单机推荐，应进入组合方案阶段。\n\n待确认：\n□ 后厨平面布局\n□ 热菜结构\n□ 当前设备配置\n□ 采购流程\n□ 预算范围",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [
+          "后厨平面布局",
+          "热菜结构",
+          "当前设备配置",
+          "采购流程",
+          "预算范围"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[创建现场调研任务]\n[生成团餐初版方案]\n[创建方案评审待办]",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 团餐组合设备方案卡\n2. 1500人食堂出餐测算模板\n3. 团餐客户案例\n4. 现场调研清单",
+      "progress": {
+        "currentStage": "P3",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

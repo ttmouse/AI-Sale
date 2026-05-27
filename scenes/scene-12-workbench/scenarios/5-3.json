@@ -1,0 +1,126 @@
+{
+  "id": "5-3",
+  "stageId": "P5",
+  "name": "试菜前准备清单生成",
+  "painPoint": "试菜效果好不好，不只取决于设备，也取决于准备是否充分。销售经常会漏确认菜品、食材、客户参与人、评价标准，导致试菜体验不完整。 ",
+  "highlights": [
+    "根据客户类型生成试菜准备清单；",
+    "提醒确认菜品、口味、食材、人数；",
+    "生成内部准备任务；",
+    "提醒销售提前发确认消息；",
+    "生成试菜评价记录模板；",
+    "对厨师长和老板分别准备关注点。"
+  ],
+  "demoGoal": "展示 AI 如何让试菜从临时安排变成标准流程。 ",
+  "messages": [
+    {
+      "type": "system",
+      "content": "明天 14:00 有王总试菜预约。 当前缺失信息：试菜菜品、食材准备方式、客户参与人联系方式。"
+    },
+    {
+      "type": "sales",
+      "content": "王总，明天下午 2 点试菜我这边已经安排好了。为了现场效果更准确，麻烦您今天把准备试的菜品发我一下。如果有特殊口味要求，比如偏辣、偏咸、少油，也可以一起告诉我。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "试鱼香肉丝和青椒肉丝，口味偏重一点。厨师长也会去。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "已补全试菜菜品和口味要求。建议生成内部准备清单。 ---"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "试菜预约：王总快餐门店\n\n时间：明天 14:00\n参与人：王总、厨师长\n试菜菜品：\n- 鱼香肉丝\n- 青椒肉丝\n口味要求：偏重\n验证重点：\n- 口味还原\n- 出餐速度\n- 操作难度\n- 厨师长接受度",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [
+          "鱼香肉丝",
+          "青椒肉丝",
+          "口味还原",
+          "出餐速度",
+          "操作难度"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建任务：\n[准备食材]\n[预设菜谱参数]\n[安排演示人员]\n[准备设备清洁]\n[打印试菜反馈表]",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P5 试菜准备\n\n试菜准备完整度：85%\n\n待补充：\n□ 展厅具体地址是否已发送\n□ 到访人数是否最终确认",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [
+          "展厅具体地址是否已发送",
+          "到访人数是否最终确认"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "新增信息：\n- 代表菜品：鱼香肉丝、青椒肉丝\n- 口味偏好：偏重\n- 厨师长参与验证",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [
+          "代表菜品：鱼香肉丝、青椒肉丝",
+          "口味偏好：偏重",
+          "厨师长参与验证"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 鱼香肉丝菜谱参数卡\n2. 青椒肉丝菜谱参数卡\n3. 厨师长试菜关注点\n4. 试菜反馈记录模板",
+      "progress": {
+        "currentStage": "P5",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

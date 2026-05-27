@@ -1,0 +1,142 @@
+{
+  "id": "2-1",
+  "stageId": "P2",
+  "name": "社餐客户画像自动补全",
+  "painPoint": "销售在聊天时经常会听到很多零散信息，例如门店类型、日单量、人员、菜品，但这些信息没有被结构化记录，后续很容易忘记。 ",
+  "highlights": [
+    "从对话中抽取客户业态；",
+    "区分社餐、团餐、连锁、小店；",
+    "自动补全日单量、人员、菜品等字段；",
+    "显示客户画像完整度；",
+    "提醒销售还缺哪些关键信息；",
+    "生成客户需求摘要。"
+  ],
+  "demoGoal": "展示 AI 如何把自然聊天变成结构化客户画像。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "我们是做快餐简餐的，店大概 120 平，一天差不多两三百单。现在主要是两个炒锅师傅，午高峰有时候会出不来。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "检测到客户画像信息：业态、面积、日单量、后厨人员、痛点。"
+    },
+    {
+      "type": "ai-recommend",
+      "content": "客户画像已较清晰，建议继续确认主力菜品和采购计划。",
+      "options": [],
+      "selected": 0
+    },
+    {
+      "type": "sales",
+      "content": "王总，您这个情况比较典型。120 平快餐店、一天两三百单，确实比较容易在午高峰卡出餐。我再确认一下，您主要是盖饭套餐多，还是小炒类菜品多？",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "盖饭套餐比较多，小炒也有一些。",
+      "sender": "王总"
+    },
+    {
+      "type": "sales",
+      "content": "明白，那您现在更想解决的是减少炒锅师傅，还是提高高峰期出餐速度？",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "两个都想解决，主要是厨师不好招。 ---",
+      "sender": "王总"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "客户画像更新\n\n客户大类：社餐\n细分类别：快餐简餐\n门店面积：120 平\n日单量：200–300 单\n后厨人员：2 名炒锅师傅\n主营菜品：盖饭套餐 + 部分小炒\n主要痛点：厨师不好招、高峰期出餐压力\n关注方向：少人化、提效率、稳定出品\n\n画像完整度：30% → 70%",
+      "progress": {
+        "currentStage": "P2",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P2 需求确认\n\n已完成：\n√ 客户业态识别\n√ 门店规模确认\n√ 日单量确认\n√ 后厨人员确认\n√ 初步痛点确认\n\n待确认：\n□ 预算区间\n□ 采购周期\n□ 决策人\n□ 是否看过竞品",
+      "progress": {
+        "currentStage": "P2",
+        "completed": [
+          "客户业态识别",
+          "门店规模确认",
+          "日单量确认",
+          "后厨人员确认",
+          "初步痛点确认"
+        ],
+        "pending": [
+          "预算区间",
+          "采购周期",
+          "决策人",
+          "是否看过竞品"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[更新客户画像]\n[生成需求摘要]\n[创建产品推荐待办]",
+      "progress": {
+        "currentStage": "P2",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 快餐简餐 G3 适配说明\n2. 200–300 单门店配置建议\n3. 厨师替代与人效提升说明卡",
+      "progress": {
+        "currentStage": "P2",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "建议下一步：\n可进入 P3 产品匹配阶段，推荐 G3 标准版或 G3 升级套装。\n\n推荐话术：\n王总，按您这个日单量和菜品结构，G3 这类标准炒菜设备会比较适配。我可以先给您一个基础配置建议，您看看是否符合您的门店情况。",
+      "progress": {
+        "currentStage": "P2",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    null
+  ]
+}

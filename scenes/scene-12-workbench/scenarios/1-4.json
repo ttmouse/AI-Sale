@@ -1,0 +1,131 @@
+{
+  "id": "1-4",
+  "stageId": "P1",
+  "name": "客户沉默后的智能唤醒",
+  "painPoint": "很多客户加了微信后不回复，销售不知道什么时候再跟、用什么理由跟、发什么内容才不显得打扰。 ",
+  "highlights": [
+    "自动识别客户沉默时长；",
+    "根据客户来源推荐唤醒方式；",
+    "生成低压跟进话术；",
+    "推荐合适资料；",
+    "创建后续跟进节奏；",
+    "标记客户响应状态。"
+  ],
+  "demoGoal": "展示 AI 能帮助销售有节奏地唤醒客户，而不是盲目追问。 ",
+  "messages": [
+    {
+      "type": "system",
+      "content": "客户已 48 小时未回复 客户来源：官网留资 留资内容：想了解炒菜机价格 建议：不要直接催促，可用“资料补充 \\+ 轻问题”唤醒。"
+    },
+    {
+      "type": "ai-recommend",
+      "content": "A\\. 资料补充型 B\\. 案例唤醒型 C\\. 价格澄清型",
+      "options": [],
+      "selected": 0
+    },
+    {
+      "type": "sales",
+      "content": "王总您好，我把您之前关注的炒菜机资料简单整理了一下。不同门店适合的型号差异比较大，如果您方便的话，我可以按您的门店类型给您发对应版本，避免资料太多看起来费时间。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "我是做快餐的，主要想知道大概多少钱。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-recommend",
+      "content": "客户被唤醒，并明确关注价格。建议先确认门店情况，再进入价格区间解释。",
+      "options": [],
+      "selected": 0
+    },
+    {
+      "type": "sales",
+      "content": "明白，快餐店适配度比较高。价格主要和型号、配置、菜品需求有关。我先了解一下您一天大概多少单、后厨现在几个人，我再给您一个更接近实际的配置范围。 ---",
+      "sender": "小陈"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "客户状态：已唤醒\n客户来源：官网留资\n客户大类：社餐\n细分类别：快餐\n关注点：价格\n响应状态：48小时沉默后重新互动\n画像完整度：10% → 30%",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P1 线索接入\n状态变化：沉默客户 → 有效对话恢复\n\n待确认：\n□ 日单量\n□ 后厨人员\n□ 预算\n□ 是否已有门店",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [
+          "日单量",
+          "后厨人员",
+          "预算",
+          "是否已有门店"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[更新客户响应状态]\n[创建下一次跟进提醒]\n[标记客户关注点：价格]",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐资料：\n1. 快餐门店基础配置价格说明\n2. 价格与配置关系说明卡\n3. ROI 回本测算卡",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "建议：\n不要直接给最低价或笼统报价。\n先确认门店规模和需求，再给价格区间，避免客户只按价格做判断。",
+      "progress": {
+        "currentStage": "P1",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

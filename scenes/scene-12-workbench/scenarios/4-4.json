@@ -1,0 +1,127 @@
+{
+  "id": "4-4",
+  "stageId": "P4",
+  "name": "客户说“再考虑一下”",
+  "painPoint": "客户说“我再考虑一下”时，很多销售不知道客户是真的考虑，还是委婉拒绝。AI 需要帮助销售拆解背后原因，并给出低压追问和后续跟进策略。 ",
+  "highlights": [
+    "识别模糊拒绝；",
+    "判断可能原因；",
+    "推荐低压追问话术；",
+    "标记客户停滞原因；",
+    "创建后续跟进任务；",
+    "推荐补充资料或案例。"
+  ],
+  "demoGoal": "展示 AI 如何把“客户停滞”转化为可跟进的具体问题。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "我再考虑一下吧，后面有需要再联系你。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "检测到模糊异议：再考虑。 可能原因：预算、效果不确定、竞品对比、决策人未参与、采购时间未到。 建议低压确认真实顾虑。"
+    },
+    {
+      "type": "sales",
+      "content": "王总，没问题，设备采购确实需要慎重考虑。方便问一下，您现在主要顾虑是预算投入、设备效果，还是还想再对比几家？我好针对性给您补充资料，避免一直给您发不相关的内容。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "主要是还没确定这个东西实际做出来怎么样。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "真实顾虑：出品效果不确定。 推荐动作：试菜邀约。"
+    },
+    {
+      "type": "sales",
+      "content": "明白，那您主要还是想确认实际出品效果。这个靠资料确实不如现场看，建议您带一道门店常做的菜来试一下，您直接看口味、速度和操作方式，会更直观。 ---",
+      "sender": "小陈"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "客户表述：再考虑一下\n表层状态：暂缓推进\n真实顾虑：出品效果不确定\n推荐策略：从资料沟通转向试菜验证",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "新增标签：\n- 对出品效果有顾虑\n- 需要试菜验证\n- 当前处于观望状态\n\n客户意向：中等偏高\n风险：若无验证动作，可能流失",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [
+          "对出品效果有顾虑",
+          "需要试菜验证",
+          "当前处于观望状态"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P4 异议化解\n建议跳转阶段：P5 试菜拜访\n\n原因：\n客户的主要顾虑需要通过现场体验解决。",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[创建试菜邀约]\n[创建 3 天后跟进任务]\n[发送试菜案例]\n[记录停滞原因]",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "建议下一步：\n不要继续发送大量资料。\n直接推动客户选择一个时间做试菜体验。",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}

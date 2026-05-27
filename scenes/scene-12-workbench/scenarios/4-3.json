@@ -1,0 +1,135 @@
+{
+  "id": "4-3",
+  "stageId": "P4",
+  "name": "竞品对比助手",
+  "painPoint": "客户经常会说“我也在看某某品牌”。普通销售容易贬低竞品，或者泛泛说自己更好。正确做法是先问客户关注点，再做差异化对比，最后引导客户用真实场景验证。 ",
+  "highlights": [
+    "自动识别客户提到的竞品；",
+    "判断客户对比维度：价格、口味、稳定性、售后、案例；",
+    "推荐不贬低竞品的话术；",
+    "推荐竞品对比知识卡；",
+    "推荐试菜验证动作；",
+    "标记客户进入竞品对比阶段。"
+  ],
+  "demoGoal": "展示 AI 如何帮助销售在竞品场景中说得稳、说得准、说得不冒进。 ",
+  "messages": [
+    {
+      "type": "customer",
+      "content": "我们也在看橡鹭，还有一家价格比你们低不少。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "检测到竞品对比：橡鹭 \\+ 低价竞品。 建议先确认客户关注维度，不要直接否定竞品。"
+    },
+    {
+      "type": "sales",
+      "content": "王总，您多比较几家是对的。不同品牌侧重点不一样，关键还是看您最关注什么：是价格、出品稳定性、操作难度，还是售后服务？ 如果只是看价格，差异会比较明显；但如果看长期使用效果，就需要结合菜品、门店场景和服务能力一起判断。",
+      "sender": "小陈"
+    },
+    {
+      "type": "customer",
+      "content": "我主要担心买回来不好用，还有售后跟不上。",
+      "sender": "王总"
+    },
+    {
+      "type": "ai-hint",
+      "content": "客户实际顾虑：稳定性 \\+ 售后，而非单纯价格。 推荐发送稳定性案例和售后保障卡。"
+    },
+    {
+      "type": "sales",
+      "content": "明白，那您关注的不是单纯价格，而是买回去能不能稳定用、出了问题有没有人管。这个点确实更重要。我可以给您看两个同类门店案例，再给您发一下我们的售后响应和培训流程。 ---",
+      "sender": "小陈"
+    }
+  ],
+  "annotations": [
+    null,
+    {
+      "profile": "竞品信息：\n- 橡鹭\n- 低价竞品，名称待确认\n\n客户对比维度：\n初始：价格\n真实顾虑：稳定性、售后服务\n\n推荐策略：\n先确认关注点，再讲差异化，不贬低竞品。",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [
+          "橡鹭",
+          "低价竞品，名称待确认"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "新增标签：\n- 竞品对比中\n- 关注稳定性\n- 关注售后服务\n- 价格敏感但非唯一因素\n\n画像完整度：82% → 88%",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [
+          "竞品对比中",
+          "关注稳定性",
+          "关注售后服务",
+          "价格敏感但非唯一因素"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "当前阶段：P4 异议化解\n风险状态：竞品比较中\n\n待完成：\n□ 发送案例\n□ 发送售后保障说明\n□ 引导试菜验证",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [
+          "发送案例",
+          "发送售后保障说明",
+          "引导试菜验证"
+        ],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "可创建动作：\n[发送竞品对比卡]\n[发送售后保障卡]\n[创建竞品跟进任务]\n[创建试菜邀约任务]",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    },
+    {
+      "profile": "推荐知识卡：\n1. 竞品对比话术卡\n2. 稳定性案例卡\n3. 售后响应说明卡\n4. 试菜验证建议卡",
+      "progress": {
+        "currentStage": "P4",
+        "completed": [],
+        "pending": [],
+        "stageChange": null
+      },
+      "flows": [],
+      "cards": [],
+      "nextAction": {
+        "suggestion": "继续推进",
+        "reason": "按流程"
+      }
+    }
+  ]
+}
