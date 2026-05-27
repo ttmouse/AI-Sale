@@ -21,7 +21,7 @@
     .stage-tab-num { font-family: 'Geist Mono', monospace; font-size: 0.6875rem; font-weight: 700; color: var(--tab-color, #999); }
     .stage-tab.active .stage-tab-num { color: var(--tab-color); }
 
-    .wb-main { display: grid; grid-template-columns: 260px 1fr 240px 280px; gap: 0.75rem; padding: 1rem 1.5rem; flex: 1; min-height: 0; }
+    .wb-main { display: grid; grid-template-columns: 260px 1fr 240px 280px; gap: 0.75rem; padding: 1rem 1.5rem; height: calc(100vh - 130px); min-height: 0; }
 
     /* 左侧面板 */
     .wb-left { display: flex; flex-direction: column; gap: 0.75rem; overflow-y: auto; }
@@ -61,9 +61,10 @@
 
     /* AI 时间轴 */
     .wb-timeline {
-      display: flex; flex-direction: column; gap: 0; overflow-y: auto;
+      display: flex; flex-direction: column; gap: 0; overflow: hidden;
       background: var(--bg-surface); border: 1px solid var(--border);
       border-radius: var(--radius-lg);
+      min-height: 0;
     }
     .wb-timeline .tl-header {
       font-size: 0.625rem; font-weight: 600; color: var(--text-muted);
@@ -72,7 +73,7 @@
       display: flex; align-items: center; gap: 0.375rem; flex-shrink: 0;
       background: var(--bg-subtle); position: sticky; top: 0; z-index: 1;
     }
-    .tl-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+    .tl-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; overscroll-behavior: contain; }
     .tl-body::-webkit-scrollbar { width: 3px; }
     .tl-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
     .tl-empty { font-size: 0.6875rem; color: var(--text-muted); padding: 1.5rem 0.75rem; text-align: center; }
@@ -204,6 +205,17 @@
     .sf-updated { background: #FFFBEB; }
     .sf-confirmed { background: #ECFDF5; }
 
+
+    /* 阶段进度条 */
+    .stage-progress-bar { display: flex; align-items: center; padding: 0.375rem 0; margin-bottom: 0.5rem; }
+    .sp-dot { display: flex; flex-direction: column; align-items: center; gap: 0.125rem; flex-shrink: 0; }
+    .sp-dot .sp-label { font-size: 0.5rem; font-weight: 600; color: var(--text-muted); letter-spacing: 0.02em; width: 2rem; text-align: center; }
+    .sp-dot::before { content: ''; width: 0.5rem; height: 0.5rem; border-radius: 50%; background: var(--border); }
+    .sp-done::before { background: #10B981; }
+    .sp-current::before { background: #3B82F6; box-shadow: 0 0 0 2px rgba(59,130,246,0.2); }
+    .sp-line { flex: 1; height: 2px; background: var(--border); margin: 0 0.125rem; align-self: center; margin-bottom: 1rem; }
+    .sp-line-done { background: #10B981; }
+
 .wb-toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(20px); padding: 0.5rem 1rem; background: var(--text-primary); color: #fff; border-radius: var(--radius-md); font-size: 0.8125rem; opacity: 0; transition: all 0.3s ease; z-index: 999; }
     .wb-toast-show { opacity: 1; transform: translateX(-50%) translateY(0); }
   </style>
@@ -262,7 +274,7 @@
 
     <!-- AI 时间轴：随对话推进累加，展示每一步AI的分析更新 -->
     <div class="wb-timeline">
-      <div class="tl-header"><span class="dot dot-blue"></span>AI 实时分析记录</div>
+      <div class="tl-header"><span class="dot dot-blue"></span>AI Agent 执行记录</div>
       <div class="tl-body" id="timeline-body">
         <div class="tl-empty">等待对话开始...</div>
       </div>
