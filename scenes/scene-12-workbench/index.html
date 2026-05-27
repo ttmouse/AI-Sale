@@ -24,7 +24,7 @@
     .wb-main { display: grid; grid-template-columns: 260px 1fr 240px 280px; gap: 0.75rem; padding: 1rem 1.5rem; height: calc(100vh - 130px); min-height: 0; }
 
     /* 左侧面板 */
-    .wb-left { display: flex; flex-direction: column; gap: 0.75rem; overflow-y: auto; }
+    .wb-left { display: flex; flex-direction: column; gap: 0.75rem; overflow-y: auto; overscroll-behavior: contain; }
     .wb-left .panel { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 1rem; }
     .wb-left .panel-title { font-size: 0.6875rem; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; }
     #stage-badge { display: inline-block; padding: 0.1875rem 0.5rem; border-radius: 0.25rem; font-size: 0.6875rem; font-weight: 600; color: #fff; margin-bottom: 0.5rem; }
@@ -64,7 +64,7 @@
       display: flex; flex-direction: column; gap: 0; overflow: hidden;
       background: var(--bg-surface); border: 1px solid var(--border);
       border-radius: var(--radius-lg);
-      min-height: 0;
+      min-height: 0; max-height: 100%;
     }
     .wb-timeline .tl-header {
       font-size: 0.625rem; font-weight: 600; color: var(--text-muted);
@@ -110,7 +110,7 @@
     .tl-card .tl-line.green::before { background: #10B981; }
 
     /* 右侧面板 */
-    .wb-right { display: flex; flex-direction: column; gap: 0.625rem; overflow-y: auto; }
+    .wb-right { display: flex; flex-direction: column; gap: 0.625rem; overflow-y: auto; overscroll-behavior: contain; }
     .wb-right .ann-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 0.75rem; }
     .wb-right .ann-card-title { font-size: 0.6875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.375rem; }
     .ann-card-title .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
@@ -282,7 +282,7 @@
 
     <!-- 右侧：AI 注解（当前最新状态）-->
     <div class="wb-right">
-      <div class="ann-card"><div class="ann-card-title"><span class="dot dot-rose"></span>待确认事项 <span id="confirm-count" style="display:none"></span></div><div id="confirm-card">暂无待确认</div></div>
+      <div class="ann-card" id="confirm-section" style="display:none"><div class="ann-card-title"><span class="dot dot-rose"></span>待确认事项 <span id="confirm-count" style="display:none"></span></div><div id="confirm-card"></div></div>
       <div class="ann-card"><div class="ann-card-title"><span class="dot dot-blue"></span>客户画像更新</div><div id="profile-card">等待对话开始...</div></div>
       <div class="ann-card"><div class="ann-card-title"><span class="dot dot-green"></span>项目推进状态</div><div id="progress-card">等待对话开始...</div></div>
       <div class="ann-card"><div class="ann-card-title"><span class="dot dot-purple"></span>流程动作</div><div id="flow-card">等待对话开始...</div></div>

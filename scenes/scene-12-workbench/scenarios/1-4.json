@@ -76,6 +76,11 @@
       "type": "customer",
       "content": "行，你先发来看看。",
       "sender": "王总"
+    },
+    {
+      "type": "sales",
+      "content": "好的王总，我马上把方案发您。这是一份快餐门店G3标准版的配置建议，里面有设备清单、适配菜品和大致价格区间。您看完有什么问题随时问我。",
+      "sender": "小陈"
     }
   ],
   "annotations": [
@@ -898,6 +903,114 @@
     },
     null,
     null,
-    null
+    null,
+    {
+      "profile": "**方案已发送**\n\n- G3标准版配置方案已送达客户\n- 等待客户阅读后反馈\n\n**画像完整度：85%**",
+      "progress": {
+        "currentStage": "P2",
+        "completed": [
+          "客户唤醒",
+          "画像建设",
+          "产品推荐",
+          "方案发送"
+        ],
+        "pending": [
+          "客户方案反馈",
+          "报价准备",
+          "试菜邀约"
+        ],
+        "stageChange": null
+      },
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "48小时",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": "方案已发送",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "current"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "效率优先",
+          "status": "current"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "current"
+        },
+        "后厨人员": {
+          "value": "2名炒锅师傅",
+          "status": "current"
+        },
+        "痛点": {
+          "value": "午高峰出餐压力",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": "盖饭+小炒",
+          "status": "current"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "current"
+        },
+        "当前阶段": {
+          "value": "P2需求洞察",
+          "status": "current"
+        },
+        "方案状态": {
+          "value": "已发送 ✓",
+          "status": "new"
+        },
+        "客户意向": {
+          "value": "正向",
+          "status": "current"
+        },
+        "画像完整度": {
+          "value": "85%",
+          "status": "current"
+        }
+      },
+      "flows": [
+        {
+          "label": "跟进方案反馈",
+          "icon": "message-square"
+        },
+        {
+          "label": "准备报价",
+          "icon": "file-text"
+        }
+      ],
+      "cards": [
+        "G3配置清单",
+        "快餐门店ROI测算"
+      ],
+      "nextAction": {
+        "suggestion": "48小时后跟进客户方案反馈，准备报价",
+        "reason": "给客户时间阅读方案后再跟进"
+      },
+      "agentLog": {
+        "received": "销售发送方案给客户",
+        "analysis": "客户同意查看方案后，销售已发送G3标准版配置方案。从沉默唤醒到方案推送，AI完成全流程跟踪。",
+        "updates": [
+          "方案已发送 ✓",
+          "全流程：沉默→唤醒→画像→推荐→方案"
+        ],
+        "stageChange": null,
+        "recommendedAction": "48小时后跟进反馈，准备报价"
+      }
+    }
   ]
 }
