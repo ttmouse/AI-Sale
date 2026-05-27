@@ -393,6 +393,7 @@ const WecomChat = (() => {
     html += '<button class="sb-tab' + (_activeTab === 'profile' ? ' active' : '') + '" data-tab="profile">\u753B\u50CF</button>';
     html += '<button class="sb-tab' + (_activeTab === 'history' ? ' active' : '') + '" data-tab="history">\u8BB0\u5F55</button>';
     html += '<button class="sb-tab' + (hasOrder ? '' : ' disabled') + (_activeTab === 'order' ? ' active' : '') + '" data-tab="order">\u8BA2\u5355</button>';
+
     html += '</div>';
 
     // 标签页内容
