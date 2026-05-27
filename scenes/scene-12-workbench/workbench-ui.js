@@ -195,55 +195,65 @@
     if (!els.timelineBody) return;
 
     var html = '<div class="tl-card">';
-    html += '<div class="tl-step">步骤 ' + msgIdx + '</div>';
 
-    // 阶段
-    if (ann.progress) {
-      var p = ann.progress;
-      var stageObj = WorkbenchEngine.getStageById(p.currentStage);
-      var color = stageObj ? stageObj.color : '#999';
-      html += '<span class="tl-stage" style="background:' + color + '">' + p.currentStage + '</span>';
-      if (p.stageChange) html += ' <span class="ann-badge ann-badge-change" style="font-size:0.5625rem;">' + p.stageChange + '</span>';
-    }
+    // Agent 日志模式（优先）
+    if (ann.agentLog) {
+      var log = ann.agentLog;
+      html += '<div class="tl-step">Step ' + msgIdx + '</div>';
 
-    // 已完成的项
-    if (ann.progress && ann.progress.completed && ann.progress.completed.length > 0) {
-      ann.progress.completed.forEach(function(item) {
-        html += '<div class="tl-line green">' + item + '</div>';
-      });
-    }
-
-    // 画像是否有更新
-    if (ann.profile) {
-      // 提取画像完整度变化
-      var m = ann.profile.match(/\*\*画像完整度[：:]\s*(\S+)\*\*/);
-      if (m) {
-        html += '<div class="tl-line hl">画像完整度 ' + m[1] + '</div>';
+      if (ann.progress) {
+        var stageObj = WorkbenchEngine.getStageById(ann.progress.currentStage);
+        var color = stageObj ? stageObj.color : '#999';
+        html += '<span class="tl-stage" style="background:' + color + '">' + ann.progress.currentStage + '</span>';
+        if (ann.progress.stageChange) html += ' <span class="ann-badge ann-badge-change" style="font-size:0.5625rem;">' + ann.progress.stageChange + '</span>';
       }
-      // 提取客户类型
-      var typeMatch = ann.profile.match(/细分类别[：:]\s*(.+)/);
-      if (typeMatch) {
-        html += '<div class="tl-line">识别：' + typeMatch[1].trim() + '</div>';
-      }
-      var sourceMatch = ann.profile.match(/客户来源[：:]\s*(.+)/);
-      if (sourceMatch && msgIdx < 3) {
-        html += '<div class="tl-line">来源：' + sourceMatch[1].trim() + '</div>';
-      }
-    }
 
-    // 下一步建议
-    if (ann.nextAction) {
-      html += '<div class="tl-line hl">' + ann.nextAction.suggestion + '</div>';
+      if (log.received) {
+        html += '<div class="tl-agent-line tl-agent-received"><span class="tl-agent-icon">📩</span><span class="tl-agent-label">收到消息</span><div class="tl-agent-text">' + (log.received) + '</div></div>';
+      }
+      if (log.analysis) {
+        html += '<div class="tl-agent-line tl-agent-analysis"><span class="tl-agent-icon">🧠</span><span class="tl-agent-label">AI 分析</span><div class="tl-agent-text">' + (log.analysis) + '</div></div>';
+      }
+      if (log.updates && log.updates.length > 0) {
+        html += '<div class="tl-agent-line"><span class="tl-agent-icon">📋</span><span class="tl-agent-label">更新字段</span>';
+        log.updates.forEach(function(u) {
+          html += '<div class="tl-agent-tag">' + u + '</div>';
+        });
+        html += '</div>';
+      }
+      if (log.recommendedAction) {
+        html += '<div class="tl-agent-line tl-agent-action"><span class="tl-agent-icon">🎯</span><span class="tl-agent-label">推荐动作</span><div class="tl-agent-text">' + (log.recommendedAction) + '</div></div>';
+      }
+      if (ann.pendingConfirm && ann.pendingConfirm.length > 0) {
+        html += '<div class="tl-agent-line"><span class="tl-agent-icon">❓</span><span class="tl-agent-label">待确认</span>';
+        ann.pendingConfirm.forEach(function(pc) {
+          html += '<div class="tl-agent-tag tl-agent-confirm">' + pc.label + ': ' + pc.value + '</div>';
+        });
+        html += '</div>';
+      }
+    } else {
+      html += '<div class="tl-step">步骤 ' + msgIdx + '</div>';
+      if (ann.progress) {
+        var p = ann.progress;
+        var stageObj = WorkbenchEngine.getStageById(p.currentStage);
+        var color = stageObj ? stageObj.color : '#999';
+        html += '<span class="tl-stage" style="background:' + color + '">' + p.currentStage + '</span>';
+        if (p.stageChange) html += ' <span class="ann-badge ann-badge-change" style="font-size:0.5625rem;">' + p.stageChange + '</span>';
+      }
+      if (ann.progress && ann.progress.completed && ann.progress.completed.length > 0) {
+        ann.progress.completed.forEach(function(item) { html += '<div class="tl-line green">' + item + '</div>'; });
+      }
+      if (ann.nextAction) {
+        html += '<div class="tl-line hl">' + ann.nextAction.suggestion + '</div>';
+      }
     }
 
     html += '</div>';
 
-    // 移除空状态
     var empty = els.timelineBody.querySelector('.tl-empty');
     if (empty) empty.remove();
 
     els.timelineBody.insertAdjacentHTML('beforeend', html);
-    // 滚动到底部
     els.timelineBody.scrollTop = els.timelineBody.scrollHeight;
   }
 
