@@ -81,7 +81,7 @@
   "annotations": [
     null,
     {
-      "profile": "**沉默检测**\n\n- 沉默时长：48小时\n- 客户来源：官网留资\n- 初始意向：想了解炒菜机价格\n- 响应状态：待唤醒\n\n**画像完整度：0% → 10%**",
+      "profile": "{\"客户来源\":{\"value\":\"官网留资\",\"status\":\"confirmed\"},\"沉默时长\":{\"value\":\"48小时\",\"status\":\"confirmed\"},\"初始意向\":{\"value\":\"价格咨询\",\"status\":\"confirmed\"},\"响应状态\":{\"value\":\"待唤醒\",\"status\":\"current\"},\"画像完整度\":{\"value\":\"10%\",\"status\":\"current\"}}",
       "progress": {
         "currentStage": "P1",
         "completed": [
@@ -142,10 +142,32 @@
         ],
         "stageChange": null,
         "recommendedAction": "发送唤醒话术"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "confirmed"
+        },
+        "沉默时长": {
+          "value": "48小时",
+          "status": "confirmed"
+        },
+        "初始意向": {
+          "value": "价格咨询",
+          "status": "confirmed"
+        },
+        "响应状态": {
+          "value": "待唤醒",
+          "status": "current"
+        },
+        "画像完整度": {
+          "value": "10%",
+          "status": "current"
+        }
       }
     },
     {
-      "profile": "**话术已发送**\n\n- 唤醒方式：资料补充型\n- 客户状态：待回复\n\n**等待客户响应中...**",
+      "profile": "{\"客户来源\":{\"value\":\"官网留资\",\"status\":\"confirmed\"},\"沉默时长\":{\"value\":\"48小时\",\"status\":\"confirmed\"},\"初始意向\":{\"value\":\"价格咨询\",\"status\":\"confirmed\"},\"响应状态\":{\"value\":\"话术已发送\",\"status\":\"updated\"},\"画像完整度\":{\"value\":\"10%\",\"status\":\"current\"}}",
       "progress": {
         "currentStage": "P1",
         "completed": [
@@ -177,10 +199,32 @@
         ],
         "stageChange": null,
         "recommendedAction": "等待客户回复"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "confirmed"
+        },
+        "沉默时长": {
+          "value": "48小时",
+          "status": "confirmed"
+        },
+        "初始意向": {
+          "value": "价格咨询",
+          "status": "confirmed"
+        },
+        "响应状态": {
+          "value": "话术已发送",
+          "status": "updated"
+        },
+        "画像完整度": {
+          "value": "10%",
+          "status": "current"
+        }
       }
     },
     {
-      "profile": "**客户已唤醒**\n\n- 客户大类 → 社餐\n- 细分类别 → 快餐\n- 核心关注 → 价格\n- 响应状态 → 已唤醒 ✨\n\n**画像完整度：10% → 30%**",
+      "profile": "{\"客户来源\":{\"value\":\"官网留资\",\"status\":\"confirmed\"},\"沉默时长\":{\"value\":\"48小时\",\"status\":\"confirmed\"},\"初始意向\":{\"value\":\"价格咨询\",\"status\":\"confirmed\"},\"响应状态\":{\"value\":\"已唤醒 ✨\",\"status\":\"updated\"},\"画像完整度\":{\"value\":\"30%\",\"status\":\"updated\"},\"客户大类\":{\"value\":\"社餐\",\"status\":\"new\"},\"细分类别\":{\"value\":\"快餐\",\"status\":\"new\"},\"核心关注点\":{\"value\":\"价格\",\"status\":\"new\"}}",
       "progress": {
         "currentStage": "P1",
         "completed": [
@@ -248,10 +292,44 @@
         ],
         "stageChange": null,
         "recommendedAction": "追问日单量和后厨人员"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "confirmed"
+        },
+        "沉默时长": {
+          "value": "48小时",
+          "status": "confirmed"
+        },
+        "初始意向": {
+          "value": "价格咨询",
+          "status": "confirmed"
+        },
+        "响应状态": {
+          "value": "已唤醒 ✨",
+          "status": "updated"
+        },
+        "画像完整度": {
+          "value": "30%",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "new"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "new"
+        },
+        "核心关注点": {
+          "value": "价格",
+          "status": "new"
+        }
       }
     },
     {
-      "profile": "**AI 建议已采纳**\n\n- 销售已按AI建议追问门店信息\n- 等待客户提供日单量和人员数据\n\n**画像完整度：30% → 40%**",
+      "profile": "{\"客户来源\":{\"value\":\"官网留资\",\"status\":\"confirmed\"},\"沉默时长\":{\"value\":\"48小时\",\"status\":\"confirmed\"},\"初始意向\":{\"value\":\"价格咨询\",\"status\":\"confirmed\"},\"响应状态\":{\"value\":\"需求确认中\",\"status\":\"updated\"},\"画像完整度\":{\"value\":\"30%\",\"status\":\"updated\"},\"客户大类\":{\"value\":\"社餐\",\"status\":\"new\"},\"细分类别\":{\"value\":\"快餐\",\"status\":\"new\"},\"核心关注点\":{\"value\":\"价格\",\"status\":\"new\"}}",
       "progress": {
         "currentStage": "P1",
         "completed": [
@@ -289,10 +367,44 @@
         ],
         "stageChange": null,
         "recommendedAction": "等待客户回复"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "confirmed"
+        },
+        "沉默时长": {
+          "value": "48小时",
+          "status": "confirmed"
+        },
+        "初始意向": {
+          "value": "价格咨询",
+          "status": "confirmed"
+        },
+        "响应状态": {
+          "value": "需求确认中",
+          "status": "updated"
+        },
+        "画像完整度": {
+          "value": "30%",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "new"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "new"
+        },
+        "核心关注点": {
+          "value": "价格",
+          "status": "new"
+        }
       }
     },
     {
-      "profile": "**门店数据采集**\n\n- 日单量：200-300单\n- 后厨人员：2名炒锅师傅\n- 痛点：午高峰出餐压力\n- 菜品结构：待确认\n\n**画像完整度：40% → 60%**",
+      "profile": "{\"客户来源\":{\"value\":\"官网留资\",\"status\":\"confirmed\"},\"沉默时长\":{\"value\":\"48小时\",\"status\":\"confirmed\"},\"初始意向\":{\"value\":\"价格咨询\",\"status\":\"confirmed\"},\"响应状态\":{\"value\":\"需求确认中\",\"status\":\"updated\"},\"画像完整度\":{\"value\":\"60%\",\"status\":\"updated\"},\"客户大类\":{\"value\":\"社餐\",\"status\":\"new\"},\"细分类别\":{\"value\":\"快餐\",\"status\":\"new\"},\"核心关注点\":{\"value\":\"价格\",\"status\":\"new\"},\"日单量\":{\"value\":\"200-300单\",\"status\":\"new\"},\"后厨人员\":{\"value\":\"2名炒锅师傅\",\"status\":\"new\"},\"痛点\":{\"value\":\"午高峰出餐压力\",\"status\":\"new\"}}",
       "progress": {
         "currentStage": "P1",
         "completed": [
@@ -359,10 +471,56 @@
         ],
         "stageChange": null,
         "recommendedAction": "追问菜品结构后推荐设备"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "confirmed"
+        },
+        "沉默时长": {
+          "value": "48小时",
+          "status": "confirmed"
+        },
+        "初始意向": {
+          "value": "价格咨询",
+          "status": "confirmed"
+        },
+        "响应状态": {
+          "value": "需求确认中",
+          "status": "updated"
+        },
+        "画像完整度": {
+          "value": "60%",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "new"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "new"
+        },
+        "核心关注点": {
+          "value": "价格",
+          "status": "new"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "new"
+        },
+        "后厨人员": {
+          "value": "2名炒锅师傅",
+          "status": "new"
+        },
+        "痛点": {
+          "value": "午高峰出餐压力",
+          "status": "new"
+        }
       }
     },
     {
-      "profile": "**菜品结构询问**\n\n- 已确认：快餐200-300单、2名师傅\n- 待确认：主力菜品类型\n- 下一个阶段：产品匹配\n\n**画像完整度：60% → 65%**",
+      "profile": "{\"客户来源\":{\"value\":\"官网留资\",\"status\":\"confirmed\"},\"沉默时长\":{\"value\":\"48小时\",\"status\":\"confirmed\"},\"初始意向\":{\"value\":\"价格咨询\",\"status\":\"confirmed\"},\"响应状态\":{\"value\":\"需求确认中\",\"status\":\"updated\"},\"画像完整度\":{\"value\":\"65%\",\"status\":\"updated\"},\"客户大类\":{\"value\":\"社餐\",\"status\":\"new\"},\"细分类别\":{\"value\":\"快餐\",\"status\":\"new\"},\"核心关注点\":{\"value\":\"价格\",\"status\":\"new\"},\"日单量\":{\"value\":\"200-300单\",\"status\":\"new\"},\"后厨人员\":{\"value\":\"2名炒锅师傅\",\"status\":\"new\"},\"痛点\":{\"value\":\"午高峰出餐压力\",\"status\":\"new\"}}",
       "progress": {
         "currentStage": "P1→P2",
         "completed": [
@@ -399,10 +557,56 @@
         ],
         "stageChange": null,
         "recommendedAction": "确认菜品后推荐G3标准版"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "confirmed"
+        },
+        "沉默时长": {
+          "value": "48小时",
+          "status": "confirmed"
+        },
+        "初始意向": {
+          "value": "价格咨询",
+          "status": "confirmed"
+        },
+        "响应状态": {
+          "value": "需求确认中",
+          "status": "updated"
+        },
+        "画像完整度": {
+          "value": "65%",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "new"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "new"
+        },
+        "核心关注点": {
+          "value": "价格",
+          "status": "new"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "new"
+        },
+        "后厨人员": {
+          "value": "2名炒锅师傅",
+          "status": "new"
+        },
+        "痛点": {
+          "value": "午高峰出餐压力",
+          "status": "new"
+        }
       }
     },
     {
-      "profile": "**画像完善**\n\n- 主营：盖饭套餐 + 小炒\n- 推荐产品：G3标准版\n- 下一阶段：P2需求洞察\n\n**画像完整度：65% → 80%**",
+      "profile": "{\"客户来源\":{\"value\":\"官网留资\",\"status\":\"confirmed\"},\"沉默时长\":{\"value\":\"48小时\",\"status\":\"confirmed\"},\"初始意向\":{\"value\":\"价格咨询\",\"status\":\"confirmed\"},\"响应状态\":{\"value\":\"需求确认中\",\"status\":\"updated\"},\"画像完整度\":{\"value\":\"80%\",\"status\":\"updated\"},\"客户大类\":{\"value\":\"社餐\",\"status\":\"new\"},\"细分类别\":{\"value\":\"快餐\",\"status\":\"new\"},\"核心关注点\":{\"value\":\"价格\",\"status\":\"new\"},\"日单量\":{\"value\":\"200-300单\",\"status\":\"new\"},\"后厨人员\":{\"value\":\"2名炒锅师傅\",\"status\":\"new\"},\"痛点\":{\"value\":\"午高峰出餐压力\",\"status\":\"new\"},\"菜品结构\":{\"value\":\"盖饭+小炒\",\"status\":\"new\"},\"推荐产品\":{\"value\":\"G3标准版\",\"status\":\"new\"},\"当前阶段\":{\"value\":\"P2需求洞察\",\"status\":\"updated\"}}",
       "progress": {
         "currentStage": "P1→P2",
         "completed": [
@@ -472,10 +676,68 @@
         ],
         "stageChange": "P1→P2",
         "recommendedAction": "发送方案给客户"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "confirmed"
+        },
+        "沉默时长": {
+          "value": "48小时",
+          "status": "confirmed"
+        },
+        "初始意向": {
+          "value": "价格咨询",
+          "status": "confirmed"
+        },
+        "响应状态": {
+          "value": "需求确认中",
+          "status": "updated"
+        },
+        "画像完整度": {
+          "value": "80%",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "new"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "new"
+        },
+        "核心关注点": {
+          "value": "价格",
+          "status": "new"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "new"
+        },
+        "后厨人员": {
+          "value": "2名炒锅师傅",
+          "status": "new"
+        },
+        "痛点": {
+          "value": "午高峰出餐压力",
+          "status": "new"
+        },
+        "菜品结构": {
+          "value": "盖饭+小炒",
+          "status": "new"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "new"
+        },
+        "当前阶段": {
+          "value": "P2需求洞察",
+          "status": "updated"
+        }
       }
     },
     {
-      "profile": "**方案已发送**\n\n- G3标准版配置方案已就绪\n- 等待客户反馈\n- 可准备报价\n\n**画像完整度：80%**",
+      "profile": "{\"客户来源\":{\"value\":\"官网留资\",\"status\":\"confirmed\"},\"沉默时长\":{\"value\":\"48小时\",\"status\":\"confirmed\"},\"初始意向\":{\"value\":\"价格咨询\",\"status\":\"confirmed\"},\"响应状态\":{\"value\":\"需求确认中\",\"status\":\"updated\"},\"画像完整度\":{\"value\":\"80%\",\"status\":\"updated\"},\"客户大类\":{\"value\":\"社餐\",\"status\":\"new\"},\"细分类别\":{\"value\":\"快餐\",\"status\":\"new\"},\"核心关注点\":{\"value\":\"价格\",\"status\":\"new\"},\"日单量\":{\"value\":\"200-300单\",\"status\":\"new\"},\"后厨人员\":{\"value\":\"2名炒锅师傅\",\"status\":\"new\"},\"痛点\":{\"value\":\"午高峰出餐压力\",\"status\":\"new\"},\"菜品结构\":{\"value\":\"盖饭+小炒\",\"status\":\"new\"},\"推荐产品\":{\"value\":\"G3标准版\",\"status\":\"new\"},\"当前阶段\":{\"value\":\"P2需求洞察\",\"status\":\"updated\"},\"方案状态\":{\"value\":\"已发送\",\"status\":\"new\"}}",
       "progress": {
         "currentStage": "P2",
         "completed": [
@@ -517,10 +779,72 @@
         ],
         "stageChange": null,
         "recommendedAction": "等待客户反馈后进入报价"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "confirmed"
+        },
+        "沉默时长": {
+          "value": "48小时",
+          "status": "confirmed"
+        },
+        "初始意向": {
+          "value": "价格咨询",
+          "status": "confirmed"
+        },
+        "响应状态": {
+          "value": "需求确认中",
+          "status": "updated"
+        },
+        "画像完整度": {
+          "value": "80%",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "new"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "new"
+        },
+        "核心关注点": {
+          "value": "价格",
+          "status": "new"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "new"
+        },
+        "后厨人员": {
+          "value": "2名炒锅师傅",
+          "status": "new"
+        },
+        "痛点": {
+          "value": "午高峰出餐压力",
+          "status": "new"
+        },
+        "菜品结构": {
+          "value": "盖饭+小炒",
+          "status": "new"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "new"
+        },
+        "当前阶段": {
+          "value": "P2需求洞察",
+          "status": "updated"
+        },
+        "方案状态": {
+          "value": "已发送",
+          "status": "new"
+        }
       }
     },
     {
-      "profile": "**转化进展**\n\n- 沉默客户→有效沟通→方案发送\n- 客户意向：正向\n- 下一阶段：报价/试菜\n\n**画像完整度：85%**",
+      "profile": "{\"客户来源\":{\"value\":\"官网留资\",\"status\":\"confirmed\"},\"沉默时长\":{\"value\":\"48小时\",\"status\":\"confirmed\"},\"初始意向\":{\"value\":\"价格咨询\",\"status\":\"confirmed\"},\"响应状态\":{\"value\":\"需求确认中\",\"status\":\"updated\"},\"画像完整度\":{\"value\":\"85%\",\"status\":\"updated\"},\"客户大类\":{\"value\":\"社餐\",\"status\":\"new\"},\"细分类别\":{\"value\":\"快餐\",\"status\":\"new\"},\"核心关注点\":{\"value\":\"价格\",\"status\":\"new\"},\"日单量\":{\"value\":\"200-300单\",\"status\":\"new\"},\"后厨人员\":{\"value\":\"2名炒锅师傅\",\"status\":\"new\"},\"痛点\":{\"value\":\"午高峰出餐压力\",\"status\":\"new\"},\"菜品结构\":{\"value\":\"盖饭+小炒\",\"status\":\"new\"},\"推荐产品\":{\"value\":\"G3标准版\",\"status\":\"new\"},\"当前阶段\":{\"value\":\"P2需求洞察\",\"status\":\"updated\"},\"方案状态\":{\"value\":\"已发送\",\"status\":\"new\"},\"客户意向\":{\"value\":\"正向（已看方案）\",\"status\":\"new\"}}",
       "progress": {
         "currentStage": "P2",
         "completed": [
@@ -565,6 +889,72 @@
         ],
         "stageChange": null,
         "recommendedAction": "跟进方案反馈，准备报价/试菜"
+      },
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "confirmed"
+        },
+        "沉默时长": {
+          "value": "48小时",
+          "status": "confirmed"
+        },
+        "初始意向": {
+          "value": "价格咨询",
+          "status": "confirmed"
+        },
+        "响应状态": {
+          "value": "需求确认中",
+          "status": "updated"
+        },
+        "画像完整度": {
+          "value": "85%",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "new"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "new"
+        },
+        "核心关注点": {
+          "value": "价格",
+          "status": "new"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "new"
+        },
+        "后厨人员": {
+          "value": "2名炒锅师傅",
+          "status": "new"
+        },
+        "痛点": {
+          "value": "午高峰出餐压力",
+          "status": "new"
+        },
+        "菜品结构": {
+          "value": "盖饭+小炒",
+          "status": "new"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "new"
+        },
+        "当前阶段": {
+          "value": "P2需求洞察",
+          "status": "updated"
+        },
+        "方案状态": {
+          "value": "已发送",
+          "status": "new"
+        },
+        "客户意向": {
+          "value": "正向（已看方案）",
+          "status": "new"
+        }
       }
     },
     null,
