@@ -48,45 +48,40 @@
   "annotations": [
     null,
     {
-      "profile": "客户状态：已唤醒\n客户来源：官网留资\n客户大类：社餐\n细分类别：快餐\n关注点：价格\n响应状态：48小时沉默后重新互动\n画像完整度：10% → 30%",
+      "profile": "**客户来源** → 官网留资\n**沉默时长** → 48小时\n**初始意向** → 价格咨询\n**响应状态** → 待唤醒\n\n**画像完整度：0% → 15%**",
       "progress": {
         "currentStage": "P1",
-        "completed": [],
-        "pending": [],
+        "completed": [
+          "识别沉默客户",
+          "检测沉默时长",
+          "检测初始意向"
+        ],
+        "pending": [
+          "客户确认来源",
+          "确认门店类型",
+          "确认日单量",
+          "确认预算"
+        ],
         "stageChange": null
       },
-      "flows": [],
-      "cards": [],
-      "nextAction": {
-        "suggestion": "继续推进",
-        "reason": "按流程"
-      },
-      "pendingConfirm": [
+      "flows": [
         {
-          "id": "source",
-          "label": "客户来源",
-          "value": "官网留资",
-          "type": "field",
-          "action": "确认",
-          "desc": "AI根据留资信息判断，请确认是否正确"
+          "label": "创建跟进任务",
+          "icon": "calendar-plus"
         },
         {
-          "id": "silence",
-          "label": "沉默时长",
-          "value": "48小时",
-          "type": "field",
-          "action": "确认",
-          "desc": "最后一条消息距今48小时未回复"
-        },
-        {
-          "id": "intent",
-          "label": "初始意向",
-          "value": "想了解炒菜机价格",
-          "type": "field",
-          "action": "确认",
-          "desc": "客户官网留资时填写的需求"
+          "label": "标记来源：官网",
+          "icon": "tag"
         }
       ],
+      "cards": [
+        "沉默客户唤醒策略卡",
+        "资料补充话术模板"
+      ],
+      "nextAction": {
+        "suggestion": "发送资料补充话术唤醒客户",
+        "reason": "沉默超过48小时需低压触达，避免直接催促进而形成压迫感"
+      },
       "agentLog": {
         "received": "系统通知：客户已48小时未回复，来源：官网留资",
         "analysis": "检测到沉默客户。沉默时长48小时，客户来源官网留资，初始意向为价格咨询。推荐资料补充型唤醒策略。",
@@ -100,50 +95,45 @@
       }
     },
     {
-      "profile": "当前阶段：P1 线索接入\n状态变化：沉默客户 → 有效对话恢复\n\n待确认：\n□ 日单量\n□ 后厨人员\n□ 预算\n□ 是否已有门店",
+      "profile": "**客户大类** → 社餐\n**细分类别** → 快餐\n**核心关注点** → 价格\n**响应状态** → 已唤醒 ✨\n\n**画像完整度：15% → 35%**",
       "progress": {
         "currentStage": "P1",
-        "completed": [],
+        "completed": [
+          "客户唤醒成功",
+          "业态识别",
+          "关注点识别",
+          "来源确认"
+        ],
         "pending": [
+          "门店规模",
           "日单量",
           "后厨人员",
-          "预算",
-          "是否已有门店"
+          "预算区间"
         ],
         "stageChange": null
       },
-      "flows": [],
-      "cards": [],
-      "nextAction": {
-        "suggestion": "继续推进",
-        "reason": "按流程"
-      },
-      "pendingConfirm": [
+      "flows": [
         {
-          "id": "type",
-          "label": "客户大类",
-          "value": "社餐",
-          "type": "tag",
-          "action": "标记",
-          "desc": "AI根据客户回复\"我是做快餐的\"判断"
+          "label": "更新客户画像",
+          "icon": "edit"
         },
         {
-          "id": "subtype",
-          "label": "细分类别",
-          "value": "快餐",
-          "type": "tag",
-          "action": "标记",
-          "desc": "AI从\"快餐\"关键词识别"
+          "label": "标记价格敏感",
+          "icon": "tag"
         },
         {
-          "id": "focus",
-          "label": "核心关注点",
-          "value": "价格",
-          "type": "tag",
-          "action": "标记",
-          "desc": "客户第一条回复即询问价格"
+          "label": "创建跟进提醒",
+          "icon": "bell"
         }
       ],
+      "cards": [
+        "快餐门店基础配置价格说明",
+        "价格与配置关系说明卡"
+      ],
+      "nextAction": {
+        "suggestion": "追问日单量和后厨人员，暂不报价",
+        "reason": "客户目前仅了解价格，需先建立需求和价值认知"
+      },
       "agentLog": {
         "received": "客户回复：\"我是做快餐的，主要想知道大概多少钱。\"",
         "analysis": "客户被成功唤醒。提取到：业态为快餐，关注焦点为价格。建议先确认门店规模和日单量再给价格区间。",
@@ -158,18 +148,40 @@
       }
     },
     {
-      "profile": "可创建动作：\n[更新客户响应状态]\n[创建下一次跟进提醒]\n[标记客户关注点：价格]",
+      "profile": "**对话状态** → 有效沟通 ✓\n**线索质量** → 中等\n**阶段进度** → P1 线索接入\n\n**待补充字段**：日单量、后厨人员、预算",
       "progress": {
         "currentStage": "P1",
-        "completed": [],
-        "pending": [],
-        "stageChange": null
+        "completed": [
+          "有效沟通建立",
+          "客户唤醒",
+          "业态识别",
+          "来源标记"
+        ],
+        "pending": [
+          "日单量",
+          "后厨人员",
+          "预算区间",
+          "决策角色"
+        ],
+        "stageChange": "P1"
       },
-      "flows": [],
-      "cards": [],
+      "flows": [
+        {
+          "label": "创建客户档案",
+          "icon": "user-plus"
+        },
+        {
+          "label": "设置下次跟进",
+          "icon": "calendar-plus"
+        }
+      ],
+      "cards": [
+        "快餐门店设备配置指南",
+        "后厨效率提升方案"
+      ],
       "nextAction": {
-        "suggestion": "继续推进",
-        "reason": "按流程"
+        "suggestion": "等待客户回复日单量和人员信息",
+        "reason": "获取门店规模后才能推荐合适的产品配置"
       },
       "agentLog": {
         "received": "销售已回复客户，追问门店信息",
@@ -184,18 +196,42 @@
       }
     },
     {
-      "profile": "推荐资料：\n1. 快餐门店基础配置价格说明\n2. 价格与配置关系说明卡\n3. ROI 回本测算卡",
+      "profile": "**AI 建议动作**\n\n根据当前画像，建议销售执行以下操作推进客户",
       "progress": {
         "currentStage": "P1",
-        "completed": [],
-        "pending": [],
+        "completed": [
+          "唤醒成功",
+          "画像初建",
+          "跟进提醒设置"
+        ],
+        "pending": [
+          "日单量确认",
+          "产品推荐",
+          "ROI测算"
+        ],
         "stageChange": null
       },
-      "flows": [],
-      "cards": [],
+      "flows": [
+        {
+          "label": "更新响应状态",
+          "icon": "check-square"
+        },
+        {
+          "label": "创建跟进提醒",
+          "icon": "bell"
+        },
+        {
+          "label": "标记价格敏感",
+          "icon": "tag"
+        }
+      ],
+      "cards": [
+        "跟进节奏建议卡",
+        "价格敏感客户应对策略"
+      ],
       "nextAction": {
-        "suggestion": "继续推进",
-        "reason": "按流程"
+        "suggestion": "确认客户日单量后进入P2需求洞察",
+        "reason": "完成基础画像后可推进到需求确认阶段"
       },
       "agentLog": {
         "received": "AI 完成初步分析，准备推荐动作",
@@ -210,18 +246,32 @@
       }
     },
     {
-      "profile": "建议：\n不要直接给最低价或笼统报价。\n先确认门店规模和需求，再给价格区间，避免客户只按价格做判断。",
+      "profile": "**知识匹配**\n\nAI 根据当前画像从知识库中匹配了以下资料",
       "progress": {
         "currentStage": "P1",
-        "completed": [],
-        "pending": [],
+        "completed": [
+          "知识匹配完成"
+        ],
+        "pending": [
+          "资料发送",
+          "客户反馈"
+        ],
         "stageChange": null
       },
-      "flows": [],
-      "cards": [],
+      "flows": [
+        {
+          "label": "发送资料",
+          "icon": "send"
+        }
+      ],
+      "cards": [
+        "快餐门店价格说明",
+        "价格配置关系卡",
+        "ROI回本测算卡"
+      ],
       "nextAction": {
-        "suggestion": "继续推进",
-        "reason": "按流程"
+        "suggestion": "按客户关注点发送对应资料卡",
+        "reason": "资料辅助客户理解价格与配置的关系"
       },
       "agentLog": {
         "received": "AI 匹配知识库",
