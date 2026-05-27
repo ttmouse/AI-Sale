@@ -97,7 +97,10 @@ const WecomChat = (() => {
       + '.sb-next-script { background:rgba(255,255,255,.03); border:0.5px solid rgba(255,255,255,.08); border-radius:8px; padding:10px 12px; font-size:12px; color:rgba(255,255,255,.5); line-height:1.6; }'
       + '.sb-stage-info { font-size:12px; color:rgba(255,255,255,.45); padding:4px 0 6px; }'
       + '.sb-stage-info strong { color:rgba(255,255,255,.8); }'
-      + '.sb-stage-change { display:inline-block; padding:1px 6px; background:#FEF3C7; color:#92400E; border-radius:3px; font-size:10px; font-weight:600; margin-left:4px; }';
+      + '.sb-stage-change { display:inline-block; padding:1px 6px; background:#FEF3C7; color:#92400E; border-radius:3px; font-size:10px; font-weight:600; margin-left:4px; }'
+      + '.sb-copy-btn { margin-top:6px; padding:6px 14px; border:0.5px solid rgba(7,90,154,.4); background:rgba(7,90,154,.2); color:#60A5FA; border-radius:6px; font-size:12px; cursor:pointer; font-family:inherit; transition:all .15s; }'
+      + '.sb-copy-btn:hover { background:rgba(7,90,154,.3); }'
+      + '.sb-copy-btn:active { transform:scale(.96); }';
     var style = document.createElement('style');
     style.textContent = css;
     document.head.appendChild(style);
@@ -167,6 +170,10 @@ const WecomChat = (() => {
 
   // ===== 工具栏按钮 HTML（场景9原始7个按钮）=====
   var TOOLBAR_BTNS = ''
+    + '<button class="tool-btn" id="btn-customer-profile">'
+    + '  <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
+    + '  <span class="tool-label">客户画像</span>'
+    + '</button>'
     + '<button class="tool-btn">'
     + '  <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l2.4 7.2H22l-6 4.8 2.4 7.2L12 16l-6.4 4.8L8 14l-6-4.8h7.6z"/></svg>'
     + '  <span class="tool-label">AI 分析</span>'
@@ -194,19 +201,23 @@ const WecomChat = (() => {
     + '<button class="tool-btn">'
     + '  <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>'
     + '  <span class="tool-label">预约试菜</span>'
-    + '</button>'
-    + '<button class="tool-btn" id="btn-customer-profile">'
-    + '  <svg class="tool-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
-    + '  <span class="tool-label">客户画像</span>'
     + '</button>';
 
   var _title = '企业微信';
+  var _customerName = '';
+  var _salesName = '';
 
   // ===== 设置标题 =====
   function setTitle(title) {
     _title = title || '企业微信';
+    _customerName = _title;
     var el = document.getElementById('nav-title');
     if (el) el.textContent = _title;
+  }
+
+  // ===== 设置销售信息 =====
+  function setSalesInfo(salesName) {
+    _salesName = salesName || '';
   }
 
   // ===== 全屏页面：打开/关闭 =====
@@ -229,29 +240,50 @@ const WecomChat = (() => {
 
     var html = '';
 
-    // 1. 字段面板
-    if (ann.fields) {
+    // 0. 联系信息栏
+    html += '<div style="display:flex;align-items:center;gap:10px;padding:0 0 12px 0;border-bottom:0.5px solid rgba(255,255,255,.06);margin-bottom:12px;">';
+    html += '<div style="width:36px;height:36px;border-radius:50%;background:#075A9A;display:flex;align-items:center;justify-content:center;color:#fff;font-size:14px;font-weight:600;flex-shrink:0;">销</div>';
+    html += '<div style="flex:1;">';
+    html += '<div style="font-size:14px;font-weight:600;color:rgba(255,255,255,.9);">' + (_customerName || '客户') + '</div>';
+    html += '<div style="font-size:11px;color:rgba(255,255,255,.4);">销售：' + (_salesName || '未知') + '</div>';
+    html += '</div>';
+    html += '</div>';
+
+    // 1. 下一步建议（置顶+可复制话术）
+    if (ann.nextAction) {
+      var na = ann.nextAction;
       html += '<div class="sb-section">';
-      html += '<div class="sb-section-title">客户画像</div>';
-      var order = ann._fieldOrder || Object.keys(ann.fields);
-      order.forEach(function(key) {
-        var f = ann.fields[key];
-        if (!f) return;
-        var isEmpty = !f.value || f.status === 'empty';
-        var val = isEmpty ? '—' : f.value;
-        var valCls = isEmpty ? 'sb-val sb-val-empty' : 'sb-val';
-        html += '<div class="sb-row"><span class="sb-key">' + key + '</span><span class="' + valCls + '">' + val + '</span></div>';
+      html += '<div class="sb-section-title">下一步建议</div>';
+      html += '<div class="sb-next-sug">' + na.suggestion + '</div>';
+      if (na.reason) html += '<div class="sb-next-reason">' + na.reason + '</div>';
+      if (na.recommendedScript) {
+        var scriptId = 'script-' + Date.now() + '-' + Math.random().toString(36).substr(2,4);
+        html += '<div style="position:relative;">';
+        html += '<div class="sb-next-script" id="' + scriptId + '">' + na.recommendedScript + '</div>';
+        html += '<button onclick="var t=document.getElementById(\'' + scriptId + '\').textContent;navigator.clipboard.writeText(t).then(function(){this.textContent=\'\u2713 \u5DF2\u590D\u5236\';var _this=this;setTimeout(function(){_this.textContent=\'\u590D\u5236\u8BDD\u672F\';},1500);}.bind(this)).catch(function(){})" class="sb-copy-btn">复制话术</button>';
+        html += '</div>';
+      }
+      html += '</div>';
+    }
+
+    // 2. 流程动作（紧跟建议）
+    if (ann.flows && ann.flows.length > 0) {
+      html += '<div class="sb-section">';
+      html += '<div class="sb-section-title">流程动作</div>';
+      ann.flows.forEach(function(f) {
+        var iconSvg = _iconHtmlSidebar(f.icon || 'circle');
+        html += '<button class="sb-flow-btn" onclick="window.showToast(\'' + f.label.replace(/'/g, "\\'") + ' 已创建\')">'
+          + iconSvg + '<span>' + f.label + '</span></button>';
       });
       html += '</div>';
     }
 
-    // 2. 项目推进状态
+    // 3. 项目推进状态（核心销售阶段）
     if (ann.progress) {
       var p = ann.progress;
       html += '<div class="sb-section">';
       html += '<div class="sb-section-title">项目推进状态</div>';
 
-      // 阶段进度条
       var allStages = ['P1','P2','P3','P4','P5','P6','P7'];
       var curIdx = allStages.indexOf(p.currentStage);
       if (curIdx < 0) curIdx = 0;
@@ -281,36 +313,19 @@ const WecomChat = (() => {
       html += '</div>';
     }
 
-    // 3. 流程动作
-    if (ann.flows && ann.flows.length > 0) {
+    // 4. 字段面板
+    if (ann.fields) {
       html += '<div class="sb-section">';
-      html += '<div class="sb-section-title">流程动作</div>';
-      ann.flows.forEach(function(f) {
-        var iconSvg = _iconHtmlSidebar(f.icon || 'circle');
-        html += '<button class="sb-flow-btn" onclick="window.showToast(\'' + f.label.replace(/'/g, "\\'") + ' 已创建\')">'
-          + iconSvg + '<span>' + f.label + '</span></button>';
+      html += '<div class="sb-section-title">客户画像</div>';
+      var order = ann._fieldOrder || Object.keys(ann.fields);
+      order.forEach(function(key) {
+        var f = ann.fields[key];
+        if (!f) return;
+        var isEmpty = !f.value || f.status === 'empty';
+        var val = isEmpty ? '—' : f.value;
+        var valCls = isEmpty ? 'sb-val sb-val-empty' : 'sb-val';
+        html += '<div class="sb-row"><span class="sb-key">' + key + '</span><span class="' + valCls + '">' + val + '</span></div>';
       });
-      html += '</div>';
-    }
-
-    // 4. 知识卡推荐
-    if (ann.cards && ann.cards.length > 0) {
-      html += '<div class="sb-section">';
-      html += '<div class="sb-section-title">知识卡推荐</div>';
-      ann.cards.forEach(function(c) { html += '<span class="sb-tag">' + c + '</span>'; });
-      html += '</div>';
-    }
-
-    // 5. 下一步建议
-    if (ann.nextAction) {
-      var na = ann.nextAction;
-      html += '<div class="sb-section">';
-      html += '<div class="sb-section-title">下一步建议</div>';
-      html += '<div class="sb-next-sug">' + na.suggestion + '</div>';
-      if (na.reason) html += '<div class="sb-next-reason">' + na.reason + '</div>';
-      if (na.recommendedScript) {
-        html += '<div class="sb-next-script">' + na.recommendedScript + '</div>';
-      }
       html += '</div>';
     }
 
@@ -390,6 +405,7 @@ const WecomChat = (() => {
     openProfile: openProfile,
     closeProfile: closeProfile,
     updateSidebar: updateSidebar,
+    setSalesInfo: setSalesInfo,
   };
 })();
 

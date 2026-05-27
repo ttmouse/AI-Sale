@@ -3,6 +3,7 @@
   "stageId": "P1",
   "name": "客户沉默后的智能唤醒",
   "customerName": "王总",
+  "salesName": "小陈",
   "painPoint": "很多客户加了微信后不回复，销售不知道什么时候再跟、用什么理由跟、发什么内容才不显得打扰。 ",
   "highlights": [
     "自动识别客户沉默时长；",
