@@ -520,20 +520,20 @@
           "status": "current"
         },
         "核心关注点": {
-          "value": "出餐效率",
+          "value": "设备适用性",
           "status": "current"
         },
         "日单量": {
-          "value": "200+单",
-          "status": "current"
+          "value": null,
+          "status": "empty"
         },
         "后厨人员": {
-          "value": "2名炒锅师傅",
-          "status": "current"
+          "value": null,
+          "status": "empty"
         },
         "痛点": {
-          "value": "午高峰出餐瓶颈",
-          "status": "current"
+          "value": null,
+          "status": "empty"
         },
         "菜品结构": {
           "value": null,
@@ -560,52 +560,40 @@
           "status": "empty"
         },
         "画像完整度": {
-          "value": "60%",
+          "value": "35%",
           "status": "current"
         }
       },
       "progress": {
         "currentStage": "P1",
         "completed": [
-          "日单量确认",
-          "人员确认",
-          "痛点识别"
+          "客户唤醒",
+          "业态识别"
         ],
         "pending": [
-          "产品推荐",
-          "方案发送"
+          "日单量",
+          "人员",
+          "需求匹配"
         ],
         "stageChange": null
       },
       "flows": [
         {
-          "label": "推荐产品",
-          "icon": "file-text"
-        },
-        {
-          "label": "更新画像",
-          "icon": "edit"
+          "label": "等待客户回复",
+          "icon": "bell"
         }
       ],
-      "cards": [
-        "G3标准版产品卡",
-        "快餐门店配置方案"
-      ],
+      "cards": [],
       "nextAction": {
-        "suggestion": "推荐G3标准版，发配置说明",
-        "reason": "200单+2名师傅场景适合G3"
+        "suggestion": "等待客户提供运营数据",
+        "reason": "已追问日单量和人员配置"
       },
       "agentLog": {
-        "received": "客户回复：200多单，2个师傅，出不来",
-        "analysis": "客户提供运营数据。AI匹配G3标准版。",
-        "updates": [
-          "日单量→200+",
-          "人员→2名",
-          "痛点→出餐瓶颈",
-          "完整度60%"
-        ],
+        "received": "销售追问门店运营数据",
+        "analysis": "销售按AI建议追问日单量和人员配置，等待客户回复",
+        "updates": [],
         "stageChange": null,
-        "recommendedAction": "推荐G3并发送方案"
+        "recommendedAction": "等待客户回复"
       }
     },
     {
@@ -810,8 +798,8 @@
         "reason": "客户同意看方案"
       },
       "agentLog": {
-        "received": "客户同意看方案",
-        "analysis": "客户意向正向。从抖音线索到方案推送完成。",
+        "received": "销售询问客户是否查看方案",
+        "analysis": "销售按建议推荐G3标准版并询问客户意愿，等待客户确认",
         "updates": [
           "意向→正向"
         ],
