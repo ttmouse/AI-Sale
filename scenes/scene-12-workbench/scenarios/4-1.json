@@ -334,6 +334,114 @@
           "status": "current"
         },
         "核心关注点": {
+          "value": "长期成本",
+          "status": "current"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "current"
+        },
+        "后厨人员": {
+          "value": "3人",
+          "status": "updated"
+        },
+        "痛点": {
+          "value": "预算有限",
+          "status": "updated"
+        },
+        "菜品结构": {
+          "value": "快餐简餐",
+          "status": "updated"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "current"
+        },
+        "当前阶段": {
+          "value": "P3",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": "ROI算账中",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": "意向明确",
+          "status": "updated"
+        },
+        "方案状态": {
+          "value": "已报价",
+          "status": "updated"
+        },
+        "画像完整度": {
+          "value": "72%",
+          "status": "current"
+        }
+      },
+      "progress": {
+        "currentStage": "P3",
+        "completed": [
+          "异议识别",
+          "策略选择",
+          "ROI引导"
+        ],
+        "pending": [
+          "人工成本获取",
+          "ROI计算",
+          "试菜邀约"
+        ],
+        "stageChange": null
+      },
+      "flows": [
+        {
+          "label": "准备ROI测算",
+          "icon": "file-text"
+        },
+        {
+          "label": "标记异议类型",
+          "icon": "tag"
+        }
+      ],
+      "cards": [
+        "快餐门店ROI算账模板"
+      ],
+      "nextAction": {
+        "suggestion": "获取人工成本数据后算出具体ROI",
+        "reason": "客户愿意对话"
+      },
+      "agentLog": {
+        "received": "销售引导客户算ROI账",
+        "analysis": "销售按AI建议引导客户算ROI账，等待客户提供人工成本数据",
+        "updates": [
+          "关注→长期成本"
+        ],
+        "stageChange": null,
+        "recommendedAction": "获取人工成本后计算ROI"
+      }
+    },
+    {
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "3天",
+          "status": "updated"
+        },
+        "初始意向": {
+          "value": "了解设备",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "updated"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
           "value": "ROI回报",
           "status": "current"
         },
@@ -419,114 +527,6 @@
         ],
         "stageChange": null,
         "recommendedAction": "展示ROI结果+案例验证"
-      }
-    },
-    {
-      "fields": {
-        "客户来源": {
-          "value": "官网留资",
-          "status": "current"
-        },
-        "沉默时长": {
-          "value": "3天",
-          "status": "updated"
-        },
-        "初始意向": {
-          "value": "了解设备",
-          "status": "updated"
-        },
-        "客户大类": {
-          "value": "社餐",
-          "status": "updated"
-        },
-        "细分类别": {
-          "value": "快餐",
-          "status": "current"
-        },
-        "核心关注点": {
-          "value": "可靠性",
-          "status": "current"
-        },
-        "日单量": {
-          "value": "200-300单",
-          "status": "current"
-        },
-        "后厨人员": {
-          "value": "3人",
-          "status": "updated"
-        },
-        "痛点": {
-          "value": "人工成本9000元/月",
-          "status": "current"
-        },
-        "菜品结构": {
-          "value": "快餐简餐",
-          "status": "updated"
-        },
-        "推荐产品": {
-          "value": "G3标准版",
-          "status": "current"
-        },
-        "当前阶段": {
-          "value": "P3",
-          "status": "current"
-        },
-        "响应状态": {
-          "value": "信任建设中",
-          "status": "current"
-        },
-        "客户意向": {
-          "value": "意向明确",
-          "status": "updated"
-        },
-        "方案状态": {
-          "value": "已报价",
-          "status": "updated"
-        },
-        "画像完整度": {
-          "value": "80%",
-          "status": "current"
-        }
-      },
-      "progress": {
-        "currentStage": "P3",
-        "completed": [
-          "ROI展示",
-          "信任疑虑识别"
-        ],
-        "pending": [
-          "案例提供",
-          "试菜邀约",
-          "再次跟进"
-        ],
-        "stageChange": null
-      },
-      "flows": [
-        {
-          "label": "准备案例",
-          "icon": "file-text"
-        },
-        {
-          "label": "邀约试菜",
-          "icon": "calendar-plus"
-        }
-      ],
-      "cards": [
-        "快餐门店成功案例集",
-        "试菜邀约话术模板"
-      ],
-      "nextAction": {
-        "suggestion": "提供同规模案例验证，邀约试菜",
-        "reason": "客户对理论计算有疑虑"
-      },
-      "agentLog": {
-        "received": "客户质疑：理想状态，万一达不到？",
-        "analysis": "检测到信任疑虑。需要案例验证+体验邀约双重背书。",
-        "updates": [
-          "关注→可靠性"
-        ],
-        "stageChange": null,
-        "recommendedAction": "提供案例+邀约试菜"
       }
     },
     {
@@ -688,6 +688,533 @@
           "status": "current"
         },
         "响应状态": {
+          "value": "信任建设中",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": "意向明确",
+          "status": "updated"
+        },
+        "方案状态": {
+          "value": "已报价",
+          "status": "updated"
+        },
+        "画像完整度": {
+          "value": "80%",
+          "status": "current"
+        }
+      },
+      "progress": {
+        "currentStage": "P3",
+        "completed": [
+          "ROI展示",
+          "信任疑虑识别"
+        ],
+        "pending": [
+          "案例提供",
+          "试菜邀约",
+          "再次跟进"
+        ],
+        "stageChange": null
+      },
+      "flows": [
+        {
+          "label": "提供案例",
+          "icon": "file-text"
+        }
+      ],
+      "cards": [
+        "同规模快餐案例集",
+        "ROI测算对比表"
+      ],
+      "nextAction": {
+        "suggestion": "提供同规模案例验证，消除信任疑虑",
+        "reason": "客户对ROI测算有疑虑"
+      },
+      "agentLog": {
+        "received": "销售展示ROI测算",
+        "analysis": "销售按AI建议展示ROI对比，客户产生信任疑虑，需要案例验证",
+        "updates": [
+          "关注→可靠性"
+        ],
+        "stageChange": null,
+        "recommendedAction": "提供案例验证"
+      }
+    },
+    {
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "3天",
+          "status": "updated"
+        },
+        "初始意向": {
+          "value": "了解设备",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "updated"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "可靠性",
+          "status": "current"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "current"
+        },
+        "后厨人员": {
+          "value": "3人",
+          "status": "updated"
+        },
+        "痛点": {
+          "value": "人工成本9000元/月",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": "快餐简餐",
+          "status": "updated"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "current"
+        },
+        "当前阶段": {
+          "value": "P3",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": "信任建设中",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": "意向明确",
+          "status": "updated"
+        },
+        "方案状态": {
+          "value": "已报价",
+          "status": "updated"
+        },
+        "画像完整度": {
+          "value": "80%",
+          "status": "current"
+        }
+      },
+      "progress": {
+        "currentStage": "P3",
+        "completed": [
+          "ROI展示",
+          "信任疑虑识别"
+        ],
+        "pending": [
+          "案例提供",
+          "试菜邀约",
+          "再次跟进"
+        ],
+        "stageChange": null
+      },
+      "flows": [
+        {
+          "label": "准备案例",
+          "icon": "file-text"
+        },
+        {
+          "label": "邀约试菜",
+          "icon": "calendar-plus"
+        }
+      ],
+      "cards": [
+        "快餐门店成功案例集",
+        "试菜邀约话术模板"
+      ],
+      "nextAction": {
+        "suggestion": "提供同规模案例验证，邀约试菜",
+        "reason": "客户对ROI测算有信任疑虑"
+      },
+      "agentLog": {
+        "received": "客户质疑ROI测算：理想状态，万一达不到？",
+        "analysis": "检测到信任疑虑。需要案例验证 + 体验邀约双重背书。",
+        "updates": [
+          "关注→可靠性"
+        ],
+        "stageChange": null,
+        "recommendedAction": "提供案例+邀约试菜"
+      }
+    },
+    null,
+    {
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "3天",
+          "status": "updated"
+        },
+        "初始意向": {
+          "value": "了解设备",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "updated"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "可靠性",
+          "status": "current"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "current"
+        },
+        "后厨人员": {
+          "value": "3人",
+          "status": "updated"
+        },
+        "痛点": {
+          "value": "人工成本9000元/月",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": "快餐简餐",
+          "status": "updated"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "current"
+        },
+        "当前阶段": {
+          "value": "P3",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": "跟进中",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": "正向",
+          "status": "current"
+        },
+        "方案状态": {
+          "value": "已报价",
+          "status": "updated"
+        },
+        "画像完整度": {
+          "value": "85%",
+          "status": "current"
+        }
+      },
+      "progress": {
+        "currentStage": "P3",
+        "completed": [
+          "ROI展示",
+          "案例提供",
+          "试菜邀约"
+        ],
+        "pending": [
+          "案例反馈",
+          "试菜确认"
+        ],
+        "stageChange": null
+      },
+      "flows": [
+        {
+          "label": "等待客户反馈",
+          "icon": "bell"
+        }
+      ],
+      "cards": [
+        "同规模快餐案例集"
+      ],
+      "nextAction": {
+        "suggestion": "等待客户看完案例后跟进",
+        "reason": "已发送案例并邀约试菜"
+      },
+      "agentLog": {
+        "received": "销售发送案例并邀约试菜",
+        "analysis": "销售按建议提供案例验证并邀约试菜，异议化解策略完整执行",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "等待客户反馈"
+      }
+    },
+    {
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "3天",
+          "status": "updated"
+        },
+        "初始意向": {
+          "value": "了解设备",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "updated"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "可靠性",
+          "status": "current"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "current"
+        },
+        "后厨人员": {
+          "value": "3人",
+          "status": "updated"
+        },
+        "痛点": {
+          "value": "人工成本9000元/月",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": "快餐简餐",
+          "status": "updated"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "current"
+        },
+        "当前阶段": {
+          "value": "P3",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": "跟进中",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": "正向",
+          "status": "current"
+        },
+        "方案状态": {
+          "value": "已报价",
+          "status": "updated"
+        },
+        "画像完整度": {
+          "value": "85%",
+          "status": "current"
+        }
+      },
+      "progress": {
+        "currentStage": "P3",
+        "completed": [
+          "ROI展示",
+          "案例提供",
+          "试菜邀约"
+        ],
+        "pending": [
+          "案例反馈",
+          "试菜确认"
+        ],
+        "stageChange": null
+      },
+      "flows": [
+        {
+          "label": "发送案例",
+          "icon": "send"
+        },
+        {
+          "label": "跟进试菜",
+          "icon": "calendar-plus"
+        }
+      ],
+      "cards": [
+        "快餐门店成功案例",
+        "试菜邀约模板"
+      ],
+      "nextAction": {
+        "suggestion": "客户同意看案例后跟进试菜邀约",
+        "reason": "异议化解进展正向"
+      },
+      "agentLog": {
+        "received": "客户同意看案例",
+        "analysis": "异议化解取得进展。从\"太贵了\"到愿意看案例。",
+        "updates": [
+          "意向→正向"
+        ],
+        "stageChange": null,
+        "recommendedAction": "跟进试菜邀约"
+      }
+    },
+    null,
+    {
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "3天",
+          "status": "updated"
+        },
+        "初始意向": {
+          "value": "了解设备",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "updated"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "可靠性",
+          "status": "current"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "current"
+        },
+        "后厨人员": {
+          "value": "3人",
+          "status": "updated"
+        },
+        "痛点": {
+          "value": "人工成本9000元/月",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": "快餐简餐",
+          "status": "updated"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "current"
+        },
+        "当前阶段": {
+          "value": "P3",
+          "status": "current"
+        },
+        "响应状态": {
+          "value": "跟进中",
+          "status": "current"
+        },
+        "客户意向": {
+          "value": "正向",
+          "status": "current"
+        },
+        "方案状态": {
+          "value": "案例已发+试菜邀约",
+          "status": "current"
+        },
+        "画像完整度": {
+          "value": "85%",
+          "status": "current"
+        }
+      },
+      "progress": {
+        "currentStage": "P3",
+        "completed": [
+          "异议识别",
+          "ROI算账",
+          "案例提供",
+          "试菜邀约"
+        ],
+        "pending": [
+          "案例反馈",
+          "试菜确认",
+          "报价"
+        ],
+        "stageChange": null
+      },
+      "flows": [
+        {
+          "label": "设置跟进",
+          "icon": "calendar-plus"
+        }
+      ],
+      "cards": [
+        "同规模快餐案例集",
+        "试菜邀约确认"
+      ],
+      "nextAction": {
+        "suggestion": "等待客户看完案例后跟进",
+        "reason": "已再次发送案例确认并邀约试菜"
+      },
+      "agentLog": {
+        "received": "销售确认发送案例并再次邀约试菜",
+        "analysis": "销售按建议发送案例并再次邀约试菜，异议化解全流程推进",
+        "updates": [],
+        "stageChange": null,
+        "recommendedAction": "等待客户反馈后跟进"
+      }
+    },
+    {
+      "fields": {
+        "客户来源": {
+          "value": "官网留资",
+          "status": "current"
+        },
+        "沉默时长": {
+          "value": "3天",
+          "status": "updated"
+        },
+        "初始意向": {
+          "value": "了解设备",
+          "status": "updated"
+        },
+        "客户大类": {
+          "value": "社餐",
+          "status": "updated"
+        },
+        "细分类别": {
+          "value": "快餐",
+          "status": "current"
+        },
+        "核心关注点": {
+          "value": "可靠性",
+          "status": "current"
+        },
+        "日单量": {
+          "value": "200-300单",
+          "status": "current"
+        },
+        "后厨人员": {
+          "value": "3人",
+          "status": "updated"
+        },
+        "痛点": {
+          "value": "人工成本9000元/月",
+          "status": "current"
+        },
+        "菜品结构": {
+          "value": "快餐简餐",
+          "status": "updated"
+        },
+        "推荐产品": {
+          "value": "G3标准版",
+          "status": "current"
+        },
+        "当前阶段": {
+          "value": "P3",
+          "status": "current"
+        },
+        "响应状态": {
           "value": "跟进中",
           "status": "current"
         },
@@ -734,26 +1261,19 @@
         "试菜体验邀约"
       ],
       "nextAction": {
-        "suggestion": "等待客户看完案例后跟进",
-        "reason": "异议化解进入收尾阶段"
+        "suggestion": "客户已同意看案例，待案例跟进后推进试菜",
+        "reason": "异议化解取得进展"
       },
       "agentLog": {
-        "received": "客户同意看案例并考虑试菜",
-        "analysis": "异议化解全流程：价格异议→ROI算账→案例验证→试菜邀约。",
+        "received": "客户同意看案例，试菜待定",
+        "analysis": "客户同意先看案例，试菜意愿待确认。异议化解取得阶段性进展，后续跟进试菜邀约。",
         "updates": [
-          "全流程→价格→ROI→案例→试菜"
+          "方案状态→案例已发+试菜邀约"
         ],
         "stageChange": null,
-        "recommendedAction": "跟进案例反馈，推进试菜"
+        "recommendedAction": "案例跟进后推进试菜"
       }
-    },
-    null,
-    null,
-    null,
-    null,
-    null,
-    null,
-    null
+    }
   ],
   "polished": true
 }
