@@ -1,189 +1,298 @@
-<!DOCTYPE html>
-<html lang="zh-CN">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/svg+xml" href="../../shared/favicon.svg">
-  <title>场景6：AI新人模拟培训对练</title>
-  <link rel="stylesheet" href="../../shared/css/styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-</head>
-<body class="scene-page">
-  <nav class="scene-nav" id="scene-nav"></nav>
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="initial-scale=1.0"><link rel="icon" type="image/svg+xml" href="../../shared/favicon.svg"><title>场景6 · 话术训练</title><link rel="stylesheet" href="../../shared/css/styles.css"><style>
+*{margin:0;padding:0;box-sizing:border-box}body{font-family:Geist,-apple-system,sans-serif;background:#F0F2F5;color:#111827;line-height:1.5;height:100dvh;overflow:hidden}
+.tr-nav{display:flex;align-items:center;gap:.75rem;padding:.5rem 1rem;background:#fff;border-bottom:1px solid #E2E5EB;flex-shrink:0}
+.tr-nav-back{color:#6B7280;text-decoration:none;font-size:.8125rem;display:flex;align-items:center;gap:.375rem}.tr-nav-back:hover{color:#2563EB}
+.tr-nav-back svg{width:16px;height:16px;stroke:currentColor;stroke-width:2;fill:none}
+.tr-nav-title{font-size:.875rem;font-weight:600}.tr-nav-badge{font-size:.625rem;padding:.125rem .5rem;border-radius:.25rem;background:#DBEAFE;color:#1E40AF}
+.tr-nav-stats{font-size:.6875rem;color:#9CA3AF;display:flex;gap:.75rem;margin-left:auto}
+.tr-main{display:grid;grid-template-columns:220px 1fr 280px;gap:.75rem;padding:.75rem 1rem;flex:1;min-height:0;height:calc(100dvh - 42px)}
+.tr-panel{background:#fff;border:1px solid #E2E5EB;border-radius:.75rem;overflow-y:auto}
+.tr-panel::-webkit-scrollbar{width:3px}.tr-panel::-webkit-scrollbar-thumb{background:#E2E5EB;border-radius:2px}
+.tr-left{display:flex;flex-direction:column;gap:.75rem;overflow-y:auto}.tr-left .tr-panel{padding:.75rem}
+.tr-section-label{font-size:.625rem;font-weight:600;color:#9CA3AF;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.375rem}
+.tr-opt-group{display:flex;flex-direction:column;gap:.1875rem;margin-bottom:.5rem}
+.tr-opt{display:flex;align-items:center;gap:.5rem;padding:.375rem .5rem;border:1px solid #E2E5EB;background:#F9FAFB;border-radius:.375rem;cursor:pointer;font-size:.75rem;font-family:inherit;color:#6B7280;text-align:left;width:100%}
+.tr-opt:hover{border-color:#CBD0D8;background:#fff}.tr-opt.active{border-color:#2563EB;background:rgba(37,99,235,.08);color:#2563EB;font-weight:500}
+.tr-opt .ic{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.5rem;color:#fff;flex-shrink:0}
+.tr-load-btn{width:100%;padding:.5rem 0;border:none;border-radius:.5rem;background:#2563EB;color:#fff;font-size:.8125rem;font-weight:600;cursor:pointer;font-family:inherit}
+.tr-load-btn:disabled{background:#D1D5DB;cursor:not-allowed}
+.tr-tag{font-size:.5625rem;padding:.0625rem .3125rem;border-radius:.125rem;background:#DBEAFE;color:#1E40AF}
+.tr-center{display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #E2E5EB;border-radius:.75rem}
+.tr-chat-head{display:flex;align-items:center;gap:.5rem;padding:.5rem .75rem;border-bottom:1px solid #E2E5EB;background:#F9FAFB;flex-shrink:0}
+.tr-chat-head-icon{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.6875rem;color:#fff;font-weight:600;flex-shrink:0}
+.tr-chat-head-title{font-size:.8125rem;font-weight:600}.tr-chat-head-sub{font-size:.625rem;color:#9CA3AF}
+.tr-scene-desc{display:none;align-items:flex-start;gap:.375rem;padding:.5rem .75rem;background:#FFFBEB;border-bottom:1px solid #FDE68A;font-size:.6875rem;color:#92400E;line-height:1.5;flex-shrink:0}
+.tr-scene-desc svg{width:16px;height:16px;flex-shrink:0;margin-top:.125rem}
+.tr-msg-area{flex:1;overflow-y:auto;padding:.75rem;display:flex;flex-direction:column;gap:.5rem;overscroll-behavior:contain}
+.tr-msg-area::-webkit-scrollbar{width:4px}.tr-msg-area::-webkit-scrollbar-thumb{background:#E2E5EB;border-radius:2px}
+.tr-cust-msg,.tr-sales-msg{display:flex;gap:.5rem;max-width:90%;animation:msgIn .3s ease-out}
+.tr-sales-msg{align-self:flex-end;flex-direction:row-reverse}
+@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.tr-cust-avatar,.tr-sales-avatar{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.5625rem;color:#fff;font-weight:600;flex-shrink:0}
+.tr-sales-avatar{background:#2563EB}
+.tr-cust-bubble{padding:.5rem .75rem;border-radius:.625rem;font-size:.8125rem;line-height:1.6;background:#F3F4F6;border-bottom-left-radius:.1875rem}
+.tr-sales-bubble{padding:.5rem .75rem;border-radius:.625rem;font-size:.8125rem;line-height:1.6;background:#2563EB;color:#fff;border-bottom-right-radius:.1875rem}
+.tr-options-area{border-top:1px solid #E2E5EB;padding:.625rem .75rem;background:#F9FAFB;flex-shrink:0}
+.tr-options-label{font-size:.625rem;font-weight:600;color:#6B7280;text-transform:uppercase;letter-spacing:.04em;margin-bottom:.375rem}
+.tr-options-grid{display:flex;flex-direction:column;gap:.3125rem}
+.tr-option-btn{display:flex;align-items:flex-start;gap:.5rem;padding:.5rem;border:1px solid #E2E5EB;border-radius:.5rem;background:#fff;cursor:pointer;font-family:inherit;text-align:left;width:100%}
+.tr-option-btn:hover{border-color:#2563EB;box-shadow:0 1px 4px rgba(37,99,235,.1)}.tr-option-btn.resolved{opacity:.7;cursor:default}
+.tr-option-btn.correct{border-color:#10B981;background:#ECFDF5;opacity:1}.tr-option-btn.wrong{border-color:#EF4444;background:#FEF2F2;opacity:1}
+.tr-opt-letter{width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.625rem;color:#fff;font-weight:700;flex-shrink:0}
+.tr-opt-text{font-size:.75rem;color:#374151;line-height:1.5}
+.tr-result-area{border-top:1px solid #E2E5EB;padding:.75rem;background:#fff;flex-shrink:0;display:none;max-height:240px;overflow-y:auto}
+.tr-result-badge{display:inline-block;padding:.125rem .5rem;border-radius:.25rem;font-size:.625rem;font-weight:600;margin-bottom:.375rem}
+.tr-result-badge.good{background:#D1FAE5;color:#065F46}.tr-result-badge.ok{background:#FEF3C7;color:#92400E}.tr-result-badge.poor{background:#FEE2E2;color:#991B1B}
+.tr-result-text{font-size:.75rem;color:#4B5563;line-height:1.6;margin-bottom:.375rem}
+.tr-result-best{font-size:.6875rem;color:#059669;padding:.375rem .5rem;background:#ECFDF5;border-left:2px solid #10B981;border-radius:.25rem;display:none;line-height:1.5;margin-bottom:.375rem}
+.tr-result-actions{display:flex;align-items:center;justify-content:center;gap:.75rem;padding:.375rem 0 0}
+.tr-retry-btn{padding:.3125rem .875rem;border:1px solid #F59E0B;background:#FFFBEB;color:#92400E;border-radius:1rem;font-size:.6875rem;font-weight:600;cursor:pointer;font-family:inherit}
+.tr-next-dots{display:flex;align-items:center;gap:.25rem}.tr-ndot{width:4px;height:4px;border-radius:50%;background:#9CA3AF;animation:ndPulse 1s ease-in-out infinite}
+@keyframes ndPulse{0%,100%{opacity:.3}50%{opacity:1}}
+.tr-empty{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;height:100%;color:#9CA3AF;text-align:center;padding:2rem}
+.tr-empty svg{width:36px;height:36px;opacity:.3;stroke:currentColor;stroke-width:1.5;fill:none}
+.tr-empty-title{font-size:.875rem;font-weight:600;color:#6B7280}.tr-empty-desc{font-size:.75rem;line-height:1.6;max-width:260px}
+.tr-summary{padding:1rem}.tr-summary h3{font-size:.875rem;font-weight:600;margin-bottom:.75rem}
+.tr-summary-grid{display:grid;grid-template-columns:1fr 1fr;gap:.5rem;margin-bottom:.75rem}
+.tr-summary-item{text-align:center;padding:.625rem;border-radius:.375rem;background:#F9FAFB}
+.tr-summary-item .v{font-size:1.25rem;font-weight:700}.tr-summary-item .l{font-size:.5625rem;color:#6B7280;margin-top:.125rem}
+.tr-summary-list{font-size:.75rem;color:#4B5563;line-height:1.8}
+.tr-right{display:flex;flex-direction:column;gap:.75rem;overflow-y:auto}.tr-right .tr-panel{padding:.75rem}
+.tr-panel-header{font-size:.625rem;font-weight:600;color:#9CA3AF;text-transform:uppercase;letter-spacing:.06em;margin-bottom:.5rem;display:flex;align-items:center;gap:.3125rem}
+.bdot{width:6px;height:6px;border-radius:50%;display:inline-block}
+.tr-scores{display:grid;grid-template-columns:1fr 1fr;gap:.3125rem}
+.tr-si{text-align:center;padding:.5rem .25rem;border-radius:.25rem;background:#F9FAFB;border:1px solid #E2E5EB}
+.tr-si-val{font-size:1.125rem;font-weight:700}.tr-si-label{font-size:.5625rem;color:#6B7280;margin-top:.125rem}
+.tr-progress-text{display:flex;justify-content:space-between;font-size:.6875rem;color:#6B7280;margin-bottom:.3125rem}
+.tr-bar{height:4px;background:#E2E5EB;border-radius:2px;overflow:hidden}.tr-bar-fill{height:100%;background:#2563EB;border-radius:2px;transition:width .3s ease}
+.tr-h-item{display:flex;align-items:center;gap:.375rem;padding:.25rem 0;border-bottom:1px solid #F3F4F6;font-size:.6875rem}
+.tr-h-letter{width:16px;height:16px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.5rem;color:#fff;font-weight:700;flex-shrink:0}
+</style></head><body>
+<nav class="tr-nav"><a href="../../index.html" class="tr-nav-back"><svg viewBox="0 0 24 24"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>返回</a><span class="tr-nav-title">话术训练</span><span class="tr-nav-badge">销售赋能</span><div class="tr-nav-stats"><span>已完成 <strong id="nav-sessions">0</strong></span><span>最高 <strong id="nav-best">--</strong></span></div></nav>
+<div class="tr-main"><div class="tr-left">
+<div class="tr-panel"><div class="tr-section-label">客户类型</div><div class="tr-opt-group" id="cust-list"></div><div class="tr-section-label" style="margin-top:.5rem">训练场景</div><div class="tr-opt-group" id="stage-list"></div></div>
+<div class="tr-panel"><button class="tr-load-btn" id="load-btn">加载案例</button></div>
+<div class="tr-panel" id="case-detail"><div style="font-size:.6875rem;color:#9CA3AF;text-align:center;padding:.5rem 0">选择一个案例</div></div></div>
+<div class="tr-center">
+<div class="tr-chat-head"><div class="tr-chat-head-icon" id="head-icon" style="background:#6B7280">客</div><div><div class="tr-chat-head-title" id="head-title">选择一个案例开始训练</div><div class="tr-chat-head-sub" id="head-sub"><span>左侧选择后点击「加载案例」</span></div></div></div>
+<div class="tr-scene-desc" id="scene-desc"><svg viewBox="0 0 24 24" fill="none" stroke="#D97706" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><div><strong id="step-label">决策点</strong><br><span id="step-desc"></span></div></div>
+<div class="tr-msg-area" id="msg-area"><div class="tr-empty"><svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg><div class="tr-empty-title">对话训练模式</div><div class="tr-empty-desc">选择一个案例，每个节点选择销售该怎么回应。</div></div></div>
+<div class="tr-options-area" id="options-area" style="display:none"><div class="tr-options-label">你会怎么回应？</div><div class="tr-options-grid" id="options-grid"></div></div>
+<div class="tr-result-area" id="result-area"><div class="tr-result-badge" id="result-badge">分析</div><div class="tr-result-text" id="result-text"></div><div class="tr-result-best" id="result-best"></div><div class="tr-result-actions" id="result-actions"></div></div></div>
+<div class="tr-right">
+<div class="tr-panel"><div class="tr-panel-header"><span class="bdot" style="background:#3B82F6"></span>我的表现</div><div class="tr-scores"><div class="tr-si"><div class="tr-si-val" style="color:#10B981" id="s-correct">0</div><div class="tr-si-label">优秀</div></div><div class="tr-si"><div class="tr-si-val" style="color:#EF4444" id="s-wrong">0</div><div class="tr-si-label">失误</div></div><div class="tr-si"><div class="tr-si-val" style="color:#2563EB" id="s-total">0</div><div class="tr-si-label">总选择</div></div><div class="tr-si"><div class="tr-si-val" style="color:#8B5CF6" id="s-rate">0%</div><div class="tr-si-label">正确率</div></div></div></div>
+<div class="tr-panel"><div class="tr-panel-header"><span class="bdot" style="background:#10B981"></span>进度</div><div><div class="tr-progress-text"><span id="p-step">--</span></div><div class="tr-bar"><div class="tr-bar-fill" id="p-bar" style="width:0%"></div></div></div></div>
+<div class="tr-panel"><div class="tr-panel-header"><span class="bdot" style="background:#F59E0B"></span>选择记录</div><div class="tr-history" id="h-area"><div style="font-size:.6875rem;color:#9CA3AF;text-align:center;padding:.5rem 0">等待开始</div></div></div></div></div>
+<script src="../../shared/js/app.js"></script>
+<script>var CUSTOMERS=[{id:'newbie',name:'创业小白',emoji:'创',color:'#10B981'},{id:'chain',name:'连锁老板',emoji:'连',color:'#8B5CF6'},{id:'picky',name:'挑剔型客户',emoji:'挑',color:'#EF4444'}];
+var STAGES=[{id:'icebreak',name:'破冰开场',icon:'🤝'},{id:'compete',name:'竞品对比',icon:'⚔️'},{id:'close',name:'关单推进',icon:'🎯'}];
 
-  <main class="scene-content">
-    <!-- 客户画像 -->
-    <div class="data-card" style="margin-bottom:20px">
-      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
-        <div style="width:56px;height:56px;background:linear-gradient(135deg,#2563EB,#3B82F6);border-radius:16px;display:flex;align-items:center;justify-content:center;color:white;font-size:24px">
-          <i class="fas fa-user-tie"></i>
-        </div>
-        <div>
-          <h3 style="font-size:18px;font-weight:600;margin-bottom:4px">王老板 · 挑剔型连锁餐饮老板</h3>
-          <p style="font-size:14px;color:var(--gray-500)">已有 3 家火锅店，想开第 4 家 · 懂行、比价、压价狠、决策慢</p>
-        </div>
-        <div style="margin-left:auto;display:flex;gap:8px;flex-wrap:wrap">
-          <span class="tag tag-orange">挑剔型</span>
-          <span class="tag tag-blue">连锁客户</span>
-          <span class="tag tag-green">高预算</span>
-          <span class="tag tag-red" id="difficultyTag" style="background:#FEE2E2;color:#991B1B;border-color:#FECACA">P1→P2 困难模式</span>
-        </div>
-      </div>
-      <div style="margin-top:12px;display:flex;gap:16px;font-size:13px;color:var(--gray-500);flex-wrap:wrap">
-        <span><b>当前训练阶段</b>：P1 了解信息 → P2 收集需求</span>
-        <span><b>阶段转化率</b>：36.63%（CRM 真实数据）</span>
-        <span><b>重点训练</b>：需求挖掘力 ⬆</span>
-      </div>
-    </div>
+var CASES_DATA={};(function(){var C=CASES_DATA;
+C['newbie-icebreak']={title:"新客户询价",tags:["报价技巧","需求引导"],root:{context:"客户在网上看到产品，直接问价格。",customer:"你好，我在网上看到你们家的炒菜机。这个机器多少钱一台？",options:[
+{letter:"A",text:"YC-3000 标准款是 4.98 万。",level:"poor",analysis:"❌ 直接报价等于把主动权交给客户。",reaction:"哦，4.98 万啊…那先这样吧。",next:null},
+{letter:"B",text:"价格根据配置不同，从 3 万到 8 万都有。您做的是什么类型的餐饮？",level:"good",analysis:"✅ 先给价格区间再用反问引导到需求。",
+next:{customer:"80 平快餐店，主要做盖浇饭。你觉得我该买哪种？",options:[
+{letter:"A",text:"推荐 YC-2000 标准款，日产能 200-300 单。",level:"good",analysis:"✅ 基于场景推荐具体型号。",
+next:{customer:"YC-2000 配齐一套大概多少钱？",options:[
+{letter:"A",text:"标准款 2.98 万，配操作台和排烟约 4.5 万。帮您算 ROI？",level:"good",analysis:"✅ 报价后转向提供价值。",
+next:{customer:"帮我算算。担心师傅不会用。",options:[
+{letter:"A",text:"免费上门安装调试+现场培训，教到会操作为止。",level:"good",analysis:"✅ 培训承诺具体。",
+next:{customer:"那售后呢？",options:[
+{letter:"A",text:"3 年质保，4 小时上门，200+ 城市有网点，写进合同。",level:"good",analysis:"✅ 承诺具体可量化。",
+next:{customer:"什么时候能安排安装？",options:[
+{letter:"A",text:"下单到安装约 2 周。您什么时候开业？我安排。",level:"good",analysis:"✅ 明确时间线+推进成交。",reaction:"一个月后开业，来得及。出合同吧。",next:null},
+{letter:"B",text:"2 周左右。",level:"poor",analysis:"❌ 只说时间线不推进，客户会觉得你在等他想。",reaction:"那你到时候联系我吧。",next:null},{letter:"C",text:"正常2周能到货安装，我提前排好单，您开业前一周我确认一下。",level:"ok",analysis:"⚠️ 给客户确定感，但缺少反问客户时间线。主动问开业时间能帮你排期也顺便推进成交。",reaction:"好的，那你提前联系我。",next:null}
+]}},
+{letter:"B",text:"售后您放心。",level:"poor",analysis:"❌ 太模糊了，客户要的是具体承诺。",reaction:"你放心我不放心。到底多久能到？",next:null},{letter:"C",text:"我们有全国200多个服务网点，具体条款合同里有写。",level:"ok",analysis:"⚠️ 提到网点数比空口说放心好，但没给具体时限。",reaction:"200多个网点还行，具体多久能到？",next:null}
+]}},
+{letter:"B",text:"不难学的。",level:"poor",analysis:"❌ 否定客户担心。",reaction:"你这么说我更担心了。",next:null}
+]}},
+{letter:"B",text:"2.98 万，很便宜了。",level:"poor",analysis:"❌ 显得防御性强。",reaction:"2.98 万也不便宜啊。",next:null},{letter:"C",text:"YC-2000 标准款 2.98 万，如果预算有限也有基础套餐 2.5 万能配齐。",level:"ok",analysis:"⚠️ 给价格选择让客户觉得你为他考虑。但先解释价值再给选择会更有说服力。",reaction:"2.5 万和 2.98 万的差在哪？",next:null}
+]}},
+{letter:"B",text:"建议买 YC-3000，性能更好。",level:"poor",analysis:"❌ 过度配置。",reaction:"我这个店才 80 平，用这么好的太浪费了吧？",
+next:{customer:"我这个店才 80 平，用这么好的太浪费了吧？",options:[
+{letter:"A",text:"您说得对，YC-2000 就够用了。",level:"good",analysis:"✅ 诚实比硬撑好。",
+next:{customer:"那 YC-2000 多少钱？",options:[
+{letter:"A",text:"2.98 万，配齐约 4.5 万。帮您算？",level:"good",analysis:"✅ 报价后转向价值。",reaction:"行，算算看。",next:null},
+{letter:"B",text:"2.98 万。",level:"poor",analysis:"❌ 没有引导。",reaction:"哦。",next:null}
+]}},
+{letter:"B",text:"长远考虑嘛。",level:"poor",analysis:"❌ 坚持推销。",reaction:"我先看看别的。",next:null}
+]}},
+{letter:"C",text:"看您预算，打算投多少？",level:"ok",analysis:"⚠️ 应先推荐再调。",reaction:"我还没想好。",next:null}
+]}},
+{letter:"C",text:"您先别急，我先介绍产品。",level:"ok",analysis:"⚠️ 回避显得不自信。",reaction:"我就想知道价格。",
+next:{customer:"我就想知道价格。",options:[
+{letter:"A",text:"标准款 2.98 万，高配 4.98 万。选哪个看场景？",level:"good",analysis:"✅ 给范围再问需求。",reaction:"2.98 万够用吗？我开快餐店。",next:null},
+{letter:"B",text:"2.98 万起。",level:"poor",analysis:"❌ 没有引导。",reaction:"哦。",next:null}
+]}}
+]}};
+C['chain-compete']={title:"客户拿竞品压价",tags:["竞品对比","差异化"],root:{context:"连锁餐饮老板对比多个品牌。",customer:"XX 牌才 3 万，你们凭什么贵一倍？",options:[
+{letter:"A",text:"XX 牌故障率高，售后也跟不上。",level:"poor",analysis:"❌ 攻击竞品最低级。",reaction:"你怎么知道？",next:null},
+{letter:"B",text:"XX 牌价格有优势。但我们的温控精度 ±1℃，连锁店口味一致很重要。您觉得品质稳定影响大吗？",level:"good",analysis:"✅ 承认优势+差异化+反问。",
+next:{customer:"品质稳定确实重要。",options:[
+{letter:"A",text:"对，温控每道菜口味一致，每月更新菜谱。",level:"good",analysis:"✅ 深入差异化。",
+next:{customer:"那你们和 XX 比，哪个更耐用？",options:[
+{letter:"A",text:"设计寿命 8 年，连续 12 小时没问题。故障率低于 1%。",level:"good",analysis:"✅ 用数据说话。",
+next:{customer:"那售后呢？",options:[
+{letter:"A",text:"3 年质保，4 小时上门，200+ 网点，写进合同。",level:"good",analysis:"✅ 承诺具体可量化。",
+next:{customer:"质保期过了维修贵不贵？",options:[
+{letter:"A",text:"续保每年 2000，比单次维修划算。终身技术支持。",level:"good",analysis:"✅ 延保方案。",
+next:{customer:"出整体方案吧，含售后条款。",options:[
+{letter:"A",text:"今天发您。约时间去店里现场试做两道菜？",level:"good",analysis:"✅ 推进线下体验。",reaction:"行，先发方案。",next:null},
+{letter:"B",text:"好的，今天发您。",level:"poor",analysis:"❌ 错失推进。",reaction:"好的。",next:null}
+]}},
+{letter:"B",text:"不贵的。",level:"poor",analysis:"❌ 太模糊。",reaction:"不贵是多少？",next:null}
+]}},
+{letter:"B",text:"响应很快的。",level:"poor",analysis:"❌ 太模糊。",reaction:"多快？有网点？",next:null}
+]}},
+{letter:"B",text:"我们比 XX 耐用。",level:"poor",analysis:"❌ 空口无凭。",reaction:"有依据？",next:null}
+]}},
+{letter:"B",text:"贵有贵的道理。",level:"poor",analysis:"❌ 没新信息。",reaction:"便宜 2 万也是钱。",next:null}
+]}}
+]}};
+C['newbie-close']={title:"客户说再考虑考虑",tags:["关单技巧","异议处理"],root:{context:"方案发了，客户说考虑考虑。",customer:"方案我看完了，挺好的。我再考虑考虑。",options:[
+{letter:"A",text:"好的，考虑好了联系我。",level:"poor",analysis:"❌ 80% 不会主动联系。",reaction:"（3 天后客户买了别家）",next:null},
+{letter:"B",text:"理解。主要在犹豫价格还是效果？我针对性补充。",level:"good",analysis:"✅ 帮客户理清犹豫点。",
+next:{customer:"主要是价格，3.5 万不是小数目。",options:[
+{letter:"A",text:"理解。用 5 年每天成本不到 20 元，省一个厨师工资月省 6000。",level:"good",analysis:"✅ 总价拆成每天成本。",
+next:{customer:"万一生意不好不就白买了？",options:[
+{letter:"A",text:"先付 30%，用 3 个月满意再付尾款。",level:"good",analysis:"✅ 试用方案降低风险。",
+next:{customer:"先付 30%？那可以。具体怎么操作？",options:[
+{letter:"A",text:"今天发分期方案和合同，没问题安排安装，2 周到位。",level:"good",analysis:"✅ 异议解决后立即推进。",reaction:"行，发过来吧。",next:null},
+{letter:"B",text:"我发您，您再考虑。",level:"poor",analysis:"❌ 前功尽弃。",reaction:"好。",next:null}
+]}},
+{letter:"B",text:"要对生意有信心。",level:"poor",analysis:"❌ 否定客户顾虑。",reaction:"你说得轻巧。",next:null}
+]}},
+{letter:"B",text:"3.5 万不贵了。",level:"poor",analysis:"❌ 否定客户感受。",reaction:"不贵？",next:null},
+{letter:"C",text:"帮您申请优惠。",level:"ok",analysis:"⚠️ 先算价值再做优惠。",
+next:{customer:"能优惠多少？",options:[
+{letter:"A",text:"延保（价值 3000）+ 送配套工具。价格不变但增值。",level:"good",analysis:"✅ 不降裸价给增值。",reaction:"行，发合同吧。",next:null},
+{letter:"B",text:"最多优惠 2000。",level:"poor",analysis:"❌ 降价显得报高了。",reaction:"才 2000？",next:null}
+]}}
+]}},
+{letter:"C",text:"活动价 30 号截止，今天定我申请延保。",level:"ok",analysis:"⚠️ 紧迫感要真实。",reaction:"那更得想想了。",next:null}
+]}};
+})();
+var id$=function(id){return document.getElementById(id);};var msgArea=id$("msg-area"),optGrid=id$("options-grid"),optArea=id$("options-area"),resultArea=id$("result-area");var state={customer:'newbie',stage:'icebreak',currentNode:null,history:[],sessions:0,bestRate:0,autoTimer:null};
 
-    <!-- 聊天区 -->
-    <div class="chat-container" style="height:calc(100vh - 280px)">
-      <div class="chat-messages" id="chat-messages">
-        <div class="chat-message ai">
-          <div class="chat-avatar ai">AI</div>
-          <div class="chat-bubble">
-            <strong>王老板：</strong>你们这机器多少钱一台？
-          </div>
-        </div>
-      </div>
+function updateDetail(){var c=CASES_DATA[state.customer+'-'+state.stage],el=id$('case-detail');if(!c){el.innerHTML='<div style="font-size:.6875rem;color:#9CA3AF;text-align:center;padding:.5rem 0">暂无案例</div>';return;}
+el.innerHTML='<div style="font-size:.75rem;font-weight:600;margin-bottom:.25rem">'+c.title+'</div><div class="tr-tags">'+c.tags.map(function(t){return'<span class="tr-tag">'+t+'</span>'}).join('')+'</div>';id$('load-btn').disabled=!c;}
+function getCase(){return CASES_DATA[state.customer+'-'+state.stage];}
 
-      <!-- 快捷标签 -->
-      <div class="quick-tags" id="quick-tags">
-        <span class="quick-tag" onclick="sendPreset('YC-3000 六万九千八')">直接报价</span>
-        <span class="quick-tag" onclick="sendPreset('价格根据配置不同，我先了解下您的场景')">先挖需求</span>
-        <span class="quick-tag" onclick="sendPreset('您这边是开新店还是老店升级？')">了解场景</span>
-      </div>
+function loadCase(){
+if(state.autoTimer){clearTimeout(state.autoTimer);state.autoTimer=null;}
+var c=getCase();if(!c)return;
+state.currentNode=c.root;state.history=[];msgArea.innerHTML='';resultArea.style.display='none';
+id$('s-correct').textContent='0';id$('s-wrong').textContent='0';id$('s-total').textContent='0';id$('s-rate').textContent='0%';
+id$('h-area').innerHTML='<div style="font-size:.6875rem;color:#9CA3AF;text-align:center;padding:.5rem 0">对话进行中</div>';
+updateDetail();showNode(c.root);
+var cust=CUSTOMERS.find(function(x){return x.id===state.customer;});
+id$('head-icon').style.background=(cust&&cust.color)||'#6B7280';id$('head-icon').textContent=(cust&&cust.emoji)||'客';
+id$('head-title').textContent=c.title;id$('head-sub').innerHTML='<span>树形对话 · 选择影响走向</span>';}
 
-      <div class="chat-input-area">
-        <input type="text" class="chat-input" id="chat-input" placeholder="输入您的话术..." onkeypress="if(event.key==='Enter')sendMessage()">
-        <button class="chat-send-btn" onclick="sendMessage()">
-          <i class="fas fa-paper-plane"></i>
-        </button>
-      </div>
-    </div>
+function showNode(node){
+if(!node||!node.customer){showEnding();return;}
+state.currentNode=node;
+if(node.context){id$('scene-desc').style.display='flex';id$('step-desc').textContent=node.context;}
+else{id$('scene-desc').style.display='none';}
+var cust=CUSTOMERS.find(function(x){return x.id===state.customer;});
+var d=document.createElement('div');d.className='tr-cust-msg';
+d.innerHTML='<div class="tr-cust-avatar" style="background:'+((cust&&cust.color)||'#6B7280')+'">'+((cust&&cust.emoji)||'客')+'</div><div class="tr-cust-bubble">'+node.customer+'</div>';
+msgArea.appendChild(d);msgArea.scrollTop=msgArea.scrollHeight;
+if(node.options&&node.options.length>0){
+optArea.style.display='block';optGrid.innerHTML='';
+var cs={A:'#3B82F6',B:'#8B5CF6',C:'#F59E0B',D:'#EF4444'};
+node.options.forEach(function(o){
+var b=document.createElement('button');b.className='tr-option-btn';b.dataset.letter=o.letter;
+b.innerHTML='<span class="tr-opt-letter" style="background:'+(cs[o.letter]||'#6B7280')+'">'+o.letter+'</span><span class="tr-opt-text">'+o.text+'</span>';
+b.onclick=function(){selectOption(o,node);};optGrid.appendChild(b);});
+resultArea.style.display='none';id$('step-label').textContent='第 '+(state.history.length+1)+' 轮 · 你的回应';
+}else{showEnding();}updateProgress();}
 
-    <!-- AI 点评面板（对话结束后显示）-->
-    <div id="review-panel" style="display:none;margin-top:20px">
-      <div class="data-card" style="border-left:4px solid var(--primary)">
-        <h3 style="font-size:16px;font-weight:600;margin-bottom:16px;display:flex;align-items:center;gap:8px">
-          <i class="fas fa-clipboard-check" style="color:var(--primary)"></i>
-          AI 对练点评
-        </h3>
+function selectOption(option,node){
+var btns=optGrid.querySelectorAll('.tr-option-btn');
+for(var i=0;i<btns.length;i++)btns[i].onclick=null;
+btns.forEach(function(b){b.classList.add('resolved');if(b.dataset.letter===option.letter)b.classList.add(option.level==='good'?'correct':'wrong');});
+var sDiv=document.createElement('div');sDiv.className='tr-sales-msg';
+sDiv.innerHTML='<div class="tr-sales-avatar">销</div><div class="tr-sales-bubble">'+option.text+'</div>';
+msgArea.appendChild(sDiv);msgArea.scrollTop=msgArea.scrollHeight;
 
-        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
-          <div style="text-align:center;padding:14px 8px;background:var(--gray-50);border-radius:var(--radius-lg)">
-            <div style="font-size:28px;font-weight:700;color:var(--primary)">75</div>
-            <div style="font-size:11px;color:var(--gray-500)">话术专业度</div>
-            <div style="font-size:10px;color:var(--gray-400);margin-top:2px">权重 25% / 难度系数 ×0.9</div>
-          </div>
-          <div style="text-align:center;padding:14px 8px;background:var(--gray-50);border-radius:var(--radius-lg)">
-            <div style="font-size:28px;font-weight:700;color:var(--warning)">65</div>
-            <div style="font-size:11px;color:var(--gray-500)">引导力</div>
-            <div style="font-size:10px;color:var(--gray-400);margin-top:2px">权重 25% / 难度系数 ×0.9</div>
-          </div>
-          <div style="text-align:center;padding:14px 8px;background:var(--gray-50);border-radius:var(--radius-lg)">
-            <div style="font-size:28px;font-weight:700;color:var(--success)">70</div>
-            <div style="font-size:11px;color:var(--gray-500)">成交概率</div>
-            <div style="font-size:10px;color:var(--gray-400);margin-top:2px">权重 25% / 难度系数 ×0.9</div>
-          </div>
-          <div style="text-align:center;padding:14px 8px;background:#FEF3C7;border-radius:var(--radius-lg);border:1px solid #FDE68A">
-            <div style="font-size:28px;font-weight:700;color:#92400E">58</div>
-            <div style="font-size:11px;color:#92400E;font-weight:500">需求挖掘力</div>
-            <div style="font-size:10px;color:#A16207;margin-top:2px">★ P1阶段权重 35%</div>
-          </div>
-        </div>
-        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;padding:12px;background:#F8FAFC;border-radius:var(--radius-md)">
-          <div style="text-align:center">
-            <div style="font-size:13px;font-weight:600;color:var(--gray-700)">阶段转化得分</div>
-            <div style="font-size:22px;font-weight:700;color:#2563EB;margin-top:2px">67</div>
-            <div style="font-size:10px;color:var(--gray-400)">基于 P1→P2 真实转化率 36.63% 校准</div>
-          </div>
-          <div style="text-align:center;border-left:1px solid var(--gray-200);border-right:1px solid var(--gray-200)">
-            <div style="font-size:13px;font-weight:600;color:var(--gray-700)">综合得分</div>
-            <div style="font-size:22px;font-weight:700;color:var(--primary);margin-top:2px">71</div>
-            <div style="font-size:10px;color:var(--gray-400)">加权平均 · 需求挖掘力权重最高</div>
-          </div>
-          <div style="text-align:center">
-            <div style="font-size:13px;font-weight:600;color:var(--gray-700)">训练阶段</div>
-            <div style="font-size:14px;font-weight:600;color:#991B1B;margin-top:2px">P1→P2 · 困难</div>
-            <div style="font-size:10px;color:var(--gray-400)">CRM 数据显示此阶段流失率最高</div>
-          </div>
-        </div>
+state.history.push({letter:option.letter,level:option.level,node:node});updateStats();
+resultArea.style.display='block';
+var bm={good:'👍 优秀选择',ok:'💡 可以更好',poor:'❌ 需要改进'},bc={good:'good',ok:'ok',poor:'poor'};
+id$('result-badge').textContent=bm[option.level]||'分析';id$('result-badge').className='tr-result-badge '+(bc[option.level]||'ok');
+id$('result-text').textContent=option.analysis;
+var bestOpt=node.options&&node.options.find(function(o){return o.level==='good';});
+if(bestOpt&&option.letter!==bestOpt.letter){id$('result-best').innerHTML='<strong>推荐回应：</strong>'+bestOpt.text;id$('result-best').style.display='block';}
+else{id$('result-best').style.display='none';}
+var actions=id$('result-actions');actions.innerHTML='';
+if(option.next&&option.next.options&&option.next.options.length>0){
+if(option.level==='poor'){
+actions.innerHTML='<button class="tr-retry-btn" id="retry-btn">↻ 再试一次</button><div class="tr-next-dots"><span class="tr-ndot"></span><span class="tr-ndot" style="animation-delay:.3s"></span><span class="tr-ndot" style="animation-delay:.6s"></span></div>';
+id$('retry-btn').onclick=function(){retryStep();};
+state.autoTimer=setTimeout(function(){showNode(option.next);},3500);
+}else{
+actions.innerHTML='<div class="tr-next-dots"><span class="tr-ndot"></span><span class="tr-ndot" style="animation-delay:.3s"></span><span class="tr-ndot" style="animation-delay:.6s"></span><span style="font-size:.625rem;color:#9CA3AF">对话继续...</span></div>';
+state.autoTimer=setTimeout(function(){showNode(option.next);},2500);}
+}else{
+if(option.reaction&&!option.next){var rc=CUSTOMERS.find(function(x){return x.id===state.customer;});var rd=document.createElement('div');rd.className='tr-cust-msg';rd.innerHTML='<div class="tr-cust-avatar" style="background:'+((rc&&rc.color)||'#6B7280')+'">'+((rc&&rc.emoji)||'客')+'</div><div class="tr-cust-bubble">'+option.reaction+'</div>';msgArea.appendChild(rd);msgArea.scrollTop=msgArea.scrollHeight;}
+actions.innerHTML='<button class="tr-retry-btn" onclick="loadCase()">↻ 重新开始</button>';updateProgress(true);}
+updateProgress();}
 
-        <div style="background:#EFF6FF;border-radius:var(--radius-md);padding:16px;margin-bottom:16px">
-          <div style="font-size:14px;font-weight:600;color:var(--primary);margin-bottom:8px">⚠️ 关键提醒</div>
-          <div style="font-size:13px;color:var(--gray-700);line-height:1.8">
-            第 1 轮直接报价风险高！过早进入价格谈判容易陷入比价模式。<br>
-            <strong>建议做法：</strong>先了解客户场景（新店/老店、面积、单量），再推荐适配方案，最后报价。
-          </div>
-        </div>
+function retryStep(){
+if(state.autoTimer){clearTimeout(state.autoTimer);state.autoTimer=null;}
+var msgs=msgArea.querySelectorAll('.tr-sales-msg,.tr-cust-msg');
+if(msgs.length>=2){msgs[msgs.length-1].remove();msgs[msgs.length-2].remove();}
+state.history.pop();updateStats();
+resultArea.style.display='none';id$('result-actions').innerHTML='';
+var btns=optGrid.querySelectorAll('.tr-option-btn');
+btns.forEach(function(b){b.classList.remove('resolved','correct','wrong');});
+var node=state.currentNode;
+btns.forEach(function(b){var l=b.dataset.letter;var o=node.options.find(function(x){return x.letter===l;});b.onclick=function(){selectOption(o,node);};});}
 
-        <div style="background:var(--gray-50);border-radius:var(--radius-md);padding:16px">
-          <div style="font-size:14px;font-weight:600;color:var(--gray-800);margin-bottom:8px">标准答案参考</div>
-          <div style="font-size:13px;color:var(--gray-700);line-height:1.8;padding:12px;background:white;border-radius:var(--radius-md);border-left:3px solid var(--success)">
-            "王老板，价格根据配置不同，3 万到 8 万都有。您这是新开店还是老店升级？面积多大？日均大概多少单？我先帮您匹配个最适合的方案。"
-          </div>
-        </div>
-      </div>
-    </div>
-  </main>
+function showEnding(){
+optArea.style.display='none';id$('scene-desc').style.display='none';
+var total=state.history.length,bests=state.history.filter(function(h){return h.level==='good';}).length,rate=total>0?Math.round(bests/total*100):0;
+if(rate>state.bestRate)state.bestRate=rate;state.sessions++;
+var div=document.createElement('div');div.className='tr-summary';
+div.innerHTML='<h3>🏆 对话结束</h3><div class="tr-summary-grid"><div class="tr-summary-item"><div class="v" style="color:'+(rate>=80?'#10B981':rate>=50?'#F59E0B':'#EF4444')+'">'+rate+'%</div><div class="l">正确率</div></div><div class="tr-summary-item"><div class="v" style="color:#2563EB">'+total+'</div><div class="l">总选择</div></div></div>';
+if(rate<100){
+var weak=state.history.filter(function(h){return h.level!=='good';});
+div.innerHTML+='<div class="tr-summary-list">📌 <strong>值得回头练的：</strong><br>';
+weak.forEach(function(h,i){div.innerHTML+=(i+1)+'. 第 '+(state.history.indexOf(h)+1)+' 轮（选了'+h.letter+'）<br>';});
+div.innerHTML+='<br>💡 点击「重新开始」再试一次</div>';}else{div.innerHTML+='<div class="tr-summary-list">🎉 全部最佳！你已经掌握了这个场景。</div>';}
+msgArea.innerHTML='';msgArea.appendChild(div);updateNavStats();}
 
-  <script src="../../shared/js/app.js"></script>
-  <script>
-    initNav('AI新人模拟培训对练', '销售赋能', 'tag-blue');
+function updateStats(){
+var total=state.history.length,bests=state.history.filter(function(h){return h.level==='good';}).length,poors=state.history.filter(function(h){return h.level==='poor';}).length;
+id$('s-correct').textContent=bests;id$('s-wrong').textContent=poors;id$('s-total').textContent=total;
+id$('s-rate').textContent=total>0?Math.round(bests/total*100)+'%':'0%';
+var area=id$('h-area');
+if(state.history.length===0){area.innerHTML='<div style="font-size:.6875rem;color:#9CA3AF;text-align:center;padding:.5rem 0">等待开始</div>';return;}
+var cm={A:'#3B82F6',B:'#8B5CF6',C:'#F59E0B',D:'#EF4444'};
+area.innerHTML=state.history.map(function(h,i){var ic=h.level==='good'?'✓':h.level==='poor'?'✗':'→';var co=h.level==='good'?'#10B981':h.level==='poor'?'#EF4444':'#F59E0B';
+return'<div class="tr-h-item"><span class="tr-h-letter" style="background:'+(cm[h.letter]||'#6B7280')+'">'+h.letter+'</span><span>第 '+(i+1)+' 轮</span><span style="margin-left:auto;color:'+co+';font-weight:600">'+ic+'</span></div>';}).join('');}
 
-    let round = 1;
-    const messagesEl = document.getElementById('chat-messages');
-    const inputEl = document.getElementById('chat-input');
-    const reviewPanel = document.getElementById('review-panel');
+function updateProgress(isEnd){
+var total=0,node=state.currentNode;while(node){total++;node=node.options&&node.options[0]?node.options[0].next:null;}
+var done=state.history.length;
+id$('p-step').textContent=isEnd?'完成':done+' / '+Math.max(total,done+1);
+if(id$('p-title'))id$('p-title').textContent=done+' 轮';
+id$('p-bar').style.width=isEnd?'100%':Math.min(done/Math.max(total,1)*100,95)+'%';}
 
-    function sendMessage() {
-      const text = inputEl.value.trim();
-      if (!text) return;
-      inputEl.value = '';
+function updateNavStats(){id$('nav-sessions').textContent=state.sessions;id$('nav-best').textContent=state.bestRate>0?state.bestRate+'%':'--';}
 
-      // 用户消息
-      messagesEl.appendChild(createMessageBubble(text, 'user'));
-      scrollToBottom(messagesEl);
+function renderSelectors(){
+var cList=id$('cust-list');cList.innerHTML='';
+CUSTOMERS.forEach(function(c){var b=document.createElement('button');b.className='tr-opt'+(c.id===state.customer?' active':'');
+b.innerHTML='<span class="ic" style="background:'+c.color+'">'+c.emoji+'</span><span>'+c.name+'</span>';
+b.onclick=function(){state.customer=c.id;renderSelectors();updateDetail();};cList.appendChild(b);});
+var sList=id$('stage-list');sList.innerHTML='';
+STAGES.forEach(function(s){var b=document.createElement('button');b.className='tr-opt'+(s.id===state.stage?' active':'');
+b.innerHTML='<span style="font-size:.875rem;width:16px;text-align:center">'+s.icon+'</span><span>'+s.name+'</span>';
+b.onclick=function(){state.stage=s.id;renderSelectors();updateDetail();};sList.appendChild(b);});
+id$('load-btn').disabled=!getCase();}
 
-      // AI 回复
-      messagesEl.appendChild(createLoadingBubble());
-      scrollToBottom(messagesEl);
+document.addEventListener('DOMContentLoaded',function(){renderSelectors();updateDetail();id$('load-btn').onclick=loadCase;});
 
-      mockDelay(1200).then(() => {
-        removeLoadingBubble();
-        const aiText = getAIReply(text);
-        messagesEl.appendChild(createMessageBubble(aiText, 'ai'));
-        scrollToBottom(messagesEl);
-        round++;
-
-        if (round >= 4) {
-          setTimeout(() => {
-            reviewPanel.style.display = 'block';
-            reviewPanel.scrollIntoView({ behavior: 'smooth' });
-          }, 500);
-        }
-      });
-    }
-
-    function sendPreset(text) {
-      inputEl.value = text;
-      sendMessage();
-    }
-
-    function getAIReply(userText) {
-      if (round === 1) {
-        if (userText.includes('万') || userText.includes('价格') || /^\d/.test(userText)) {
-          return `<strong>王老板：</strong>（皱眉）别跟我报数字，我先问下，你们这机器和 XX 品牌比，优势在哪？<br><br><span style="color:var(--primary);font-size:12px">[AI点评] 客户对你直接报价不满，转向竞品对比，需要你用差异化优势回应]</span>`;
-        } else {
-          return `<strong>王老板：</strong>我开火锅店的，第 4 家店，300 平。你那机器能做火锅底料不？<br><br><span style="color:var(--primary);font-size:12px">[AI点评] 好！你成功把话题转回需求挖掘，客户开始透露场景信息]</span>`;
-        }
-      } else if (round === 2) {
-        return `<strong>王老板：</strong>（停顿）那价格呢？我前面三家店用的别的牌子，一台才 4 万。<br><br><span style="color:var(--primary);font-size:12px">[AI点评] 客户开始比价，这是价格敏感信号。不要直接降价，要强调差异化价值]</span>`;
-      } else {
-        return `<strong>王老板：</strong>（看了眼手表）这样，你把方案发我微信上，我跟我合伙人商量一下。<br><br><span style="color:var(--gray-500);font-size:12px">—— 对话结束 ——</span>`;
-      }
-    }
-  </script>
-</body>
-</html>
+</script></body></html>
