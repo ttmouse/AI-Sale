@@ -46,20 +46,20 @@
     /* 中间 — 由 wecom-chat.js 组件渲染，此处只保留播放控制 */
     .wb-center { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; overflow-y: auto; background: #2a2a2a; border-radius: var(--radius-lg); }
     .wb-center::-webkit-scrollbar { width: 3px; }
-    .wb-center::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    .wb-center::-webkit-scrollbar-thumb { background: #444; border-radius: 2px; }
     #phone-container { width: 100%; max-width: 375px; flex-shrink: 0; padding-top: 8px; }
 
 
 
     /* 播放控制 */
-    .playback-controls { display: flex; gap: 0.375rem; padding: 0.5rem; background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); flex-shrink: 0; align-items: center; width: 100%; max-width: 390px; }
-    .ctrl-btn { padding: 0.375rem 0.625rem; border: 1px solid var(--border); background: var(--bg-surface); border-radius: var(--radius-sm); font-size: 0.6875rem; cursor: pointer; color: var(--text-secondary); transition: all 0.15s; font-family: inherit; display: flex; align-items: center; gap: 0.25rem; }
-    .ctrl-btn:hover { border-color: var(--brand); color: var(--brand); background: var(--brand-muted); }
+    .playback-controls { display: flex; gap: 0.375rem; padding: 0.5rem; background: #1e1e1e; border: 1px solid #3a3a3a; border-radius: var(--radius-lg); flex-shrink: 0; align-items: center; width: 100%; max-width: 375px; }
+    .ctrl-btn { padding: 0.375rem 0.625rem; border: 1px solid #3a3a3a; background: #2a2a2a; border-radius: var(--radius-sm); font-size: 0.6875rem; cursor: pointer; color: #ccc; transition: all 0.15s; font-family: inherit; display: flex; align-items: center; gap: 0.25rem; }
+    .ctrl-btn:hover { border-color: var(--brand); color: #fff; background: rgba(37,99,235,0.2); }
     .ctrl-btn:active { transform: scale(0.96); }
     .ctrl-btn.playing { background: var(--brand); color: #fff; border-color: var(--brand); }
     .ctrl-btn svg { width: 13px; height: 13px; stroke: currentColor; stroke-width: 2; fill: none; }
-    .msg-progress { flex: 1; display: flex; align-items: center; gap: 0.5rem; font-size: 0.6875rem; color: var(--text-muted); }
-    .msg-progress-bar { flex: 1; height: 3px; background: var(--border); border-radius: 2px; overflow: hidden; }
+    .msg-progress { flex: 1; display: flex; align-items: center; gap: 0.5rem; font-size: 0.6875rem; color: #888; }
+    .msg-progress-bar { flex: 1; height: 3px; background: #3a3a3a; border-radius: 2px; overflow: hidden; }
     .msg-progress-fill { height: 100%; background: var(--brand); border-radius: 2px; transition: width 0.3s ease; width: 0%; }
 
     /* AI 时间轴 */
