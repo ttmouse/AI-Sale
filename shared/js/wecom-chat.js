@@ -17,7 +17,7 @@ const WecomChat = (() => {
     var css = ''
       + '#phone { width:375px; height:812px; background:#000; border-radius:40px; overflow:hidden; position:relative; display:flex; flex-direction:column; flex-shrink:0; }'
       + '#top-bar { flex-shrink:0; position:relative; z-index:100; }'
-      + '#status-bar { display:flex; align-items:center; justify-content:space-between; height:28px; padding:0 20px; background:#0C0C0E; flex-shrink:0; }'
+      + '#status-bar { display:flex; align-items:center; justify-content:space-between; height:28px; padding:0 20px; background:#0C0C0E; flex-shrink:0; position:relative; z-index:1; }'
       + '#status-time { font-size:12px; font-weight:600; color:rgba(255,255,255,.9); font-family:-apple-system,BlinkMacSystemFont,sans-serif; }'
       + '#status-icons { display:flex; align-items:center; gap:5px; }'
       + '#status-icons svg { display:block; }'
@@ -58,11 +58,11 @@ const WecomChat = (() => {
       + '#input-bar .right-btn { width:40px; height:40px; border-radius:50%; display:flex; align-items:center; justify-content:center; border:none; background:transparent; cursor:pointer; flex-shrink:0; transition:all .15s; }'
       + '#input-bar .right-btn:active { background:rgba(255,255,255,.1); }'
       + '#input-bar .right-btn svg { width:24px; height:24px; fill:rgba(255,255,255,.9); }'
-      + '.fp-overlay { position:absolute; top:0; left:0; right:0; bottom:0; background:rgba(0,0,0,.5); z-index:200; opacity:0; pointer-events:none; transition:opacity .3s ease; }'
+      + '.fp-overlay { position:absolute; top:28px; left:0; right:0; bottom:0; background:rgba(0,0,0,.5); z-index:200; opacity:0; pointer-events:none; transition:opacity .3s ease; }'
       + '.fp-overlay.open { opacity:1; pointer-events:auto; }'
-      + '.fp-page { position:absolute; top:0; left:0; width:100%; height:100%; background:#111214; z-index:210; transform:translateY(100%); transition:transform .35s cubic-bezier(.22,1,.36,1); display:flex; flex-direction:column; overflow:hidden; will-change:transform; }'
+      + '.fp-page { position:absolute; top:28px; left:0; width:100%; height:calc(100% - 28px); background:#111214; z-index:210; transform:translateY(100%); transition:transform .35s cubic-bezier(.22,1,.36,1); display:flex; flex-direction:column; overflow:hidden; will-change:transform; }'
       + '.fp-page.open { transform:translateY(0); }'
-      + '.fp-header { display:flex; align-items:center; height:52px; padding:0 12px; background:#111214; border-bottom:0.5px solid rgba(255,255,255,.06); flex-shrink:0; }'
+      + '.fp-header { display:flex; align-items:center; height:52px; padding:0 12px; background:#0C0C0E; border-bottom:0.5px solid rgba(255,255,255,.06); flex-shrink:0; }'
       + '.fp-close { width:44px; height:44px; display:flex; align-items:center; justify-content:center; border:none; background:transparent; color:rgba(255,255,255,.9); font-size:26px; cursor:pointer; flex-shrink:0; }'
       + '.fp-close:active { opacity:.6; }'
       + '.fp-title { flex:1; text-align:center; font-size:17px; font-weight:500; color:rgba(255,255,255,.9); }'
@@ -135,7 +135,7 @@ const WecomChat = (() => {
       + '      <span id="status-time">9:41</span>'
       + '      <div id="status-icons">'
       + '        <svg width="17" height="12" viewBox="0 0 17 12" fill="none"><rect x="0" y="7" width="3" height="5" rx="0.5" fill="white" fill-opacity="0.9"/><rect x="4.5" y="4.5" width="3" height="7.5" rx="0.5" fill="white" fill-opacity="0.9"/><rect x="9" y="2" width="3" height="10" rx="0.5" fill="white" fill-opacity="0.9"/><rect x="13.5" y="0" width="3" height="12" rx="0.5" fill="white" fill-opacity="0.9"/></svg>'
-      + '        <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><path d="M8 9.5a1 1 0 1 1 0-2 1 1 0 0 1 0 2z" fill="white" fill-opacity="0.9"/><path d="M8 6.7c-1.2 0-2.3.5-3.1 1.2l.9.9c.6-.5 1.4-.8 2.2-.8s1.6.3 2.2.8l.9-.9c-.8-.7-1.9-1.2-3.1-1.2z" fill="white" fill-opacity="0.9"/><path d="M8 3.5c-2.2 0-4.2.9-5.7 2.3l.9.9C4.4 5.5 6.1 4.8 8 4.8s3.6.7 4.8 1.9l.9-.9C12.2 4.4 10.2 3.5 8 3.5z" fill="white" fill-opacity="0.9"/></svg>'
+      + '        <svg width="16" height="11" viewBox="0 0 16 11" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.66707 2.28448C9.8918 2.28457 12.0315 3.13869 13.6438 4.67028C13.7652 4.78852 13.9593 4.78703 14.0789 4.66693L15.2395 3.4966C15.3 3.43569 15.3338 3.35318 15.3333 3.26733C15.3328 3.18148 15.2981 3.09937 15.2368 3.03917C11.0049 -1.01306 4.32857 -1.01306 0.0966565 3.03917C0.0353544 3.09933 0.000572274 3.18141 6.99859e-06 3.26726C-0.000558277 3.35311 0.0331399 3.43565 0.0936446 3.4966L1.25459 4.66693C1.37409 4.78721 1.56831 4.78871 1.68965 4.67028C3.30221 3.13859 5.44212 2.28447 7.66707 2.28448ZM7.66707 6.09206C8.88942 6.09199 10.0681 6.54594 10.9742 7.36571C11.0968 7.48206 11.2898 7.47954 11.4093 7.36003L12.5685 6.1897C12.6296 6.12831 12.6635 6.04504 12.6626 5.9585C12.6617 5.87196 12.6261 5.78939 12.5639 5.72926C9.8047 3.16485 5.53178 3.16485 2.77262 5.72926C2.7103 5.78939 2.67474 5.87201 2.67392 5.95857C2.6731 6.04513 2.70709 6.1284 2.76827 6.1897L3.92721 7.36003C4.04667 7.47954 4.23972 7.48206 4.36227 7.36571C5.26774 6.54648 6.44553 6.09257 7.66707 6.09206ZM9.98929 8.6539C9.99106 8.74068 9.95692 8.82434 9.89492 8.88514L7.88962 10.9071C7.83084 10.9666 7.75069 11 7.66707 11C7.58345 11 7.5033 10.9666 7.44452 10.9071L5.43888 8.88514C5.37693 8.8243 5.34284 8.7406 5.34468 8.65383C5.34652 8.56705 5.38411 8.48487 5.44859 8.4267C6.72925 7.34443 8.60489 7.34443 9.88555 8.4267C9.94998 8.48492 9.98752 8.56712 9.98929 8.6539Z" fill="white" fill-opacity="0.9"/></svg>'
       + '        <svg width="25" height="12" viewBox="0 0 25 12" fill="none"><rect x="0.5" y="1" width="19" height="10" rx="2.5" stroke="white" stroke-opacity="0.9" fill="none"/><rect x="20" y="3.5" width="3" height="5" rx="1" fill="white" fill-opacity="0.4"/><rect x="2" y="2.5" width="16" height="7" rx="1.5" fill="white" fill-opacity="0.9"/></svg>'
       + '      </div>'
       + '    </div>'
@@ -257,21 +257,27 @@ const WecomChat = (() => {
   function openProfile() {
     var page = document.getElementById('profile-page');
     var overlay = document.getElementById('profile-overlay');
+    var statusBar = document.getElementById('status-bar');
     if (page && overlay) { page.classList.add('open'); overlay.classList.add('open'); }
+    if (statusBar) statusBar.style.zIndex = '999';
   }
   function closeProfile() {
     var page = document.getElementById('profile-page');
     var overlay = document.getElementById('profile-overlay');
     var historyPage = document.getElementById('history-page');
+    var statusBar = document.getElementById('status-bar');
     if (historyPage) historyPage.classList.remove('open');
     if (page && overlay) { page.classList.remove('open'); overlay.classList.remove('open'); }
+    if (statusBar) statusBar.style.zIndex = '';
   }
 
   // ===== 历史记录页面：打开/关闭 =====
   function openHistory() {
     var historyPage = document.getElementById('history-page');
     var overlay = document.getElementById('profile-overlay');
+    var statusBar = document.getElementById('status-bar');
     if (!historyPage) return;
+    if (statusBar) statusBar.style.zIndex = '999';
     if (overlay) overlay.classList.add('open');
 
     var body = document.getElementById('history-body');
@@ -300,7 +306,9 @@ const WecomChat = (() => {
   }
   function closeHistory() {
     var historyPage = document.getElementById('history-page');
+    var statusBar = document.getElementById('status-bar');
     if (historyPage) historyPage.classList.remove('open');
+    if (statusBar) statusBar.style.zIndex = '';
   }
 
   // ===== 更新侧边栏内容（含标签页）=====
