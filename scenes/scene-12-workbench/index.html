@@ -8,20 +8,20 @@
   <link rel="stylesheet" href="../../shared/css/styles.css">
   <style>
     /* ===== 页面布局 ===== */
-    .wb-page { display: flex; flex-direction: column; min-height: 100vh; background: var(--bg-base); }
-    .wb-nav { background: var(--bg-surface); border-bottom: 1px solid var(--border); padding: 0.75rem 1.5rem; display: flex; align-items: center; gap: 1rem; flex-shrink: 0; }
+    .wb-page { display: flex; flex-direction: column; height: 100vh; background: var(--bg-base); }
+    .wb-nav { background: var(--bg-surface); border-bottom: 1px solid var(--border); padding: 0.375rem 1rem; display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
     .wb-nav-back { color: var(--text-secondary); text-decoration: none; font-size: 0.8125rem; display: flex; align-items: center; gap: 0.375rem; }
     .wb-nav-back:hover { color: var(--brand); }
     .wb-nav-back svg { width: 16px; height: 16px; }
-    .wb-nav-title { font-size: 0.9375rem; font-weight: 600; color: var(--text-primary); }
-    .wb-stage-bar { display: flex; gap: 0.25rem; padding: 0.625rem 1.5rem; background: var(--bg-surface); border-bottom: 1px solid var(--border); overflow-x: auto; flex-shrink: 0; }
-    .stage-tab { display: flex; align-items: center; gap: 0.5rem; padding: 0.4375rem 0.75rem; border: 1px solid var(--border); background: var(--bg-subtle); border-radius: var(--radius-md); cursor: pointer; font-size: 0.75rem; font-family: inherit; color: var(--text-secondary); transition: all 0.2s ease; white-space: nowrap; flex-shrink: 0; border-left: 3px solid var(--tab-color, #999); }
+    .wb-nav-title { font-size: 0.875rem; font-weight: 600; color: var(--text-primary); white-space: nowrap; }
+    .wb-nav-stages { display: flex; gap: 0.1875rem; overflow-x: auto; flex: 1; align-items: center; }
+    .stage-tab { display: flex; align-items: center; gap: 0.25rem; padding: 0.25rem 0.5rem; border: 1px solid var(--border); background: var(--bg-subtle); border-radius: var(--radius-sm); cursor: pointer; font-size: 0.6875rem; font-family: inherit; color: var(--text-secondary); transition: all 0.15s ease; white-space: nowrap; flex-shrink: 0; border-left: 2px solid var(--tab-color, #999); }
     .stage-tab:hover { background: var(--bg-hover); border-color: var(--border-strong); }
-    .stage-tab.active { background: var(--bg-surface); border-color: var(--tab-color, #999); color: var(--text-primary); font-weight: 600; box-shadow: 0 1px 4px rgba(0,0,0,0.08); }
-    .stage-tab-num { font-family: 'Geist Mono', monospace; font-size: 0.6875rem; font-weight: 700; color: var(--tab-color, #999); }
+    .stage-tab.active { background: var(--bg-surface); border-color: var(--tab-color, #999); color: var(--text-primary); font-weight: 600; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .stage-tab-num { font-family: 'Geist Mono', monospace; font-size: 0.625rem; font-weight: 700; color: var(--tab-color, #999); }
     .stage-tab.active .stage-tab-num { color: var(--tab-color); }
 
-    .wb-main { display: grid; grid-template-columns: 260px 1fr 240px 280px; gap: 0.75rem; padding: 1rem 1.5rem; height: calc(100vh - 130px); min-height: 0; }
+    .wb-main { display: grid; grid-template-columns: 260px 1fr 310px 310px; grid-template-rows: 1fr; gap: 0.75rem; padding: 1rem 1.5rem; flex: 1; min-height: 0; }
 
     /* 左侧面板 */
     .wb-left { display: flex; flex-direction: column; gap: 0.75rem; overflow-y: auto; overscroll-behavior: contain; }
@@ -44,8 +44,10 @@
     .scenario-item-id { font-family: 'Geist Mono', monospace; font-size: 0.6875rem; color: var(--text-muted); min-width: 2rem; }
 
     /* 中间 — 由 wecom-chat.js 组件渲染，此处只保留播放控制 */
-    .wb-center { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; overflow: hidden; }
-    #phone-container { width: 100%; max-width: 390px; flex-shrink: 0; }
+    .wb-center { display: flex; flex-direction: column; align-items: center; gap: 0.75rem; overflow-y: auto; background: #2a2a2a; border-radius: var(--radius-lg); }
+    .wb-center::-webkit-scrollbar { width: 3px; }
+    .wb-center::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+    #phone-container { width: 100%; max-width: 375px; flex-shrink: 0; padding-top: 8px; }
 
 
 
@@ -68,19 +70,19 @@
       min-height: 0; max-height: 100%;
     }
     .wb-timeline .tl-header {
-      font-size: 0.625rem; font-weight: 600; color: var(--text-muted);
+      font-size: 0.8125rem; font-weight: 600; color: var(--text-muted);
       text-transform: uppercase; letter-spacing: 0.06em;
-      padding: 0.625rem 0.75rem; border-bottom: 1px solid var(--border);
+      padding: 0.75rem 1rem; border-bottom: 1px solid var(--border);
       display: flex; align-items: center; gap: 0.375rem; flex-shrink: 0;
       background: var(--bg-subtle); position: sticky; top: 0; z-index: 1;
     }
     .tl-body { flex: 1; overflow-y: auto; display: flex; flex-direction: column; overscroll-behavior: contain; }
     .tl-body::-webkit-scrollbar { width: 3px; }
     .tl-body::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-    .tl-empty { font-size: 0.6875rem; color: var(--text-muted); padding: 1.5rem 0.75rem; text-align: center; }
+    .tl-empty { font-size: 0.8125rem; color: var(--text-muted); padding: 1.5rem 0.75rem; text-align: center; }
 
     .tl-card {
-      padding: 0.625rem 0.75rem;
+      padding: 0.75rem 1rem;
       border-bottom: 1px solid var(--border);
       animation: tlSlideIn 0.3s ease-out;
     }
@@ -89,7 +91,7 @@
 
     
 .tl-card .tl-step {
-      font-size: 0.5625rem; font-weight: 700; color: var(--brand);
+      font-size: 0.75rem; font-weight: 700; color: var(--brand);
       text-transform: uppercase; letter-spacing: 0.04em; margin-bottom: 0.25rem;
     }
     .tl-card .tl-stage {
@@ -98,7 +100,7 @@
       color: #fff; margin-bottom: 0.25rem;
     }
     .tl-card .tl-line {
-      font-size: 0.625rem; color: var(--text-secondary);
+      font-size: 0.8125rem; color: var(--text-secondary);
       line-height: 1.5; padding: 0.0625rem 0;
       padding-left: 0.625rem; position: relative;
     }
@@ -113,6 +115,8 @@
 
     /* 右侧面板 */
     .wb-right { display: flex; flex-direction: column; gap: 0.625rem; overflow-y: auto; overscroll-behavior: contain; }
+    .wb-right::-webkit-scrollbar { width: 3px; }
+    .wb-right::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
     .wb-right .ann-card { background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 0.75rem; }
     .wb-right .ann-card-title { font-size: 0.6875rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.375rem; }
     .ann-card-title .dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
@@ -183,24 +187,24 @@
     /* Agent 执行日志 - 执行过程流 */
     /* Agent 执行日志 - 卡片样式 */
     .tl-scard { margin: 0.1875rem 0; border-radius: 0.25rem; overflow: hidden; background: var(--bg-surface); box-shadow: 0 1px 2px rgba(0,0,0,0.04); }
-    .tl-scard-hd { display: flex; align-items: center; gap: 0.3125rem; padding: 0.25rem 0.5rem; font-size: 0.5625rem; font-weight: 600; background: var(--bg-subtle); }
-    .tl-scard-bd { padding: 0.1875rem 0.5rem 0.3125rem 0.5rem; font-size: 0.5625rem; line-height: 1.6; }
+    .tl-scard-hd { display: flex; align-items: center; gap: 0.3125rem; padding: 0.25rem 0.5rem; font-size: 0.6875rem; font-weight: 600; background: var(--bg-subtle); }
+    .tl-scard-bd { padding: 0.1875rem 0.5rem 0.3125rem 0.5rem; font-size: 0.6875rem; line-height: 1.6; }
     .tl-scard-observe .tl-scard-hd { color: #3B82F6; }
     .tl-scard-reason .tl-scard-hd { color: #8B5CF6; }
     .tl-scard-execute .tl-scard-hd { color: #10B981; }
     .tl-agent-icon { display: inline-flex; align-items: center; vertical-align: middle; width: 1rem; height: 1rem; }
     .tl-agent-icon svg { width: 12px; height: 12px; }
-    .tl-dur { font-size: 0.4375rem; color: var(--text-muted); opacity: 0.5; margin-left: auto; font-family: "Geist Mono", monospace; white-space: nowrap; }
-    .tl-agent-tool { font-family: "SF Mono", "Geist Mono", monospace; font-size: 0.4375rem; color: var(--text-muted); opacity: 0.4; margin-right: 0.25rem; }
+    .tl-dur { font-size: 0.5625rem; color: var(--text-muted); opacity: 0.5; margin-left: auto; font-family: "Geist Mono", monospace; white-space: nowrap; }
+    .tl-agent-tool { font-family: "SF Mono", "Geist Mono", monospace; font-size: 0.5625rem; color: var(--text-muted); opacity: 0.4; margin-right: 0.25rem; }
     .tl-agent-result { color: var(--text-secondary); word-break: break-word; }
-    .tl-prompt { color: var(--text-muted); opacity: 0.6; display: block; font-size: 0.5rem; }
-    .tl-running { display: inline-block; animation: tl-pulse 0.8s ease-in-out infinite; font-size: 0.5rem; color: var(--brand); margin-left: 0.25rem; }
+    .tl-prompt { color: var(--text-muted); opacity: 0.6; display: block; font-size: 0.625rem; }
+    .tl-running { display: inline-block; animation: tl-pulse 0.8s ease-in-out infinite; font-size: 0.625rem; color: var(--brand); margin-left: 0.25rem; }
     @keyframes tl-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
-    .tl-phase-divider { font-size: 0.5rem; font-weight: 700; padding: 0.25rem 0 0.0625rem; letter-spacing: 0.05em; border-top: 1px solid var(--border); margin-top: 0.125rem; }
+    .tl-phase-divider { font-size: 0.625rem; font-weight: 700; padding: 0.25rem 0 0.0625rem; letter-spacing: 0.05em; border-top: 1px solid var(--border); margin-top: 0.125rem; }
     .tl-phase-observe { color: #3B82F6; }
     .tl-phase-reason { color: #8B5CF6; }
     .tl-phase-execute { color: #10B981; }
-    .tl-agent-tag { display: inline-block; padding: 0.0625rem 0.3125rem; background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 0.125rem; font-size: 0.5625rem; color: var(--text-secondary); margin: 0.0625rem 0.125rem; }
+    .tl-agent-tag { display: inline-block; padding: 0.0625rem 0.3125rem; background: var(--bg-subtle); border: 1px solid var(--border); border-radius: 0.125rem; font-size: 0.6875rem; color: var(--text-secondary); margin: 0.0625rem 0.125rem; }
     .tl-agent-confirm { background: #FEF3C7; border-color: #FDE68A; color: #92400E; }
 
 
@@ -242,17 +246,15 @@
 </head>
 <body class="wb-page">
 
-  <!-- 导航 -->
+  <!-- 导航 + 阶段 Tab（合并为一行）-->
   <nav class="wb-nav">
     <a href="../../index.html" class="wb-nav-back">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
       返回主页
     </a>
-    <span class="wb-nav-title">销售对话智能工作台 · 场景演示</span>
+    <span class="wb-nav-title">销售对话智能工作台</span>
+    <div class="wb-nav-stages" id="stage-tabs"></div>
   </nav>
-
-  <!-- 阶段 Tab -->
-  <div class="wb-stage-bar" id="stage-tabs"></div>
 
   <!-- 三栏主区域 -->
   <div class="wb-main">

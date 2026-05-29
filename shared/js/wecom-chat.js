@@ -15,7 +15,7 @@ const WecomChat = (() => {
     if (_cssInjected) return;
     _cssInjected = true;
     var css = ''
-      + '#phone { width:390px; height:844px; background:#000; border-radius:40px; overflow:hidden; position:relative; display:flex; flex-direction:column; box-shadow:0 20px 80px rgba(0,0,0,.8),0 0 0 1px rgba(255,255,255,.06); flex-shrink:0; }'
+      + '#phone { width:375px; height:812px; background:#000; border-radius:40px; overflow:hidden; position:relative; display:flex; flex-direction:column; flex-shrink:0; }'
       + '#top-bar { flex-shrink:0; position:relative; z-index:100; }'
       + '#status-bar { display:flex; align-items:center; justify-content:space-between; height:28px; padding:0 20px; background:#0C0C0E; flex-shrink:0; }'
       + '#status-time { font-size:12px; font-weight:600; color:rgba(255,255,255,.9); font-family:-apple-system,BlinkMacSystemFont,sans-serif; }'
@@ -42,7 +42,7 @@ const WecomChat = (() => {
       + '.msg-sales .msg-bubble { position:relative; }'
       + '.msg-sales .msg-bubble .msg-content { background:#075A9A; color:#fff; padding:10px 12px; border-radius:4px; font-size:15px; word-break:break-word; line-height:1.5; }'
       + '.msg-sales .msg-bubble::before { content:""; position:absolute; top:14px; right:-5px; width:0; height:0; border:5px solid transparent; border-right:0; border-left-color:#075A9A; border-bottom-width:4px; border-top-width:6px; }'
-      + '.msg-sales .msg-bubble .read-tag { font-size:10px; color:rgba(255,255,255,.2); text-align:right; margin-top:2px; }'
+
       + '#toolbar { background:#0C0C0E; border-top:0.5px solid rgba(255,255,255,.06); flex-shrink:0; position:relative; z-index:50; padding:8px 0; }'
       + '.tool-scroll { display:flex; gap:10px; overflow-x:auto; overflow-y:hidden; -webkit-overflow-scrolling:touch; padding:0 12px; scrollbar-width:none; }'
       + '.tool-scroll::-webkit-scrollbar { display:none; }'
@@ -600,7 +600,7 @@ const WecomChat = (() => {
         + '<div class="msg-bubble"><div class="msg-content">' + _escape(content) + '</div></div>';
     } else if (type === 'sales') {
       div.innerHTML = '<div class="msg-bubble"><div class="msg-content">' + _escape(content)
-        + '<div class="read-tag">\u5DF2\u8BFB</div></div></div>'
+        + '</div></div></div>'
         + '<div class="msg-avatar">\u9500</div>';
     }
 
