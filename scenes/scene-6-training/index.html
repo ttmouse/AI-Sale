@@ -87,92 +87,75 @@
 <script>var CUSTOMERS=[{id:'newbie',name:'创业小白',emoji:'创',color:'#10B981'},{id:'chain',name:'连锁老板',emoji:'连',color:'#8B5CF6'},{id:'picky',name:'挑剔型客户',emoji:'挑',color:'#EF4444'}];
 var STAGES=[{id:'icebreak',name:'破冰开场',icon:'🤝'},{id:'compete',name:'竞品对比',icon:'⚔️'},{id:'close',name:'关单推进',icon:'🎯'}];
 
-var CASES_DATA={};(function(){var C=CASES_DATA;
+var CASES_DATA={};
+(function(){var C=CASES_DATA;
+// Case 1: 新客户询价
 C['newbie-icebreak']={title:"新客户询价",tags:["报价技巧","需求引导"],root:{context:"客户在网上看到产品，直接问价格。",customer:"你好，我在网上看到你们家的炒菜机。这个机器多少钱一台？",options:[
-{letter:"A",text:"YC-3000 标准款是 4.98 万。",level:"poor",analysis:"❌ 直接报价等于把主动权交给客户。",reaction:"哦，4.98 万啊…那先这样吧。",next:null},
-{letter:"B",text:"价格根据配置不同，从 3 万到 8 万都有。您做的是什么类型的餐饮？",level:"good",analysis:"✅ 先给价格区间再用反问引导到需求。",
-next:{customer:"80 平快餐店，主要做盖浇饭。你觉得我该买哪种？",options:[
-{letter:"A",text:"推荐 YC-2000 标准款，日产能 200-300 单。",level:"good",analysis:"✅ 基于场景推荐具体型号。",
-next:{customer:"YC-2000 配齐一套大概多少钱？",options:[
-{letter:"A",text:"标准款 2.98 万，配操作台和排烟约 4.5 万。帮您算 ROI？",level:"good",analysis:"✅ 报价后转向提供价值。",
-next:{customer:"帮我算算。担心师傅不会用。",options:[
-{letter:"A",text:"免费上门安装调试+现场培训，教到会操作为止。",level:"good",analysis:"✅ 培训承诺具体。",
-next:{customer:"那售后呢？",options:[
-{letter:"A",text:"3 年质保，4 小时上门，200+ 城市有网点，写进合同。",level:"good",analysis:"✅ 承诺具体可量化。",
-next:{customer:"什么时候能安排安装？",options:[
-{letter:"A",text:"下单到安装约 2 周。您什么时候开业？我安排。",level:"good",analysis:"✅ 明确时间线+推进成交。",reaction:"一个月后开业，来得及。出合同吧。",next:null},
-{letter:"B",text:"2 周左右。",level:"poor",analysis:"❌ 只说时间线不推进，客户会觉得你在等他想。",reaction:"那你到时候联系我吧。",next:null},{letter:"C",text:"正常2周能到货安装，我提前排好单，您开业前一周我确认一下。",level:"ok",analysis:"⚠️ 给客户确定感，但缺少反问客户时间线。主动问开业时间能帮你排期也顺便推进成交。",reaction:"好的，那你提前联系我。",next:null}
+{letter:"A",text:"YC-3000 标准款 4.98 万，YC-2000 标准款 2.98 万，看您的需求来选。",level:"good",analysis:"👍 给价格范围的同时给出两个型号选项，客户不会只盯着一个数字。客户可以自己判断，感觉你有底气而不是遮遮掩掩。风险是信息量大，有些客户会纠结选哪个。",reaction:"2.98 万那款够用吗？我开快餐店的。",next:null},
+{letter:"B",text:"价格从 3 万到 8 万都有，主要看配置。您做的是什么类型的餐饮？",level:"good",analysis:"👍 先给区间让客户有预期，再用反问把话题引到需求上。既回答了问题，又把主动权拿回来了。风险是如果客户坚持要具体价格，你会陷入被动。",reaction:"80 平快餐店，主要做盖浇饭。你觉得我该买哪种？",next:{customer:"80 平快餐店，主要做盖浇饭。你觉得我该买哪种？",options:[
+{letter:"A",text:"80 平快餐店的话，YC-2000 标准款比较多人选，日产能 200-300 单，够用了。",level:"good",analysis:"👍 基于客户场景推荐具体型号，附带产能数据让客户理解为什么。他会觉得你不是在推销而是在帮他选。风险是如果客户想要更便宜或更贵的，你要准备好调整方案。",reaction:"YC-2000 配齐一套大概多少钱？",next:{customer:"YC-2000 配齐一套大概多少钱？",options:[
+{letter:"A",text:"标准款 2.98 万，配操作台和排烟大概 4.5 万。我帮您算算投入产出？",level:"good",analysis:"👍 报价具体，然后立刻转向提供价值——算 ROI。客户感受到的是专业服务不是在卖货。风险是客户可能说'先报价再说'拒绝算 ROI。",reaction:"帮我算算。但担心师傅不会用。",next:{customer:"担心师傅不会用。",options:[
+{letter:"A",text:"我们免费上门安装调试加现场培训，教到会操作为止不限次数，还有视频随时看。",level:"good",analysis:"👍 培训承诺具体（上门+现场+不限次数），客户听到的是保障不是空话。风险是如果客户问'培训多久'，你要能给出具体时间。",reaction:"那售后呢？万一出问题怎么办？",next:{customer:"那售后呢？",options:[
+{letter:"A",text:"3 年质保，4 小时上门，超时免维修费，全国 200 多个城市有网点，这些白纸黑字写进合同。",level:"good",analysis:"👍 用具体数字（3年/4小时/200城市）说话，最后强调'写进合同'让客户踏实。风险是如果客户问质保期后的费用，你要有准备。",reaction:"什么时候能安排安装？",next:{customer:"什么时候能安排安装？",options:[
+{letter:"A",text:"下单到安装大概 2 周。您什么时候开业？我按您的时间来安排。",level:"good",analysis:"👍 主动问客户时间线，客户会感受到你的服务意识。注意语气别太急，让客户觉得你在催他。",reaction:"一个月后开业，来得及。出合同吧。",next:null},
+{letter:"B",text:"正常 2 周左右。我建议早点下单，这样安装完还有时间调试，开业更放心。",level:"good",analysis:"👍 给出专业建议（留调试时间），体现行业经验。客户会觉得你不只是卖货是在帮他把控进度。风险是如果客户不着急，可能觉得你在制造紧迫感。",reaction:"也对，那早点定下来。发合同吧。",next:null},
+{letter:"C",text:"2 周能到。我先发一份安装准备清单，您提前把场地准备好。",level:"good",analysis:"👍 给了实用信息让客户有事可做。但比 A 和 B 少了一个推动成交的动作——客户可能拿了清单继续拖着。",reaction:"好的，你先发过来我看看。",next:null}
 ]}},
-{letter:"B",text:"售后您放心。",level:"poor",analysis:"❌ 太模糊了，客户要的是具体承诺。",reaction:"你放心我不放心。到底多久能到？",next:null},{letter:"C",text:"我们有全国200多个服务网点，具体条款合同里有写。",level:"ok",analysis:"⚠️ 提到网点数比空口说放心好，但没给具体时限。",reaction:"200多个网点还行，具体多久能到？",next:null}
+{letter:"B",text:"售后我们有完善的体系，合同里都有写，您放心好了。",level:"good",analysis:"👍 提到'合同里都有写'让客户有确定感。但没给具体数字——哪个行业、多长时间、多快响应？客户嘴上不说心里会打鼓。大客户尤其需要具体承诺。",reaction:"合同里有写就好。那具体多久能到？",next:null}
 ]}},
-{letter:"B",text:"不难学的。",level:"poor",analysis:"❌ 否定客户担心。",reaction:"你这么说我更担心了。",next:null}
+{letter:"B",text:"不难的，我们有培训，师傅学几天就会了。",level:"good",analysis:"👍 提到有培训，比回避问题好。但'几天'太模糊了——客户需要的是'教到会为止'的具体承诺。风险是客户觉得你在淡化他的担心。",reaction:"几天是几天？别到时候学了半个月还不会。",next:null}
 ]}},
-{letter:"B",text:"2.98 万，很便宜了。",level:"poor",analysis:"❌ 显得防御性强。",reaction:"2.98 万也不便宜啊。",next:null},{letter:"C",text:"YC-2000 标准款 2.98 万，如果预算有限也有基础套餐 2.5 万能配齐。",level:"ok",analysis:"⚠️ 给价格选择让客户觉得你为他考虑。但先解释价值再给选择会更有说服力。",reaction:"2.5 万和 2.98 万的差在哪？",next:null}
+{letter:"B",text:"2.98 万，如果预算有限也有 2.5 万的基础套餐。",level:"good",analysis:"👍 给了价格选择，客户会觉得你在为他考虑。但先问需求再给方案会更好——客户可能因为低价选了一个不适合他的配置。",reaction:"2.5 万的和 2.98 万的差在哪？",next:null}
 ]}},
-{letter:"B",text:"建议买 YC-3000，性能更好。",level:"poor",analysis:"❌ 过度配置。",reaction:"我这个店才 80 平，用这么好的太浪费了吧？",
-next:{customer:"我这个店才 80 平，用这么好的太浪费了吧？",options:[
-{letter:"A",text:"您说得对，YC-2000 就够用了。",level:"good",analysis:"✅ 诚实比硬撑好。",
-next:{customer:"那 YC-2000 多少钱？",options:[
-{letter:"A",text:"2.98 万，配齐约 4.5 万。帮您算？",level:"good",analysis:"✅ 报价后转向价值。",reaction:"行，算算看。",next:null},
-{letter:"B",text:"2.98 万。",level:"poor",analysis:"❌ 没有引导。",reaction:"哦。",next:null}
+{letter:"B",text:"80 平的话 YC-2000 够用了，YC-3000 产能更高但价格也贵不少。",level:"good",analysis:"👍 给客户两个选项对比，让他自己权衡。客户会觉得你客观不是在硬推。但信息有点多，有些客户会不知道选哪个好。",reaction:"那 YC-3000 贵多少？",next:{customer:"那 YC-3000 贵多少？",options:[
+{letter:"A",text:"YC-3000 是 4.98 万，产能高 50% 但您 80 平的店 YC-2000 完全够用了，省下的 2 万可以投在别的地方。",level:"good",analysis:"👍 给了对比还给了一个帮客户省钱的理由——客户会觉得你站在他这边。风险是如果客户确实需要高产能，你反而劝他买小的。",reaction:"有道理，那 YC-2000 配齐多少钱？",next:null},
+{letter:"B",text:"YC-3000 4.98 万，不过性能确实好很多。",level:"good",analysis:"👍 回答了价格但没硬推。客户可以自己判断。但缺少帮客户决策的引导——他可能不知道哪个更适合自己的场景。",reaction:"贵了 2 万啊…那 YC-2000 够用吗？",next:null}
 ]}},
-{letter:"B",text:"长远考虑嘛。",level:"poor",analysis:"❌ 坚持推销。",reaction:"我先看看别的。",next:null}
+{letter:"C",text:"这个看您的预算和需求。您大概打算投多少钱？",level:"good",analysis:"👍 问预算本身没有错，可以帮客户缩小范围。但顺序上最好先给出专业建议建立信任，再问预算调整。直接问预算客户可能觉得你在看人下菜碟。",reaction:"我也没想好，你觉得多少钱合适？",next:null}
 ]}},
-{letter:"C",text:"看您预算，打算投多少？",level:"ok",analysis:"⚠️ 应先推荐再调。",reaction:"我还没想好。",next:null}
-]}},
-{letter:"C",text:"您先别急，我先介绍产品。",level:"ok",analysis:"⚠️ 回避显得不自信。",reaction:"我就想知道价格。",
-next:{customer:"我就想知道价格。",options:[
-{letter:"A",text:"标准款 2.98 万，高配 4.98 万。选哪个看场景？",level:"good",analysis:"✅ 给范围再问需求。",reaction:"2.98 万够用吗？我开快餐店。",next:null},
-{letter:"B",text:"2.98 万起。",level:"poor",analysis:"❌ 没有引导。",reaction:"哦。",next:null}
-]}}
+{letter:"C",text:"我先了解一下您的需求，这样才能给您推荐最合适的型号。您做的是什么类型的餐饮？",level:"good",analysis:"👍 不想直接报价的想法是对的——先建立价值再谈价格。但语气要自然，不要让客户觉得你在回避问题。可以说'价格看配置，我先帮您看看哪种适合'。",reaction:"我就想知道大概多少钱。",next:null}
 ]}};
+// Case 2: 竞品对比
 C['chain-compete']={title:"客户拿竞品压价",tags:["竞品对比","差异化"],root:{context:"连锁餐饮老板对比多个品牌。",customer:"XX 牌才 3 万，你们凭什么贵一倍？",options:[
-{letter:"A",text:"XX 牌故障率高，售后也跟不上。",level:"poor",analysis:"❌ 攻击竞品最低级。",reaction:"你怎么知道？",next:null},
-{letter:"B",text:"XX 牌价格有优势。但我们的温控精度 ±1℃，连锁店口味一致很重要。您觉得品质稳定影响大吗？",level:"good",analysis:"✅ 承认优势+差异化+反问。",
-next:{customer:"品质稳定确实重要。",options:[
-{letter:"A",text:"对，温控每道菜口味一致，每月更新菜谱。",level:"good",analysis:"✅ 深入差异化。",
-next:{customer:"那你们和 XX 比，哪个更耐用？",options:[
-{letter:"A",text:"设计寿命 8 年，连续 12 小时没问题。故障率低于 1%。",level:"good",analysis:"✅ 用数据说话。",
-next:{customer:"那售后呢？",options:[
-{letter:"A",text:"3 年质保，4 小时上门，200+ 网点，写进合同。",level:"good",analysis:"✅ 承诺具体可量化。",
-next:{customer:"质保期过了维修贵不贵？",options:[
-{letter:"A",text:"续保每年 2000，比单次维修划算。终身技术支持。",level:"good",analysis:"✅ 延保方案。",
-next:{customer:"出整体方案吧，含售后条款。",options:[
-{letter:"A",text:"今天发您。约时间去店里现场试做两道菜？",level:"good",analysis:"✅ 推进线下体验。",reaction:"行，先发方案。",next:null},
-{letter:"B",text:"好的，今天发您。",level:"poor",analysis:"❌ 错失推进。",reaction:"好的。",next:null}
+{letter:"A",text:"XX 牌是便宜，但他们的用料和售后跟我们是两个档次。",level:"good",analysis:"👍 承认对方价格便宜（显得客观），然后暗示品质差异。但只说'用料档次'没具体数据支撑，客户追问起来你要能答得上来。更好的做法是用可量化的差异点说话。",reaction:"两个档次？具体差在哪？",next:null},
+{letter:"B",text:"XX 牌价格确实有优势。但我们的温控精度能做到 ±1℃，连锁店口味一致很重要。您觉得品质稳定影响大吗？",level:"good",analysis:"👍 承认对方优势+给出具体差异化数据+反问拉回客户需求。这是标准的竞品应对结构。风险是如果客户说'品质我不在乎，便宜就行'，你的策略要调整。",reaction:"品质稳定确实重要。",next:{customer:"品质稳定确实重要。",options:[
+{letter:"A",text:"对，我们的温控每道菜口味一致，而且每月更新菜谱不用依赖大厨。连锁店扩张最怕的就是口味不统一。",level:"good",analysis:"👍 在客户认可的点上深入，加了一个差异化优势（菜谱更新），最后把话题拉到连锁店的痛点——扩张。客户会感觉你懂他的生意。",reaction:"那耐用性呢？一天要工作 10 小时。",next:{customer:"耐用性怎么样？",options:[
+{letter:"A",text:"设计寿命 8 年，连续工作 12 小时没问题。故障率低于 1%，出厂经过 72 小时拷机。有客户用了 5 年没出过一次问题。",level:"good",analysis:"👍 用数据说话（8年/12小时/低于1%），再辅以客户案例，非常扎实。风险是如果客户说'那万一坏了呢'，你要能接住售后的问题。",reaction:"那售后呢？坏了怎么办？",next:{customer:"坏了怎么办？",options:[
+{letter:"A",text:"3 年质保，4 小时上门，超时免维修费。200 多个城市有服务网点，这些承诺写进合同的。",level:"good",analysis:"👍 承诺具体可量化（3年/4小时/200城市），最后强调写进合同——客户听了踏实。大客户最看重的就是说到做到。",reaction:"质保期过了呢？维修贵不贵？",next:{customer:"质保期过了呢？",options:[
+{letter:"A",text:"续保每年 2000，比单次维修划算。而且终身提供技术支持，有问题随时打电话。",level:"good",analysis:"👍 主动给出续保方案（每年2000），让客户心里有数。比等客户问了再回答显得更专业。风险是客户可能觉得每年 2000 也是一笔开销。",reaction:"行，那你出个整体方案吧，设备清单和售后条款都写上。",next:{customer:"出整体方案吧。",options:[
+{letter:"A",text:"今天整理好发您。另外方便的话，我约个时间带机器去您店里现场试做两道菜？",level:"good",analysis:"👍 答应出方案的同时推进试菜。对高客单产品来说，线上聊再多不如一次线下体验。错过这个时机，后面再约难度更大。",reaction:"先发方案我看完再约。",next:null},
+{letter:"B",text:"好的，今天整理好发您。",level:"good",analysis:"👍 说到做到，给客户好的第一印象。但对比 A，少了一个推进试菜的机会。方案发完后客户可能看完就没下文了。",reaction:"好的，等你方案。",next:null}
 ]}},
-{letter:"B",text:"不贵的。",level:"poor",analysis:"❌ 太模糊。",reaction:"不贵是多少？",next:null}
+{letter:"B",text:"维修费用不高，具体看情况。",level:"good",analysis:"👍 回答不算错，但'看情况'三个字会让客户心里没底。大客户做采购决策需要的是确定性不是'看情况'。建议主动给一个参考价或续保方案。",reaction:"看情况是什么情况？你给个大概的数。",next:null}
 ]}},
-{letter:"B",text:"响应很快的。",level:"poor",analysis:"❌ 太模糊。",reaction:"多快？有网点？",next:null}
+{letter:"B",text:"我们有全国网点，响应速度您可以放心。",level:"good",analysis:"👍 提到了网点，但没有具体时限。大客户做决策需要可量化的承诺——'放心'是最没有说服力的词。给具体数字（4 小时）效果会好很多。",reaction:"具体多久能到？您给个准话。",next:null}
 ]}},
-{letter:"B",text:"我们比 XX 耐用。",level:"poor",analysis:"❌ 空口无凭。",reaction:"有依据？",next:null}
+{letter:"B",text:"我们比 XX 耐用，用过的客户都知道。",level:"good",analysis:"👍 用客户口碑说话有一定说服力。但没有数据支撑，如果客户追问'怎么证明'就尴尬了。建议备好具体的检测数据或客户案例。",reaction:"有客户案例吗？用了多久？",next:null}
 ]}},
-{letter:"B",text:"贵有贵的道理。",level:"poor",analysis:"❌ 没新信息。",reaction:"便宜 2 万也是钱。",next:null}
+{letter:"B",text:"一分钱一分货嘛，我们的用料和工艺不一样。",level:"good",analysis:"👍 '一分钱一分货'是老话，有一定道理。但太笼统了，客户需要的是具体差异点——差在哪、值不值这个差价。建议用具体数据支撑。",reaction:"那你说说具体差在哪？",next:null}
 ]}}
 ]}};
-C['newbie-close']={title:"客户说再考虑考虑",tags:["关单技巧","异议处理"],root:{context:"方案发了，客户说考虑考虑。",customer:"方案我看完了，挺好的。我再考虑考虑。",options:[
-{letter:"A",text:"好的，考虑好了联系我。",level:"poor",analysis:"❌ 80% 不会主动联系。",reaction:"（3 天后客户买了别家）",next:null},
-{letter:"B",text:"理解。主要在犹豫价格还是效果？我针对性补充。",level:"good",analysis:"✅ 帮客户理清犹豫点。",
-next:{customer:"主要是价格，3.5 万不是小数目。",options:[
-{letter:"A",text:"理解。用 5 年每天成本不到 20 元，省一个厨师工资月省 6000。",level:"good",analysis:"✅ 总价拆成每天成本。",
-next:{customer:"万一生意不好不就白买了？",options:[
-{letter:"A",text:"先付 30%，用 3 个月满意再付尾款。",level:"good",analysis:"✅ 试用方案降低风险。",
-next:{customer:"先付 30%？那可以。具体怎么操作？",options:[
-{letter:"A",text:"今天发分期方案和合同，没问题安排安装，2 周到位。",level:"good",analysis:"✅ 异议解决后立即推进。",reaction:"行，发过来吧。",next:null},
-{letter:"B",text:"我发您，您再考虑。",level:"poor",analysis:"❌ 前功尽弃。",reaction:"好。",next:null}
+// Case 3: 关单推进
+C['newbie-close']={title:"客户说再考虑考虑",tags:["关单技巧","异议处理"],root:{context:"方案发了，客户说考虑考虑。",customer:"方案我看完了，挺好的。我再考虑考虑，回头联系你。",options:[
+{letter:"A",text:"好的，您考虑好了随时联系我。",level:"good",analysis:"👍 尊重客户的节奏，不让客户觉得被逼单。有些客户确实需要时间，逼太紧反而会跑。但风险是——大多数客户说考虑只是习惯性拖延，你不推动他，他大概率不会主动联系你。据不完全统计，说'考虑考虑'的客户 80% 以上没有然后了。",reaction:"（3 天后你跟进，发现客户已经买了别家的）",next:null},
+{letter:"B",text:"好的王老板，我理解。多问一句——主要在犹豫价格还是效果？我可以针对性给您补充信息。",level:"good",analysis:"👍 用封闭式问题帮客户理清犹豫的点。大多数人说'考虑'只是习惯，自己也没想清楚犹豫什么。帮客户厘清问题你才能解决。风险是客户可能觉得你在逼他表态。",reaction:"主要是价格，3.5 万不是小数目。",next:{customer:"主要是价格，3.5 万不是小数目。",options:[
+{letter:"A",text:"理解。换个角度算：这台机器用 5 年，每天成本不到 20 元，但能帮您省一个厨师的工资——一个月省 6000。",level:"good",analysis:"👍 把总价拆成每天成本感知完全不同。再用省一个厨师工资算 ROI，这是关单时最有效的算账方式。风险是如果客户说'那万一没生意呢'，你要准备好回答。",reaction:"这么算确实不贵。但万一生意不好不白买了？",next:{customer:"万一生意不好不就白买了？",options:[
+{letter:"A",text:"这个您放心。我们可以先付 30%，用 3 个月满意再付尾款。而且机器二手保值率很高。",level:"good",analysis:"👍 提供先付 30% 的试用方案，把客户的决策风险降到最低。这是关单时的有力工具。风险是公司不一定支持分期方案，你要先确认政策。",reaction:"先付 30%？那可以。具体怎么操作？",next:{customer:"具体怎么操作？",options:[
+{letter:"A",text:"今天我把分期方案和合同一起发您，您看看没问题我们就安排送货安装，2 周到位。",level:"good",analysis:"👍 客户说'具体怎么操作'是一个强烈的购买信号——他已经决定要了只是在问流程。这时候给出清晰的下一步（发合同→安装），客户会顺理成章地走完流程。",reaction:"行，发过来吧。",next:null},
+{letter:"B",text:"我发您方案和合同，您看完再说。",level:"good",analysis:"👍 按流程办事没错，但没有抓住客户的热度。客户说'具体怎么操作'是购买信号——他在等你给指令，你应该直接推进而不是让他再想一次。热度会冷的。",reaction:"好，我看看再说。",next:null}
 ]}},
-{letter:"B",text:"要对生意有信心。",level:"poor",analysis:"❌ 否定客户顾虑。",reaction:"你说得轻巧。",next:null}
+{letter:"B",text:"您要对生意有信心嘛，这个机器能帮您赚钱的。",level:"good",analysis:"👍 鼓励客户的出发点是好的。但'你要有信心'听起来像是在说'你的担心是多余的'——客户会觉得你不理解他的处境。更好的做法是给具体方案降低风险，而不是鼓励他冒险。",reaction:"你说得轻巧，亏的不是你的钱。",next:null}
 ]}},
-{letter:"B",text:"3.5 万不贵了。",level:"poor",analysis:"❌ 否定客户感受。",reaction:"不贵？",next:null},
-{letter:"C",text:"帮您申请优惠。",level:"ok",analysis:"⚠️ 先算价值再做优惠。",
-next:{customer:"能优惠多少？",options:[
-{letter:"A",text:"延保（价值 3000）+ 送配套工具。价格不变但增值。",level:"good",analysis:"✅ 不降裸价给增值。",reaction:"行，发合同吧。",next:null},
-{letter:"B",text:"最多优惠 2000。",level:"poor",analysis:"❌ 降价显得报高了。",reaction:"才 2000？",next:null}
+{letter:"B",text:"3.5 万其实不算贵，这个配置很划算了。",level:"good",analysis:"👍 帮客户重新评估价格本身没有错。但否定客户感受（你觉得不贵→他觉得贵）会让对话陷入'贵不贵'的拉锯。更有效的方法是帮他算账（每天多少钱），把价格转化成价值。",reaction:"您觉得不贵，对我来说是一笔大钱啊。",next:null},
+{letter:"C",text:"要不我帮您问问，看能不能申请点优惠。",level:"good",analysis:"👍 给优惠是关单的常见手段。但顺序很重要——先帮客户算价值账，如果还觉得贵，再用优惠作为最后的推力。一上来就给优惠，客户会想'原来还有降价空间，那我再等等'。",reaction:"能优惠多少？",next:{customer:"能优惠多少？",options:[
+{letter:"A",text:"我帮您申请一套延保服务（价值 3000），再送配套工具。价格不变但增值了，您觉得怎么样？",level:"good",analysis:"👍 不降裸价给增值服务，既让客户觉得赚到了，你也没破坏价格体系。这是双赢的谈判方式。风险是客户可能说'我不要延保，直接降价'。",reaction:"行，那发合同吧。",next:null},
+{letter:"B",text:"我申请一下，最多能优惠 2000。",level:"good",analysis:"👍 给了实际优惠，客户会觉得争取到了东西。但直接降价有个副作用——客户会想'原来你报高了'，影响信任。而且下次客户会更习惯还价。",reaction:"才 2000？能不能再多点？",next:null}
 ]}}
 ]}},
-{letter:"C",text:"活动价 30 号截止，今天定我申请延保。",level:"ok",analysis:"⚠️ 紧迫感要真实。",reaction:"那更得想想了。",next:null}
+{letter:"C",text:"这个月的活动价 30 号就截止了，今天定的话我还能帮您申请延保。",level:"good",analysis:"👍 制造紧迫感是有效的关单技巧——活动截止、限时优惠给客户一个'现在做决定'的理由。但风险是如果活动不是真的，客户以后知道了会失去所有信任。紧迫感必须真实。",reaction:"活动截止啊…那我更得好好想想了，别冲动消费。",next:null}
 ]}};
 })();
+
 var id$=function(id){return document.getElementById(id);};var msgArea=id$("msg-area"),optGrid=id$("options-grid"),optArea=id$("options-area"),resultArea=id$("result-area");var state={customer:'newbie',stage:'icebreak',currentNode:null,history:[],sessions:0,bestRate:0,autoTimer:null};
 
 function updateDetail(){var c=CASES_DATA[state.customer+'-'+state.stage],el=id$('case-detail');if(!c){el.innerHTML='<div style="font-size:.6875rem;color:#9CA3AF;text-align:center;padding:.5rem 0">暂无案例</div>';return;}
